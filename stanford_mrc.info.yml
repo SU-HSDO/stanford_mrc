@@ -27,6 +27,7 @@ dependencies:
   - field_ui
   - file
   - filter
+  - help
   - image
   - link
   - linkit
