@@ -1,0 +1,67 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.stanford_event.body
+    - field.field.node.stanford_event.field_s_event_audience
+    - field.field.node.stanford_event.field_s_event_category
+    - field.field.node.stanford_event.field_s_event_date
+    - field.field.node.stanford_event.field_s_event_image
+    - field.field.node.stanford_event.field_s_event_link
+    - node.type.stanford_event
+  module:
+    - datetime
+    - image
+    - link
+    - text
+    - user
+id: node.stanford_event.default
+targetEntityType: node
+bundle: stanford_event
+mode: default
+content:
+  body:
+    type: text_default
+    weight: 4
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+  field_s_event_date:
+    type: datetime_default
+    weight: 1
+    region: content
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+  field_s_event_image:
+    type: image
+    weight: 2
+    region: content
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+  field_s_event_link:
+    type: link
+    weight: 3
+    region: content
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_s_event_audience: true
+  field_s_event_category: true

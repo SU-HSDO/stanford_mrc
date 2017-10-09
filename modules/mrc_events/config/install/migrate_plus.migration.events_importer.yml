@@ -1,0 +1,112 @@
+langcode: en
+status: true
+dependencies: {  }
+id: events_importer
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: mrc_events
+label: 'My Events importer'
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  urls: 'http://events.stanford.edu/xml/drupal/v2.php?organization=19'
+  data_parser_plugin: simple_xml
+  item_selector: /EventList/Event
+  fields:
+    -
+      name: guid
+      label: GUID
+      selector: guid
+    -
+      name: title
+      label: 'Event Title'
+      selector: title
+    -
+      name: body
+      label: Description
+      selector: description
+    -
+      name: event_date
+      label: 'Event date'
+      selector: eventDate
+    -
+      name: link
+      label: 'Event Link'
+      selector: link
+    -
+      name: audience
+      label: 'Event Audience'
+      selector: audiences
+    -
+      name: image
+      label: 'Image URL'
+      selector: imageUrl
+    -
+      name: categories
+      label: Categories
+      selector: categories
+  ids:
+    guid:
+      type: string
+  constants:
+    status: 1
+    type: stanford_event
+process:
+  title: title
+  body: body
+  field_s_event_date:
+    -
+      plugin: format_date
+      from_format: 'l, M j, Y g:i A'
+      to_format: U
+      source: event_date
+    -
+      plugin: format_date
+      from_format: 'l, M j, Y g:i A'
+      to_format: c
+      source: event_date
+    -
+      plugin: substr
+      start: 0
+      length: 19
+  field_s_event_link: link
+  field_s_event_category:
+    -
+      plugin: explode
+      source: categories
+      delimiter: ','
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: program_types
+      value_key: name
+    -
+      plugin: default_value
+      default_value: null
+  field_s_event_audience:
+    -
+      plugin: explode
+      source: audience
+      delimiter: ','
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: event_audience
+      value_key: name
+    -
+      plugin: default_value
+      default_value: null
+  field_s_event_image:
+    -
+      plugin: migration_lookup
+      migration: events_image_importer
+      source: guid
+  status: constants/status
+  type: constants/type
+destination:
+  plugin: 'entity:node'
+migration_dependencies: null
