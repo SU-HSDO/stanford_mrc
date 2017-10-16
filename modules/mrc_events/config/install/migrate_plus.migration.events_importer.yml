@@ -1,3 +1,4 @@
+uuid: ed1dce6c-6053-43f7-b1b4-dbdaa32e850c
 langcode: en
 status: true
 dependencies: {  }
@@ -87,7 +88,7 @@ process:
   type: constants/type
   title: title
   body: body
-  field_s_event_admission: addmission
+  field_s_event_admission: admission
   field_s_event_contact_email: contact_email
   field_s_event_contact_phone: contact_phone
   field_s_event_sponsor: event_sponsor
@@ -144,6 +145,7 @@ process:
       source: guid
   field_s_event_status:
     -
+      source: event_status
       plugin: entity_generate
       entity_type: taxonomy_term
       bundle_key: vid
