@@ -3,18 +3,29 @@ status: true
 dependencies:
   config:
     - field.field.node.stanford_event.body
+    - field.field.node.stanford_event.field_s_event_admission
     - field.field.node.stanford_event.field_s_event_audience
     - field.field.node.stanford_event.field_s_event_category
+    - field.field.node.stanford_event.field_s_event_contact_email
+    - field.field.node.stanford_event.field_s_event_contact_phone
     - field.field.node.stanford_event.field_s_event_date
     - field.field.node.stanford_event.field_s_event_image
     - field.field.node.stanford_event.field_s_event_link
+    - field.field.node.stanford_event.field_s_event_location
+    - field.field.node.stanford_event.field_s_event_map_link
+    - field.field.node.stanford_event.field_s_event_sponsor
+    - field.field.node.stanford_event.field_s_event_status
+    - field.field.node.stanford_event.field_s_event_type
     - node.type.stanford_event
   module:
     - datetime
     - image
     - link
+    - telephone
     - text
     - user
+_core:
+  default_config_hash: jfA8y6cBKx0RfIcNxqRvHT3WazpDzq1ndzszZFhjPkY
 id: node.stanford_event.default
 targetEntityType: node
 bundle: stanford_event
@@ -24,14 +35,36 @@ content:
     type: text_default
     weight: 4
     region: content
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+  field_s_event_admission:
+    weight: 10
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_s_event_contact_email:
+    weight: 8
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_s_event_contact_phone:
+    weight: 9
+    label: hidden
+    settings:
+      title: ''
+    third_party_settings: {  }
+    type: telephone_link
+    region: content
   field_s_event_date:
     type: datetime_default
     weight: 1
     region: content
-    label: above
+    label: hidden
     settings:
       format_type: medium
       timezone_override: ''
@@ -40,7 +73,7 @@ content:
     type: image
     weight: 2
     region: content
-    label: above
+    label: hidden
     settings:
       image_style: ''
       image_link: ''
@@ -49,7 +82,7 @@ content:
     type: link
     weight: 3
     region: content
-    label: above
+    label: hidden
     settings:
       trim_length: 80
       url_only: false
@@ -57,6 +90,32 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
+  field_s_event_location:
+    weight: 5
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_s_event_map_link:
+    weight: 6
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_s_event_sponsor:
+    weight: 7
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
   links:
     weight: 0
     region: content
@@ -65,3 +124,5 @@ content:
 hidden:
   field_s_event_audience: true
   field_s_event_category: true
+  field_s_event_status: true
+  field_s_event_type: true

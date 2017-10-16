@@ -47,6 +47,35 @@ source:
       name: categories
       label: Categories
       selector: categories
+    -
+      name: location
+      label: Location
+      selector: locationText
+    -
+      name: map_link
+      label: "Map Link"
+      selector: mapUrl
+    -
+      name: event_sponsor
+      label: Sponsor
+      selector: sponsor
+    -
+      name: contact_email
+      label: "Contact Email"
+      selector: contactEmail
+    -
+      name: contact_phone
+      label: "Contact Phone"
+      selector: contactPhone
+    -
+      name: admission
+      label: Admission
+      selector: admissionDescription
+    -
+      name: event_status
+      label: "Event Status"
+      selector: eventStatus
+
   ids:
     guid:
       type: string
@@ -54,8 +83,17 @@ source:
     status: 1
     type: stanford_event
 process:
+  status: constants/status
+  type: constants/type
   title: title
   body: body
+  field_s_event_admission: addmission
+  field_s_event_contact_email: contact_email
+  field_s_event_contact_phone: contact_phone
+  field_s_event_sponsor: event_sponsor
+  field_s_event_location: location
+  field_s_event_map_link: map_link
+  field_s_event_link: link
   field_s_event_date:
     -
       plugin: format_date
@@ -71,7 +109,6 @@ process:
       plugin: substr
       start: 0
       length: 19
-  field_s_event_link: link
   field_s_event_category:
     -
       plugin: explode
@@ -105,8 +142,16 @@ process:
       plugin: migration_lookup
       migration: events_image_importer
       source: guid
-  status: constants/status
-  type: constants/type
+  field_s_event_status:
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: event_status
+      value_key: name
+    -
+      plugin: default_value
+      default_value: null
 destination:
   plugin: 'entity:node'
 migration_dependencies: null

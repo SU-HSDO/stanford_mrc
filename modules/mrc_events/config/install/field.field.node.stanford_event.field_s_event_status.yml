@@ -2,16 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_s_event_audience
+    - field.storage.node.field_s_event_status
     - node.type.stanford_event
-    - taxonomy.vocabulary.event_audience
-_core:
-  default_config_hash: sY0DRUA_6wRm-N9zGK30PSBdmARg8OJpRKNDYT0obuQ
-id: node.stanford_event.field_s_event_audience
-field_name: field_s_event_audience
+    - taxonomy.vocabulary.event_status
+id: node.stanford_event.field_s_event_status
+field_name: field_s_event_status
 entity_type: node
 bundle: stanford_event
-label: Audience
+label: Status
 description: ''
 required: false
 translatable: false
@@ -21,9 +19,10 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      event_audience: event_audience
+      event_status: event_status
     sort:
-      field: _none
-    auto_create: true
+      field: name
+      direction: asc
+    auto_create: false
     auto_create_bundle: ''
 field_type: entity_reference

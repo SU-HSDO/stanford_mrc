@@ -1,6 +1,8 @@
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: WuxBrIO0ZXDvB3PxmY-aCUBZ6OouM9XVTeTvxLkQOtg
 id: events_image_importer
 class: null
 field_plugin_method: null
