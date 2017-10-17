@@ -3,9 +3,6 @@ description: Events content type and importer
 core: 8.x
 type: module
 dependencies:
-  - migrate_tools
-  - migrate_plus
-  - mrc_migrate_processors
   - telephone
   - file
   - image
@@ -13,6 +10,6 @@ dependencies:
   - node
   - taxonomy
   - text
-  - path_auto
+  - pathauto
   - datetime_range
   - mrc_migrate_processors

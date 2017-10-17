@@ -1,3 +1,4 @@
+uuid: ed1dce6c-6053-43f7-b1b4-dbdaa32e850c
 langcode: en
 status: true
 dependencies: {  }
@@ -97,7 +98,8 @@ process:
   field_s_event_contact_phone: contact_phone
   field_s_event_sponsor: event_sponsor
   field_s_event_location: location
-  field_s_event_map_link: map_link
+  field_s_event_map_link/uri: map_link
+  field_s_event_map_link/uri: title
   field_s_event_link: link
   field_s_event_date/value:
     -

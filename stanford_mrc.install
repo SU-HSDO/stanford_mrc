@@ -8,6 +8,7 @@
 use Drupal\user\Entity\User;
 use Drupal\user\RoleInterface;
 use Drupal\shortcut\Entity\Shortcut;
+use Drupal\Core\Config\FileStorage;
 
 /**
  * Implements hook_install().
@@ -45,4 +46,39 @@ function stanford_mrc_install() {
   // Allow all users to use search.
   user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['search content']);
   user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['search content']);
+}
+
+/**
+ * Read from the file and re-save the configuration entities.
+ *
+ * @param bool $create_missing
+ *   Create all missing configs in addition to the configs defined in $configs.
+ * @param array|string $configs
+ *   Array of config names to update, string "all" to import all.
+ */
+function stanford_mrc_update_configs($create_missing = FALSE, $configs = []) {
+  /** @var \Drupal\Core\Config\StorageInterface $active_storage */
+  $active_storage = \Drupal::service('config.storage');
+
+  $path = drupal_get_path('profile', 'stanford_mrc') . '/config/install';
+  $source = new FileStorage($path);
+
+  if (is_string($configs) && $configs = 'all') {
+    $configs = $source->listAll();
+  }
+  elseif ($create_missing) {
+    $missing_configs = array_diff($source->listAll(), $active_storage->listAll());
+    $configs = array_unique(array_merge($configs, $missing_configs));
+  }
+
+  foreach ($configs as $config) {
+    $active_storage->write($config, $source->read($config));
+  }
+}
+
+/**
+ * Creates missing text format.
+ */
+function stanford_mrc_update_8001() {
+  stanford_mrc_update_configs(TRUE);
 }
