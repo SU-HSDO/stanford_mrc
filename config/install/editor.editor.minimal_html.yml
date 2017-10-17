@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.basic_html
+    - filter.format.minimal_html
   module:
     - ckeditor
-format: basic_html
+format: minimal_html
 editor: ckeditor
 settings:
   toolbar:
@@ -26,15 +26,6 @@ settings:
           items:
             - BulletedList
             - NumberedList
-        -
-          name: Media
-          items:
-            - Blockquote
-            - DrupalImage
-        -
-          name: Tools
-          items:
-            - Source
   plugins:
     drupallink:
       linkit_enabled: true

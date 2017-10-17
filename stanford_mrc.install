@@ -56,7 +56,7 @@ function stanford_mrc_install() {
  * @param array|string $configs
  *   Array of config names to update, string "all" to import all.
  */
-function stanford_mrc_update_configs($create_missing = FALSE, $configs = []) {
+function stanford_mrc_update_configs($create_missing = TRUE, $configs = []) {
   /** @var \Drupal\Core\Config\StorageInterface $active_storage */
   $active_storage = \Drupal::service('config.storage');
 
@@ -72,7 +72,20 @@ function stanford_mrc_update_configs($create_missing = FALSE, $configs = []) {
   }
 
   foreach ($configs as $config) {
-    $active_storage->write($config, $source->read($config));
+    if (!$active_storage->exists($config)) {
+      $active_storage->write($config, $source->read($config));
+    }
+    else {
+      /** @var \Drupal\Core\Config\ConfigFactoryInterface $config_factory */
+      $config_factory = \Drupal::configFactory();
+      /** @var \Drupal\Core\Config\Config $config_entity */
+      $config_entity = $config_factory->getEditable($config);
+      $updated_config = $source->read($config);
+      unset($updated_config['uuid']);
+      $updated_config = ['uuid' => $config_entity->get('uuid')] + $updated_config;
+      $config_entity->setData($updated_config);
+      $config_entity->save();
+    }
   }
 }
 
@@ -80,5 +93,5 @@ function stanford_mrc_update_configs($create_missing = FALSE, $configs = []) {
  * Creates missing text format.
  */
 function stanford_mrc_update_8001() {
-  stanford_mrc_update_configs(TRUE);
+  stanford_mrc_update_configs(TRUE, 'all');
 }
