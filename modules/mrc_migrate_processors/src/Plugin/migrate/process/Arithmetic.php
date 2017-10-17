@@ -47,29 +47,13 @@ class Arithmetic extends ProcessPluginBase {
     foreach ($fields as &$item) {
       if (is_string($item) && $row->hasSourceProperty($item)) {
         $item = $row->getSourceProperty($item);
+        $item = preg_replace('[^0-9\+-\*\/\(\) ]', '', $item);
       }
     }
 
-    $formula = implode($this->configuration['operation'], $fields);
-    return $this->calculateString($formula);
-  }
-
-  /**
-   * Peform the basic math operation.
-   *
-   * @param string $math_string
-   *   The forumla string.
-   *
-   * @return int
-   *   Computed value.
-   */
-  protected function calculateString($math_string) {
-    $math_string = trim($math_string);
-    // Remove any non-numbers chars; exception for math operators.
-    $math_string = preg_replace('[^0-9\+-\*\/\(\) ]', '', $math_string);
-    $compute = create_function("", "return (" . $math_string . ");");
+    $formula = implode($this->configuration['operation'], array_filter($fields));
+    $compute = create_function("", "return (" . trim($formula) . ");");
     return 0 + $compute();
-
   }
 
 }

@@ -1,4 +1,3 @@
-uuid: ed1dce6c-6053-43f7-b1b4-dbdaa32e850c
 langcode: en
 status: true
 dependencies: {  }
@@ -29,9 +28,13 @@ source:
       label: Description
       selector: description
     -
-      name: event_date
-      label: 'Event date'
-      selector: eventDate
+      name: event_start
+      label: 'Event start'
+      selector: rssEventDate
+    -
+      name: event_end
+      label: 'Event end'
+      selector: rssEventEndDate
     -
       name: link
       label: 'Event Link'
@@ -96,20 +99,26 @@ process:
   field_s_event_location: location
   field_s_event_map_link: map_link
   field_s_event_link: link
-  field_s_event_date:
+  field_s_event_date/value:
     -
       plugin: format_date
-      source: event_date
-      from_format: 'l, M j, Y g:i A'
+      source: event_start
+      from_format: 'D, d M Y H:i:s T'
       to_format: U
     -
-      plugin: arithmetic
-      operation: +
-      fields:
-        - constants/timezone
+      plugin: format_date
+      from_format: U
+      to_format: 'Y-m-d\TH:i:s'
+
+  field_s_event_date/end_value:
     -
       plugin: format_date
-      from_format: 'U'
+      source: event_end
+      from_format: 'D, d M Y H:i:s T'
+      to_format: U
+    -
+      plugin: format_date
+      from_format: U
       to_format: 'Y-m-d\TH:i:s'
   field_s_event_category:
     -
@@ -120,7 +129,7 @@ process:
       plugin: entity_generate
       entity_type: taxonomy_term
       bundle_key: vid
-      bundle: program_types
+      bundle: event_category
       value_key: name
     -
       plugin: default_value
@@ -139,7 +148,7 @@ process:
     -
       plugin: default_value
       default_value: null
-  field_s_event_image:
+  field_s_event_image/target_id:
     -
       plugin: migration_lookup
       migration: events_image_importer

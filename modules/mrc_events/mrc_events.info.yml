@@ -15,3 +15,4 @@ dependencies:
   - text
   - path_auto
   - datetime_range
+  - mrc_migrate_processors
