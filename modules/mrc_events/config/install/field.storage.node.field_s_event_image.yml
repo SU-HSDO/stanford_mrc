@@ -5,8 +5,6 @@ dependencies:
     - file
     - image
     - node
-_core:
-  default_config_hash: nfRswubTWruAiGxJwl15apaqMf34Sx8hIy-Fh84w-YU
 id: node.field_s_event_image
 field_name: field_s_event_image
 entity_type: node

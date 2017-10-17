@@ -19,14 +19,12 @@ dependencies:
     - image.style.thumbnail
     - node.type.stanford_event
   module:
-    - datetime
+    - datetime_range
     - image
     - link
     - path
     - telephone
     - text
-_core:
-  default_config_hash: B9axOvXqoEi0u80XwM-YPj1iIRrfIIUAgQJGvAHDDKc
 id: node.stanford_event.default
 targetEntityType: node
 bundle: stanford_event
@@ -34,7 +32,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 1
+    weight: 2
     region: content
     settings:
       rows: 9
@@ -43,12 +41,12 @@ content:
     third_party_settings: {  }
   created:
     type: datetime_timestamp
-    weight: 8
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   field_s_event_admission:
-    weight: 31
+    weight: 12
     settings:
       rows: 5
       placeholder: ''
@@ -66,7 +64,7 @@ content:
     third_party_settings: {  }
   field_s_event_category:
     type: entity_reference_autocomplete
-    weight: 6
+    weight: 8
     region: content
     settings:
       match_operator: CONTAINS
@@ -74,7 +72,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_s_event_contact_email:
-    weight: 29
+    weight: 10
     settings:
       size: 60
       placeholder: ''
@@ -82,21 +80,24 @@ content:
     type: email_default
     region: content
   field_s_event_contact_phone:
-    weight: 30
+    weight: 11
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: telephone_default
     region: content
   field_s_event_date:
-    type: datetime_default
-    weight: 3
-    region: content
-    settings: {  }
+    weight: 1
+    settings:
+      date_order: MDY
+      time_type: '12'
+      increment: 1
     third_party_settings: {  }
+    type: daterange_datelist
+    region: content
   field_s_event_image:
     type: image_image
-    weight: 2
+    weight: 3
     region: content
     settings:
       progress_indicator: throbber
@@ -111,7 +112,7 @@ content:
       placeholder_title: ''
     third_party_settings: {  }
   field_s_event_location:
-    weight: 26
+    weight: 6
     settings:
       rows: 5
       placeholder: ''
@@ -119,7 +120,7 @@ content:
     type: string_textarea
     region: content
   field_s_event_map_link:
-    weight: 27
+    weight: 7
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -127,7 +128,7 @@ content:
     type: link_default
     region: content
   field_s_event_sponsor:
-    weight: 28
+    weight: 9
     settings:
       rows: 5
       placeholder: ''
@@ -135,13 +136,13 @@ content:
     type: string_textarea
     region: content
   field_s_event_status:
-    weight: 33
+    weight: 16
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_s_event_type:
-    weight: 32
+    weight: 13
     settings:
       match_operator: CONTAINS
       size: 60
@@ -151,7 +152,7 @@ content:
     region: content
   path:
     type: path
-    weight: 11
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -159,21 +160,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 9
+    weight: 14
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 12
+    weight: 17
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 10
+    weight: 15
     region: content
     third_party_settings: {  }
   title:
@@ -186,7 +187,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 7
+    weight: 20
     settings:
       match_operator: CONTAINS
       size: 60

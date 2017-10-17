@@ -18,14 +18,12 @@ dependencies:
     - field.field.node.stanford_event.field_s_event_type
     - node.type.stanford_event
   module:
-    - datetime
+    - datetime_range
     - image
     - link
     - telephone
     - text
     - user
-_core:
-  default_config_hash: jfA8y6cBKx0RfIcNxqRvHT3WazpDzq1ndzszZFhjPkY
 id: node.stanford_event.default
 targetEntityType: node
 bundle: stanford_event
@@ -61,14 +59,15 @@ content:
     type: telephone_link
     region: content
   field_s_event_date:
-    type: datetime_default
     weight: 1
-    region: content
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: events_date
+      separator: To
     third_party_settings: {  }
+    type: daterange_default
+    region: content
   field_s_event_image:
     type: image
     weight: 2

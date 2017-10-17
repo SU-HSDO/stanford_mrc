@@ -6,8 +6,6 @@ dependencies:
     - node.type.stanford_event
   module:
     - text
-_core:
-  default_config_hash: f9IelcYkZ2km9l7lqmKNq_8b1H9NwQhsc7wyxclWUVE
 id: node.stanford_event.body
 field_name: body
 entity_type: node

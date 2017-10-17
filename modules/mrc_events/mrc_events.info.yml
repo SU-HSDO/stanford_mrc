@@ -5,3 +5,13 @@ type: module
 dependencies:
   - migrate_tools
   - migrate_plus
+  - mrc_migrate_processors
+  - telephone
+  - file
+  - image
+  - link
+  - node
+  - taxonomy
+  - text
+  - path_auto
+  - datetime_range

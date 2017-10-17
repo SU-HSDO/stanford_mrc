@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\mrc_events\Plugin\migrate\process;
+namespace Drupal\mrc_migrate_processors\Plugin\migrate\process;
 
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\migrate\process\Download;

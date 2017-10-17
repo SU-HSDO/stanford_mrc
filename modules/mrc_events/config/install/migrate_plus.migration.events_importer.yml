@@ -83,6 +83,7 @@ source:
   constants:
     status: 1
     type: stanford_event
+    timezone: 25200
 process:
   status: constants/status
   type: constants/type
@@ -98,18 +99,18 @@ process:
   field_s_event_date:
     -
       plugin: format_date
+      source: event_date
       from_format: 'l, M j, Y g:i A'
       to_format: U
-      source: event_date
+    -
+      plugin: arithmetic
+      operation: +
+      fields:
+        - constants/timezone
     -
       plugin: format_date
-      from_format: 'l, M j, Y g:i A'
-      to_format: c
-      source: event_date
-    -
-      plugin: substr
-      start: 0
-      length: 19
+      from_format: 'U'
+      to_format: 'Y-m-d\TH:i:s'
   field_s_event_category:
     -
       plugin: explode

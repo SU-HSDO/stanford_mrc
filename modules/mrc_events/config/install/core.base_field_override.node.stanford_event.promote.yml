@@ -3,8 +3,6 @@ status: true
 dependencies:
   config:
     - node.type.stanford_event
-_core:
-  default_config_hash: 8j7ToEneJZ4ET6VClwaZPU_Ox-zL5Y5vAhcTVVfXD1I
 id: node.stanford_event.promote
 field_name: promote
 entity_type: node

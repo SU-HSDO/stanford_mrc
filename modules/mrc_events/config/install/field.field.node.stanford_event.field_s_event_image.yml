@@ -6,8 +6,6 @@ dependencies:
     - node.type.stanford_event
   module:
     - image
-_core:
-  default_config_hash: bbtg8SwF2dHuox6wHMxsvku7vt4N9AvOQCPTyK2VBKw
 id: node.stanford_event.field_s_event_image
 field_name: field_s_event_image
 entity_type: node

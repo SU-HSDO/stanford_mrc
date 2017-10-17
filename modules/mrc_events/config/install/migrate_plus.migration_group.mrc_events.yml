@@ -1,8 +1,6 @@
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: CwbZj6WNrtRmVBWQUFUY8GEZCQRERx1X_KbCV4nPUlA
 id: mrc_events
 label: Events
 description: 'Stanford events importer.'
