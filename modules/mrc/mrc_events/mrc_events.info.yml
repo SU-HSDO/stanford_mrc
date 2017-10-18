@@ -1,0 +1,16 @@
+name: MRC Events
+description: Events content type and importer
+core: 8.x
+type: module
+dependencies:
+  - telephone
+  - file
+  - image
+  - link
+  - node
+  - taxonomy
+  - text
+  - pathauto
+  - datetime_range
+  - mrc_migrate_processors
+  - allowed_formats

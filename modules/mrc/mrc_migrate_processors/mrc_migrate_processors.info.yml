@@ -1,0 +1,6 @@
+name: "MRC Migrate Processors"
+description: "Extra migration processors to assit with importing"
+core: 8.x
+type: module
+dependecies:
+  - migrate
