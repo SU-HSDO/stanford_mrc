@@ -109,14 +109,25 @@ process:
       plugin: format_date
       source: event_start
       from_format: 'Y-m-d H:i:s O'
+      to_format: U
+      timezone: 'Etc/GMT'
+    -
+      plugin: format_date
+      from_format: U
       to_format: 'Y-m-d\TH:i:s'
-
+      timezone: 'Etc/GMT'
   field_s_event_date/end_value:
     -
       plugin: format_date
       source: event_end
       from_format: 'Y-m-d H:i:s O'
+      to_format: U
+      timezone: 'Etc/GMT'
+    -
+      plugin: format_date
+      from_format: U
       to_format: 'Y-m-d\TH:i:s'
+      timezone: 'Etc/GMT'
   field_s_event_category:
     -
       plugin: explode
@@ -163,4 +174,5 @@ process:
       default_value: null
 destination:
   plugin: 'entity:node'
-migration_dependencies: null
+migration_dependencies:
+  - migrate_plus.migration.events_image_importer
