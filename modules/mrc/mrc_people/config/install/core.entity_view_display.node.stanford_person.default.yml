@@ -47,7 +47,7 @@ content:
     region: content
   field_s_person_affiliation:
     weight: 106
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -55,7 +55,7 @@ content:
     region: content
   field_s_person_education:
     weight: 108
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -63,14 +63,14 @@ content:
     region: content
   field_s_person_email:
     weight: 109
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: content
   field_s_person_faculty_interests:
     weight: 117
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -78,7 +78,7 @@ content:
     region: content
   field_s_person_faculty_status:
     weight: 116
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -86,7 +86,7 @@ content:
     region: content
   field_s_person_first_name:
     weight: 102
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -94,7 +94,7 @@ content:
     region: content
   field_s_person_last_name:
     weight: 103
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -102,7 +102,7 @@ content:
     region: content
   field_s_person_links:
     weight: 115
-    label: above
+    label: hidden
     settings:
       trim_length: 80
       url_only: false
@@ -114,14 +114,14 @@ content:
     region: content
   field_s_person_mail:
     weight: 113
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: address_default
     region: content
   field_s_person_mail_code:
     weight: 114
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -129,7 +129,7 @@ content:
     region: content
   field_s_person_middle_name:
     weight: 104
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -137,7 +137,7 @@ content:
     region: content
   field_s_person_office:
     weight: 112
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -145,7 +145,7 @@ content:
     region: content
   field_s_person_office_hours:
     weight: 111
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -153,7 +153,7 @@ content:
     region: content
   field_s_person_photo:
     weight: 105
-    label: above
+    label: hidden
     settings:
       image_style: ''
       image_link: ''
@@ -162,7 +162,7 @@ content:
     region: content
   field_s_person_staff_type:
     weight: 123
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -170,7 +170,7 @@ content:
     region: content
   field_s_person_student_cohort:
     weight: 119
-    label: above
+    label: hidden
     settings:
       format_type: medium
       timezone_override: ''
@@ -179,7 +179,7 @@ content:
     region: content
   field_s_person_student_dissert:
     weight: 121
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -187,7 +187,7 @@ content:
     region: content
   field_s_person_student_grad:
     weight: 122
-    label: above
+    label: hidden
     settings:
       format_type: medium
       timezone_override: ''
@@ -196,7 +196,7 @@ content:
     region: content
   field_s_person_student_study:
     weight: 120
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -204,7 +204,7 @@ content:
     region: content
   field_s_person_student_type:
     weight: 118
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -212,14 +212,14 @@ content:
     region: content
   field_s_person_telephone:
     weight: 110
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: content
   field_s_person_title:
     weight: 107
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
