@@ -25,12 +25,14 @@ dependencies:
     - field.field.node.stanford_person.field_s_person_student_type
     - field.field.node.stanford_person.field_s_person_telephone
     - field.field.node.stanford_person.field_s_person_title
+    - image.style.large
     - node.type.stanford_person
   module:
     - address
     - datetime
     - image
     - link
+    - telephone
     - text
     - user
 id: node.stanford_person.default
@@ -41,20 +43,20 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 101
+    weight: 1
     settings: {  }
     third_party_settings: {  }
     region: content
   field_s_person_affiliation:
-    weight: 106
+    weight: 3
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     type: entity_reference_label
     region: content
   field_s_person_education:
-    weight: 108
+    weight: 5
     label: hidden
     settings:
       link_to_entity: false
@@ -62,46 +64,30 @@ content:
     type: string
     region: content
   field_s_person_email:
-    weight: 109
+    weight: 6
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: content
   field_s_person_faculty_interests:
-    weight: 117
+    weight: 14
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     type: entity_reference_label
     region: content
   field_s_person_faculty_status:
-    weight: 116
+    weight: 13
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_s_person_first_name:
-    weight: 102
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_s_person_last_name:
-    weight: 103
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_s_person_links:
-    weight: 115
+    weight: 12
     label: hidden
     settings:
       trim_length: 80
@@ -113,22 +99,14 @@ content:
     type: link
     region: content
   field_s_person_mail:
-    weight: 113
+    weight: 10
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: address_default
     region: content
   field_s_person_mail_code:
-    weight: 114
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_s_person_middle_name:
-    weight: 104
+    weight: 11
     label: hidden
     settings:
       link_to_entity: false
@@ -136,7 +114,7 @@ content:
     type: string
     region: content
   field_s_person_office:
-    weight: 112
+    weight: 9
     label: hidden
     settings:
       link_to_entity: false
@@ -144,7 +122,7 @@ content:
     type: string
     region: content
   field_s_person_office_hours:
-    weight: 111
+    weight: 8
     label: hidden
     settings:
       link_to_entity: false
@@ -152,33 +130,33 @@ content:
     type: string
     region: content
   field_s_person_photo:
-    weight: 105
+    weight: 2
     label: hidden
     settings:
-      image_style: ''
+      image_style: large
       image_link: ''
     third_party_settings: {  }
     type: image
     region: content
   field_s_person_staff_type:
-    weight: 123
+    weight: 20
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     type: entity_reference_label
     region: content
   field_s_person_student_cohort:
-    weight: 119
+    weight: 16
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: html_year
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_s_person_student_dissert:
-    weight: 121
+    weight: 18
     label: hidden
     settings:
       link_to_entity: false
@@ -186,39 +164,40 @@ content:
     type: string
     region: content
   field_s_person_student_grad:
-    weight: 122
+    weight: 19
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: html_year
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_s_person_student_study:
-    weight: 120
+    weight: 17
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     type: entity_reference_label
     region: content
   field_s_person_student_type:
-    weight: 118
+    weight: 15
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     type: entity_reference_label
     region: content
   field_s_person_telephone:
-    weight: 110
+    weight: 7
     label: hidden
-    settings: {  }
+    settings:
+      title: ''
     third_party_settings: {  }
-    type: basic_string
+    type: telephone_link
     region: content
   field_s_person_title:
-    weight: 107
+    weight: 4
     label: hidden
     settings:
       link_to_entity: false
@@ -226,6 +205,11 @@ content:
     type: string
     region: content
   links:
-    weight: 100
+    weight: 0
     region: content
-hidden: {  }
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_s_person_first_name: true
+  field_s_person_last_name: true
+  field_s_person_middle_name: true

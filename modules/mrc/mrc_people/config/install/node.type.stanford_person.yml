@@ -5,12 +5,11 @@ dependencies:
     - menu_ui
 third_party_settings:
   menu_ui:
-    available_menus:
-      - main
-    parent: 'main:'
+    available_menus: {  }
+    parent: ''
 name: Person
 type: stanford_person
-description: ''
+description: 'A generic person details, staff, faculty, student, or alumni.'
 help: ''
 new_revision: false
 preview_mode: 1
