@@ -1,0 +1,10 @@
+name: MRC People
+description: A person content type
+core: 8.x
+type: module
+version: VERSION
+dependencies:
+  - field
+  - field_group
+  - address
+  - telephone
