@@ -8,3 +8,4 @@ dependencies:
   - field_group
   - address
   - telephone
+  - auto_entitylabel

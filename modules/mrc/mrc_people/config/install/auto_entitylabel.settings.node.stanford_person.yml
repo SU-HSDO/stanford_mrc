@@ -3,4 +3,4 @@ pattern: '[node:field_s_person_first_name] [node:field_s_person_middle_name] [no
 php: 0
 dependencies:
   config:
-    - node.node_type.stanford_person
+    - node.type.stanford_person
