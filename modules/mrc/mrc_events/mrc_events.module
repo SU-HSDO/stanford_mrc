@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * mrc_events.mdoule
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function mrc_events_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  if ($element['#entity_type'] == 'node' && $element['#bundle'] == 'stanford_event') {
+    /** @var \Drupal\Core\Field\WidgetBaseInterface $widget */
+    $widget = $context['widget'];
+    if ($widget->getBaseId() == 'daterange_datelist') {
+      $show_end = FALSE;
+
+      if (!empty($element['value']['#default_value']) && !empty($element['end_value']['#default_value'])) {
+        /** @var \DateInterval $diff */
+        $diff = $element['value']['#default_value']->diff($element['end_value']['#default_value']);
+        $show_end = (bool) (int) $diff->format('%Y%M%D%H%I%S');
+      }
+
+      $element['show_end'] = [
+        '#type' => 'checkbox',
+        '#title' => t('Show End Date'),
+        '#default_value' => $show_end,
+        '#attributes' => ['class' => ['show-end-date']],
+      ];
+      $element['#attached']['library'][] = 'mrc_events/admin';
+      array_unshift($element['#element_validate'], 'mrc_events_node_validate_date');
+    }
+  }
+}
+
+/**
+ * Validation for event dates in nodes form.
+ */
+function mrc_events_node_validate_date($form, FormStateInterface $form_state) {
+  $date = $form_state->getValue('field_s_event_date');
+
+  // If the start value is populated but end is empty, copy the start date
+  // to the end date to pass validation.
+  if (!empty($date[0]['value']) && empty($date[0]['end_value'])) {
+    $date[0]['end_value'] = $date[0]['value'];
+    $form_state->setValue('field_s_event_date', $date);
+  }
+}
