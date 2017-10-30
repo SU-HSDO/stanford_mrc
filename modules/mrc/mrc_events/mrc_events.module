@@ -43,7 +43,7 @@ function mrc_events_node_validate_date($form, FormStateInterface $form_state) {
 
   // If the start value is populated but end is empty, copy the start date
   // to the end date to pass validation.
-  if (!empty($date[0]['value']) && empty($date[0]['end_value'])) {
+  if (!empty($date[0]['value']) && (!$date[0]['show_end'] || empty($date[0]['end_value']))) {
     $date[0]['end_value'] = $date[0]['value'];
     $form_state->setValue('field_s_event_date', $date);
   }
