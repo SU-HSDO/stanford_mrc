@@ -36,6 +36,10 @@ process:
   bundle: constants/type
   uri:
     -
+      plugin: skip_on_empty
+      method: row
+      source: image
+    -
       plugin: download_file
       source:
         - image
@@ -43,4 +47,4 @@ process:
       rename: true
 destination:
   plugin: 'entity:file'
-migration_dependencies: null
+migration_dependencies: {}

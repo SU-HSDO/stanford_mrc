@@ -12,5 +12,4 @@ dependencies:
   - text
   - pathauto
   - datetime_range
-  - mrc_migrate_processors
   - allowed_formats
