@@ -1,0 +1,4 @@
+name: MRC Helper
+description: Provides various helper functionality for MRC
+core: 8.x
+type: module
