@@ -1,0 +1,18 @@
+name: Math Research Center
+type: theme
+description: 'Stanford Basic Branding Theme.'
+package: MRC
+version: VERSION
+core: 8.x
+base theme: stanford_basic
+libraries:
+  - core/normalize
+  - math_research_center/mrc
+regions:
+  page_top: 'Page top'
+  header: Header
+  highlighted: Highlighted
+  help: Help
+  content: Content
+  footer: Footer
+  page_bottom: 'Page bottom'
