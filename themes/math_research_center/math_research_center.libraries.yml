@@ -86,3 +86,9 @@
 #       css/pattern-library/theme/theme.css: {}
 #       css/pattern-library/theme/print.css: { media: print }
 
+# CHANGE THE LIBRARY BELOW
+mrc:
+  version: VERSION
+  css:
+    base:
+      css/mrc.css: {}
