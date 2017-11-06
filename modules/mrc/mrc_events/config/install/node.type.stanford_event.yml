@@ -8,9 +8,11 @@ third_party_settings:
     available_menus:
       - main
     parent: 'main:'
+_core:
+  default_config_hash: tArwO0Xe_vzbE5DCpSk2baFo2ogkkUkrPCgfeiAQcDo
 name: Event
 type: stanford_event
-description: ''
+description: 'An event pulled in from <a href="http://events.stanford.edu">events.stanford.edu.</a>.'
 help: ''
 new_revision: false
 preview_mode: 1

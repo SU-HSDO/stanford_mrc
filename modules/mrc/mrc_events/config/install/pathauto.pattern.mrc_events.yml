@@ -3,6 +3,8 @@ status: true
 dependencies:
   module:
     - node
+_core:
+  default_config_hash: l0a3eQ9eZzK9t0lWBrGg60Ynt2H-0Wn5YCRM-s6UbAc
 id: mrc_events
 label: 'MRC Events'
 type: 'canonical_entities:node'

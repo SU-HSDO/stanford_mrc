@@ -5,6 +5,8 @@ dependencies:
     - field.storage.node.field_s_event_status
     - node.type.stanford_event
     - taxonomy.vocabulary.event_status
+_core:
+  default_config_hash: MyOKbTNxnSUu_2XHNs60pjNfBV9xFJqXsZBHLQIZnjY
 id: node.stanford_event.field_s_event_status
 field_name: field_s_event_status
 entity_type: node

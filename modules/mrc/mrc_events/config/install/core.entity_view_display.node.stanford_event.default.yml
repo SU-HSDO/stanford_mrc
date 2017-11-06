@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.stanford_event.field_s_event_sponsor
     - field.field.node.stanford_event.field_s_event_status
     - field.field.node.stanford_event.field_s_event_type
+    - field.field.node.stanford_event.field_s_event_video_recap
     - node.type.stanford_event
   module:
     - datetime_range
@@ -24,6 +25,9 @@ dependencies:
     - telephone
     - text
     - user
+    - video_embed_field
+_core:
+  default_config_hash: '--Z_oePhErkaBTiWo881iUr_LbanS3gn3S1XXxQDkW0'
 id: node.stanford_event.default
 targetEntityType: node
 bundle: stanford_event
@@ -41,7 +45,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: basic_string
+    type: text_default
     region: content
   field_s_event_contact_email:
     weight: 8
@@ -114,6 +118,17 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
+  field_s_event_video_recap:
+    weight: 11
+    label: hidden
+    settings:
+      responsive: true
+      width: 854
+      height: 480
+      autoplay: false
+    third_party_settings: {  }
+    type: video_embed_field_video
     region: content
   links:
     weight: 0

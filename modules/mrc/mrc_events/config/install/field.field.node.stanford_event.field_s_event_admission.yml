@@ -12,6 +12,8 @@ third_party_settings:
     minimal_html: minimal_html
     basic_html: '0'
     plain_text: '0'
+_core:
+  default_config_hash: bU7Ttb6Fznj3TdL_N8-q089Q5dKyQA9rWZlMr-OBcE4
 id: node.stanford_event.field_s_event_admission
 field_name: field_s_event_admission
 entity_type: node
