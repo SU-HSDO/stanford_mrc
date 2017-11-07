@@ -1,0 +1,15 @@
+uuid: b5e6cbef-f43a-47e2-833e-721fd9ce8016
+langcode: en
+status: true
+dependencies:
+  module:
+    - media_entity_document
+id: media_document
+label: Document
+description: 'Document files such as doc, pdf etc.'
+type: document
+queue_thumbnail_downloads: false
+new_revision: false
+type_configuration:
+  source_field: field_media_document
+field_map: {  }

@@ -1,0 +1,20 @@
+uuid: e5863adc-5223-4bef-8880-f4c137bafa31
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'file:file:d0296825-8526-48da-b2c1-beca9fd10270'
+  module:
+    - entity_embed
+    - media_entity
+label: Media
+id: embed_media
+type_id: entity
+type_settings:
+  entity_type: media
+  bundles: {  }
+  display_plugins: {  }
+  entity_browser: media
+  entity_browser_settings:
+    display_review: false
+icon_uuid: d0296825-8526-48da-b2c1-beca9fd10270
