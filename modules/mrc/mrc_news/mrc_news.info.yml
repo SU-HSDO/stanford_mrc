@@ -1,0 +1,17 @@
+name: 'MRC News'
+type: module
+description: 'MRC news items and views.'
+core: 8.x
+package: Stanford
+version: 8.x-1.0-dev
+dependencies:
+  - file
+  - image
+  - link
+  - node
+  - taxonomy
+  - text
+  - pathauto
+  - datetime_range
+  - allowed_formats
+  - metatag
