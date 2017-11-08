@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * mrc_events.install
+ */
+
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+
+/**
+ * Creates new field and reverts the entity form.
+ */
+function mrc_events_update_8001() {
+  \Drupal::service('module_installer')->install(['video_embed_field']);
+
+  FieldStorageConfig::create([
+    'field_name' => 'field_s_event_video_recap',
+    'entity_type' => 'node',
+    'type' => 'video_embed_field',
+    'cardinality' => 1,
+  ])->save();
+
+  FieldConfig::create([
+    'field_name' => 'field_s_event_video_recap',
+    'entity_type' => 'node',
+    'bundle' => 'stanford_event',
+    'label' => 'Post Event Video',
+  ])->save();
+
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_events') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+}

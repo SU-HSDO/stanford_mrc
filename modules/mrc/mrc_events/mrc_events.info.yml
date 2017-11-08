@@ -13,3 +13,4 @@ dependencies:
   - pathauto
   - datetime_range
   - allowed_formats
+  - video_embed_field

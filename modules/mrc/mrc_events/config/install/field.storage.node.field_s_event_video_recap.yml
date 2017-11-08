@@ -3,14 +3,13 @@ status: true
 dependencies:
   module:
     - node
-_core:
-  default_config_hash: qSn-ZEnykkn9VlxTqesqUQg0shf8jlemOs-daQFMEss
-id: node.field_s_event_contact_email
-field_name: field_s_event_contact_email
+    - video_embed_field
+id: node.field_s_event_video_recap
+field_name: field_s_event_video_recap
 entity_type: node
-type: email
+type: video_embed_field
 settings: {  }
-module: core
+module: video_embed_field
 locked: false
 cardinality: 1
 translatable: true

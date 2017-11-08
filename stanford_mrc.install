@@ -58,16 +58,25 @@ function stanford_mrc_after_install() {
 /**
  * Read from the file and re-save the configuration entities.
  *
+ * This does not create field tables, that must be done before updating the
+ * configurations for the field. Simply create the field and instance, then
+ * call this function to revert the field settings. see https://www.drupal8.ovh/en/tutoriels/283/create-a-field-a-node-entity-programmatically-on-drupal-8
+ * for more information.
+ *
  * @param bool $create_missing
  *   Create all missing configs in addition to the configs defined in $configs.
  * @param array|string $configs
  *   Array of config names to update, string "all" to import all.
+ * @param string $path
+ *   Path to the config files.
  */
-function stanford_mrc_update_configs($create_missing = TRUE, $configs = []) {
+function stanford_mrc_update_configs($create_missing = TRUE, $configs = [], $path = '') {
   /** @var \Drupal\Core\Config\StorageInterface $active_storage */
   $active_storage = \Drupal::service('config.storage');
 
-  $path = drupal_get_path('profile', 'stanford_mrc') . '/config/install';
+  if (empty($path)) {
+    $path = drupal_get_path('profile', 'stanford_mrc') . '/config/install';
+  }
   $source = new FileStorage($path);
 
   // If configs is all, grab all available configs in the profile.
