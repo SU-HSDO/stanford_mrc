@@ -14,3 +14,4 @@ dependencies:
   - pathauto
   - datetime_range
   - allowed_formats
+  - metatag
