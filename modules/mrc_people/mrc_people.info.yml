@@ -3,6 +3,7 @@ description: A person content type
 core: 8.x
 type: module
 version: VERSION
+package: Stanford MRC
 dependencies:
   - field
   - field_group
