@@ -15,6 +15,6 @@ $theme_name = \Drupal::theme()->getActiveTheme()->getName();
  *
  * Form override for theme settings.
  */
-function stanford_basic_form_system_theme_settings_alter(array &$form, FormStateInterface $form_state) {
+function math_research_center_form_system_theme_settings_alter(array &$form, FormStateInterface $form_state) {
 
 }
