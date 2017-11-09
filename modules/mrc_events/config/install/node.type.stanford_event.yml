@@ -12,7 +12,7 @@ _core:
   default_config_hash: tArwO0Xe_vzbE5DCpSk2baFo2ogkkUkrPCgfeiAQcDo
 name: Event
 type: stanford_event
-description: 'An event pulled in from <a href="http://events.stanford.edu">events.stanford.edu.</a>.'
+description: 'An event pulled in from events.stanford.edu.'
 help: ''
 new_revision: false
 preview_mode: 1
