@@ -90,5 +90,5 @@
 mrc:
   version: VERSION
   css:
-    base:
-      css/mrc.css: {}
+    component:
+      css/components/components.css: {}

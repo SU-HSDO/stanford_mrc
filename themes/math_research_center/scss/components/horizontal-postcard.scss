@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+///
+/// HORIZONTAL POSTCARD COMPONENT
+///
+
+// Decanter
+@import
+  'decanter/scss/lib/bourbon',
+  'decanter/scss/lib/neat',
+  'decanter/scss/lib/normalize',
+  'decanter/scss/core/core',
+  'decanter/scss/elements/elements';
+
+.mrc-horizontal-postcard {
+  display: flex;
+  background: $color-white;
+  padding: 3rem;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 767px) {
+    display: block;
+  }
+
+  .mrc-horizontal-postcard__img {
+    margin-right: 30px;
+
+    @media (max-width: 767px) {
+      margin-right: 0;
+    }
+  }
+
+  .mrc-horizontal-postcard__content {
+    .mrc-horizontal-postcard__superhead {
+      font-weight: $font-bold;
+      margin: 0 0 .2em;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .mrc-horizontal-postcard__button {
+      text-align: center;
+    }
+  }
+}
