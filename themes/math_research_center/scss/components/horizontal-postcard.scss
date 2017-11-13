@@ -7,10 +7,8 @@
 // Decanter
 @import
   'decanter/scss/lib/bourbon',
-  'decanter/scss/lib/neat',
-  'decanter/scss/lib/normalize',
-  'decanter/scss/core/core',
-  'decanter/scss/elements/elements';
+  'decanter/scss/core/variables',
+  'decanter/scss/core/utilities';
 
 .mrc-horizontal-postcard {
   display: flex;
