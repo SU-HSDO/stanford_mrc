@@ -11,20 +11,21 @@
   'decanter/scss/core/utilities';
 
 .mrc-horizontal-postcard {
-  display: flex;
   background: $color-white;
+  box-shadow: $box-shadow;
+  display: block;
   padding: 3rem;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
 
-  @media (max-width: 767px) {
-    display: block;
+  @include media($medium-screen) {
+    display: flex;
   }
 
-  .mrc-horizontal-postcard__img {
-    margin-right: 30px;
 
-    @media (max-width: 767px) {
-      margin-right: 0;
+  .mrc-horizontal-postcard__img {
+    margin-right: 0;
+
+    @include media($medium-screen) {
+      margin-right: 30px;
     }
   }
 
