@@ -1,0 +1,18 @@
+uuid: 3fe7fa3f-0e06-4730-bef9-d8b2b81bdece
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_embed
+    - media
+label: 'Media Browser'
+id: media_browser
+type_id: entity
+type_settings:
+  entity_type: media
+  bundles: {  }
+  display_plugins:
+    - 'view_mode:media.full'
+  entity_browser: media_browser
+  entity_browser_settings:
+    display_review: false

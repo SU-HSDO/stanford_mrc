@@ -1,0 +1,15 @@
+uuid: 2ef3e6f7-c21f-4106-be5d-28cf6686d19f
+langcode: en
+status: true
+dependencies:
+  module:
+    - video_embed_media
+id: video
+label: Video
+description: 'Use remote video urls for reusable media.'
+source: video_embed_field
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_video_embed_field
+field_map: {  }
