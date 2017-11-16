@@ -19,7 +19,8 @@ function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $fo
   if (isset($form['attributes']['data-entity-embed-display-settings'])) {
     $editor = $form_state->getBuildInfo()['args'][0];
     if ($editor instanceof Editor) {
-      \Drupal::classResolver()->getInstanceFromDefinition(MrcMediaEntityEmbedDialog::class)
+      \Drupal::classResolver()
+        ->getInstanceFromDefinition(MrcMediaEntityEmbedDialog::class)
         ->alterForm($form, $form_state);
     }
   }
@@ -29,8 +30,8 @@ function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $fo
  * Implements hook_preprocess_HOOK() for entity embed container templates.
  */
 function mrc_media_preprocess_entity_embed_container(&$variables) {
-//  if (isset($variables['element']['#context']['data-entity-embed-display-settings']['linkit_attributes'])) {
-//    $url_attributes = $variables['element']['#context']['data-entity-embed-display-settings']['linkit_attributes'];
-//    $variables['url_attributes'] = new Attribute($url_attributes);
-//  }
+  if (!empty($variables['element']['#context']['data-entity-embed-display-settings']['linkit'])) {
+    $url_attributes = ['href' => $variables['element']['#context']['data-entity-embed-display-settings']['linkit']];
+    $variables['url_attributes'] = new Attribute($url_attributes);
+  }
 }
