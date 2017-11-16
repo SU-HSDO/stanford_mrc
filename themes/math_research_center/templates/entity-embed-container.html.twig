@@ -1,12 +1,4 @@
+
 <span{{ attributes }}>
-
-  {% if url_attributes is not empty %}
-    <a{{ url_attributes }}>
-  {% endif %}
-
   {{ children }}
-
-  {% if url_attributes is not empty %}
-    </a>
-  {% endif %}
 </span>
