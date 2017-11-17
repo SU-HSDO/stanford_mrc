@@ -83,7 +83,6 @@
 
     event.target.value = ui.item.path;
 
-    console.log($('input[name*="linkit][href_dirty_check"]', $form).val());
     return false;
   }
 

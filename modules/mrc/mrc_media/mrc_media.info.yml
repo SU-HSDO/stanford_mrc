@@ -4,9 +4,19 @@ core: 8.x
 package: media
 type: module
 dependencies:
-  - media
-  - video_embed_media
+  - ckeditor
+  - editor
+  - linkit
+  - file
+  - inline_entity_form
   - entity_embed
+  - dropzonejs
+  - dropzonejs_eb_widget
   - entity_browser
   - entity_browser_entity_form
-  - linkit
+  - embed
+  - file_browser
+  - media
+  - video_embed_field
+  - video_embed_media
+  - serialization
