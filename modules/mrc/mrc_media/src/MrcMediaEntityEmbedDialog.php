@@ -53,6 +53,11 @@ class MrcMediaEntityEmbedDialog implements ContainerInjectionInterface {
    *   The current state of the form.
    */
   public function alterForm(array &$form, FormStateInterface $form_state) {
+
+    // Only allow linking images. Documents should all ready be linked.
+    if (empty($form['attributes'][$this->settingsKey]['image_link'])) {
+      return;
+    }
     // Hide the image_link option since it only links to the file itself.
     $form['attributes'][$this->settingsKey]['image_link']['#options']['url'] = $this->t('URL');
     $form['attributes'][$this->settingsKey]['image_link']['#weight'] = 99;
