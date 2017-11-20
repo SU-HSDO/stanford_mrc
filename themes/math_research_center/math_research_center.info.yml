@@ -1,10 +1,10 @@
 name: Math Research Center
 type: theme
-description: 'Stanford Basic Branding Theme.'
+base theme: stanford_basic
+description: 'Math Research Center theme.'
 package: MRC
 version: VERSION
 core: 8.x
-base theme: stanford_basic
 libraries:
   - core/normalize
   - math_research_center/mrc
