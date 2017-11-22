@@ -10,13 +10,52 @@ use Drupal\editor\Entity\Editor;
 use Drupal\mrc_media\Form\EntityEmbedDialog;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\file\Entity\File;
+use Drupal\mrc_media\Plugin\EntityBrowser\Widget\DropzoneUpload;
 
 /**
  * Implements hook_entity_insert().
  */
 function mrc_media_entity_insert(EntityInterface $entity) {
   if ($entity instanceof File) {
-    // todo: Create media entity.
+//    ddl($entity);
+    //    if (empty($entity->get('source'))) {
+    //      return;
+    //    }
+
+    //    $extension = pathinfo($entity->getFileUri(), PATHINFO_EXTENSION);
+    //    $media_type = $this->entityTypeManager
+    //      ->getStorage('media_type')
+    //      ->load('image');
+    //
+    //    ddl($media_type);
+    //    ddl($media_type->getSource());
+    //
+    //    $media_entity = \Drupal::entityTypeManager()->getStorage('media')
+    //      ->create([
+    //        'bundle' => $media_type->id(),
+    //        $media_type->getSource()
+    //          ->getConfiguration()['source_field'] => $entity,
+    //        'uid' => \Drupal::currentUser()->id(),
+    //        'status' => TRUE,
+    //        'type' => $media_type->getSource()->getPluginId(),
+    //      ]);
+    //
+    //    $source_field = $media_entity->getSource()
+    //      ->getConfiguration()['source_field'];
+    //    // If we don't save file at this point Media entity creates another file
+    //    // entity with same uri for the thumbnail. That should probably be fixed
+    //    // in Media entity, but this workaround should work for now.
+    //    $media_entity->$source_field->entity->save();
+    //    $media_entity->save();
+  }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function mrc_media_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  if (isset($element['#type']) && $element['#type'] == 'managed_file') {
+    $element['#element_validate'][] = [DropzoneUpload::class, 'saveFileManaged'];
   }
 }
 

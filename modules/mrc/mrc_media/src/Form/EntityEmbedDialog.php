@@ -127,7 +127,6 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => $linkit_profile_id,
       ],
-      "#weight" => $form['attributes'][$this->settingsKey]['image_link']['#weight'] + .5,
       '#default_value' => isset($input['href']) ? $input['href'] : '',
       '#states' => [
         'visible' => [

@@ -14,6 +14,7 @@ use Drupal\file\Entity\File;
 use Drupal\media\Entity\Media;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * An Entity Browser widget for creating media entities from embed codes.
@@ -145,8 +146,8 @@ class DropzoneUpload extends WidgetBase {
    * {@inheritdoc}
    */
   public function prepareEntities(array $form, FormStateInterface $form_state) {
-    $entities = [];
-
+    $file_entities = [];
+    $media_entities = [];
 
     $storage = $form_state->getStorage();
     $return_file = FALSE;
@@ -156,26 +157,26 @@ class DropzoneUpload extends WidgetBase {
 
     foreach ($this->getFiles($form, $form_state) as $file) {
       if ($file instanceof File) {
+        $file_entities[] = $file;
         $media_type = $this->getExtensionBundle(pathinfo($file->getFileUri(), PATHINFO_EXTENSION));
 
-        $media_entity = $this->entityTypeManager->getStorage('media')->create([
-          'bundle' => $media_type->id(),
-          $media_type->getSource()->getConfiguration()['source_field'] => $file,
-          'uid' => $this->currentUser->id(),
-          'status' => TRUE,
-          'type' => $media_type->getSource()->getPluginId(),
-        ]);
-
-        if ($return_file) {
-          $entities[] = $file;
-        }
-        else {
-          $entities[] = $media_entity;
-        }
+        $media_entities[] = $this->entityTypeManager->getStorage('media')
+          ->create([
+            'bundle' => $media_type->id(),
+            $media_type->getSource()
+              ->getConfiguration()['source_field'] => $file,
+            'uid' => $this->currentUser->id(),
+            'status' => TRUE,
+            'type' => $media_type->getSource()->getPluginId(),
+          ]);
       }
     }
-    kint($entities);
-    return $entities;
+
+    if ($return_file) {
+      return $file_entities;
+    }
+
+    return $media_entities;
   }
 
   /**
@@ -196,7 +197,7 @@ class DropzoneUpload extends WidgetBase {
       '#max_files' => !empty($storage['entity_browser']['validators']['cardinality']['cardinality']) ? $storage['entity_browser']['validators']['cardinality']['cardinality'] : 1,
       '#clientside_resize' => FALSE,
     ];
-    kint($form['upload']);
+
     $form['#attached']['library'][] = 'dropzonejs/widget';
     // Disable the submit button until the upload sucesfully completed.
     $form['#attached']['library'][] = 'dropzonejs_eb_widget/common';
@@ -345,6 +346,67 @@ class DropzoneUpload extends WidgetBase {
       }
     }
     return NULL;
+  }
+
+  public static function saveFileManaged(&$form, FormStateInterface &$form_state, $request) {
+    ddl($form);
+    ddl($form_state);
+
+    if ($form_state::hasAnyErrors()) {
+      return;
+    }
+
+    // Determine whether it was the upload or the remove button that was clicked,
+    // and set $element to the managed_file element that contains that button.
+    $parents = $form_state->getTriggeringElement()['#array_parents'];
+    $button_key = array_pop($parents);
+    $element = NestedArray::getValue($form, $parents);
+
+    // No action is needed here for the upload button, because all file uploads on
+    // the form are processed by \Drupal\file\Element\ManagedFile::valueCallback()
+    // regardless of which button was clicked. Action is needed here for the
+    // remove button, because we only remove a file in response to its remove
+    // button being clicked.
+    if ($button_key == 'remove_button') {
+      $fids = array_keys($element['#files']);
+      // Get files that will be removed.
+      if ($element['#multiple']) {
+        $remove_fids = [];
+        foreach (Element::children($element) as $name) {
+          if (strpos($name, 'file_') === 0 && $element[$name]['selected']['#value']) {
+            $remove_fids[] = (int) substr($name, 5);
+          }
+        }
+        $fids = array_diff($fids, $remove_fids);
+      }
+      else {
+        // If we deal with single upload element remove the file and set
+        // element's value to empty array (file could not be removed from
+        // element if we don't do that).
+        $remove_fids = $fids;
+        $fids = [];
+      }
+
+      foreach ($remove_fids as $fid) {
+        // If it's a temporary file we can safely remove it immediately, otherwise
+        // it's up to the implementing module to remove usages of files to have them
+        // removed.
+        if ($element['#files'][$fid] && $element['#files'][$fid]->isTemporary()) {
+          $element['#files'][$fid]->delete();
+        }
+      }
+      // Update both $form_state->getValues() and FormState::$input to reflect
+      // that the file has been removed, so that the form is rebuilt correctly.
+      // $form_state->getValues() must be updated in case additional submit
+      // handlers run, and for form building functions that run during the
+      // rebuild, such as when the managed_file element is part of a field widget.
+      // FormState::$input must be updated so that
+      // \Drupal\file\Element\ManagedFile::valueCallback() has correct information
+      // during the rebuild.
+      $form_state->setValueForElement($element['fids'], implode(' ', $fids));
+      NestedArray::setValue($form_state->getUserInput(), $element['fids']['#parents'], implode(' ', $fids));
+    }
+
   }
 
 }
