@@ -68,8 +68,14 @@
     if (!ui.item.path) {
       throw 'Missing path param.' + JSON.stringify(ui.item);
     }
+    console.log(ui.item);
 
     $('input[name*="linkit][href_dirty_check"]', $form).val(ui.item.path);
+
+    // Clear values to fix going from internal like to external.
+    $('input[name*="linkit][data-entity-type]"]', $form).val('');
+    $('input[name*="linkit][data-entity-uuid]"]', $form).val('');
+    $('input[name*="linkit][data-entity-substitution]"]', $form).val('');
 
     if (ui.item.entity_type_id || ui.item.entity_uuid || ui.item.substitution_id) {
       if (!ui.item.entity_type_id || !ui.item.entity_uuid || !ui.item.substitution_id) {

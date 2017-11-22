@@ -1,0 +1,62 @@
+uuid: 5b2346c5-d673-4518-b04d-10e9b7db02f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.media_entity_browser
+  module:
+    - mrc_media
+    - views
+name: media_browser
+label: 'Media Browser'
+display: iframe
+display_configuration:
+  width: 100%
+  height: '650'
+  link_text: 'Select Media'
+  auto_open: true
+selection_display: multi_step_display
+selection_display_configuration:
+  entity_type: media
+  display: label
+  display_settings:
+    view_mode: default
+  select_text: 'Use selected'
+  selection_hidden: false
+  view: null
+  view_display: null
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  39f2b6ed-f27d-42d8-a161-004510188d8d:
+    settings:
+      view: media_entity_browser
+      view_display: media_browser
+      submit_text: 'Select Media'
+      auto_select: true
+    uuid: 39f2b6ed-f27d-42d8-a161-004510188d8d
+    weight: -10
+    label: Library
+    id: view
+  ffe1badf-f391-4e5a-8fe4-da745c9da5af:
+    settings:
+      submit_text: Embed
+      form_mode: media_browser
+    uuid: ffe1badf-f391-4e5a-8fe4-da745c9da5af
+    weight: -8
+    label: 'Add Video'
+    id: embed_code
+  e837394f-45b5-4198-962a-406e24baf0ec:
+    settings:
+      upload_location: 'public://media'
+      dropzone_description: 'Drop files here to upload them'
+      max_filesize: '25'
+      extensions:
+        file: 'txt doc docx xls xlsx pdf ppt pps odt ods odp'
+        image: 'jpg jpeg gif png'
+        video: ''
+      submit_text: 'Select Media'
+    uuid: e837394f-45b5-4198-962a-406e24baf0ec
+    weight: -9
+    label: 'Upload Media'
+    id: dropzonejs_media

@@ -5,18 +5,16 @@ package: media
 type: module
 dependencies:
   - ckeditor
-  - editor
-  - linkit
-  - file
-  - inline_entity_form
-  - entity_embed
   - dropzonejs
   - dropzonejs_eb_widget
+  - editor
+  - embed
   - entity_browser
   - entity_browser_entity_form
-  - embed
-  - file_browser
+  - entity_embed
+  - inline_entity_form
+  - linkit
   - media
   - video_embed_field
   - video_embed_media
-  - serialization
+  - views

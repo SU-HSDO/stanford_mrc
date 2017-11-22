@@ -1,4 +1,4 @@
-uuid: 2ef3e6f7-c21f-4106-be5d-28cf6686d19f
+uuid: 4f49ab87-bca6-49ec-ad8d-a2a74926a233
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     - video_embed_media
 id: video
 label: Video
-description: 'Use remote video urls for reusable media.'
+description: 'Use Video urls from YouTube for reusable media.'
 source: video_embed_field
 queue_thumbnail_downloads: false
 new_revision: false
