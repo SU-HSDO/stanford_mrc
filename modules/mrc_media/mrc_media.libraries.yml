@@ -1,0 +1,12 @@
+mrc_media.autocomplete:
+  version: VERSION
+  js:
+    js/mrc_media.autocomplete.js: {}
+  css:
+    component:
+      css/mrc_media.autocomplete.css: {}
+  dependencies:
+    - linkit/linkit.base
+    - core/drupal.ajax
+    - core/jquery.ui.autocomplete
+    - core/underscore

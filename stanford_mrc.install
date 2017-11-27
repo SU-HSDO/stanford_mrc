@@ -125,3 +125,11 @@ function stanford_mrc_update_configs($create_missing = TRUE, $configs = [], $pat
 function stanford_mrc_update_8001() {
   stanford_mrc_update_configs(TRUE, 'all');
 }
+
+/**
+ * Enables media and resets the text format..
+ */
+function stanford_mrc_update_8002() {
+  \Drupal::service('module_installer')->install(['mrc_media']);
+  stanford_mrc_update_configs(TRUE, 'all');
+}

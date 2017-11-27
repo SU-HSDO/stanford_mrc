@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * @file
+ * mrc_media.module
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\editor\Entity\Editor;
+use Drupal\mrc_media\Form\EntityEmbedDialog;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\file\Entity\File;
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function mrc_media_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  if (isset($element['#type']) && $element['#type'] == 'managed_file') {
+    $element['#element_validate'][] = 'mrc_media_save_file_managed_media';
+  }
+}
+
+/**
+ * Create a new media entity when a file_managed file is uploaded.
+ *
+ * @param array $element
+ *   Managed file form element.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Submitted form state.
+ */
+function mrc_media_save_file_managed_media(array $element, FormStateInterface $form_state) {
+  $parents = $form_state->getTriggeringElement()['#array_parents'];
+  $button_key = array_pop($parents);
+
+  if ($button_key == 'remove_button' || $form_state::hasAnyErrors()) {
+    return;
+  }
+
+
+  if (!empty($element['#files'])) {
+    foreach ($element['#files'] as $file) {
+      if ($file instanceof File) {
+        $media_bundle = 'file';
+
+        // Switch the media bundle to image if there is a width attribute.
+        // Can't find a better solution than that.
+        if (isset($element['width'])) {
+          $media_bundle = 'image';
+        }
+
+        // Load the media type entity to get the source field.
+        $entity_type_manager = \Drupal::entityTypeManager();
+        $media_type = $entity_type_manager->getStorage('media_type')
+          ->load($media_bundle);
+        $source_field = $media_type->getSource()
+          ->getConfiguration()['source_field'];
+
+        // Check if a media entity has already been created.
+        $query = \Drupal::entityQuery('media')
+          ->condition($source_field, $file->id());
+
+        // Media entity already created.
+        if (!empty($query->execute())) {
+          continue;
+        }
+
+        // Create the new media entity.
+        $media_entity = $entity_type_manager->getStorage('media')
+          ->create([
+            'bundle' => $media_type->id(),
+            $source_field => $file,
+            'uid' => \Drupal::currentUser()->id(),
+            'status' => TRUE,
+            'type' => $media_type->getSource()->getPluginId(),
+          ]);
+
+        $source_field = $media_entity->getSource()
+          ->getConfiguration()['source_field'];
+        // If we don't save file at this point Media entity creates another file
+        // entity with same uri for the thumbnail. That should probably be fixed
+        // in Media entity, but this workaround should work for now.
+        $media_entity->$source_field->entity->save();
+        $media_entity->save();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Adds Linkit support for the link field in the entity embed dialog.
+ */
+function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (isset($form['attributes']['data-entity-embed-display-settings'])) {
+    $editor = $form_state->getBuildInfo()['args'][0];
+    if ($editor instanceof Editor) {
+      \Drupal::classResolver()
+        ->getInstanceFromDefinition(EntityEmbedDialog::class)
+        ->alterForm($form, $form_state);
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function mrc_media_theme_registry_alter(&$theme_registry) {
+  // Register the path to the template file and add an additional variable to
+  // image_formatter for link attributes.
+  $path = drupal_get_path('module', 'mrc_media') . '/templates';
+  $theme_registry['image_formatter']['path'] = $path;
+  $theme_registry['image_formatter']['variables']['attributes'] = NULL;
+  $theme_registry['entity_embed_container']['path'] = $path;
+  $theme_registry['media']['path'] = $path;
+}
+
+/**
+ * Implements hook_entity_embed_alter().
+ */
+function mrc_media_entity_embed_alter(array &$build, EntityInterface $entity, array &$context) {
+  $build['entity']['#display_settings'] = $context['data-entity-embed-display-settings'];
+  $build['entity']['#pre_render'][] = [EntityEmbedDialog::class, 'preRender'];
+}
