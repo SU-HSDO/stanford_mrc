@@ -67,9 +67,15 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
    */
   public function alterForm(array &$form, FormStateInterface $form_state) {
     $entity = $form_state->get('entity');
-    $method = 'entityEmbed' . ucfirst($entity->bundle());
-    if (method_exists($this, $method)) {
-      $this->{$method}($form, $form_state);
+
+    switch ($entity->bundle()) {
+      case 'image':
+        $this->entityEmbedImage($form, $form_state);
+        break;
+
+      case 'file':
+        $this->entityEmbedFile($form, $form_state);
+        break;
     }
   }
 
@@ -176,28 +182,32 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
    *   Form state object.
    */
   public static function formSubmit(array &$form, FormStateInterface $form_state) {
-    $linkit_settings = $form_state->getValue([
+    $linkit_key = [
       'attributes',
       'data-entity-embed-display-settings',
       'linkit',
-    ]);
+    ];
+    $linkit_settings = $form_state->getValue($linkit_key);
 
     $href = $linkit_settings['href'];
+    // No link: unset values to clean up embed code.
+    if (!$href) {
+      $form_state->unsetValue($linkit_key);
+      return;
+    }
+
     $href_dirty_check = $linkit_settings['href_dirty_check'];
 
     // Unset the attributes since this is an external url.
-    if ($href !== $href_dirty_check) {
+    if (!$href || $href !== $href_dirty_check) {
       unset($linkit_settings['data-entity-type']);
       unset($linkit_settings['data-entity-uuid']);
       unset($linkit_settings['data-entity-substitution']);
     }
 
     unset($linkit_settings['href_dirty_check']);
-    $form_state->setValue([
-      'attributes',
-      'data-entity-embed-display-settings',
-      'linkit',
-    ], array_filter($linkit_settings));
+
+    $form_state->setValue($linkit_key, array_filter($linkit_settings));
   }
 
   /**
@@ -224,6 +234,7 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
       $display_settings = Json::decode($editor_object[$this->settingsKey]);
       $input = $display_settings ?: [];
     }
+
     $form['attributes'][$this->settingsKey]['image_style'] = [
       '#type' => 'select',
       '#title' => $this->t('Image Style'),
@@ -279,37 +290,57 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
    */
   public static function preRender(array $render) {
     if (isset($render['#display_settings'])) {
-      $source_field = $render['#media']->getSource()
-        ->getConfiguration()['source_field'];
-
       switch ($render['#media']->bundle()) {
         case 'image':
-
-          if (!empty($render['#display_settings']['alt_text'])) {
-            $render[$source_field][0]['#item_attributes']['alt'] = $render['#display_settings']['alt_text'];
-          }
-
-          if (!empty($render['#display_settings']['title_text'])) {
-            $render[$source_field][0]['#item_attributes']['title'] = $render['#display_settings']['title_text'];
-          }
-
-          if (!empty($render['#display_settings']['linkit'])) {
-            $render[$source_field][0]['#url'] = $render['#display_settings']['linkit']['href'];
-            unset($render['#display_settings']['linkit']['href']);
-            $render[$source_field][0]['#attributes'] = $render['#display_settings']['linkit'];
-          }
-
-          $render[$source_field][0]['#image_style'] = $render['#display_settings']['image_style'];
+          self::preRenderImage($render);
           break;
 
         case 'file':
-
-          $render[$source_field][0]['#description'] = $render['#display_settings']['description'];
+          self::preRenderFile($render);
           break;
       }
     }
 
     return $render;
+  }
+
+  /**
+   * Modify the image media type to add a link and apply an image style.
+   *
+   * @param array $render
+   *   Render array on the media entity.
+   */
+  private static function preRenderImage(array &$render) {
+    $source_field = $render['#media']->getSource()
+      ->getConfiguration()['source_field'];
+
+    if (!empty($render['#display_settings']['alt_text'])) {
+      $render[$source_field][0]['#item_attributes']['alt'] = $render['#display_settings']['alt_text'];
+    }
+
+    if (!empty($render['#display_settings']['title_text'])) {
+      $render[$source_field][0]['#item_attributes']['title'] = $render['#display_settings']['title_text'];
+    }
+
+    if (!empty($render['#display_settings']['linkit'])) {
+      $render[$source_field][0]['#url'] = $render['#display_settings']['linkit']['href'];
+      unset($render['#display_settings']['linkit']['href']);
+      $render[$source_field][0]['#attributes'] = $render['#display_settings']['linkit'];
+    }
+
+    $render[$source_field][0]['#image_style'] = $render['#display_settings']['image_style'];
+  }
+
+  /**
+   * Modify the file media type to change the link text.
+   *
+   * @param array $render
+   *   Render array on the media entity.
+   */
+  private static function preRenderFile(array &$render) {
+    $source_field = $render['#media']->getSource()
+      ->getConfiguration()['source_field'];
+    $render[$source_field][0]['#description'] = $render['#display_settings']['description'];
   }
 
 }
