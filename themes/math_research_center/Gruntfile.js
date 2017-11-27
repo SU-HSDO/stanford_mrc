@@ -95,7 +95,10 @@ module.exports = function(grunt) {
           "node_modules/font-awesome/scss",
           "node_modules/neat-omega",
           "node_modules/decanter/core",
-          "node_modules"
+          "node_modules",
+          // Parent theme directory.
+          "../",
+          "../stanford_basic/scss"
         ],
         sourceMap: true,
         // This controls the compiled css and can be changed to nested, compact or compressed.
@@ -108,23 +111,7 @@ module.exports = function(grunt) {
           'css/components/components.css':                  'scss/components/components.scss',
           // Components are compiled individually so they may be included
           // conditionally using logic built in to the theme template or module.
-          'css/components/brand-bar.css':                   'scss/components/brand-bar/brand-bar.scss',
-          'css/components/brand-lockup.css':                'scss/components/brand-lockup/brand-lockup.scss',
-          'css/components/breadcrumb.css':                  'scss/components/breadcrumb/breadcrumb.scss',
-          'css/components/global-footer.css':               'scss/components/global-footer/global-footer.scss',
-          'css/components/main-menu.css':                   'scss/components/main-menu/main-menu.scss',
-          'css/components/messages.css':                    'scss/components/messages/messages.scss',
-          'css/components/navigation.css':                  'scss/components/navigation/navigation.scss',
-          'css/components/pager.css':                       'scss/components/pager/pager.scss',
-          'css/components/site-name.css':                   'scss/components/site-name/site-name.scss',
-          'css/components/tabs.css':                        'scss/components/tabs/tabs.scss',
-          // Theme compiled styles.
-          'css/base/base.css':                              'scss/base/base.scss',
-          'css/layout/layout.css':                          'scss/layout/layout.scss',
-          'css/states/states.css':                          'scss/states/states.scss',
-          'css/theme/theme.css':                            'scss/theme/theme.scss',
-          'css/theme/centered-container.css':               'scss/theme/centered-container.scss',
-          'css/theme/print.css':                            'scss/theme/print.scss'
+          'css/components/horizontal-postcard.css':         'scss/components/horizontal-postcard.scss'
         }
       }
     },

@@ -1,7 +1,7 @@
 name: Stanford MRC
 type: profile
 description: 'Installation profile for MRC.'
-version: VERSION
+version: 8.0.1
 core: 8.x
 
 distribution:

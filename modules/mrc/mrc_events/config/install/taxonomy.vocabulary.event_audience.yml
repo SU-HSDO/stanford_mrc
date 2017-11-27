@@ -1,8 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-name: 'Event Audience'
-vid: event_audience
-description: ''
-hierarchy: 0
-weight: 0
