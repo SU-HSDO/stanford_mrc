@@ -34,8 +34,14 @@ class EmbedCode extends WidgetBase {
     }
   }
 
-  public function getEntityForm(array &$original_form, FormStateInterface $form_state, array $additional_widget_parameters) {
-    $form = parent::getForm($original_form, $form_state, $additional_widget_parameters);
+  /**
+   * @param array $original_form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   * @param array $additional_widget_parameters
+   *
+   * @return array
+   */
+  public function getEntityForm(array &$form, FormStateInterface $form_state, array $additional_widget_parameters) {
 
     if (isset($form['actions'])) {
       $form['actions']['#weight'] = 100;
@@ -79,7 +85,8 @@ class EmbedCode extends WidgetBase {
    * {@inheritdoc}
    */
   public function getForm(array &$original_form, FormStateInterface $form_state, array $additional_widget_parameters) {
-    $form = $this->getEntityForm($original_form, $form_state, $additional_widget_parameters);
+    $form = parent::getForm($original_form, $form_state, $additional_widget_parameters);
+    $this->getEntityForm($form, $form_state, $additional_widget_parameters);
 
     $form['input'] = [
       '#type' => 'textarea',
@@ -256,6 +263,7 @@ class EmbedCode extends WidgetBase {
 
     /** @var \Drupal\media\MediaTypeInterface $media_type */
     foreach ($media_types as $type_id => $media_type) {
+      // @todo: Fix this!
       $source = $media_type->getSource();
       //      if ($source instanceof InputMatchInterface && $source->appliesTo($value, $media_type)) {
       if ($type_id == 'video') {

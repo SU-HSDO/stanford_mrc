@@ -150,12 +150,6 @@ class DropzoneUpload extends WidgetBase {
     $file_entities = [];
     $media_entities = [];
 
-    $storage = $form_state->getStorage();
-    $return_file = FALSE;
-    if (!empty($storage['entity_browser']['validators']['entity_type']['type']) && $storage['entity_browser']['validators']['entity_type']['type'] == 'file') {
-      $return_file = TRUE;
-    }
-
     foreach ($this->getFiles($form, $form_state) as $file) {
       if ($file instanceof File) {
         $file_entities[] = $file;
@@ -171,10 +165,6 @@ class DropzoneUpload extends WidgetBase {
             'type' => $media_type->getSource()->getPluginId(),
           ]);
       }
-    }
-
-    if ($return_file) {
-      return $file_entities;
     }
 
     return $media_entities;
@@ -347,47 +337,6 @@ class DropzoneUpload extends WidgetBase {
       }
     }
     return NULL;
-  }
-
-  public static function saveFileManaged(&$element, FormStateInterface &$form_state, $request) {
-    // Determine whether it was the upload or the remove button that was clicked,
-    // and set $element to the managed_file element that contains that button.
-//    $parents = $form_state->getTriggeringElement()['#array_parents'];
-//    $button_key = array_pop($parents);
-//
-//    if ($button_key == 'remove_button' || $form_state::hasAnyErrors()) {
-//      return;
-//    }
-//    ddl($element);
-//
-//    if (!empty($element['#files'])) {
-//      foreach ($element['#files'] as $file) {
-//        if ($file instanceof File) {
-//
-//          self::$entityTypeManager;
-//          $media_type = $this->getExtensionBundle(pathinfo($file->getFileUri(), PATHINFO_EXTENSION));
-//          $media_bundle = 'file';
-//          if(){
-//            $media_bundle = 'image';
-//          }
-//
-//
-//          $media_type = $this->entityTypeManager
-//            ->getStorage('media_type')
-//            ->load($media_bundle);
-//
-//          $this->entityTypeManager->getStorage('media')
-//            ->create([
-//              'bundle' => $media_type->id(),
-//              $media_type->getSource()
-//                ->getConfiguration()['source_field'] => $file,
-//              'uid' => $this->currentUser->id(),
-//              'status' => TRUE,
-//              'type' => $media_type->getSource()->getPluginId(),
-//            ]);
-//        }
-//      }
-//    }
   }
 
 }

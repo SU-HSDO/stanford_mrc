@@ -58,7 +58,7 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
   }
 
   /**
-   * Alter form to integrate with the linkit module.
+   * Alter form embed form to give an additional fields and settings.
    *
    * @param array $form
    *   An associative array containing the structure of the form.
@@ -80,13 +80,11 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
   }
 
   /**
-   * Adds linkit custom autocomplete functionality to elements.
-   *
-   * Instead of using the core autocomplete, we use our own.
+   * Use Linkit functions but replace the autocomplete library with our own.
    *
    * {@inheritdoc}
    *
-   * @see \Drupal\Core\Render\Element\FormElement::processAutocomplete
+   * @see Linkit::processLinkitAutocomplete()
    */
   public static function processLinkitAutocomplete(&$element, FormStateInterface $form_state, &$complete_form) {
     Linkit::processLinkitAutocomplete($element, $form_state, $complete_form);
@@ -328,7 +326,9 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
       $render[$source_field][0]['#attributes'] = $render['#display_settings']['linkit'];
     }
 
-    $render[$source_field][0]['#image_style'] = $render['#display_settings']['image_style'];
+    if (!empty($render['#display_settings']['image_style'])) {
+      $render[$source_field][0]['#image_style'] = $render['#display_settings']['image_style'];
+    }
   }
 
   /**
