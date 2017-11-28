@@ -1,0 +1,9 @@
+#entities .field--name-revision-log-message,
+#entities input[value="Remove"],
+div[data-drupal-selector="edit-actions"] input:disabled {
+  display: none;
+}
+img {
+  height: 20px;
+  width: 20px;
+}

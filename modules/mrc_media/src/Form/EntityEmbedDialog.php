@@ -68,6 +68,17 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
   public function alterForm(array &$form, FormStateInterface $form_state) {
     $entity = $form_state->get('entity');
 
+//    $form['entity'] = [
+//      '#type' => 'inline_entity_form',
+//      '#entity_type' => $entity->getEntityTypeId(),
+//      '#bundle' => $entity->bundle(),
+//      '#default_value' => $entity,
+//      '#form_mode' => 'media_browser',
+//      '#prefix' => '<div id="entities">',
+//      '#suffix' => '</div>',
+//      '#weight' => 99,
+//    ];
+
     switch ($entity->bundle()) {
       case 'image':
         $this->entityEmbedImage($form, $form_state);
@@ -328,6 +339,9 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
 
     if (!empty($render['#display_settings']['image_style'])) {
       $render[$source_field][0]['#image_style'] = $render['#display_settings']['image_style'];
+    }
+    else {
+      unset($render[$source_field][0]['#image_style']);
     }
   }
 
