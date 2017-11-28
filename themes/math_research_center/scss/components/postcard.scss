@@ -1,0 +1,72 @@
+@charset "UTF-8";
+
+///
+/// CARD COMPONENT
+///
+
+// An extensible content container with options for a wide variety of content.
+
+// Decanter
+@import
+  'decanter/scss/lib/bourbon',
+  'decanter/scss/core/variables',
+  'decanter/scss/core/utilities';
+
+@mixin mrc-postcard-container {
+  background: $color-white;
+  box-shadow: $box-shadow;
+  padding: 3rem;
+}
+
+// Default postcard (vertical)
+.mrc-postcard {
+  @include mrc-postcard-container;
+
+  .mrc-postcard__img {
+    img {
+      width: 100%;
+    }
+  }
+
+  .mrc-postcard__content {
+    .mrc-postcard__superhead {
+      font-weight: $font-bold;
+      margin: 0 0 .2em;
+    }
+
+    .mrc-postcard__title {
+      margin-top: 0;
+    }
+
+    .mrc-postcard__button {
+      text-align: center;
+    }
+  }
+}
+
+// Horizontal postcard
+.mrc-postcard--horizontal {
+  @extend .mrc-postcard;
+
+  display: block;
+
+  @include media($medium-screen) {
+    display: flex;
+  }
+
+  .mrc-postcard--horizontal__img {
+    margin-right: 0;
+
+    img {
+      width: 100%;
+    }
+
+    @include media($medium-screen) {
+      margin-right: 30px;
+
+      img {
+        width: auto;
+      }
+    }
+  }
+}
