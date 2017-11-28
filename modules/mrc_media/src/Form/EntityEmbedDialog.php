@@ -68,16 +68,17 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
   public function alterForm(array &$form, FormStateInterface $form_state) {
     $entity = $form_state->get('entity');
 
-//    $form['entity'] = [
-//      '#type' => 'inline_entity_form',
-//      '#entity_type' => $entity->getEntityTypeId(),
-//      '#bundle' => $entity->bundle(),
-//      '#default_value' => $entity,
-//      '#form_mode' => 'media_browser',
-//      '#prefix' => '<div id="entities">',
-//      '#suffix' => '</div>',
-//      '#weight' => 99,
-//    ];
+    // @todo: decide if we need this.
+    //    $form['entity'] = [
+    //      '#type' => 'inline_entity_form',
+    //      '#entity_type' => $entity->getEntityTypeId(),
+    //      '#bundle' => $entity->bundle(),
+    //      '#default_value' => $entity,
+    //      '#form_mode' => 'media_browser',
+    //      '#prefix' => '<div id="entities">',
+    //      '#suffix' => '</div>',
+    //      '#weight' => 99,
+    //    ];
 
     switch ($entity->bundle()) {
       case 'image':
