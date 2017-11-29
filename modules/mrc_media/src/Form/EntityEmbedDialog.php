@@ -68,18 +68,6 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
   public function alterForm(array &$form, FormStateInterface $form_state) {
     $entity = $form_state->get('entity');
 
-    // @todo: decide if we need this.
-    //    $form['entity'] = [
-    //      '#type' => 'inline_entity_form',
-    //      '#entity_type' => $entity->getEntityTypeId(),
-    //      '#bundle' => $entity->bundle(),
-    //      '#default_value' => $entity,
-    //      '#form_mode' => 'media_browser',
-    //      '#prefix' => '<div id="entities">',
-    //      '#suffix' => '</div>',
-    //      '#weight' => 99,
-    //    ];
-
     switch ($entity->bundle()) {
       case 'image':
         $this->entityEmbedImage($form, $form_state);
@@ -229,6 +217,45 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
    *   Embed dialog form state object.
    */
   private function entityEmbedImage(array &$form, FormStateInterface $form_state) {
+    $input = [];
+    if (isset($form_state->getUserInput()['editor_object'])) {
+      $editor_object = $form_state->getUserInput()['editor_object'];
+      $display_settings = Json::decode($editor_object[$this->settingsKey]);
+      $input = $display_settings ?: [];
+    }
+
+    /** @var \Drupal\media\Entity\Media $entity */
+    $entity = $form_state->getStorage()['entity'];
+    $source_field = $entity->getSource()
+      ->getConfiguration()['source_field'];
+    /** @var \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $image_field */
+    $image_field = $entity->get($source_field);
+    $default_alt = $image_field->getValue()[0]['alt'];
+
+    $form['attributes'][$this->settingsKey]['image_style'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Image Style'),
+      '#options' => $this->getImageStyles(),
+      '#default_value' => isset($input['image_style']) ? $input['image_style'] : '',
+      '#empty_option' => $this->t('None (original image)'),
+    ];
+    $form['attributes'][$this->settingsKey]['alt_text'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Alt Text'),
+      '#default_value' => isset($input['alt_text']) ? $input['alt_text'] : $default_alt,
+    ];
+    $form['attributes'][$this->settingsKey]['title_text'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Title Text'),
+      '#default_value' => isset($input['title_text']) ? $input['title_text'] : '',
+    ];
+    $this->buildLinkitField($form, $form_state);
+  }
+
+  /**
+   * @return array
+   */
+  private function getImageStyles() {
     $styles = $this->entityTypeManager->getStorage('image_style')
       ->loadMultiple();
     $style_options = [];
@@ -237,32 +264,7 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
       $style_options[$style->id()] = $style->label();
     }
     asort($style_options);
-
-    $input = [];
-    if (isset($form_state->getUserInput()['editor_object'])) {
-      $editor_object = $form_state->getUserInput()['editor_object'];
-      $display_settings = Json::decode($editor_object[$this->settingsKey]);
-      $input = $display_settings ?: [];
-    }
-
-    $form['attributes'][$this->settingsKey]['image_style'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Image Style'),
-      '#options' => $style_options,
-      '#default_value' => isset($input['image_style']) ? $input['image_style'] : '',
-      '#empty_option' => $this->t('None (original image)'),
-    ];
-    $form['attributes'][$this->settingsKey]['alt_text'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Alt Text'),
-      '#default_value' => isset($input['alt_text']) ? $input['alt_text'] : '',
-    ];
-    $form['attributes'][$this->settingsKey]['title_text'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Title Text'),
-      '#default_value' => isset($input['title_text']) ? $input['title_text'] : '',
-    ];
-    $this->buildLinkitField($form, $form_state);
+    return $style_options;
   }
 
   /**
@@ -281,11 +283,15 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
       $input = $display_settings ?: [];
     }
 
+    /** @var \Drupal\media\Entity\Media $entity */
+    $entity = $form_state->getStorage()['entity'];
+
     $form['attributes'][$this->settingsKey]['description'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Description'),
       '#description' => $this->t('Optionally enter text to use as the link text.'),
-      '#default_value' => isset($input['description']) ? $input['description'] : '',
+      '#default_value' => isset($input['description']) ? $input['description'] : $entity->label(),
+      '#required' => TRUE,
     ];
   }
 

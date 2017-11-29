@@ -62,4 +62,8 @@ function mrc_media_install() {
  */
 function mrc_media_update_8001() {
   mrc_media_install();
+
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_media') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
 }
