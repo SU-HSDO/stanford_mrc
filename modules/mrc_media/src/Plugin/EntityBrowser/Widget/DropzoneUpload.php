@@ -3,8 +3,6 @@
 namespace Drupal\mrc_media\Plugin\EntityBrowser\Widget;
 
 use Drupal\Component\Utility\Bytes;
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -14,13 +12,10 @@ use Drupal\entity_browser\WidgetValidationManager;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\file\Entity\File;
-use Drupal\image\Plugin\Field\FieldWidget\ImageWidget;
 use Drupal\inline_entity_form\ElementSubmit;
 use Drupal\media\Entity\Media;
-use Drupal\media\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * An Entity Browser widget for creating media entities from embed codes.
