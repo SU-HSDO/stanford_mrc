@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 ///
-/// CARD COMPONENT
+/// POSTCARD COMPONENT
 ///
 
 // An extensible content container with options for a wide variety of content.
@@ -12,15 +12,13 @@
   'decanter/scss/core/variables',
   'decanter/scss/core/utilities';
 
-@mixin mrc-postcard-container {
-  background: $color-white;
-  box-shadow: $box-shadow;
-  padding: 3rem;
-}
+// Stanford Math Research Center
+@import
+  '../utilities/mixins/mixins';
 
 // Default postcard (vertical)
 .mrc-postcard {
-  @include mrc-postcard-container;
+  @include mrc-card-container;
 
   .mrc-postcard__img {
     img {
@@ -44,15 +42,11 @@
   }
 }
 
-// Horizontal postcard
+// Horizontal postcard modifier
 .mrc-postcard--horizontal {
   @extend .mrc-postcard;
 
-  display: block;
-
-  @include media($medium-screen) {
-    display: flex;
-  }
+  @include mrc-flex-medium;
 
   .mrc-postcard--horizontal__img {
     margin-right: 0;
