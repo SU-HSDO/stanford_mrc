@@ -180,6 +180,20 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
    *   Form state object.
    */
   public static function formSubmit(array &$form, FormStateInterface $form_state) {
+    $settings = $form_state->getValue([
+      'attributes',
+      'data-entity-embed-display-settings',
+    ]);
+    $settings = array_filter($settings);
+    // Clean up the display settings, but we still want at least an empty alt
+    // text. This also helps prevent an empty array which converts to an empty
+    // string. An empty string breaks the render portion.
+    $settings['alt_text'] = isset($settings['alt_text']) ? $settings['alt_text'] : '';
+    $form_state->setValue([
+      'attributes',
+      'data-entity-embed-display-settings',
+    ], $settings);
+
     $linkit_key = [
       'attributes',
       'data-entity-embed-display-settings',
