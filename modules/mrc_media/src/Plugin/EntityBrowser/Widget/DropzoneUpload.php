@@ -204,9 +204,14 @@ class DropzoneUpload extends WidgetBase {
   }
 
   /**
-   * @param array $original_form
+   * Add the inline entity form after the files have been uploaded.
+   *
+   * @param array $form
+   *   Original form from getFrom().
    * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state object.
    * @param array $additional_widget_parameters
+   *   Additional parameters we dont need.
    *
    * @return array
    */
@@ -318,6 +323,8 @@ class DropzoneUpload extends WidgetBase {
    * {@inheritdoc}
    */
   public function submit(array &$element, array &$form, FormStateInterface $form_state) {
+    parent::submit($element, $form, $form_state);
+
     $children = Element::children($element['entities']);
     foreach ($children as $child) {
       $entity_form = $element['entities'][$child];
@@ -333,7 +340,6 @@ class DropzoneUpload extends WidgetBase {
 
     $media_entities = $this->prepareEntities($form, $form_state);
 
-    $this->selectEntities($media_entities, $form_state);
     $this->clearFormValues($element, $form_state);
   }
 

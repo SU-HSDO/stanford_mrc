@@ -16,6 +16,9 @@ settings:
           items:
             - Bold
             - Italic
+            - Outdent
+            - Indent
+            - Table
         -
           name: Links
           items:
@@ -32,9 +35,19 @@ settings:
             - Blockquote
             - media_browser
         -
+          name: Styles
+          items:
+            - Format
+            - Styles
+        -
           name: Tools
           items:
+            - RemoveFormat
+            - PasteFromWord
             - Source
+            - Undo
+            - Redo
+            - Maximize
   plugins:
     drupallink:
       linkit_enabled: true
@@ -42,7 +55,7 @@ settings:
     language:
       language_list: un
     stylescombo:
-      styles: ''
+      styles: "a.btn|Button\r\na.some-class|My Class"
 image_upload:
   status: false
   scheme: public
