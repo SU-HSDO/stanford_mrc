@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 ///
-/// NEWS CARD COMPONENT
+/// EVENT CARD COMPONENT
 ///
 
 // Decanter
@@ -14,11 +14,11 @@
 @import
   '../utilities/mixins/mixins';
 
-.mrc-news-card {
+.mrc-event-card {
   @include mrc-card-container;
   @include mrc-flex-medium;
 
-  .mrc-news-card__img {
+  .mrc-event-card__img {
     margin-right: 0;
 
     img {
@@ -34,17 +34,17 @@
     }
   }
 
-  .mrc-news-card__content {
-    .mrc-news-card__date {
+  .mrc-event-card__content {
+    .mrc-event-card__date {
       margin: 0 0 0.25em 0;
     }
 
-    .mrc-news-card__subcontent {
+    .mrc-event-card__subcontent {
       flex-wrap: wrap;
 
       @include mrc-flex-medium;
 
-      .mrc-news-card__source {
+      .mrc-event-card__time {
         margin: 0 0 0.25em 0;
 
         @include media($medium-screen) {
@@ -52,17 +52,17 @@
 
           &:after {
             content: "|";
-            padding-right: 0.25em;
+            padding: 0 0.25em;
           }
         }
       }
 
-      .mrc-news-card__program {
+      .mrc-event-card__location {
         margin-top: 0;
       }
     }
 
-    .mrc-news-card__title {
+    .mrc-event-card__title {
       margin-top: 0;
     }
   }
