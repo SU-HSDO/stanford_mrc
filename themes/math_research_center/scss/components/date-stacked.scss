@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+///
+/// DATE STACKED COMPONENT
+///
+
+// Decanter
+@import
+  'decanter/scss/lib/bourbon',
+  'decanter/scss/core/variables',
+  'decanter/scss/core/utilities';
+
+// Stanford Math Research Center
+@import
+  '../utilities/mixins/mixins';
+
+.mrc-date-stacked {
+  color: $color-white;
+  background: $color-black;
+  height: 75px;
+  width: 75px;
+  text-align: center;
+
+  .mrc-date-stacked__month {
+    font-weight: $font-light;
+    line-height: 2.5em;
+    text-transform: uppercase;
+  }
+
+  .mrc-date-stacked__day {
+    font-size: $h2-font-size;
+    font-weight: $font-bold;
+    margin-top: -22px;
+  }
+}

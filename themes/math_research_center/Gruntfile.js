@@ -111,6 +111,7 @@ module.exports = function(grunt) {
           'css/components/components.css':       'scss/components/components.scss',
           // Components are compiled individually so they may be included
           // conditionally using logic built in to the theme template or module.
+          'css/components/date-stacked.css':     'scss/components/date-stacked.scss',
           'css/components/event-card.css':       'scss/components/event-card.scss',
           'css/components/news-card.css':        'scss/components/news-card.scss',
           'css/components/postcard.css':         'scss/components/postcard.scss'
