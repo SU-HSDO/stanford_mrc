@@ -340,6 +340,7 @@ class DropzoneUpload extends WidgetBase {
 
     $media_entities = $this->prepareEntities($form, $form_state);
 
+    $this->selectEntities($media_entities, $form_state);
     $this->clearFormValues($element, $form_state);
   }
 
