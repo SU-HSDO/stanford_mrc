@@ -14,6 +14,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\file\Entity\File;
 use Drupal\inline_entity_form\ElementSubmit;
 use Drupal\media\Entity\Media;
+use Drupal\mrc_media\BundleSuggestion;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -44,12 +45,18 @@ class DropzoneUpload extends WidgetBase {
   protected $currentUser;
 
   /**
+   * @var \Drupal\mrc_media\BundleSuggestion
+   */
+  protected $bundleSuggestion;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, DropzoneJsUploadSave $dropzone_save, AccountProxyInterface $current_user) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, DropzoneJsUploadSave $dropzone_save, AccountProxyInterface $current_user, BundleSuggestion $bundle_suggestion) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $event_dispatcher, $entity_type_manager, $validation_manager);
     $this->dropzoneJsSave = $dropzone_save;
     $this->currentUser = $current_user;
+    $this->bundleSuggestion = $bundle_suggestion;
   }
 
   /**
@@ -64,7 +71,8 @@ class DropzoneUpload extends WidgetBase {
       $container->get('entity_type.manager'),
       $container->get('plugin.manager.entity_browser.widget_validation'),
       $container->get('dropzonejs.upload_save'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('mrc_media.bundle_suggestion')
     );
   }
 
@@ -72,15 +80,9 @@ class DropzoneUpload extends WidgetBase {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    $max_filesize = file_upload_max_size() / pow(Bytes::KILOBYTE, 2);
     $config = [
       'upload_location' => 'public://media',
       'dropzone_description' => $this->t('Drop files here to upload them'),
-      'max_filesize' => $max_filesize,
-      'extensions' => [
-        'image' => 'jpg jpeg gif png',
-        'file' => 'txt doc docx xls xlsx pdf ppt pps odt ods odp',
-      ],
     ];
     return $config + parent::defaultConfiguration();
   }
@@ -103,32 +105,6 @@ class DropzoneUpload extends WidgetBase {
       '#title' => $this->t('Dropzone drag-n-drop zone text'),
       '#default_value' => $configuration['dropzone_description'],
     ];
-
-    preg_match('%\d+%', $configuration['max_filesize'], $matches);
-    $max_filesize = !empty($matches) ? array_shift($matches) : '1';
-
-    $form['max_filesize'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Maximum size of files.'),
-      '#min' => '0',
-      '#field_suffix' => $this->t('MB'),
-      '#default_value' => $max_filesize,
-    ];
-
-    $media_types = $this->entityTypeManager->getStorage('media_type')
-      ->loadMultiple();
-
-    $form['extensions'] = ['#type' => 'container'];
-
-    /** @var \Drupal\media\Entity\MediaType $media_type */
-    foreach ($media_types as $media_type) {
-      $form['extensions'][$media_type->id()] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('File extensions for %label', ['%label' => $media_type->label()]),
-        '#description' => $this->t('A space separated list of file extensions'),
-        '#default_value' => isset($configuration['extensions'][$media_type->id()]) ? $configuration['extensions'][$media_type->id()] : '',
-      ];
-    }
 
     return $form;
   }
@@ -158,7 +134,7 @@ class DropzoneUpload extends WidgetBase {
     foreach ($files as $file) {
       if ($file instanceof File) {
         $file_entities[] = $file;
-        $media_type = $this->getExtensionBundle(pathinfo($file->getFileUri(), PATHINFO_EXTENSION));
+        $media_type = $this->bundleSuggestion->getBundleFromFile($file->getFileUri());
 
         $media_entities[] = $this->entityTypeManager->getStorage('media')
           ->create([
@@ -181,15 +157,14 @@ class DropzoneUpload extends WidgetBase {
   public function getForm(array &$original_form, FormStateInterface $form_state, array $additional_widget_parameters) {
     $form = parent::getForm($original_form, $form_state, $additional_widget_parameters);
     $storage = $form_state->getStorage();
-    $widget = $storage['entity_browser']['widget_context'];
 
     $form['upload'] = [
       '#title' => $this->t('File upload'),
       '#type' => 'dropzonejs',
       '#required' => TRUE,
       '#dropzone_description' => $this->configuration['dropzone_description'],
-      '#max_filesize' => '100MB',
-      '#extensions' => !empty($widget['upload_validators']['file_validate_extensions'][0]) ? $widget['upload_validators']['file_validate_extensions'][0] : $this->getBundleExtensions(),
+      '#max_filesize' => $this->bundleSuggestion->getMaxFilesize(),
+      '#extensions' => $this->bundleSuggestion->getAllExtensions(),
       '#max_files' => !empty($storage['entity_browser']['validators']['cardinality']['cardinality']) ? $storage['entity_browser']['validators']['cardinality']['cardinality'] : 1,
       '#clientside_resize' => FALSE,
     ];
@@ -269,29 +244,6 @@ class DropzoneUpload extends WidgetBase {
       'widget_context',
       'target_bundles',
     ]);
-  }
-
-  /**
-   * Get specific bundle extensions or all.
-   *
-   * @param string|null $bundle_id
-   *   Media type id or null to get all.
-   *
-   * @return string
-   *   List of all extensions for the bundle or all bundles.
-   */
-  private function getBundleExtensions($bundle_id = NULL) {
-    if ($bundle_id) {
-      if (isset($this->configuration['extensions'][$bundle_id])) {
-        return $this->configuration['extensions'][$bundle_id];
-      }
-      return '';
-    }
-    $extensions = [];
-    foreach ($this->configuration['extensions'] as $bundle_extensions) {
-      $extensions[] = $bundle_extensions;
-    }
-    return implode(' ', $extensions);
   }
 
   /**
@@ -375,15 +327,10 @@ class DropzoneUpload extends WidgetBase {
    *   Array of uploaded files.
    */
   protected function getFiles(array $form, FormStateInterface $form_state) {
-    $config = $this->configuration;
-    $storage = $form_state->getStorage();
-    $widget = $storage['entity_browser']['widget_context'];
-
-    $max_filesize = !empty($widget['upload_validators']['file_validate_size'][0]) ? $widget['upload_validators']['file_validate_size'][0] : $config['max_filesize'] . 'MB';
 
     $additional_validators = [
       'file_validate_size' => [
-        Bytes::toInt($max_filesize),
+        $this->bundleSuggestion->getMaxFilesize(),
         0,
       ],
     ];
@@ -403,7 +350,7 @@ class DropzoneUpload extends WidgetBase {
         $entity = $this->dropzoneJsSave->createFile(
           $file['path'],
           $this->getUploadLocation(),
-          $this->getBundleExtensions(),
+          $this->bundleSuggestion->getAllExtensions(),
           $this->currentUser,
           $additional_validators
         );
@@ -418,27 +365,6 @@ class DropzoneUpload extends WidgetBase {
     $form_state->set(['dropzonejs', $this->uuid(), 'files'], $files);
 
     return $files;
-  }
-
-  /**
-   * Get the media bundle for the uploaded extension.
-   *
-   * @param string $extension
-   *   File extension.
-   *
-   * @return \Drupal\Core\Entity\EntityInterface|null
-   *   Media bundle type.
-   */
-  public function getExtensionBundle($extension) {
-    foreach ($this->configuration['extensions'] as $bundle => $extensions) {
-      $extensions = explode(' ', $extensions);
-      if (in_array($extension, $extensions)) {
-        return $this->entityTypeManager
-          ->getStorage('media_type')
-          ->load($bundle);
-      }
-    }
-    return NULL;
   }
 
 }

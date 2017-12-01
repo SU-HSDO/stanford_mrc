@@ -35,7 +35,7 @@ class EmbedCode extends WidgetBase {
   }
 
   /**
-   * @param array $original_form
+   * @param array $form
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    * @param array $additional_widget_parameters
    *
