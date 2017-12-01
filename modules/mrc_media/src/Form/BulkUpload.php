@@ -74,7 +74,7 @@ class BulkUpload extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
+    $save_step = TRUE;
     if (empty($form_state->get(['dropzonejs', 'media']))) {
       $form['upload'] = [
         '#title' => $this->t('File upload'),
@@ -86,6 +86,7 @@ class BulkUpload extends FormBase {
         '#max_files' => 0,
         '#clientside_resize' => FALSE,
       ];
+      $save_step = FALSE;
     }
 
     $form['actions'] = [
@@ -93,13 +94,12 @@ class BulkUpload extends FormBase {
       '#weight' => 99,
       'submit' => [
         '#type' => 'submit',
-        '#value' => $this->t('Upload'),
-        '#eb_widget_main_submit' => TRUE,
+        '#value' => $save_step ? $this->t('Save') : $this->t('Upload'),
+        '#eb_widget_main_submit' => !$save_step,
         '#attributes' => ['class' => ['is-entity-browser-submit']],
         '#button_type' => 'primary',
       ],
     ];
-
 
     $form['#attached']['library'][] = 'dropzonejs/widget';
     // Disable the submit button until the upload sucesfully completed.
@@ -136,10 +136,13 @@ class BulkUpload extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    if (isset($form['upload'])) {
+    $trigger = $form_state->getTriggeringElement();
+
+    if ($trigger['#eb_widget_main_submit']) {
       $form_state->setRebuild();
       return;
     }
+
     $count = 0;
 
     $children = Element::children($form['entities']);
