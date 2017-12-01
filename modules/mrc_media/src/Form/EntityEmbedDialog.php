@@ -376,6 +376,7 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
     $source_field = $render['#media']->getSource()
       ->getConfiguration()['source_field'];
     $render[$source_field][0]['#description'] = $render['#display_settings']['description'];
+    $render['#cache']['max-age'] = 0;
   }
 
 }

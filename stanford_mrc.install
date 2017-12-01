@@ -127,7 +127,7 @@ function stanford_mrc_update_8001() {
 }
 
 /**
- * Enables media and resets the text format..
+ * Enables media and resets the text format.
  */
 function stanford_mrc_update_8002() {
   \Drupal::service('module_installer')->install(['mrc_media']);
@@ -135,7 +135,7 @@ function stanford_mrc_update_8002() {
 }
 
 /**
- * Resets the text format..
+ * Resets the text format.
  */
 function stanford_mrc_update_8003() {
   stanford_mrc_update_configs(TRUE, 'all');

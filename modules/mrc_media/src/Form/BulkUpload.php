@@ -237,7 +237,7 @@ class BulkUpload extends FormBase {
           // Create the file entity.
           $files[] = $this->dropzoneSave->createFile(
             $file['path'],
-            $this->bundleSuggestion->getMediaPath($media_type),
+            $this->bundleSuggestion->getUploadPath($media_type),
             $this->bundleSuggestion->getAllExtensions(),
             $this->currentUser,
             $additional_validators

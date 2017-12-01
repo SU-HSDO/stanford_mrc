@@ -43,6 +43,29 @@ class BundleSuggestion {
   }
 
   /**
+   * Get all media type bundles that are configured to have an upload field.
+   *
+   * @return \Drupal\media\Entity\MediaType[]
+   *   Keyed array of media bundles with upload fields.
+   */
+  public function getUploadBundles() {
+    $upload_bundles = [];
+    $media_types = $this->getMediaBundles();
+
+    /** @var \Drupal\media\Entity\MediaType $media_type */
+    foreach ($media_types as $media_type) {
+      $source_field = $media_type->getSource()
+        ->getConfiguration()['source_field'];
+      $field = FieldConfig::loadByName('media', $media_type->id(), $source_field);
+      if (!empty($field->getSetting('file_extensions'))) {
+        $upload_bundles[$media_type->id()] = $media_type;
+      }
+    }
+
+    return $upload_bundles;
+  }
+
+  /**
    * Get all allowed file extensions that can be uploaded for a media type.
    *
    * @param \Drupal\media\Entity\MediaType $media_type
@@ -67,7 +90,7 @@ class BundleSuggestion {
    * @param string $uri
    *   The file uri.
    *
-   * @return \Drupal\Core\Entity\EntityInterface|null
+   * @return MediaType|null
    *   Media type bundle if one matches.
    */
   public function getBundleFromFile($uri) {
@@ -122,8 +145,19 @@ class BundleSuggestion {
     return 0;
   }
 
-  public function getMediaPath(MediaType $media_type) {
-    return 'public://';
+  public function getUploadPath(MediaType $media_type) {
+    $source_field = $media_type->getSource()
+      ->getConfiguration()['source_field'];
+    $path = 'public://';
+    if ($source_field) {
+      $field = FieldConfig::loadByName('media', $media_type->id(), $source_field);
+      $path = 'public://' . $field->getSetting('file_directory');
+    }
+
+    if (strrpos($path, '/') !== strlen($path)) {
+      $path .= '/';
+    }
+    return $path;
   }
 
   /**
@@ -132,7 +166,7 @@ class BundleSuggestion {
    * @param array $bundles
    *   Optionally specifiy which media bundles to load.
    *
-   * @return \Drupal\Core\Entity\EntityInterface[]
+   * @return MediaType[]
    *   Keyed array of all media types.
    */
   private function getMediaBundles($bundles = []) {
