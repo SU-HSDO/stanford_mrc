@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountProxy;
+use Drupal\Core\Url;
 use Drupal\dropzonejs\DropzoneJsUploadSave;
 use Drupal\file\Entity\File;
 use Drupal\inline_entity_form\ElementSubmit;
@@ -22,24 +23,32 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class BulkUpload extends FormBase {
 
   /**
+   * Entity manager used to load media types.
+   *
    * @var \Drupal\Core\Entity\EntityTypeManager
    */
-  private $entityTypeManager;
+  protected $entityTypeManager;
 
   /**
+   * Our bundle suggestion for some helpful methods.
+   *
    * @var \Drupal\mrc_media\BundleSuggestion
    */
-  private $bundleSuggestion;
+  protected $bundleSuggestion;
 
   /**
+   * Dropzone file save.
+   *
    * @var \Drupal\dropzonejs\DropzoneJsUploadSave
    */
-  private $dropzoneSave;
+  protected $dropzoneSave;
 
   /**
+   * Current user on the site.
+   *
    * @var \Drupal\Core\Session\AccountProxy
    */
-  private $currentUser;
+  protected $currentUser;
 
   /**
    * {@inheritdoc}
@@ -75,6 +84,8 @@ class BulkUpload extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $save_step = TRUE;
+
+    // If files have already been uploaded, we don't want to allow upload again.
     if (empty($form_state->get(['dropzonejs', 'media']))) {
       $form['upload'] = [
         '#title' => $this->t('File upload'),
@@ -104,8 +115,7 @@ class BulkUpload extends FormBase {
     $form['#attached']['library'][] = 'dropzonejs/widget';
     // Disable the submit button until the upload sucesfully completed.
     $form['#attached']['library'][] = 'dropzonejs_eb_widget/common';
-    $original_form['#attributes']['class'][] = 'dropzonejs-disable-submit';
-
+    $form['#attributes']['class'][] = 'dropzonejs-disable-submit';
 
     $this->getEntityForm($form, $form_state);
     return $form;
@@ -117,8 +127,15 @@ class BulkUpload extends FormBase {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
 
+    // Dont create the media entities if any errors exist.
+    if ($form_state::hasAnyErrors()) {
+      return;
+    }
+
+    // Get the newly created media entities.
     $media_entities = $this->createMediaEntities($form, $form_state);
 
+    // Save the files and the media entites on them.
     foreach ($media_entities as &$media_entity) {
       if ($media_entity instanceof Media) {
         $source_field = $media_entity->getSource()
@@ -138,6 +155,8 @@ class BulkUpload extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $trigger = $form_state->getTriggeringElement();
 
+    // Upload is done, but we want to rebuild the form to display the inline
+    // entity forms of the media entity.
     if ($trigger['#eb_widget_main_submit']) {
       $form_state->setRebuild();
       return;
@@ -149,10 +168,13 @@ class BulkUpload extends FormBase {
     foreach ($children as $child) {
       $entity_form = $form['entities'][$child];
 
+      // Make sure we only get the inline entity form elements.
       if (!isset($entity_form['#ief_element_submit'])) {
         continue;
       }
 
+      // Call all inline entity form submit functions. This saves the entities
+      // with the new values from any fields.
       foreach ($entity_form['#ief_element_submit'] as $submit_function) {
         call_user_func_array($submit_function, [&$entity_form, $form_state]);
       }
@@ -160,7 +182,13 @@ class BulkUpload extends FormBase {
       $count++;
     }
 
+    // Give a message and redirect the user to the media overview page if they
+    // have permission to view that page.
     drupal_set_message($this->t('Saved %count Media Items', ['%count' => $count]));
+    if ($this->currentUser->hasPermission('access media overview')) {
+      $url = Url::fromUserInput('/admin/content/media');
+      $form_state->setRedirectUrl($url);
+    }
   }
 
   /**
@@ -190,11 +218,15 @@ class BulkUpload extends FormBase {
       'upload',
       'uploaded_files',
     ], []) as $file) {
+
+      // Check if file exists before we create an entity for it.
       if (!empty($file['path']) && file_exists($file['path'])) {
 
+        // Get the media type from the file extension.
         $media_type = $this->bundleSuggestion->getBundleFromFile($file['path']);
 
         if ($media_type) {
+          // Validate the media bundle allows for the size of file.
           $additional_validators = [
             'file_validate_size' => [
               $this->bundleSuggestion->getMaxFileSizeBundle($media_type),
@@ -202,15 +234,14 @@ class BulkUpload extends FormBase {
             ],
           ];
 
-          $entity = $this->dropzoneSave->createFile(
+          // Create the file entity.
+          $files[] = $this->dropzoneSave->createFile(
             $file['path'],
             $this->bundleSuggestion->getMediaPath($media_type),
             $this->bundleSuggestion->getAllExtensions(),
             $this->currentUser,
             $additional_validators
           );
-
-          $files[] = $entity;
         }
       }
     }
@@ -247,8 +278,7 @@ class BulkUpload extends FormBase {
     }
 
     foreach ($media_entities as $entity) {
-
-      $form['entities'][] = [
+      $form['entities'][$entity->id()] = [
         '#type' => 'inline_entity_form',
         '#entity_type' => $entity->getEntityTypeId(),
         '#bundle' => $entity->bundle(),
@@ -258,8 +288,8 @@ class BulkUpload extends FormBase {
     }
 
     // Without this, IEF won't know where to hook into the widget. Don't pass
-    // $original_form as the second argument to addCallback(), because it's not
-    // just the entity browser part of the form, not the actual complete form.
+    // $form as the second argument to addCallback(), because it's not
+    // the actual complete form.
     ElementSubmit::addCallback($form['actions']['submit'], $form_state->getCompleteForm());
 
     $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
@@ -267,6 +297,8 @@ class BulkUpload extends FormBase {
 
 
   /**
+   * Create media entities out of the uploaded files and their entities.
+   *
    * @param array $form
    *   Form array.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
@@ -276,10 +308,9 @@ class BulkUpload extends FormBase {
    *   Array of media entities before saving.
    */
   private function createMediaEntities(array $form, FormStateInterface $form_state) {
-
-    $file_entities = [];
     $media_entities = [];
 
+    // Media entities were already created.
     if ($form_state->get(['dropzonejs', 'media'])) {
       return $form_state->get(['dropzonejs', 'media']);
     }
@@ -287,9 +318,10 @@ class BulkUpload extends FormBase {
     $files = $this->getFiles($form, $form_state);
     foreach ($files as $file) {
       if ($file instanceof File) {
-        $file_entities[] = $file;
+        // Get the media type bundle from the file uri.
         $media_type = $this->bundleSuggestion->getBundleFromFile($file->getFileUri());
 
+        // Create the media entity.
         $media_entities[] = $this->entityTypeManager->getStorage('media')
           ->create([
             'bundle' => $media_type->id(),
@@ -301,6 +333,7 @@ class BulkUpload extends FormBase {
           ]);
       }
     }
+
     $form_state->set(['dropzonejs', 'media'], $media_entities);
     return $media_entities;
   }

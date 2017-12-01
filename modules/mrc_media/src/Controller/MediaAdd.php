@@ -12,9 +12,9 @@ class MediaAdd extends EntityController {
     $page = parent::addPage($entity_type_id);
 
     $url = new Url('mrc_media.bulk_upload');
-    unset($page['#bundles']['file'], $page['#bundles']['image']);;
+    unset($page['#bundles']['image']);;
 
-    $page['#bundles']['bulk'] = [
+    $page['#bundles']['file'] = [
       'label' => $this->t('Bulk Upload'),
       'description' => $this->t('Upload multiple files/images at once'),
       'add_link' => new Link($this->t('Bulk Upload'), $url),
