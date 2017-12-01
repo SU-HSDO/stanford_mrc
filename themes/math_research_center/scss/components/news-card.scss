@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+///
+/// NEWS CARD COMPONENT
+///
+
+// Decanter
+@import
+  'decanter/scss/lib/bourbon',
+  'decanter/scss/core/variables',
+  'decanter/scss/core/utilities';
+
+// Stanford Math Research Center
+@import
+  '../utilities/mixins/mixins';
+
+.mrc-news-card {
+  @include mrc-card-container;
+  @include mrc-flex-large;
+
+  .mrc-news-card__img {
+    margin-right: 0;
+
+    img {
+      width: 100%;
+    }
+
+    @include media($medium-screen) {
+      margin-right: 30px;
+
+      img {
+        width: auto;
+      }
+    }
+  }
+
+  .mrc-news-card__content {
+    .mrc-news-card__date {
+      margin: 0 0 0.25em 0;
+    }
+
+    .mrc-news-card__subcontent {
+      @include mrc-flex-medium;
+
+      .mrc-news-card__source {
+        margin-top: 0;
+
+        &:after {
+          content: "|";
+          padding-right: 0.25em;
+        }
+      }
+
+      .mrc-news-card__program {
+        margin-top: 0;
+      }
+    }
+    .mrc-news-card__title {
+      margin-top: 0;
+    }
+  }
+}

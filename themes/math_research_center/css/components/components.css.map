@@ -3,7 +3,7 @@
 	"file": "components.css",
 	"sources": [
 		"../../scss/components/components.scss",
-		"../../scss/components/horizontal-postcard.scss",
+		"../../scss/components/postcard.scss",
 		"../../node_modules/decanter/scss/lib/_bourbon.scss",
 		"../../node_modules/decanter/scss/lib/settings/_settings.scss",
 		"../../node_modules/decanter/scss/lib/settings/_prefixer.scss",
@@ -92,8 +92,11 @@
 		"../../node_modules/decanter/scss/lib/addons/_triangle.scss",
 		"../../node_modules/decanter/scss/lib/addons/_word-wrap.scss",
 		"../../node_modules/decanter/scss/core/_variables.scss",
-		"../../node_modules/decanter/scss/core/_utilities.scss"
+		"../../node_modules/decanter/scss/core/_utilities.scss",
+		"../../scss/utilities/mixins/mixins.scss",
+		"../../scss/utilities/mixins/_basic-flex.scss",
+		"../../scss/utilities/mixins/_card-container.scss"
 	],
-	"mappings": "A0FyDA,AAAA,iBAAiB,AAAC,CAJhB,QAAQ,CAAE,QAAS,CACnB,IAAI,CAAE,MAAO,CAKd,AzF/CD,AAAA,wBAAwB,AAAC,CACvB,UAAU,CwFiCiB,IAAO,CxFhClC,UAAU,CwF8FU,CAAC,CAAC,GAAG,CAAC,GAAG,CAAC,CAAC,CAAC,eAAI,CxF7FpC,OAAO,CAAE,KAAM,CACf,OAAO,CAAE,IAAK,CA6Bf,AyFCC,MAAM,CAAN,MAAM,MAAM,SAAS,EAAE,KAAK,EzFlC9B,AAAA,wBAAwB,AAAC,CAOrB,OAAO,CAAE,IAAK,CA0BjB,CAjCD,AAWE,wBAXsB,CAWtB,6BAA6B,AAAC,CAC5B,YAAY,CAAE,CAAE,CAKjB,AyFiBD,MAAM,CAAN,MAAM,MAAM,SAAS,EAAE,KAAK,EzFlC9B,AAWE,wBAXsB,CAWtB,6BAA6B,AAAC,CAI1B,YAAY,CAAE,IAAK,CAEtB,CAjBH,AAoBI,wBApBoB,CAmBtB,iCAAiC,CAC/B,mCAAmC,AAAC,CAClC,WAAW,CwFKK,GAAG,CxFJnB,MAAM,CAAE,QAAS,CAClB,AAvBL,AAyBI,wBAzBoB,CAmBtB,iCAAiC,CAM/B,EAAE,AAAC,CACD,UAAU,CAAE,CAAE,CACf,AA3BL,AA6BI,wBA7BoB,CAmBtB,iCAAiC,CAU/B,gCAAgC,AAAC,CAC/B,UAAU,CAAE,MAAO,CACpB",
+	"mappings": "A0FyDA,AAAA,iBAAiB,AAAC,CAJhB,QAAQ,CAAE,QAAS,CACnB,IAAI,CAAE,MAAO,CAKd,AzFxCD,AAAA,aAAa,CA0Bb,AA1BA,yBA0ByB,AA1BX,C4FZZ,UAAU,CJuCiB,IAAO,CItClC,UAAU,CJoGU,CAAC,CAAC,GAAG,CAAC,GAAG,CAAC,CAAC,CAAC,eAAI,CInGpC,OAAO,CAAE,IAAK,C5FiCf,AAvBD,AAII,aAJS,CAGX,kBAAkB,CAChB,GAAG,CAsBP,AAtBI,yBAsBqB,CAvBvB,kBAAkB,CAChB,GAAG,AAAC,CACF,KAAK,CAAE,IAAK,CACb,AANL,AAUI,aAVS,CASX,sBAAsB,CACpB,wBAAwB,CAgB5B,AAhBI,yBAgBqB,CAjBvB,sBAAsB,CACpB,wBAAwB,AAAC,CACvB,WAAW,CwFQK,GAAG,CxFPnB,MAAM,CAAE,QAAS,CAClB,AAbL,AAeI,aAfS,CASX,sBAAsB,CAMpB,oBAAoB,CAWxB,AAXI,yBAWqB,CAjBvB,sBAAsB,CAMpB,oBAAoB,AAAC,CACnB,UAAU,CAAE,CAAE,CACf,AAjBL,AAmBI,aAnBS,CASX,sBAAsB,CAUpB,qBAAqB,CAOzB,AAPI,yBAOqB,CAjBvB,sBAAsB,CAUpB,qBAAqB,AAAC,CACpB,UAAU,CAAE,MAAO,CACpB,AAKL,AAAA,yBAAyB,AAAC,C2F5BxB,OAAO,CAAE,KAAM,C3FgDhB,AyFnBC,MAAM,CAAN,MAAM,MAAM,SAAS,EAAE,KAAK,EzFD9B,AAAA,yBAAyB,AAAC,C2FzBtB,OAAO,CAAE,IAAK,C3F6CjB,CApBD,AAKE,yBALuB,CAKvB,8BAA8B,AAAC,CAC7B,YAAY,CAAE,CAAE,CAajB,AAnBH,AAQI,yBARqB,CAKvB,8BAA8B,CAG5B,GAAG,AAAC,CACF,KAAK,CAAE,IAAK,CACb,AyFTH,MAAM,CAAN,MAAM,MAAM,SAAS,EAAE,KAAK,EzFD9B,AAKE,yBALuB,CAKvB,8BAA8B,AAAC,CAQ3B,YAAY,CAAE,IAAK,CAMtB,AAnBH,AAeM,yBAfmB,CAKvB,8BAA8B,CAU1B,GAAG,AAAC,CACF,KAAK,CAAE,IAAK,CACb",
 	"names": []
 }

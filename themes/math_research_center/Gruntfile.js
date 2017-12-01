@@ -108,10 +108,11 @@ module.exports = function(grunt) {
       dist: {
         files: {
           // Component Wrap Up.
-          'css/components/components.css':                  'scss/components/components.scss',
+          'css/components/components.css':       'scss/components/components.scss',
           // Components are compiled individually so they may be included
           // conditionally using logic built in to the theme template or module.
-          'css/components/horizontal-postcard.css':         'scss/components/horizontal-postcard.scss'
+          'css/components/news-card.css':        'scss/components/news-card.scss',
+          'css/components/postcard.css':         'scss/components/postcard.scss'
         }
       }
     },
