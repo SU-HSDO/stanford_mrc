@@ -9,6 +9,9 @@ use Drupal\media\Entity\MediaType;
 
 class BundleSuggestion {
 
+  /**
+   * @var \Drupal\Core\Entity\EntityTypeManager
+   */
   private $entityTypeManager;
 
   /**
@@ -99,6 +102,15 @@ class BundleSuggestion {
     return $max_filesize;
   }
 
+  /**
+   * Get maximum file size for the media type.
+   *
+   * @param \Drupal\media\Entity\MediaType $media_type
+   *   The media type bundle to get file size for.
+   *
+   * @return int
+   *   The maximum file size.
+   */
   public function getMaxFileSizeBundle(MediaType $media_type) {
     $source_field = $media_type->getSource()
       ->getConfiguration()['source_field'];
