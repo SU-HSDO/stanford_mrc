@@ -109,7 +109,6 @@ module.exports = function(grunt) {
         files: {
           // Files are compiled individually so they may be included
           // conditionally using logic built in to the theme template or module.
-
           // COMPONENTS
           'css/components/components.css':       'scss/components/components.scss',
 
