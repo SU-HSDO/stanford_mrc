@@ -1,10 +1,14 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.media.thumbnail
   module:
     - entity_browser
     - media
     - user
+_core:
+  default_config_hash: EjsYOkTuE8g6c-8IvWifRVQpPSCbtnPxMjolu4bikfE
 id: media_entity_browser
 label: 'Media Entity Browser'
 module: views
@@ -245,7 +249,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          view_mode: default
+          view_mode: thumbnail
           entity_type: media
           plugin_id: rendered_entity
       filters:
@@ -377,8 +381,9 @@ display:
         - user.permissions
       tags:
         - 'config:core.entity_view_display.media.file.default'
-        - 'config:core.entity_view_display.media.image.default'
         - 'config:core.entity_view_display.media.video.default'
+        - 'config:core.entity_view_display.media.video.full'
+        - 'config:core.entity_view_display.media.image.default'
   media_browser:
     display_plugin: entity_browser
     id: media_browser
@@ -398,3 +403,4 @@ display:
         - 'config:core.entity_view_display.media.file.default'
         - 'config:core.entity_view_display.media.image.default'
         - 'config:core.entity_view_display.media.video.default'
+        - 'config:core.entity_view_display.media.video.full'

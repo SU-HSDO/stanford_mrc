@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * @file
+ * mrc_media.install
+ */
+
+use Drupal\embed\Entity\EmbedButton;
+use Drupal\file\Entity\File;
+
+/**
+ * Implements hook_install().
+ */
+function mrc_media_install() {
+  $config_factory = \Drupal::configFactory();
+
+  // Media Image form.
+  $config = $config_factory->getEditable('core.entity_form_display.media.image.default');
+  $data = $config->getRawData();
+  foreach (['created', 'path', 'uid', 'status'] as $hide_field) {
+    unset($data['content'][$hide_field]);
+    $data['hidden'][$hide_field] = TRUE;
+  }
+  $config->setData($data);
+  $config->save(TRUE);
+
+  // Media Image display.
+  $config = $config_factory->getEditable('core.entity_view_display.media.image.default');
+  $data = $config->getRawData();
+  $data['content']['field_media_image']['label'] = 'hidden';
+  $data['content']['field_media_image']['settings']['image_style'] = '';
+  $data['content']['field_media_image']['settings']['image_link'] = '';
+  $config->setData($data);
+  $config->save(TRUE);
+
+  // Media Image image field.
+  $config = $config_factory->getEditable('field.field.media.image.field_media_image');
+  $data = $config->getRawData();
+  $data['settings']['alt_field_required'] = FALSE;
+  $data['settings']['file_directory'] = 'media';
+  $config->setData($data);
+  $config->save(TRUE);
+
+  // Media File form.
+  $config = $config_factory->getEditable('core.entity_form_display.media.file.default');
+  $data = $config->getRawData();
+  foreach (['created', 'path', 'uid', 'status'] as $hide_field) {
+    unset($data['content'][$hide_field]);
+    $data['hidden'][$hide_field] = TRUE;
+  }
+  $config->setData($data);
+  $config->save(TRUE);
+
+  // Media File display.
+  $config = $config_factory->getEditable('core.entity_view_display.media.file.default');
+  $data = $config->getRawData();
+  $data['content']['field_media_file']['label'] = 'hidden';
+  $config->setData($data);
+  $config->save(TRUE);
+
+  mrc_media_add_embed_button();
+}
+
+/**
+ * Edits the media browser button to have an icon.
+ */
+function mrc_media_add_embed_button() {
+  $icon = \Drupal::moduleHandler()->getModule('mrc_media')->getPath() . '/img/media.png';
+  $fs = \Drupal::service('file_system');
+  $destination = file_unmanaged_copy($icon, 'public://media/' . $fs->basename($icon));
+
+  if ($destination) {
+    $file = File::create(['uri' => $destination]);
+    $file->save();
+
+    EmbedButton::load('media_browser')
+      ->set('icon_uuid', $file->uuid())
+      ->save();
+  }
+}
+
+/**
+ * Run install function to edit core media bundles.
+ */
+function mrc_media_update_8001() {
+  mrc_media_install();
+
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_media') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+}
+
+/**
+ * Sets the media browser embed button icon.
+ */
+function mrc_media_update_8002() {
+  mrc_media_add_embed_button();
+}

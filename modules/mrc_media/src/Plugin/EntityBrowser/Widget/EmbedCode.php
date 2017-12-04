@@ -101,6 +101,7 @@ class EmbedCode extends WidgetBase {
         'callback' => [static::class, 'ajax'],
       ],
     ];
+    $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
     return $form;
   }
 
