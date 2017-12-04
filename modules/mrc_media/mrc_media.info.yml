@@ -12,6 +12,7 @@ dependencies:
   - entity_browser
   - entity_browser_entity_form
   - entity_embed
+  - entity_usage
   - inline_entity_form
   - linkit
   - media

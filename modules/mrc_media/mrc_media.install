@@ -7,6 +7,7 @@
 
 use Drupal\embed\Entity\EmbedButton;
 use Drupal\file\Entity\File;
+use Drupal\views\Entity\View;
 
 /**
  * Implements hook_install().
@@ -65,6 +66,10 @@ function mrc_media_install() {
   $config->setData($data);
   $config->save(TRUE);
 
+  $view = View::load('media');
+  $view->disable();
+  $view->save();
+
   mrc_media_add_embed_button();
 }
 
@@ -106,4 +111,17 @@ function mrc_media_update_8001() {
  */
 function mrc_media_update_8002() {
   mrc_media_add_embed_button();
+}
+
+/**
+ * Replaces the admin media page with a view that has useage links.
+ */
+function mrc_media_update_8003() {
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_media') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+
+  $view = View::load('media');
+  $view->disable();
+  $view->save();
 }
