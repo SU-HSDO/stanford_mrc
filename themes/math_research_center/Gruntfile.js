@@ -107,15 +107,21 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          // Component Wrap Up.
-          'css/components/components.css':       'scss/components/components.scss',
-          // Components are compiled individually so they may be included
+          // Files are compiled individually so they may be included
           // conditionally using logic built in to the theme template or module.
+          // COMPONENTS
+          'css/components/components.css':       'scss/components/components.scss',
+
           'css/components/date-stacked.css':        'scss/components/date-stacked.scss',
           'css/components/event-card.css':          'scss/components/event-card.scss',
           'css/components/featured-event-card.css': 'scss/components/featured-event-card.scss',
           'css/components/news-card.css':           'scss/components/news-card.scss',
-          'css/components/postcard.css':            'scss/components/postcard.scss'
+          'css/components/postcard.css':            'scss/components/postcard.scss',
+
+          // THEME
+          'css/theme/theme.css':                    'scss/theme/theme.scss',
+
+          'css/theme/news.css':                     'scss/theme/news.scss'
         }
       }
     },
