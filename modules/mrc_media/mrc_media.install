@@ -77,7 +77,9 @@ function mrc_media_install() {
  * Edits the media browser button to have an icon.
  */
 function mrc_media_add_embed_button() {
-  $icon = \Drupal::moduleHandler()->getModule('mrc_media')->getPath() . '/img/media.png';
+  $icon = \Drupal::moduleHandler()
+      ->getModule('mrc_media')
+      ->getPath() . '/img/media.png';
   $fs = \Drupal::service('file_system');
 
   $directory = 'public://media/image/';
@@ -117,6 +119,13 @@ function mrc_media_update_8002() {
  * Replaces the admin media page with a view that has useage links.
  */
 function mrc_media_update_8003() {
+  $icon = 'public://media/image/media.png';
+  if (!file_exists($icon)) {
+    mrc_media_add_embed_button();
+  }
+
+  \Drupal::service('module_installer')->install(['entity_usage']);
+
   module_load_install('stanford_mrc');
   $path = drupal_get_path('module', 'mrc_media') . '/config/install';
   stanford_mrc_update_configs(TRUE, 'all', $path);

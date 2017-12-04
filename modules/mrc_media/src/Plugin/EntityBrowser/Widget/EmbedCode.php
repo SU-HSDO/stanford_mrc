@@ -102,6 +102,7 @@ class EmbedCode extends WidgetBase {
       ],
     ];
     $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
+    $form['#attached']['library'][] = 'mrc_media/mrc_media.embed';
     return $form;
   }
 
