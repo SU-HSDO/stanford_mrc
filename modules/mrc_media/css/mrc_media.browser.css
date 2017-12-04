@@ -1,0 +1,11 @@
+#entities .field--name-revision-log-message,
+#entities input[value="Remove"],
+div[data-drupal-selector="edit-actions"] input:disabled {
+  display: none;
+}
+
+#entity .field--name-revision-log-message,
+#entity input[value="Remove"],
+div[data-drupal-selector="edit-actions"] input:disabled {
+  display: none;
+}

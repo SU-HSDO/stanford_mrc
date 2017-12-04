@@ -10,3 +10,9 @@ mrc_media.autocomplete:
     - core/drupal.ajax
     - core/jquery.ui.autocomplete
     - core/underscore
+
+mrc_media.browser:
+  version: VERSION
+  css:
+    component:
+      css/mrc_media.browser.css: {}
