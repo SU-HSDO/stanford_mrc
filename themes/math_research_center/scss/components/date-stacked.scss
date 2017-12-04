@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+///
+/// DATE STACKED COMPONENT
+///
+
+// Decanter
+@import
+  'decanter/scss/lib/bourbon',
+  'decanter/scss/core/variables',
+  'decanter/scss/core/utilities';
+
+// Stanford Math Research Center
+@import
+  '../utilities/mixins/mixins';
+
+.mrc-date-stacked {
+  @include mrc-date-stacked;
+}
