@@ -16,3 +16,10 @@ mrc_media.browser:
   css:
     component:
       css/mrc_media.browser.css: {}
+
+mrc_media.embed:
+  version: VERSION
+  js:
+    js/mrc_media.embed.js: {}
+  dependencies:
+    - core/jquery

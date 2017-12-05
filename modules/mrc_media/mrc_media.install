@@ -7,6 +7,7 @@
 
 use Drupal\embed\Entity\EmbedButton;
 use Drupal\file\Entity\File;
+use Drupal\views\Entity\View;
 
 /**
  * Implements hook_install().
@@ -37,7 +38,7 @@ function mrc_media_install() {
   $config = $config_factory->getEditable('field.field.media.image.field_media_image');
   $data = $config->getRawData();
   $data['settings']['alt_field_required'] = FALSE;
-  $data['settings']['file_directory'] = 'media';
+  $data['settings']['file_directory'] = 'media/image';
   $config->setData($data);
   $config->save(TRUE);
 
@@ -58,6 +59,17 @@ function mrc_media_install() {
   $config->setData($data);
   $config->save(TRUE);
 
+  // Media Image image field.
+  $config = $config_factory->getEditable('field.field.media.file.field_media_file');
+  $data = $config->getRawData();
+  $data['settings']['file_directory'] = 'media/file';
+  $config->setData($data);
+  $config->save(TRUE);
+
+  $view = View::load('media');
+  $view->disable();
+  $view->save();
+
   mrc_media_add_embed_button();
 }
 
@@ -65,9 +77,15 @@ function mrc_media_install() {
  * Edits the media browser button to have an icon.
  */
 function mrc_media_add_embed_button() {
-  $icon = \Drupal::moduleHandler()->getModule('mrc_media')->getPath() . '/img/media.png';
+  $icon = \Drupal::moduleHandler()
+      ->getModule('mrc_media')
+      ->getPath() . '/img/media.png';
   $fs = \Drupal::service('file_system');
-  $destination = file_unmanaged_copy($icon, 'public://media/' . $fs->basename($icon));
+
+  $directory = 'public://media/image/';
+  file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
+
+  $destination = file_unmanaged_copy($icon, $directory . $fs->basename($icon));
 
   if ($destination) {
     $file = File::create(['uri' => $destination]);
@@ -95,4 +113,24 @@ function mrc_media_update_8001() {
  */
 function mrc_media_update_8002() {
   mrc_media_add_embed_button();
+}
+
+/**
+ * Replaces the admin media page with a view that has useage links.
+ */
+function mrc_media_update_8003() {
+  $icon = 'public://media/image/media.png';
+  if (!file_exists($icon)) {
+    mrc_media_add_embed_button();
+  }
+
+  \Drupal::service('module_installer')->install(['entity_usage']);
+
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_media') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+
+  $view = View::load('media');
+  $view->disable();
+  $view->save();
 }
