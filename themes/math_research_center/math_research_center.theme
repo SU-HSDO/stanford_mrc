@@ -4,3 +4,12 @@
  * @file
  * Preprocess functions for MRC.
  */
+
+/**
+ * Implements hook_preprocess_patterns_overview_page().
+ */
+function math_research_center_preprocess_patterns_overview_page(&$variables) {
+  uasort($variables['patterns'], function ($pattern_a, $pattern_b) {
+    return strcmp($pattern_a['label'], $pattern_b['label']);
+  });
+}

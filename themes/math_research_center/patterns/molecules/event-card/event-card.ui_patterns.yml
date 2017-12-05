@@ -1,0 +1,26 @@
+event_card:
+  label: "Event Card"
+  description: ""
+  fields:
+    title:
+      label: "Title"
+      preview: "Card Title"
+    image:
+      theme: image
+      uri: "http://via.placeholder.com/200x200"
+    date:
+      label: "Date"
+      preview: "Week Day, Month, Day, Year"
+    time:
+      label: "Time"
+      preview: "Start Time - End Time"
+    location:
+      label: "Location"
+      preview: "Location Information"
+
+  libraries:
+    - event_card:
+        css:
+          component:
+            css/event-card.css: {}
+  use: "@math_research_center/molecules/event-card/event-card.html.twig"

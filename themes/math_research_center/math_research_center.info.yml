@@ -8,6 +8,7 @@ core: 8.x
 libraries:
   - core/normalize
   - math_research_center/mrc
+
 regions:
   page_top: 'Page top'
   header: Header
@@ -16,3 +17,8 @@ regions:
   content: Content
   footer: Footer
   page_bottom: 'Page bottom'
+
+component-libraries:
+  math_research_center:
+    paths:
+      - patterns

@@ -109,6 +109,14 @@ module.exports = function(grunt) {
         files: {
           // Files are compiled individually so they may be included
           // conditionally using logic built in to the theme template or module.
+          // PATTERNS
+          'patterns/atoms/date-stacked/css/date-stacked.css': 'patterns/atoms/date-stacked/scss/date-stacked.scss',
+          'patterns/molecules/event-card/css/event-card.css': 'patterns/molecules/event-card/scss/event-card.scss',
+          'patterns/molecules/featured-event-card/css/featured-event-card.css': 'patterns/molecules/featured-event-card/scss/featured-event-card.scss',
+          'patterns/molecules/news-card/css/news-card.css': 'patterns/molecules/news-card/scss/news-card.scss',
+          'patterns/molecules/postcard/css/postcard.css': 'patterns/molecules/postcard/scss/postcard.scss',
+          'patterns/templates/node-news/css/node-news.css': 'patterns/templates/node-news/scss/node-news.scss',
+
           // COMPONENTS
           'css/components/components.css':       'scss/components/components.scss',
 

@@ -1,0 +1,38 @@
+<div class="mrc-postcard">
+  <div class="mrc-postcard__img">
+    {{ image }}
+  </div>
+  <div class="mrc-postcard__content">
+    {% if super_head %}
+      <div class="mrc-postcard__superhead">{{ super_head }}</div>
+    {% endif %}
+    <h2 class="mrc-postcard__title">{{ title }}</h2>
+    <div>
+      {{ description }}
+    </div>
+
+    {% if button %}
+      <div class="mrc-postcard__button">
+        {{ button }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+<!-- Horizontal postcard -->
+<div class="mrc-postcard--horizontal">
+  <div class="mrc-postcard--horizontal__img">
+    {{ image }}
+  </div>
+  <div class="mrc-postcard__content">
+    <div class="mrc-postcard__superhead">{{ superhead }}</div>
+    <h2 class="mrc-postcard__title">{{ title }}</h2>
+    <div>
+      {{ description }}
+    </div>
+    {% if button %}
+      <div class="mrc-postcard__button">
+        {{ button }}
+      </div>
+    {% endif %}
+  </div>
+</div>

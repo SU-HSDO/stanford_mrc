@@ -1,0 +1,12 @@
+# Event Card Pattern
+#
+node_news:
+  label: "Node: News"
+  description: "News node layout"
+  fields:
+    title:
+      description: "Card title."
+      label: Title
+      preview: "ERE Seminar: NO SEMINAR"
+      type: text
+  use: "@math_research_center/templates/node-news/node-news.html.twig"
