@@ -1,5 +1,5 @@
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -10,7 +10,7 @@ _core:
 id: math_research_center_breadcrumbs
 theme: math_research_center
 region: content
-weight: -45
+weight: -50
 provider: null
 plugin: system_breadcrumb_block
 settings:

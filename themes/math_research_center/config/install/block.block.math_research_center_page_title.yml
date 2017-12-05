@@ -6,7 +6,7 @@ dependencies:
 id: math_research_center_page_title
 theme: math_research_center
 region: content
-weight: -50
+weight: -75
 provider: null
 plugin: page_title_block
 settings:

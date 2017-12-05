@@ -7,10 +7,10 @@ dependencies:
     - system
   theme:
     - math_research_center
-id: mainnavigation
+id: math_research_center_mainnavigation
 theme: math_research_center
 region: content
-weight: 0
+weight: -99
 provider: null
 plugin: 'system_menu_block:main'
 settings:
