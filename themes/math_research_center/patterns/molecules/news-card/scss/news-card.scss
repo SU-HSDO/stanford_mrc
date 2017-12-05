@@ -49,11 +49,6 @@
 
         @include media($medium-screen) {
           margin: 0;
-
-          &:after {
-            content: "|";
-            padding-right: 0.25em;
-          }
         }
       }
 
