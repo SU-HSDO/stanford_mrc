@@ -1,15 +1,25 @@
 <div class="mrc-news-card">
-  <div class="mrc-news-card__img">
-    {{ image }}
-  </div>
-  <div class="mrc-news-card__content">
-    <div class="mrc-news-card__date">{{ time }}</div>
-    <div class=mrc-news-card__subcontent>
-      <div class="mrc-news-card__source">
-        {{ link }}
-      </div>
-      <div class="mrc-news-card__program">{{ program }}</div>
+  {% if image %}
+    <div class="mrc-news-card__img">
+      {{ image }}
     </div>
-    <h2 class="mrc-news-card__title">{{ title }}</h2>
+  {% endif %}
+  <div class="mrc-news-card__content">
+    {% if time %}
+      <div class="mrc-news-card__date">{{ time }}</div>
+    {% endif %}
+    <div class=mrc-news-card__subcontent>
+      {% if link %}
+        <div class="mrc-news-card__source">
+          {{ link }}
+        </div>
+      {% endif %}
+      {% if program %}
+        <div class="mrc-news-card__program">{{ program }}</div>
+      {% endif %}
+    </div>
+    {% if title %}
+      <h2 class="mrc-news-card__title">{{ title }}</h2>
+    {% endif %}
   </div>
 </div>

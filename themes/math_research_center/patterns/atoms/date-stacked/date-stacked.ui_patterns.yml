@@ -3,7 +3,7 @@ date_stacked:
   fields:
     month:
       label: "Month"
-      Preview: "Jan"
+      preview: "Jan"
     day:
       label: "Day"
       preview: "23"

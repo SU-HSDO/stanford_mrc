@@ -1,13 +1,13 @@
-<div class="mrc-postcard">
+<div class="mrc-postcard--horizontal">
   {% if image %}
-    <div class="mrc-postcard__img">
+    <div class="mrc-postcard--horizontal__img">
       {{ image }}
     </div>
   {% endif %}
 
   <div class="mrc-postcard__content">
-    {% if super_head %}
-      <div class="mrc-postcard__superhead">{{ super_head }}</div>
+    {% if superhead %}
+      <div class="mrc-postcard__superhead">{{ superhead }}</div>
     {% endif %}
     {% if title %}
       <h2 class="mrc-postcard__title">{{ title }}</h2>
@@ -25,4 +25,3 @@
     {% endif %}
   </div>
 </div>
-

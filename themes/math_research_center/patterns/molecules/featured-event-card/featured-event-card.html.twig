@@ -1,15 +1,27 @@
 <div class="mrc-featured-event-card">
-  <div class="mrc-featured-event-card__img">
-    {{ image }}
-  </div>
-  <div class="mrc-featured-event-card__content">
-    {{ pattern('date_stacked', {'month': month, 'day': day}) }}
-
-    <div class=mrc-featured-event-card__subcontent>
-      <div class="mrc-featured-event-card__time">{{ time }}</div>
-      <div class="mrc-featured-event-card__location">{{ location }}</div>
+  {% if image %}
+    <div class="mrc-featured-event-card__img">
+      {{ image }}
     </div>
-    <h2 class="mrc-featured-event-card__title">{{ title }}</h2>
-    <div class="mrc-featured-event-card__teaser">{{ description }}</div>
+  {% endif %}
+
+  <div class="mrc-featured-event-card__content">
+    {% if month and day %}
+      {{ pattern('date_stacked', {'month': month, 'day': day}) }}
+    {% endif %}
+    <div class=mrc-featured-event-card__subcontent>
+      {% if time %}
+        <div class="mrc-featured-event-card__time">{{ time }}</div>
+      {% endif %}
+      {% if location %}
+        <div class="mrc-featured-event-card__location">{{ location }}</div>
+      {% endif %}
+    </div>
+    {% if title %}
+      <h2 class="mrc-featured-event-card__title">{{ title }}</h2>
+    {% endif %}
+    {% if description %}
+      <div class="mrc-featured-event-card__teaser">{{ description }}</div>
+    {% endif %}
   </div>
 </div>

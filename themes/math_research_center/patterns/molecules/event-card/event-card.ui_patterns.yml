@@ -6,8 +6,10 @@ event_card:
       label: "Title"
       preview: "Card Title"
     image:
-      theme: image
-      uri: "http://via.placeholder.com/200x200"
+      label: "Image"
+      preview:
+        theme: image
+        uri: "http://via.placeholder.com/200x200"
     date:
       label: "Date"
       preview: "Week Day, Month, Day, Year"
