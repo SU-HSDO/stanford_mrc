@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         }
       },
       css: {
-        files: ['scss/**/*.scss'],
+        files: ['scss/**/*.scss', 'patterns/**/**/scss/*.scss'],
         tasks: ['sass'],
         options: {
           interrupt: true
@@ -109,6 +109,7 @@ module.exports = function(grunt) {
         files: {
           // Files are compiled individually so they may be included
           // conditionally using logic built in to the theme template or module.
+
           // PATTERNS
           'patterns/atoms/date-stacked/css/date-stacked.css':                   'patterns/atoms/date-stacked/scss/date-stacked.scss',
           'patterns/molecules/event-card/css/event-card.css':                   'patterns/molecules/event-card/scss/event-card.scss',
@@ -116,6 +117,7 @@ module.exports = function(grunt) {
           'patterns/molecules/news-card/css/news-card.css':                     'patterns/molecules/news-card/scss/news-card.scss',
           'patterns/molecules/postcard/css/postcard.css':                       'patterns/molecules/postcard/scss/postcard.scss',
           'patterns/molecules/postcard-horizontal/css/postcard-horizontal.css': 'patterns/molecules/postcard-horizontal/scss/postcard-horizontal.scss',
+          'patterns/templates/node-event/css/node-event.css':                   'patterns/templates/node-event/scss/node-event.scss',
           'patterns/templates/node-news/css/node-news.css':                     'patterns/templates/node-news/scss/node-news.scss',
 
           // COMPONENTS
