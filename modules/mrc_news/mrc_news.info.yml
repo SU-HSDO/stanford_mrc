@@ -15,3 +15,5 @@ dependencies:
   - datetime_range
   - allowed_formats
   - metatag
+  - ds
+  - ui_patterns_ds
