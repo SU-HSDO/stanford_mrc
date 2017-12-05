@@ -16,8 +16,6 @@
 @import
   '../utilities/mixins/mixins';
 
-
-// Horizontal postcard modifier
 .mrc-postcard--horizontal {
 
   @include mrc-flex-medium;

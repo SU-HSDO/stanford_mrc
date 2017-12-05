@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+///
+/// EVENT NODE STYLES
+///
+
+// Decanter
+@import
+  'decanter/scss/lib/bourbon',
+  'decanter/scss/core/variables',
+  'decanter/scss/core/utilities';
+
+// Stanford Math Research Center
+@import
+  '../utilities/mixins/mixins';
+
+.mrc-event__img {
+  @include mrc-float-left;
+}
+
+.mrc-event__location {
+  font-size: $h3-font-size;
+  font-weight: $font-light;
+  margin-top: 0;
+}
+
+.mrc-event__date,
+.mrc-event__time {
+  font-size: $h2-font-size;
+}
+
+.mrc-event__map-admission {
+  flex-wrap: wrap;
+  margin: 1em 0;
+
+  @include mrc-flex-medium;
+
+  .mrc-event__map {
+    margin-right: 0;
+
+    @include media($medium-screen) {
+      margin-right: 0.5em;
+    }
+
+
+    &:before {
+      content: "\f041";
+      font-family: FontAwesome;
+    }
+  }
+
+  .mrc-event__admission {
+    margin-left: 0;
+
+    @include media($medium-screen) {
+      margin-left: 0.5em;
+    }
+
+
+    &:before {
+      content: "\f145";
+      font-family: FontAwesome;
+    }
+  }
+}
+
+.mrc-event__main-content {
+  &:before {
+    content: "\2014";
+    font-size: $lead-font-size;
+    font-weight: $font-bold;
+  }
+}
+
+.mrc-event__sponsor {
+  font-style: italic;
+
+  p {
+    &:before {
+      content: "Sponsored by ";
+    }
+  }
+}
+
+.mrc-event__contact {
+  font-style: italic;
+  margin-top: 1em;
+}
+
+.decanter-embed-container {
+  margin-top: 1em;
+}
