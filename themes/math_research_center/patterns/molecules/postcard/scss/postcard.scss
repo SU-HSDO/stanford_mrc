@@ -16,7 +16,6 @@
 @import
   '../utilities/mixins/mixins';
 
-// Default postcard (vertical)
 .mrc-postcard {
   @include mrc-card-container;
 
