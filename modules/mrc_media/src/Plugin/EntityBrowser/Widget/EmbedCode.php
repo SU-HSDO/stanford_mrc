@@ -35,7 +35,7 @@ class EmbedCode extends WidgetBase {
   }
 
   /**
-   * @param array $original_form
+   * @param array $form
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    * @param array $additional_widget_parameters
    *
@@ -102,6 +102,7 @@ class EmbedCode extends WidgetBase {
       ],
     ];
     $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
+    $form['#attached']['library'][] = 'mrc_media/mrc_media.embed';
     return $form;
   }
 

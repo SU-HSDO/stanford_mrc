@@ -1,0 +1,9 @@
+services:
+  mrc_media.route_subscriber:
+    class: Drupal\mrc_media\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  mrc_media.bundle_suggestion:
+    class: '\Drupal\mrc_media\BundleSuggestion'
+    arguments:
+      - '@entity_type.manager'
