@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - math_research_center
+_core:
+  default_config_hash: 98cTvtysHPvgIQQ3ZR1Nhsw-sZ0xOMnNg4_MjBbsXpI
+id: math_research_center_main_menu
+theme: math_research_center
+region: header
+weight: 1
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+visibility: {  }

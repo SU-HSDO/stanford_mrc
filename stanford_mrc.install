@@ -143,7 +143,7 @@ function stanford_mrc_update_8003() {
 }
 
 /**
- * Enables new modules
+ * Enables new modules.
  */
 function stanford_mrc_update_8004() {
   \Drupal::service('theme_installer')->install(['math_research_center']);
@@ -158,3 +158,11 @@ function stanford_mrc_update_8004() {
   ]);
 }
 
+/**
+ * Set blocks for math_research_center theme.
+ */
+function stanford_mrc_update_8005() {
+  $theme_path = drupal_get_path('theme','math_research_center');
+  stanford_mrc_update_configs(TRUE, 'all', $theme_path);
+  stanford_mrc_update_configs(TRUE, 'all');
+}
