@@ -11,10 +11,12 @@ dependencies:
     - field.field.node.stanford_news_item.field_s_news_link
     - field.field.node.stanford_news_item.field_s_news_meta_tags
     - field.field.node.stanford_news_item.field_s_news_source
+    - image.style.hero_banner
     - node.type.stanford_news_item
   module:
     - datetime
     - ds
+    - file
     - image
     - link
     - text
@@ -28,7 +30,7 @@ third_party_settings:
       entity_classes: all_classes
       settings:
         pattern:
-          field_templates: default
+          field_templates: only_content
     regions:
       date:
         - field_s_news_date
@@ -38,12 +40,13 @@ third_party_settings:
         - field_s_news_image
       content:
         - body
+        - field_s_news_attachment
       author:
         - node_author
     fields:
       node_author:
         plugin_id: node_author
-        weight: 4
+        weight: 5
         label: hidden
         formatter: author
 _core:
@@ -60,6 +63,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  field_s_news_attachment:
+    type: file_default
+    weight: 4
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings:
+      ds:
+        ds_limit: ''
   field_s_news_date:
     weight: 0
     label: hidden
@@ -73,7 +85,7 @@ content:
     weight: 2
     label: hidden
     settings:
-      image_style: ''
+      image_style: hero_banner
       image_link: ''
     third_party_settings: {  }
     type: image
@@ -91,7 +103,6 @@ content:
     type: link
     region: link
 hidden:
-  field_s_news_attachment: true
   field_s_news_categories: true
   field_s_news_featured: true
   field_s_news_link: true
