@@ -37,6 +37,9 @@ function mrc_events_update_8001() {
  * Reverts the entity display.
  */
 function mrc_events_update_8002() {
+  if (!\Drupal::moduleHandler()->moduleExists('ui_patterns_ds')) {
+    \Drupal::service('module_installer')->install(['ui_patterns_ds']);
+  }
   module_load_install('stanford_mrc');
   $path = drupal_get_path('module', 'mrc_events') . '/config/install';
   stanford_mrc_update_configs(TRUE, 'all', $path);
