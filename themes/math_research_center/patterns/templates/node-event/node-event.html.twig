@@ -30,7 +30,9 @@
   {% endif %}
 
   {% if sponsor %}
-    <div class="mrc-event__sponsor">{{ sponsor }}</div>
+    <div class="mrc-event__sponsor">
+      <span class="sponsored-by">{{ "Sponsored by "|t }}</span>{{ sponsor }}
+    </div>
   {% endif %}
 
   <div class="mrc-event__contact">

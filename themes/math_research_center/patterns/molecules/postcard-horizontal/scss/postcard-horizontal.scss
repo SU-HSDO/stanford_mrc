@@ -17,15 +17,10 @@
   '../utilities/mixins/mixins';
 
 .mrc-postcard--horizontal {
-
   @include mrc-flex-medium;
 
-  .mrc-postcard--horizontal__img {
+  .mrc-postcard__img {
     margin-right: 0;
-
-    img {
-      width: 100%;
-    }
 
     @include media($medium-screen) {
       margin-right: 30px;
@@ -34,5 +29,9 @@
         width: auto;
       }
     }
+  }
+
+  .mrc-postcard__title {
+    margin-top: 0;
   }
 }
