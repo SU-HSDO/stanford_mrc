@@ -32,3 +32,12 @@ function mrc_events_update_8001() {
   $path = drupal_get_path('module', 'mrc_events') . '/config/install';
   stanford_mrc_update_configs(TRUE, 'all', $path);
 }
+
+/**
+ * Reverts the entity display.
+ */
+function mrc_events_update_8002() {
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_events') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+}
