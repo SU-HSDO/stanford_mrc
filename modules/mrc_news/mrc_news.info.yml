@@ -17,3 +17,4 @@ dependencies:
   - metatag
   - ds
   - ui_patterns_ds
+  - rabbit_hole
