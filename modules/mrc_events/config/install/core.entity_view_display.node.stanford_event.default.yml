@@ -17,15 +17,48 @@ dependencies:
     - field.field.node.stanford_event.field_s_event_status
     - field.field.node.stanford_event.field_s_event_type
     - field.field.node.stanford_event.field_s_event_video_recap
+    - image.style.large
     - node.type.stanford_event
   module:
     - datetime_range
+    - ds
     - image
     - link
     - telephone
     - text
     - user
     - video_embed_field
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_node_event
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: only_content
+    regions:
+      date:
+        - field_s_event_date
+      image:
+        - field_s_event_image
+      description:
+        - body
+      location:
+        - field_s_event_location
+      map:
+        - field_s_event_map_link
+      sponsor:
+        - field_s_event_sponsor
+      email:
+        - field_s_event_contact_email
+      phone:
+        - field_s_event_contact_phone
+      admission:
+        - field_s_event_admission
+      embed_video:
+        - field_s_event_video_recap
 _core:
   default_config_hash: '--Z_oePhErkaBTiWo881iUr_LbanS3gn3S1XXxQDkW0'
 id: node.stanford_event.default
@@ -36,7 +69,7 @@ content:
   body:
     type: text_default
     weight: 4
-    region: content
+    region: description
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -46,14 +79,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: text_default
-    region: content
+    region: admission
   field_s_event_contact_email:
     weight: 8
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
-    region: content
+    region: email
   field_s_event_contact_phone:
     weight: 9
     label: hidden
@@ -61,37 +94,25 @@ content:
       title: ''
     third_party_settings: {  }
     type: telephone_link
-    region: content
+    region: phone
   field_s_event_date:
     weight: 1
     label: hidden
     settings:
       timezone_override: ''
-      format_type: events_date
+      date_format: 'l, F j, Y g:i A'
       separator: To
     third_party_settings: {  }
-    type: daterange_default
-    region: content
+    type: daterange_custom
+    region: date
   field_s_event_image:
     type: image
     weight: 2
-    region: content
+    region: image
     label: hidden
     settings:
-      image_style: ''
+      image_style: large
       image_link: ''
-    third_party_settings: {  }
-  field_s_event_link:
-    type: link
-    weight: 3
-    region: content
-    label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
     third_party_settings: {  }
   field_s_event_location:
     weight: 5
@@ -99,7 +120,7 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: basic_string
-    region: content
+    region: location
   field_s_event_map_link:
     weight: 6
     label: hidden
@@ -111,14 +132,14 @@ content:
       target: ''
     third_party_settings: {  }
     type: link
-    region: content
+    region: map
   field_s_event_sponsor:
     weight: 7
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
-    region: content
+    region: sponsor
   field_s_event_video_recap:
     weight: 11
     label: hidden
@@ -129,14 +150,11 @@ content:
       autoplay: false
     third_party_settings: {  }
     type: video_embed_field_video
-    region: content
-  links:
-    weight: 0
-    region: content
-    settings: {  }
-    third_party_settings: {  }
+    region: embed_video
 hidden:
   field_s_event_audience: true
   field_s_event_category: true
+  field_s_event_link: true
   field_s_event_status: true
   field_s_event_type: true
+  links: true

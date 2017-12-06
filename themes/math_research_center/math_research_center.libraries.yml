@@ -87,8 +87,13 @@
 #       css/pattern-library/theme/print.css: { media: print }
 
 # CHANGE THE LIBRARY BELOW
-mrc:
-  version: VERSION
+
+fontawesome:
+  version: 4.7.0
+  remote: https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css
+  license:
+    name: FontAwesome
+    url: http://fontawesome.io/license/
   css:
-    component:
-      css/components/components.css: {}
+    base:
+      https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css: {}
