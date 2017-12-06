@@ -35,17 +35,19 @@
     </div>
   {% endif %}
 
-  <div class="mrc-event__contact">
-    <div class="contact-label">
-      {{ "Event Contact:"|t }}
+  {% if email or phone %}
+    <div class="mrc-event__contact">
+      <div class="contact-label">
+        {{ "Event contact information:"|t }}
+      </div>
+      {% if email %}
+        <div>{{ email }}</div>
+      {% endif %}
+      {% if phone %}
+        <div>{{ phone }}</div>
+      {% endif %}
     </div>
-    {% if email %}
-      <div>{{ email }}</div>
-    {% endif %}
-    {% if phone %}
-      <div>{{ phone }}</div>
-    {% endif %}
-  </div>
+  {% endif %}
 
   {% if embed_video %}
     <div class="decanter-embed-container" aria-label="16:9">{{ embed_video }}</div>
