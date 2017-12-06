@@ -3,7 +3,7 @@ news_card:
   fields:
     title:
       label: "Title"
-      preview: "<a href=\"#\">Title</a>"
+      preview: "<a href=\"#\">Card Title</a>"
     image:
       label: "Image"
       preview:

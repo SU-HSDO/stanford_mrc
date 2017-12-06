@@ -30,15 +30,14 @@
 }
 
 .mrc-event__map-admission {
-  flex-wrap: wrap;
   margin: 1em 0;
 
-  @include mrc-flex-medium;
-
   .mrc-event__map {
+    float: none;
     margin-right: 0;
 
     @include media($medium-screen) {
+      float: left;
       margin-right: 0.5em;
     }
 
@@ -47,6 +46,7 @@
       color: $color-bright-red;
       content: "\f041";
       font-family: FontAwesome;
+      margin-right: 0.15em;
     }
   }
 
@@ -61,6 +61,7 @@
     &:before {
       content: "\f145";
       font-family: FontAwesome;
+      margin-right: 0.15em;
     }
   }
 }
@@ -68,19 +69,16 @@
 .mrc-event__description {
   &:before {
     content: "\2014";
+    display: block;
     font-size: $lead-font-size;
     font-weight: $font-bold;
+    margin-bottom: 0.5em;
   }
 }
 
 .mrc-event__sponsor {
   font-style: italic;
-
-  p {
-    &:before {
-      content: "Sponsored by ";
-    }
-  }
+  margin-top: 1em;
 }
 
 .mrc-event__contact {

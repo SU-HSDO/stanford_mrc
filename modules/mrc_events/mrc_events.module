@@ -6,6 +6,9 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\node\Entity\Node;
 
 /**
  * Implements hook_field_widget_form_alter().
@@ -46,5 +49,16 @@ function mrc_events_node_validate_date($form, FormStateInterface $form_state) {
   if (!empty($date[0]['value']) && (!$date[0]['show_end'] || empty($date[0]['end_value']))) {
     $date[0]['end_value'] = $date[0]['value'];
     $form_state->setValue('field_s_event_date', $date);
+  }
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function mrc_events_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  // Don't show the end date on the event node page.
+  if ($entity instanceof Node && $entity->bundle() == 'stanford_event') {
+    unset($build['field_s_event_date'][0]['end_date']);
+    unset($build['field_s_event_date'][0]['separator']);
   }
 }

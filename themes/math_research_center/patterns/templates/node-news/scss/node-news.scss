@@ -16,6 +16,7 @@
 
 .mrc-news__date-source {
   flex-wrap: wrap;
+  margin-bottom: 1em;
 
   @include mrc-flex-medium;
 
@@ -35,8 +36,9 @@
 .mrc-news__author {
   font-style: italic;
   font-weight: $font-bold;
+  margin-top: 1em;
 
   > div {
-    display:inline-block;
+    display: inline-block;
   }
 }

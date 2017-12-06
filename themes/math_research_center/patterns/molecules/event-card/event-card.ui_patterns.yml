@@ -4,7 +4,7 @@ event_card:
   fields:
     title:
       label: "Title"
-      preview: "Card Title"
+      preview: "<a href=\"#\">Card Title</a>"
     image:
       label: "Image"
       preview:

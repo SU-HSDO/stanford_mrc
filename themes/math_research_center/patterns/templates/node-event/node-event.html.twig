@@ -1,40 +1,59 @@
 <div class="event-node">
-  <h1>{{ title }}</h1>
-  {% if image %}
+  {% if image|render %}
     <div class="mrc-event__img">{{ image }}</div>
   {% endif %}
-  {% if location %}
+
+  {% if location|render %}
     <div class="mrc-event__location">{{ location }}</div>
   {% endif %}
-  {% if date %}
+
+  {% if date|render %}
     <div class="mrc-event__date">{{ date }}</div>
   {% endif %}
-  {% if time %}
+
+  {% if time|render %}
     <div class="mrc-event__time">{{ time }}</div>
   {% endif %}
+
   <div class="mrc-event__map-admission">
-    {% if map %}
+    {% if map|render %}
       <div class="mrc-event__map">{{ map }}</div>
     {% endif %}
-    {% if admission %}
+
+    {% if admission|render %}
       <div class="mrc-event__admission">{{ admission }}</div>
     {% endif %}
   </div>
-  {% if description %}
+
+  {% if description|render %}
     <div class="mrc-event__description">{{ description }}</div>
   {% endif %}
-  {% if sponsor %}
-    <div class="mrc-event__sponsor">{{ sponsor }}</div>
+
+  {% if sponsor|render %}
+    <div class="mrc-event__sponsor">
+      <span class="sponsored-by">{{ "Sponsored by "|t }}</span>{{ sponsor }}
+    </div>
   {% endif %}
-  <div class="mrc-event__contact">
-    {% if email %}
-      <div>{{ email }}</div>
-    {% endif %}
-    {% if phone %}
-      <div>{{ phone }}</div>
-    {% endif %}
-  </div>
-  {% if embed_video %}
+
+  {% if email|render or phone|render %}
+    <div class="mrc-event__contact">
+      
+      <div class="contact-label">
+        {{ "Event contact information:"|t }}
+      </div>
+      
+      {% if email|render %}
+        <div>{{ email }}</div>
+      {% endif %}
+      
+      {% if phone|render %}
+        <div>{{ phone }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if embed_video|render %}
     <div class="decanter-embed-container" aria-label="16:9">{{ embed_video }}</div>
   {% endif %}
+
 </div>
