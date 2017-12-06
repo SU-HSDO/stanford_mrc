@@ -1,0 +1,11 @@
+Stanford MRC
+
+Version 8.0.2                                                         2017-11-09
+--------------------------------------------------------------------------------
+- Set Display settings for news nodes & events nodes.
+- New visitor content type in mrc_visitor module.
+- Media browser with wysiwyg support and bulk upload page in new module mrc_media.
+
+Version 8.0.1                                                         2017-11-09
+--------------------------------------------------------------------------------
+- Initial Release
