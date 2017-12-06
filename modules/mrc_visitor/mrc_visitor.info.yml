@@ -13,3 +13,4 @@ dependencies:
   - text
   - pathauto
   - entity_reference_revisions
+  - yearonly
