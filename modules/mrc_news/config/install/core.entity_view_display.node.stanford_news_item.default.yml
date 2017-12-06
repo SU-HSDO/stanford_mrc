@@ -11,103 +11,46 @@ dependencies:
     - field.field.node.stanford_news_item.field_s_news_link
     - field.field.node.stanford_news_item.field_s_news_meta_tags
     - field.field.node.stanford_news_item.field_s_news_source
+    - image.style.hero_banner
     - node.type.stanford_news_item
   module:
     - datetime
-    - field_group
+    - ds
     - file
     - image
     - link
     - text
     - user
 third_party_settings:
-  field_group:
-    group_s_postcard:
-      children:
-        - group_s_postcard_image
-        - group_s_postcard_content
-        - body
-        - field_s_news_link
-        - field_s_news_attachment
-      parent_name: ''
-      weight: 0
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: ''
-        element: div
-        show_label: false
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: Postcard
-    group_s_postcard_image:
-      children:
-        - field_s_news_image
-      parent_name: group_s_postcard
-      weight: 20
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: 'postcard-image group_s_postcard_image'
-        element: div
-        show_label: false
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'Postcard Image'
-    group_s_postcard_content:
-      children:
-        - group_descriptor_info
-      parent_name: group_s_postcard
-      weight: 21
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: postcard-content
-        element: div
-        show_label: false
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'Postcard Content'
-    group_descriptor_info:
-      children:
+  ds:
+    layout:
+      id: pattern_node_news
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: only_content
+    regions:
+      date:
         - field_s_news_date
+      link:
         - field_s_news_source
-        - group_s_news_postedin
-      parent_name: group_s_postcard_content
-      weight: 1
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: descriptor
-        element: div
-        show_label: false
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'Group Descriptor Info'
-    group_s_news_postedin:
-      children:
-        - field_s_news_categories
-      parent_name: group_descriptor_info
-      weight: 6
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: descriptor
-        element: div
-        show_label: false
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'Posted In'
+      image:
+        - field_s_news_image
+      content:
+        - body
+        - field_s_news_attachment
+      author:
+        - node_author
+    fields:
+      node_author:
+        plugin_id: node_author
+        weight: 5
+        label: hidden
+        formatter: author
+_core:
+  default_config_hash: tHz7HH0TLEM8PMHeA5HIwZZUcXxOJq2d4Ro2Fbo3WZY
 id: node.stanford_news_item.default
 targetEntityType: node
 bundle: stanford_news_item
@@ -116,58 +59,40 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 22
+    weight: 3
     settings: {  }
     third_party_settings: {  }
     region: content
   field_s_news_attachment:
-    weight: 24
-    label: above
-    settings: {  }
-    third_party_settings: {  }
     type: file_default
-    region: content
-  field_s_news_categories:
-    weight: 9
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_s_news_date:
     weight: 4
-    label: above
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings:
+      ds:
+        ds_limit: ''
+  field_s_news_date:
+    weight: 0
+    label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: standard_date
     third_party_settings: {  }
     type: datetime_default
-    region: content
+    region: date
   field_s_news_image:
-    weight: 3
-    label: above
+    weight: 2
+    label: hidden
     settings:
-      image_style: ''
+      image_style: hero_banner
       image_link: ''
     third_party_settings: {  }
     type: image
-    region: content
-  field_s_news_link:
-    weight: 23
-    label: above
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    type: link
-    region: content
+    region: image
   field_s_news_source:
-    weight: 5
-    label: above
+    weight: 1
+    label: hidden
     settings:
       trim_length: 80
       url_only: false
@@ -176,8 +101,10 @@ content:
       target: ''
     third_party_settings: {  }
     type: link
-    region: content
+    region: link
 hidden:
+  field_s_news_categories: true
   field_s_news_featured: true
+  field_s_news_link: true
   field_s_news_meta_tags: true
   links: true

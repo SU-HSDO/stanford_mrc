@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * mrc_news.install
+ */
+
+/**
+ * Revert the news node display.
+ */
+function mrc_news_update_8001() {
+  if (!\Drupal::moduleHandler()->moduleExists('ui_patterns_ds')) {
+    \Drupal::service('module_installer')->install(['ui_patterns_ds']);
+  }
+  if (!\Drupal::moduleHandler()->moduleExists('rh_node')) {
+    \Drupal::service('module_installer')->install(['rh_node']);
+  }
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_news') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+}

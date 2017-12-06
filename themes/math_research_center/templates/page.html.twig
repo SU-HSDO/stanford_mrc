@@ -1,0 +1,32 @@
+<!-- ______________________ HEADER _______________________ -->
+
+{% if page.header %}
+  <header id="header" class="decanter-grid">
+    {{ page.header }}
+  </header><!-- /#header -->
+{% endif %}
+
+<!-- ______________________ MAIN _______________________ -->
+
+{{ page.breadcrumb }}
+
+{% if page.highlighted|render %}
+  <div id="highlighted">{{ page.highlighted }}</div>
+{% endif %}
+
+
+{% if page.help %}
+  <div id="help">{{ page.help }}</div>
+{% endif %}
+
+<div class="decanter-grid main-container">
+  {{ page.content }}
+</div>
+
+<!-- ______________________ FOOTER _______________________ -->
+
+{% if page.footer|render %}
+  <footer id="footer">
+    {{ page.footer }}
+  </footer><!-- /#footer -->
+{% endif %}
