@@ -106,8 +106,9 @@ function stanford_mrc_update_configs($create_missing = TRUE, $configs = [], $pat
     $updated_config = $source->read($config);
     unset($updated_config['uuid']);
 
+    $uuid = $config_entity->get('uuid');
     // Make sure there is a UUID on the config.
-    if (!$uuid = $config_entity->get('uuid')) {
+    if (empty($uuid)) {
       $uuid_service = \Drupal::service('uuid');
       $uuid = $uuid_service->generate();
     }

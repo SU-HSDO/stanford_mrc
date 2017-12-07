@@ -14,6 +14,11 @@
       {% if time %}
         <div class="mrc-event-card__time">{{ time }}</div>
       {% endif %}
+
+      {% if time and location %}
+        &nbsp;|&nbsp;
+      {% endif %}
+
       {% if location %}
         <div class="mrc-event-card__location">{{ location }}</div>
       {% endif %}

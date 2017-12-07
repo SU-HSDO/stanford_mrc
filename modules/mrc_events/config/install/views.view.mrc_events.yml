@@ -11,6 +11,7 @@ dependencies:
     - datetime
     - datetime_range
     - image
+    - mrc_date
     - node
     - ui_patterns_views
     - user
@@ -213,11 +214,11 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: daterange_custom
+          type: datetimerange_custom
           settings:
             timezone_override: ''
             date_format: 'l, F j, Y'
-            separator: ''
+            display: start_date
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -493,7 +494,8 @@ display:
           exposed: false
           expose:
             label: ''
-          plugin_id: standard
+          plugin_id: datetime
+          entity_type: node
       title: List
       header: {  }
       footer: {  }
