@@ -1,4 +1,7 @@
-<div class="mrc-postcard--horizontal">
+
+{% set attributes = attributes.addClass('mrc-postcard--horizontal') %}
+
+<div{{ attributes }}>
   {% if image %}
     <div class="mrc-postcard__img">
       {{ image }}

@@ -1,4 +1,7 @@
-<div class="event-node">
+
+{% set attributes = attributes.addClass('event-node') %}
+
+<div{{ attributes }}>
   {% if image|render %}
     <div class="mrc-event__img">{{ image }}</div>
   {% endif %}

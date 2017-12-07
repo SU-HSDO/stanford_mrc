@@ -1,4 +1,7 @@
-<div class="mrc-news__date-source">
+
+{% set attributes = attributes.addClass('mrc-news__date-source') %}
+
+<div{{ attributes }}>
   {% if date %}
     <div class="mrc-news__date">
       {{ date }}
