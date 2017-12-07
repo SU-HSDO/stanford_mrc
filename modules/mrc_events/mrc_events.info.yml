@@ -16,3 +16,4 @@ dependencies:
   - datetime_range
   - allowed_formats
   - video_embed_field
+  - ui_patterns_ds
