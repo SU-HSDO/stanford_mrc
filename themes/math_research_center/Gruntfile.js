@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         }
       },
       css: {
-        files: ['scss/**/*.scss', 'patterns/**/**/scss/*.scss'],
+        files: ['scss/**/*.scss', 'patterns/**/**/scss/*.scss', 'examples/**/**/scss/*.scss'],
         tasks: ['sass'],
         options: {
           interrupt: true
@@ -120,16 +120,15 @@ module.exports = function(grunt) {
           'patterns/templates/node-event/css/node-event.css':                   'patterns/templates/node-event/scss/node-event.scss',
           'patterns/templates/node-news/css/node-news.css':                     'patterns/templates/node-news/scss/node-news.scss',
 
-          // COMPONENTS
-          'css/components/date-stacked.css':        'scss/components/date-stacked.scss',
-          'css/components/event-card.css':          'scss/components/event-card.scss',
-          'css/components/featured-event-card.css': 'scss/components/featured-event-card.scss',
-          'css/components/news-card.css':           'scss/components/news-card.scss',
-          'css/components/postcard.css':            'scss/components/postcard.scss',
-
-          // THEME
-          'css/theme/event.css':                    'scss/theme/event.scss',
-          'css/theme/news.css':                     'scss/theme/news.scss'
+          // EXAMPLES
+          'examples/atoms/date-stacked/css/date-stacked.css':                   'examples/atoms/date-stacked/scss/date-stacked.scss',
+          'examples/molecules/event-card/css/event-card.css':                   'examples/molecules/event-card/scss/event-card.scss',
+          'examples/molecules/featured-event-card/css/featured-event-card.css': 'examples/molecules/featured-event-card/scss/featured-event-card.scss',
+          'examples/molecules/news-card/css/news-card.css':                     'examples/molecules/news-card/scss/news-card.scss',
+          'examples/molecules/postcard/css/postcard.css':                       'examples/molecules/postcard/scss/postcard.scss',
+          'examples/molecules/postcard-horizontal/css/postcard-horizontal.css': 'examples/molecules/postcard-horizontal/scss/postcard-horizontal.scss',
+          'examples/templates/event/css/event.css':                             'examples/templates/event/scss/event.scss',
+          'examples/templates/news/css/news.css':                               'examples/templates/news/scss/news.scss'
         }
       }
     },
