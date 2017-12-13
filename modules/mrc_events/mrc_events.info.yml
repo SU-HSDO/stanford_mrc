@@ -17,3 +17,4 @@ dependencies:
   - allowed_formats
   - video_embed_field
   - ui_patterns_ds
+  - mrc_date

@@ -20,10 +20,10 @@ dependencies:
     - image.style.large
     - node.type.stanford_event
   module:
-    - datetime_range
     - ds
     - image
     - link
+    - mrc_date
     - telephone
     - text
     - user
@@ -101,9 +101,9 @@ content:
     settings:
       timezone_override: ''
       date_format: 'l, F j, Y g:i A'
-      separator: To
+      display: start_date
     third_party_settings: {  }
-    type: daterange_custom
+    type: datetimerange_custom
     region: date
   field_s_event_image:
     type: image

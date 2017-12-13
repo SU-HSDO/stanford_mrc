@@ -1,4 +1,7 @@
-<div class="mrc-featured-event-card">
+
+{% set attributes = attributes.addClass('mrc-featured-event-card') %}
+
+<div{{ attributes }}>
   {% if image %}
     <div class="mrc-featured-event-card__img">
       {{ image }}

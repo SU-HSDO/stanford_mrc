@@ -1,4 +1,7 @@
-<div class="mrc-event-card">
+
+{% set attributes = attributes.addClass('mrc-event-card') %}
+
+<div{{ attributes }}>
 
   {% if image %}
     <div class="mrc-event-card__img">
@@ -14,6 +17,11 @@
       {% if time %}
         <div class="mrc-event-card__time">{{ time }}</div>
       {% endif %}
+
+      {% if time and location %}
+        &nbsp;|&nbsp;
+      {% endif %}
+
       {% if location %}
         <div class="mrc-event-card__location">{{ location }}</div>
       {% endif %}

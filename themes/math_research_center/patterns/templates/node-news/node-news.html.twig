@@ -1,33 +1,38 @@
-<div class="mrc-news__date-source">
-  {% if date %}
-    <div class="mrc-news__date">
-      {{ date }}
+
+{% set attributes = attributes.addClass('news-node') %}
+
+<div{{ attributes }}>
+  <div class="mrc-news__date-source">
+    {% if date %}
+      <div class="mrc-news__date">
+        {{ date }}
+      </div>
+    {% endif %}
+
+    {% if link and date %}
+      &nbsp;|&nbsp;
+    {% endif %}
+
+    {% if link %}
+      <div class="mrc-news__source">
+        {{ link }}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if image %}
+    <div class="mrc-news__img">
+      {{ image }}
     </div>
   {% endif %}
 
-  {% if link and date %}
-    &nbsp;|&nbsp;
-  {% endif %}
+  <div class="mrc-news__main-content">
+    {{ content }}
+  </div>
 
-  {% if link %}
-    <div class="mrc-news__source">
-      {{ link }}
+  {% if author %}
+    <div class="mrc-news__author">
+      <span class="story-by">{{ "Story by "|t }}</span> {{ author }}
     </div>
   {% endif %}
 </div>
-
-{% if image %}
-  <div class="mrc-news__img">
-    {{ image }}
-  </div>
-{% endif %}
-
-<div class="mrc-news__main-content">
-  {{ content }}
-</div>
-
-{% if author %}
-  <div class="mrc-news__author">
-    <span class="story-by">{{ "Story by "|t }}</span> {{ author }}
-  </div>
-{% endif %}

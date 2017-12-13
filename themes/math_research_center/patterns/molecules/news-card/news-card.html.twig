@@ -1,4 +1,7 @@
-<div class="mrc-news-card">
+
+{% set attributes = attributes.addClass('mrc-news-card') %}
+
+<div{{ attributes }}>
   {% if image %}
     <div class="mrc-news-card__img">
       {{ image }}
@@ -17,7 +20,7 @@
         </div>
       {% endif %}
 
-      {% if link|render|striptags|trim and program|render|striptags|trim %}
+      {% if link and program %}
         &nbsp;|&nbsp;
       {% endif %}
 
