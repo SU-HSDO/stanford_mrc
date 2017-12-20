@@ -12,7 +12,7 @@ targetEntityType: node
 bundle: stanford_basic_page
 mode: default
 content:
-  field_s_mrc_page_text:
+  field_s_mrc_page_bricks:
     weight: 101
     label: above
     settings:

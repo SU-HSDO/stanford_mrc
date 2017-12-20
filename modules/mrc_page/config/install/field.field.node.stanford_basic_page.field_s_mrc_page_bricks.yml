@@ -8,10 +8,10 @@ dependencies:
   module:
     - bricks_revisions
 id: node.stanford_basic_page.field_s_mrc_page_bricks
-field_name: field_s_mrc_page_text
+field_name: field_s_mrc_page_bricks
 entity_type: node
 bundle: stanford_basic_page
-label: 'Page Text'
+label: 'Bricks'
 description: ''
 required: false
 translatable: false
