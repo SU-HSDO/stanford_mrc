@@ -24,3 +24,5 @@ dependencies:
   - ui_patterns_ds
   - entity_reference_revisions
   - bricks
+  - bricks_inline
+  - bricks_revisions
