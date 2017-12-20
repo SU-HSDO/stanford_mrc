@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_s_mrc_page_text
+    - node.type.stanford_basic_page
+    - paragraphs.paragraphs_type.wysiwyg
+  module:
+    - bricks_revisions
+id: node.stanford_basic_page.field_s_mrc_page_text
+field_name: field_s_mrc_page_text
+entity_type: node
+bundle: stanford_basic_page
+label: 'Page Text'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: '0'
+    target_bundles:
+      wysiwyg: wysiwyg
+    target_bundles_drag_drop:
+      wysiwyg:
+        enabled: '1'
+        weight: '2'
+field_type: bricks_revisioned
