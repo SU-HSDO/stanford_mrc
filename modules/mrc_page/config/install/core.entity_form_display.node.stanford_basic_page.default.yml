@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.stanford_basic_page.field_s_mrc_page_text
+    - field.field.node.stanford_basic_page.field_s_mrc_page_bricks
     - node.type.stanford_basic_page
   module:
     - bricks_inline

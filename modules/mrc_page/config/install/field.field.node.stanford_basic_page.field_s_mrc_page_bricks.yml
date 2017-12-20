@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_s_mrc_page_text
+    - field.storage.node.field_s_mrc_page_bricks
     - node.type.stanford_basic_page
     - paragraphs.paragraphs_type.wysiwyg
   module:
     - bricks_revisions
-id: node.stanford_basic_page.field_s_mrc_page_text
+id: node.stanford_basic_page.field_s_mrc_page_bricks
 field_name: field_s_mrc_page_text
 entity_type: node
 bundle: stanford_basic_page
