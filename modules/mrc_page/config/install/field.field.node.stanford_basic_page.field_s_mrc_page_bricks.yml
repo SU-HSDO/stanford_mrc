@@ -4,14 +4,13 @@ dependencies:
   config:
     - field.storage.node.field_s_mrc_page_bricks
     - node.type.stanford_basic_page
-    - paragraphs.paragraphs_type.wysiwyg
   module:
     - bricks_revisions
 id: node.stanford_basic_page.field_s_mrc_page_bricks
 field_name: field_s_mrc_page_bricks
 entity_type: node
 bundle: stanford_basic_page
-label: 'Bricks'
+label: Bricks
 description: ''
 required: false
 translatable: false
@@ -20,11 +19,6 @@ default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    negate: '0'
-    target_bundles:
-      wysiwyg: wysiwyg
-    target_bundles_drag_drop:
-      wysiwyg:
-        enabled: '1'
-        weight: '2'
+    negate: '1'
+    target_bundles: null
 field_type: bricks_revisioned
