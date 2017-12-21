@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.stanford_basic_page.field_s_mrc_page_bricks
+    - node.type.stanford_basic_page
+  module:
+    - bricks
+    - user
+id: node.stanford_basic_page.default
+targetEntityType: node
+bundle: stanford_basic_page
+mode: default
+content:
+  field_s_mrc_page_bricks:
+    weight: 101
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    type: bricks_nested
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  links: true
