@@ -51,9 +51,11 @@ function mrc_bricks_helper_preprocess_inline_entity_form_entity_table(&$variable
 
   if (isset($element['#widget']) && $element['#widget'] == 'bricks_tree_inline') {
     // For now disable the nesting ability.
-    $variables['table']['#tabledrag'] = [$variables['table']['#tabledrag'][0]];
-    $children = Element::children($element);
+    if (!empty($variables['table']['#tabledrag'])) {
+      $variables['table']['#tabledrag'] = [$variables['table']['#tabledrag'][0]];
+    }
 
+    $children = Element::children($element);
     // If there are more than 1 child, we rely on
     // bricks_inline_preprocess_inline_entity_form_entity_table() function.
     if (count($children) != 1) {
