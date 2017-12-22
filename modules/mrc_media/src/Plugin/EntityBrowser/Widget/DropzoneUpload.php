@@ -327,26 +327,22 @@ class DropzoneUpload extends WidgetBase {
    *   Array of uploaded files.
    */
   protected function getFiles(array $form, FormStateInterface $form_state) {
-
-    $additional_validators = [
-      'file_validate_size' => [
-        $this->bundleSuggestion->getMaxFilesize(),
-        0,
-      ],
-    ];
-
-    $files = $form_state->get(['dropzonejs', $this->uuid(), 'files']);
-
-    if (!$files) {
-      $files = [];
-    }
+    $files = $form_state->get(['dropzonejs', $this->uuid(), 'files']) ?: [];
 
     // We do some casting because $form_state->getValue() might return NULL.
     foreach ((array) $form_state->getValue([
       'upload',
       'uploaded_files',
     ], []) as $file) {
-      if (file_exists($file['path'])) {
+      if (!empty($file['path']) && file_exists($file['path'])) {
+        $bundle = $this->bundleSuggestion->getBundleFromFile($file['path']);
+        $additional_validators = [
+          'file_validate_size' => [
+            $this->bundleSuggestion->getMaxFileSizeBundle($bundle),
+            0,
+          ],
+        ];
+
         $entity = $this->dropzoneJsSave->createFile(
           $file['path'],
           $this->getUploadLocation(),
