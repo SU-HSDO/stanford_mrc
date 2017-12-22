@@ -1,0 +1,6 @@
+name: MRC Display Modes
+description: Alters the core display modes
+core: 8.x
+type: module
+version: VERSION
+package: Stanford MRC

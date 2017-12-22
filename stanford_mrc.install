@@ -168,3 +168,17 @@ function stanford_mrc_update_8005() {
   stanford_mrc_update_configs(TRUE, 'all', $theme_path);
   stanford_mrc_update_configs(TRUE, 'all');
 }
+
+/**
+ * Enables new modules.
+ */
+function stanford_mrc_update_8006() {
+  \Drupal::service('module_installer')->install([
+    'mrc_bricks_helper',
+    'mrc_display_modes',
+    'mrc_paragraphs_cta',
+    'mrc_paragraphs_postcard',
+    'mrc_page',
+  ]);
+  stanford_mrc_update_configs(TRUE, 'all');
+}

@@ -10,7 +10,7 @@ third_party_settings:
     parent: 'main:'
 name: 'Basic Page'
 type: stanford_basic_page
-description: 'A basic page with a wysiwyg field.'
+description: 'A primary page with bricks.'
 help: ''
 new_revision: true
 preview_mode: 1
