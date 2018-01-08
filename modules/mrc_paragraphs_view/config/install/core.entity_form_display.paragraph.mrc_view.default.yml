@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.mrc_view.field_mrc_view
+    - paragraphs.paragraphs_type.mrc_view
+  module:
+    - viewfield
+id: paragraph.mrc_view.default
+targetEntityType: paragraph
+bundle: mrc_view
+mode: default
+content:
+  field_mrc_view:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: viewfield_select
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true
