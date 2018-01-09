@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.stanford_event.field_s_event_contact_email
     - field.field.node.stanford_event.field_s_event_contact_phone
     - field.field.node.stanford_event.field_s_event_date
+    - field.field.node.stanford_event.field_s_event_featured
     - field.field.node.stanford_event.field_s_event_image
     - field.field.node.stanford_event.field_s_event_link
     - field.field.node.stanford_event.field_s_event_location
@@ -39,24 +40,24 @@ third_party_settings:
         pattern:
           field_templates: only_content
     regions:
-      date:
-        - field_s_event_date
       image:
         - field_s_event_image
-      description:
-        - body
       location:
         - field_s_event_location
+      date:
+        - field_s_event_date
       map:
         - field_s_event_map_link
+      admission:
+        - field_s_event_admission
+      description:
+        - body
       sponsor:
         - field_s_event_sponsor
       email:
         - field_s_event_contact_email
       phone:
         - field_s_event_contact_phone
-      admission:
-        - field_s_event_admission
       embed_video:
         - field_s_event_video_recap
 _core:
@@ -68,27 +69,27 @@ mode: default
 content:
   body:
     type: text_default
-    weight: 4
+    weight: 5
     region: description
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_s_event_admission:
-    weight: 10
+    weight: 4
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: admission
   field_s_event_contact_email:
-    weight: 8
+    weight: 7
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: email
   field_s_event_contact_phone:
-    weight: 9
+    weight: 8
     label: hidden
     settings:
       title: ''
@@ -96,7 +97,7 @@ content:
     type: telephone_link
     region: phone
   field_s_event_date:
-    weight: 1
+    weight: 2
     label: hidden
     settings:
       timezone_override: ''
@@ -107,7 +108,7 @@ content:
     region: date
   field_s_event_image:
     type: image
-    weight: 2
+    weight: 0
     region: image
     label: hidden
     settings:
@@ -115,14 +116,14 @@ content:
       image_link: ''
     third_party_settings: {  }
   field_s_event_location:
-    weight: 5
+    weight: 1
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: location
   field_s_event_map_link:
-    weight: 6
+    weight: 3
     label: hidden
     settings:
       trim_length: 80
@@ -134,14 +135,14 @@ content:
     type: link
     region: map
   field_s_event_sponsor:
-    weight: 7
+    weight: 6
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: sponsor
   field_s_event_video_recap:
-    weight: 11
+    weight: 9
     label: hidden
     settings:
       responsive: true
@@ -154,6 +155,7 @@ content:
 hidden:
   field_s_event_audience: true
   field_s_event_category: true
+  field_s_event_featured: true
   field_s_event_link: true
   field_s_event_status: true
   field_s_event_type: true
