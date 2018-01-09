@@ -56,3 +56,26 @@ function mrc_events_update_8003() {
   $path = drupal_get_path('module', 'mrc_events') . '/config/install';
   stanford_mrc_update_configs(TRUE, 'all', $path);
 }
+
+/**
+ * Adds featured event checkbox and filter.
+ */
+function mrc_events_update_8004() {
+  FieldStorageConfig::create([
+    'field_name' => 'field_s_event_featured',
+    'entity_type' => 'node',
+    'type' => 'boolean',
+    'cardinality' => 1,
+  ])->save();
+
+  FieldConfig::create([
+    'field_name' => 'field_s_event_featured',
+    'entity_type' => 'node',
+    'bundle' => 'stanford_event',
+    'label' => 'Featured',
+  ])->save();
+
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_events') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+}

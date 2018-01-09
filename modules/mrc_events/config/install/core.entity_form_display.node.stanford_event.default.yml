@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.stanford_event.field_s_event_contact_email
     - field.field.node.stanford_event.field_s_event_contact_phone
     - field.field.node.stanford_event.field_s_event_date
+    - field.field.node.stanford_event.field_s_event_featured
     - field.field.node.stanford_event.field_s_event_image
     - field.field.node.stanford_event.field_s_event_link
     - field.field.node.stanford_event.field_s_event_location
@@ -50,6 +51,7 @@ third_party_settings:
         - body
         - field_s_event_image
         - field_s_event_link
+        - field_s_event_featured
       parent_name: group_event_tabs
       weight: 2
       format_type: tab
@@ -165,6 +167,13 @@ content:
       increment: 1
     third_party_settings: {  }
     type: daterange_datelist
+    region: content
+  field_s_event_featured:
+    weight: 22
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
     region: content
   field_s_event_image:
     type: image_image
