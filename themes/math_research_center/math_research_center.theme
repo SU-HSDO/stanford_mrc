@@ -44,3 +44,35 @@ function math_research_center_preprocess(&$variables, $hook) {
     }
   }
 }
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function math_research_center_preprocess_field(&$variables) {
+  // Change some field settings like the labels.
+  switch ($variables['field_name']) {
+    case 'field_s_visitor_donor':
+      $variables['label'] = t('Position funded by');
+      break;
+
+    case 'field_s_visitor_external_link':
+      $node_title = $variables['element']['#object']->label();
+      $variables['label'] = t('You can learn more about @title at', ['@title' => $node_title]);
+      break;
+
+    case 'field_s_visitor_research_area':
+
+      if (count($variables['items']) > 1) {
+        $variables['label'] .= 's';
+      }
+      break;
+
+    case 'field_s_visitor_year_visited':
+      foreach ($variables['items'] as &$item) {
+        $year = (int) $item['content']['#markup'];
+        $item['content']['#markup'] = ($year - 1) . ' - ' . $item['content']['#markup'];
+      }
+      break;
+  }
+
+}

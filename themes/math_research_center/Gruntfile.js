@@ -119,6 +119,7 @@ module.exports = function(grunt) {
           'patterns/molecules/postcard-horizontal/css/postcard-horizontal.css': 'patterns/molecules/postcard-horizontal/scss/postcard-horizontal.scss',
           'patterns/templates/node-event/css/node-event.css':                   'patterns/templates/node-event/scss/node-event.scss',
           'patterns/templates/node-news/css/node-news.css':                     'patterns/templates/node-news/scss/node-news.scss',
+          'patterns/templates/node-news/css/node-visitor.css':                     'patterns/templates/node-news/scss/node-visitor.scss',
 
           // EXAMPLES
           'examples/atoms/date-stacked/css/date-stacked.css':                   'examples/atoms/date-stacked/scss/date-stacked.scss',
