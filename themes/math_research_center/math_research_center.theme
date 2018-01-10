@@ -7,6 +7,12 @@
 
 use Drupal\ui_patterns\UiPatterns;
 
+function math_research_center_preprocess_page(&$variables) {
+  if (isset($variables['node'])) {
+    $variables['#attached']['library'][] = 'math_research_center/' . $variables['node']->bundle();
+  }
+}
+
 /**
  * Implements hook_preprocess_patterns_overview_page().
  */

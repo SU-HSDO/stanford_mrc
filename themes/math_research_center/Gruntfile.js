@@ -110,6 +110,9 @@ module.exports = function(grunt) {
           // Files are compiled individually so they may be included
           // conditionally using logic built in to the theme template or module.
 
+          // BASE
+          'scss/node/stanford_visitor.css':                     'css/node/stanford_visitor',
+
           // PATTERNS
           'patterns/atoms/date-stacked/css/date-stacked.css':                   'patterns/atoms/date-stacked/scss/date-stacked.scss',
           'patterns/molecules/event-card/css/event-card.css':                   'patterns/molecules/event-card/scss/event-card.scss',
