@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * mrc_visitor.install
+ */
+
+/**
+ * Rebuilds the node display.
+ */
+function mrc_visitor_update_8001(){
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_visitor') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+
+}

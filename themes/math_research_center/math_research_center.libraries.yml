@@ -97,3 +97,9 @@ fontawesome:
   css:
     base:
       https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css: {}
+
+stanford_visitor:
+  version: VERSION
+  css:
+    base:
+      css/node/stanford_visitor.css: {}
