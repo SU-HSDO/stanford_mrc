@@ -1,0 +1,10 @@
+services:
+  mrc_ds_blocks.subscriber:
+    class: Drupal\mrc_ds_blocks\Routing\RouteSubscriber
+    arguments: ['@entity.manager']
+    tags:
+     - { name: event_subscriber }
+  mrc_ds_blocks.param_converter:
+    class: Drupal\mrc_ds_blocks\Routing\MrcDsBlocksConverter
+    tags:
+      - { name: paramconverter }
