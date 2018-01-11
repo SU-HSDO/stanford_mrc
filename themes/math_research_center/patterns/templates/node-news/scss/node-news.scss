@@ -13,10 +13,9 @@
 '../utilities/mixins/mixins';
 
 .mrc-news__date-source {
+  display: flex;
   flex-wrap: wrap;
   margin-bottom: 1em;
-
-  @include mrc-flex-medium;
 
   .mrc-news__date {
     margin: 0 0 0.25em 0;
