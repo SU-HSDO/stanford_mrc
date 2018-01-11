@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * mrc_helper.install
+ */
+
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+
+/**
+ * Implements hook_install().
+ */
+function mrc_helper_install() {
+
+  // Create MRC Event Series and attach it to Event, News and Visitor.
+  $field_storage_config = FieldStorageConfig::loadByName('node', 'field_mrc_event_series');
+  if (empty($field_storage_config)) {
+    FieldStorageConfig::create([
+      'field_name' => 'field_mrc_event_series',
+      'entity_type' => 'node',
+      'type' => 'entity_reference',
+      'cardinality' => -1,
+    ])->save();
+  }
+
+  $field_instance = FieldConfig::loadByName('node', 'field_mrc_event_series', 'stanford_event');
+  if (empty($field_instance)) {
+    FieldConfig::create([
+      'field_name' => 'field_mrc_event_series',
+      'entity_type' => 'node',
+      'bundle' => 'stanford_event',
+      'label' => 'MRC Event Series',
+    ])->save();
+  }
+
+  $field_instance = FieldConfig::loadByName('node', 'field_mrc_event_series', 'stanford_news_item');
+  if (empty($field_instance)) {
+    FieldConfig::create([
+      'field_name' => 'field_mrc_event_series',
+      'entity_type' => 'node',
+      'bundle' => 'stanford_news_item',
+      'label' => 'MRC Event Series',
+    ])->save();
+  }
+  $field_instance = FieldConfig::loadByName('node', 'field_mrc_event_series', 'stanford_visitor');
+  if (empty($field_instance)) {
+    FieldConfig::create([
+      'field_name' => 'field_mrc_event_series',
+      'entity_type' => 'node',
+      'bundle' => 'stanford_visitor',
+      'label' => 'MRC Event Series',
+    ])->save();
+  }
+
+  // Get helper function.
+  module_load_install('stanford_mrc');
+
+  // Load content type config
+  $path = drupal_get_path('module', 'mrc_events') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+
+  $path = drupal_get_path('module', 'mrc_news') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+
+  $path = drupal_get_path('module', 'mrc_visitor') . '/config/install';
+  stanford_mrc_update_configs(TRUE, 'all', $path);
+}
