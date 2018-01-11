@@ -1,11 +1,13 @@
 # [Stanford MRC](https://github.com/SU-HSDO/stanford_mrc)
 
+Maintainers: Maintainers: [pookmish](https://github.com/pookmish), [boznik](https://github.com/boznik), [josephgknox](https://github.com/josephgknox)
+
 Changelog: [Changelog.txt](CHANGELOG.txt)
 
 Description
 ---
 
-Math Research Center installation profile. Contains all the theme and necessary module for the MRC site.
+Math Research Center installation profile. Contains all the theme and necessary modules for the MRC website.
 
 
 Troubleshooting
