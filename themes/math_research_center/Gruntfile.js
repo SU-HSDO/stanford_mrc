@@ -90,15 +90,12 @@ module.exports = function(grunt) {
       options: {
         includePaths: [
           "scss",
-          "node_modules/bourbon/core",
-          "node_modules/bourbon-neat/core",
+          "node_modules/bourbon/app/assets/stylesheets",
+          "node_modules/bourbon-neat/app/assets/stylesheets",
           "node_modules/font-awesome/scss",
-          "node_modules/neat-omega",
-          "node_modules/decanter/core",
+          "node_modules/neat-omega/core",
+          "../stanford_basic/libraries/decanter/scss",
           "node_modules",
-          // Parent theme directory.
-          "../",
-          "../stanford_basic/scss"
         ],
         sourceMap: true,
         // This controls the compiled css and can be changed to nested, compact or compressed.
