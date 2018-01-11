@@ -31,6 +31,13 @@
   }
 }
 
+.mrc-news__img {
+  img {
+    height: auto;
+    width: 100%;
+  }
+}
+
 .mrc-news__author {
   font-style: italic;
   font-weight: $font-bold;
