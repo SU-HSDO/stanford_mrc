@@ -27,10 +27,10 @@ function mrc_ds_blocks_entity_view_alter(array &$build, EntityInterface $entity,
     'mode' => $display->getMode(),
   ];
 
-  mrc_ds_blocks_attach_groups($build, $context);
+  mrc_ds_blocks_attach_blocks($build, $context);
 }
 
-function mrc_ds_blocks_attach_groups(&$element, $context) {
+function mrc_ds_blocks_attach_blocks(&$element, $context) {
   /** @var \Drupal\Core\Block\BlockManager $block_manager */
   $block_manager = \Drupal::service('plugin.manager.block');
 
@@ -46,7 +46,7 @@ function mrc_ds_blocks_attach_groups(&$element, $context) {
       continue;
     }
 
-    $block_instance = $block_manager->createInstance($block_id);
+    $block_instance = $block_manager->createInstance($block_id, $block->config);
     $element[$block_id] = $block_instance->build();
     $element[$block_id]['#weight'] = $block->weight;
   }
@@ -71,19 +71,22 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
   $params = mrc_ds_blocks_field_ui_form_params($form, $display);
 
   $table = &$form['fields'];
-  $blocks = \Drupal::service('plugin.manager.block')->getDefinitions();
+  /** @var \Drupal\Core\Block\BlockManager $block_manager */
+  $block_manager = \Drupal::service('plugin.manager.block');
+  $blocks = $block_manager->getDefinitions();
 
   $form['#mrc_ds_blocks'] = array_keys($params->groups);
 
   foreach ($params->groups as $block_id => $block) {
+
     $table[$block_id] = [
       '#attributes' => [
-        'class' => ['draggable', 'field-group'],
+        'class' => ['draggable', 'tabledrag-leaf'],
         'id' => $block_id,
       ],
-      '#row_type' => 'group',
+      '#row_type' => 'field',
       '#region_callback' => $params->region_callback,
-      '#js_settings' => ['rowHandler' => 'group'],
+      '#js_settings' => ['rowHandler' => 'field'],
       'human_name' => [
         '#markup' => Html::escape($blocks[$block_id]['admin_label']),
         '#prefix' => '<span class="group-label">',
@@ -114,36 +117,29 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
         '#markup' => '&nbsp;',
       ],
       'format' => [
-        'type' => [
-          '#type' => 'select',
-          '#options' => [],
-          //          '#default_value' => $group->format_type,
-          '#attributes' => ['class' => ['field-group-type']],
-        ],
+        '#markup' => '&nbsp;',
       ],
       'settings_summary' => ['#markup' => ''],
-      //      'settings_edit' => [
-      //        '#type' => 'image_button',
-      //        '#name' => $block_id . '_group_settings_edit',
-      //        '#src' => 'core/misc/icons/787878/cog.svg',
-      //        '#attributes' => [
-      //          'class' => ['field-plugin-settings-edit'],
-      //          'alt' => t('Edit'),
-      //        ],
-      //        '#op' => 'edit',
-      //        // Do not check errors for the 'Edit' button, but make sure we get
-      //        // the value of the 'plugin type' select.
-      //        '#limit_validation_errors' => [['fields', $block_id, 'type']],
-      //        '#prefix' => '<div class="field-plugin-settings-edit-wrapper">',
-      //        '#suffix' => '</div>',
-      //      ],
+      'settings_edit' => [
+        '#type' => 'image_button',
+        '#name' => $block_id . '_block_settings_edit',
+        '#src' => 'core/misc/icons/787878/cog.svg',
+        '#attributes' => [
+          'class' => ['field-plugin-settings-edit'],
+          'alt' => t('Edit'),
+        ],
+        '#op' => 'edit',
+        // Do not check errors for the 'Edit' button, but make sure we get
+        // the value of the 'plugin type' select.
+        '#limit_validation_errors' => [['fields', $block_id, 'type']],
+        '#prefix' => '<div class="field-plugin-settings-edit-wrapper">',
+        '#suffix' => '</div>',
+      ],
     ];
 
     $block->blockId = $block_id;
     $delete_route = MrcDsBlocks::getDeleteRoute($block);
-    kint($delete_route);
-    $table[$block_id]['settings_edit'] = ['#markup' => Drupal::l(t('delete'), $delete_route)];
-    //    $table[$block_id]['settings_edit']['#suffix'] .= Drupal::l(t('delete'), $delete_route);
+    $table[$block_id]['settings_edit']['#suffix'] .= Drupal::l(t('delete'), $delete_route);
   }
 
   array_unshift($form['actions']['submit']['#submit'], 'mrc_ds_blocks_field_overview_submit');
@@ -266,12 +262,6 @@ function mrc_ds_blocks_field_ui_form_params($form, EntityDisplayBase $display) {
 
   // Gather parenting data.
   $params->parents = [];
-  foreach ($params->groups as $name => $group) {
-    foreach ($group->children as $child) {
-      $params->parents[$child] = $name;
-    }
-  }
-
   return $params;
 }
 

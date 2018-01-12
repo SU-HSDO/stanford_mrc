@@ -4,6 +4,7 @@ namespace Drupal\mrc_ds_blocks\Form;
 
 use Drupal\Core\Block\BlockManager;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Entity\EntityFormBuilder;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -112,17 +113,43 @@ class MrcDsBlocksAddForm extends FormBase {
    */
   function buildConfigurationForm(array &$form, FormStateInterface $form_state) {
     $options = [];
+    $first_block = NULL;
     foreach ($this->blockManager->getDefinitions() as $block_id => $block) {
       $category = is_string($block['category']) ? $block['category'] : $block['category']->render();
       $label = is_string($block['admin_label']) ? $block['admin_label'] : $block['admin_label']->render();
       $options[$category][$block_id] = $label;
+
+      if (empty($first_block)) {
+        $first_block = $block_id;
+      }
     }
 
     $form['block'] = [
       '#type' => 'select',
       '#title' => $this->t('Block'),
       '#options' => $options,
+      '#ajax' => [
+        'callback' => 'Drupal\mrc_ds_blocks\Form\MrcDsBlocksAddForm::ajaxSubmit',
+        'wrapper' => 'block-config',
+        'event' => 'change',
+        'method' => 'replace',
+      ],
     ];
+
+
+    $form['block_config'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Block Configuration'),
+      '#prefix' => '<div id="block-config">',
+      '#suffix' => '</div>',
+      //      '#tree' => TRUE,
+    ];
+
+    $selected_block = $form_state->getValue('block') ?: $first_block;
+    $block = $this->blockManager->createInstance($selected_block);
+
+    $block_form = [];
+    $form['block_config'] += $block->buildConfigurationForm($block_form, $form_state);
 
     $form['actions'] = ['#type' => 'actions'];
     $form['actions']['submit'] = [
@@ -130,7 +157,16 @@ class MrcDsBlocksAddForm extends FormBase {
       '#value' => $this->t('Add Block'),
       '#button_type' => 'primary',
     ];
+  }
 
+  /**
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return mixed
+   */
+  public static function ajaxSubmit(array &$form, FormStateInterface $form_state) {
+    return $form['block_config'];
   }
 
   /**
@@ -146,6 +182,7 @@ class MrcDsBlocksAddForm extends FormBase {
         break;
       }
     }
+    $form_state->cleanValues();
 
     $new_block = (object) [
       'blockId' => $block_id,
@@ -153,10 +190,17 @@ class MrcDsBlocksAddForm extends FormBase {
       'bundle' => $this->bundle,
       'mode' => $this->mode,
       'context' => $this->context,
-      'children' => [],
+      'config' => [],
       'parent_name' => '',
       'weight' => 20,
     ];
+
+    foreach ($form_state->getValues() as $key => $value) {
+      if ($key != 'block') {
+        $new_block->config[$key] = $value;
+      }
+    }
+
     mrc_ds_blocks_save($new_block);
 
     drupal_set_message(t('New block %label successfully added.', ['%label' => $block_label]));
