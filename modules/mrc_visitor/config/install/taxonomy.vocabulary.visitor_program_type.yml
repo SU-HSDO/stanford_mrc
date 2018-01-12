@@ -1,8 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-name: 'Program Type'
-vid: visitor_program_type
-description: 'Distinguished visitor program type'
-hierarchy: 0
-weight: 0
