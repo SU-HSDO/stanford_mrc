@@ -74,7 +74,7 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
   $blocks = \Drupal::service('plugin.manager.block')->getDefinitions();
 
   $form['#mrc_ds_blocks'] = array_keys($params->groups);
-//kint($params);
+
   foreach ($params->groups as $block_id => $block) {
     $table[$block_id] = [
       '#attributes' => [
@@ -109,13 +109,41 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
           '#default_value' => $block_id,
           '#attributes' => ['class' => ['field-name']],
         ],
-        'settings_edit'
       ],
+      'spacer' => [
+        '#markup' => '&nbsp;',
+      ],
+      'format' => [
+        'type' => [
+          '#type' => 'select',
+          '#options' => [],
+          //          '#default_value' => $group->format_type,
+          '#attributes' => ['class' => ['field-group-type']],
+        ],
+      ],
+      'settings_summary' => ['#markup' => ''],
+      //      'settings_edit' => [
+      //        '#type' => 'image_button',
+      //        '#name' => $block_id . '_group_settings_edit',
+      //        '#src' => 'core/misc/icons/787878/cog.svg',
+      //        '#attributes' => [
+      //          'class' => ['field-plugin-settings-edit'],
+      //          'alt' => t('Edit'),
+      //        ],
+      //        '#op' => 'edit',
+      //        // Do not check errors for the 'Edit' button, but make sure we get
+      //        // the value of the 'plugin type' select.
+      //        '#limit_validation_errors' => [['fields', $block_id, 'type']],
+      //        '#prefix' => '<div class="field-plugin-settings-edit-wrapper">',
+      //        '#suffix' => '</div>',
+      //      ],
     ];
 
+    $block->blockId = $block_id;
     $delete_route = MrcDsBlocks::getDeleteRoute($block);
-
-    $table[$block_id]['settings_edit']['#suffix'] .= Drupal::l(t('delete'), $delete_route);
+    kint($delete_route);
+    $table[$block_id]['settings_edit'] = ['#markup' => Drupal::l(t('delete'), $delete_route)];
+    //    $table[$block_id]['settings_edit']['#suffix'] .= Drupal::l(t('delete'), $delete_route);
   }
 
   array_unshift($form['actions']['submit']['#submit'], 'mrc_ds_blocks_field_overview_submit');
@@ -138,7 +166,7 @@ function mrc_ds_blocks_field_overview_submit($form, FormStateInterface $form_sta
   $entity_type = $display->get('targetEntityType');
   $bundle = $display->get('bundle');
   $mode = $display->get('mode');
-  $context = field_group_get_context_from_display($display);
+  $context = mrc_ds_blocks_get_context_from_display($display);
 
   // Collect children.
   $children = array_fill_keys($form['#mrc_ds_blocks'], []);
@@ -228,7 +256,8 @@ function mrc_ds_blocks_field_ui_form_params($form, EntityDisplayBase $display) {
   $params = new stdClass();
   $params->entity_type = $display->getTargetEntityTypeId();
   $params->bundle = $display->getTargetBundle();
-  $params->region_callback = 'field_group_display_overview_row_region';
+  //  $params->region_callback = 'field_group_display_overview_row_region';
+  $params->region_callback = '';
   $params->mode = $display->getMode();
   $params->context = mrc_ds_blocks_get_context_from_display($display);
 
@@ -244,6 +273,30 @@ function mrc_ds_blocks_field_ui_form_params($form, EntityDisplayBase $display) {
   }
 
   return $params;
+}
+
+/**
+ * Loads a group definition.
+ *
+ * @param $block_id
+ *   The name of the group.
+ * @param $entity_type
+ *   The name of the entity.
+ * @param $bundle
+ *   The name of the bundle.
+ * @param $context
+ *   The context of the view mode (form or view)
+ * @param $mode
+ *   The view mode to load.
+ *
+ * @return null|object
+ */
+function mrc_ds_blocks_load_block($block_id, $entity_type, $bundle, $context, $mode) {
+  $blocks = mrc_ds_blocks_get_blocks($entity_type, $bundle, $context, $mode);
+  if (isset($blocks[$block_id])) {
+    return $blocks[$block_id];
+  }
+  return NULL;
 }
 
 /**
@@ -304,4 +357,16 @@ function mrc_ds_blocks_get_blocks($entity_type, $bundle, $context, $mode) {
     }
   }
   return $groups;
+}
+
+function mrc_ds_blocks_delete_block($block) {
+  $display = EntityViewDisplay::load($block->entity_type . '.' . $block->bundle . '.' . $block->mode);
+
+  /**
+   * @var $display \Drupal\Core\Entity\Display\EntityDisplayInterface
+   */
+  if (isset($display)) {
+    $display->unsetThirdPartySetting('mrc_ds_blocks', $block->blockId);
+    $display->save();
+  }
 }

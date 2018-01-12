@@ -69,33 +69,18 @@ class MrcDsBlocks {
 
       $mode_route_name = '';
       $route_parameters = FieldUI::getRouteBundleParameter($entity_type, $block->bundle);
-      $route_parameters['field_group_name'] = $block->group_name;
+      $route_parameters['mrc_ds_blocks_id'] = $block->blockId;
 
-      // Get correct route name based on context and mode.
-      if ($block->context == 'form') {
-
-        $context_route_name = 'form_display';
-        if ($block->mode != 'default') {
-          $mode_route_name = '.form_mode';
-          $route_parameters['form_mode_name'] = $block->mode;
-        }
-
-      }
-      else {
-
-        $context_route_name = 'display';
-        if ($block->mode != 'default') {
-          $mode_route_name = '.view_mode';
-          $route_parameters['view_mode_name'] = $block->mode;
-        }
-
+      $context_route_name = 'display';
+      if ($block->mode != 'default') {
+        $mode_route_name = '.view_mode';
+        $route_parameters['view_mode_name'] = $block->mode;
       }
 
-      return new Url('field_ui.field_group_delete_' . $entity_type_id . '.' . $context_route_name . $mode_route_name, $route_parameters);
+      return new Url('mrc_ds_blocks.mrc_ds_blocks_delete_' . $entity_type_id . '.' . $context_route_name . $mode_route_name, $route_parameters);
     }
 
     throw new \InvalidArgumentException('The given group is not a valid.');
-
   }
 
 }

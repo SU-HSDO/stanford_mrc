@@ -162,7 +162,6 @@ class MrcDsBlocksAddForm extends FormBase {
     drupal_set_message(t('New block %label successfully added.', ['%label' => $block_label]));
 
     $form_state->setRedirectUrl(self::getRoute($new_block));
-    \Drupal::cache()->invalidate('field_groups');
   }
 
   /**

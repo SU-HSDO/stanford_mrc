@@ -56,15 +56,16 @@ class RouteSubscriber extends RouteSubscriberBase {
           );
         }
 
-        $options['parameters']['field_group'] = array(
-          'type' => 'field_group',
+        $options['parameters']['mrc_ds_blocks_id'] = array(
+          'type' => 'mrc_ds_block',
           'entity_type' => $entity_type->getBundleEntityType(),
         );
 
-//        $defaults_delete = [
-//          'entity_type_id' => $entity_type_id,
-//          '_form' => '\Drupal\field_group\Form\MrcDsBlocksDeleteForm',
-//        ];
+        $defaults_delete = [
+          'entity_type_id' => $entity_type_id,
+          '_form' => '\Drupal\mrc_ds_blocks\Form\MrcDsBlocksDeleteForm',
+        ];
+
         $defaults_add = [
           'entity_type_id' => $entity_type_id,
           '_form' => '\Drupal\mrc_ds_blocks\Form\MrcDsBlocksAddForm',
@@ -77,41 +78,29 @@ class RouteSubscriber extends RouteSubscriberBase {
           $defaults_add['bundle'] = !$entity_type->hasKey('bundle') ? $entity_type_id : '';
           $defaults_delete['bundle'] = $defaults_add['bundle'];
         }
-//
-//        // Routes to delete field groups.
-//        $route = new Route(
-//          "$path/form-display/{field_group_name}/delete",
-//          ['context' => 'form'] + $defaults_delete,
-//          array('_permission' => 'administer ' . $entity_type_id . ' form display'),
-//          $options
-//        );
-//        $collection->add("mrc_ds_blocks.mrc_ds_blocks_delete_$entity_type_id.form_display", $route);
-//
-//        $route = new Route(
-//          "$path/form-display/{form_mode_name}/{field_group_name}/delete",
-//          ['context' => 'form'] + $defaults_delete,
-//          array('_permission' => 'administer ' . $entity_type_id . ' form display'),
-//          $options
-//        );
-//        $collection->add("mrc_ds_blocks.mrc_ds_blocks_delete_$entity_type_id.form_display.form_mode", $route);
-//
-//        $route = new Route(
-//          "$path/display/{field_group_name}/delete",
-//          ['context' => 'view'] + $defaults_delete,
-//          array('_permission' => 'administer ' . $entity_type_id . ' display'),
-//          $options
-//        );
-//        $collection->add("mrc_ds_blocks.mrc_ds_blocks_delete_$entity_type_id.display", $route);
-//
-//        $route = new Route(
-//          "$path/display/{view_mode_name}/{field_group_name}/delete",
-//          ['context' => 'view'] + $defaults_delete,
-//          array('_permission' => 'administer ' . $entity_type_id . ' display'),
-//          $options
-//        );
-//        $collection->add("mrc_ds_blocks.mrc_ds_blocks_delete_$entity_type_id.display.view_mode", $route);
 
-        // Routes to add field groups.
+
+
+        // Routes to delete field groups.
+        $route = new Route(
+          "$path/display/{mrc_ds_blocks_id}/delete-block",
+          ['context' => 'view'] + $defaults_delete,
+          array('_permission' => 'administer ' . $entity_type_id . ' display'),
+          $options
+        );
+        $collection->add("mrc_ds_blocks.mrc_ds_blocks_delete_$entity_type_id.display", $route);
+
+        $route = new Route(
+          "$path/display/{view_mode_name}/{mrc_ds_blocks_id}/delete-block",
+          ['context' => 'view'] + $defaults_delete,
+          array('_permission' => 'administer ' . $entity_type_id . ' display'),
+          $options
+        );
+        $collection->add("mrc_ds_blocks.mrc_ds_blocks_delete_$entity_type_id.display.view_mode", $route);
+
+
+
+        // Routes to add blocks.
         $route = new Route(
           "$path/display/add-block",
           ['context' => 'view'] + $defaults_add,
