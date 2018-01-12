@@ -10,7 +10,6 @@ dependencies:
     - field.field.node.stanford_visitor.field_s_visitor_last_name
     - field.field.node.stanford_visitor.field_s_visitor_photo
     - field.field.node.stanford_visitor.field_s_visitor_position_title
-    - field.field.node.stanford_visitor.field_s_visitor_program_type
     - field.field.node.stanford_visitor.field_s_visitor_research_area
     - field.field.node.stanford_visitor.field_s_visitor_year_visited
     - image.style.medium
@@ -134,5 +133,4 @@ content:
 hidden:
   field_s_visitor_first_name: true
   field_s_visitor_last_name: true
-  field_s_visitor_program_type: true
   links: true
