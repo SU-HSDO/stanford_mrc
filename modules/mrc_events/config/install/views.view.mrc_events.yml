@@ -517,6 +517,7 @@ display:
         title: false
       arguments: {  }
       title: 'Upcoming Events'
+      block_hide_empty: true
     cache_metadata:
       max-age: -1
       contexts:

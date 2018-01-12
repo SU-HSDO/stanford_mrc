@@ -572,6 +572,7 @@ display:
           items_per_page: 2
           offset: 0
       arguments: {  }
+      block_hide_empty: true
     cache_metadata:
       max-age: -1
       contexts:
