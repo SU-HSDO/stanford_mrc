@@ -14,3 +14,15 @@ function mrc_visitor_update_8001(){
   stanford_mrc_update_configs(TRUE, 'all', $path);
 
 }
+
+/**
+ * Remove field_s_visitor_program_type.
+ */
+function mrc_visitor_update_8002() {
+  $entityManager = \Drupal::service('entity.manager');
+  $fields = $entityManager->getFieldDefinitions('node', 'stanford_visitor');
+
+  if ($field = $fields['field_s_visitor_program_type']) {
+    $field->delete();
+  }
+}
