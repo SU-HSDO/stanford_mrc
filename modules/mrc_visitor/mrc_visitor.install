@@ -5,6 +5,8 @@
  * mrc_visitor.install
  */
 
+use \Drupal\taxonomy\Entity\Vocabulary;
+
 /**
  * Rebuilds the node display.
  */
@@ -16,13 +18,27 @@ function mrc_visitor_update_8001(){
 }
 
 /**
- * Remove field_s_visitor_program_type.
+ * Remove field_s_visitor_program_type, program type vocabulary and terms associated.
  */
 function mrc_visitor_update_8002() {
+  // Delete the field first so drupal doesn't complain.
   $entityManager = \Drupal::service('entity.manager');
   $fields = $entityManager->getFieldDefinitions('node', 'stanford_visitor');
 
   if ($field = $fields['field_s_visitor_program_type']) {
     $field->delete();
+  }
+
+  // Delete terms.
+  $vid = 'visitor_program_type';
+  $tids = Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', $vid)
+    ->execute();
+  entity_delete_multiple('taxonomy_term', $tids);
+
+  // Delete vocabulary.
+  $vocab = Vocabulary::load($vid);
+  if ($vocab) {
+    $vocab->delete();
   }
 }
