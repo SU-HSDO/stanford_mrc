@@ -4,3 +4,6 @@ core: 8.x
 type: module
 version: VERSION
 package: Stanford MRC
+dependencies:
+  - block
+  - field

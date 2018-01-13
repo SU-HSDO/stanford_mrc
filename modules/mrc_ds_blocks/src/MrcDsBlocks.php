@@ -6,15 +6,15 @@ use Drupal\Core\Url;
 use Drupal\field_ui\FieldUI;
 
 /**
- * Static methods for fieldgroup UI.
+ * Static methods for Mrc Ds Blocks UI.
  */
 class MrcDsBlocks {
 
   /**
    * Get the field ui route that should be used for given arguments.
    *
-   * @param stdClass $block
-   *   The group to get the field ui route for.
+   * @param \stdClass $block
+   *   The block to get the field ui route for.
    *
    * @return \Drupal\Core\Url
    *   A URL object.
@@ -25,7 +25,6 @@ class MrcDsBlocks {
       ->getDefinition($block->entity_type);
     if ($entity_type->get('field_ui_base_route')) {
 
-      $context_route_name = "";
       $mode_route_name = "default";
       $route_parameters = FieldUI::getRouteBundleParameter($entity_type, $block->bundle);
 
@@ -54,7 +53,7 @@ class MrcDsBlocks {
   }
 
   /**
-   * Get the field group delete route for a given group.
+   * Get the delete route for a given block.
    *
    * @param \stdClass $block
    *
@@ -80,7 +79,7 @@ class MrcDsBlocks {
       return new Url('mrc_ds_blocks.mrc_ds_blocks_delete_' . $entity_type_id . '.' . $context_route_name . $mode_route_name, $route_parameters);
     }
 
-    throw new \InvalidArgumentException('The given group is not a valid.');
+    throw new \InvalidArgumentException('The given block is not a valid.');
   }
 
 }

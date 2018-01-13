@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * Subscriber for Field group routes.
+ * Subscriber for block routes.
  */
 class RouteSubscriber extends RouteSubscriberBase {
 
@@ -34,10 +34,9 @@ class RouteSubscriber extends RouteSubscriberBase {
    * {@inheritdoc}
    */
   protected function alterRoutes(RouteCollection $collection) {
-
-    // Create fieldgroup routes for every entity.
+    // Create block routes for every entity.
     foreach ($this->manager->getDefinitions() as $entity_type_id => $entity_type) {
-      $defaults = array();
+
       if ($route_name = $entity_type->get('field_ui_base_route')) {
         // Try to get the route from the current collection.
         if (!$entity_route = $collection->get($route_name)) {
@@ -79,9 +78,7 @@ class RouteSubscriber extends RouteSubscriberBase {
           $defaults_delete['bundle'] = $defaults_add['bundle'];
         }
 
-
-
-        // Routes to delete field groups.
+        // Routes to delete block.
         $route = new Route(
           "$path/display/{mrc_ds_blocks_id}/delete-block",
           ['context' => 'view'] + $defaults_delete,
@@ -97,8 +94,6 @@ class RouteSubscriber extends RouteSubscriberBase {
           $options
         );
         $collection->add("mrc_ds_blocks.mrc_ds_blocks_delete_$entity_type_id.display.view_mode", $route);
-
-
 
         // Routes to add blocks.
         $route = new Route(
@@ -125,7 +120,6 @@ class RouteSubscriber extends RouteSubscriberBase {
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
-    //$events = parent::getSubscribedEvents();
     // Come after field_ui, config_translation.
     $events[RoutingEvents::ALTER] = array('onAlterRoutes', -210);
     return $events;

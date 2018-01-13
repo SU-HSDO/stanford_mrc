@@ -3,16 +3,13 @@
 namespace Drupal\mrc_ds_blocks\Form;
 
 use Drupal\Core\Block\BlockManager;
-use Drupal\Core\Entity\Entity\EntityViewDisplay;
-use Drupal\Core\Entity\EntityFormBuilder;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
+use Drupal\mrc_ds_blocks\MrcDsBlocks;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a form for adding a fieldgroup to a bundle.
+ * Provides a form for adding a block to a bundle.
  */
 class MrcDsBlocksAddForm extends FormBase {
 
@@ -31,14 +28,14 @@ class MrcDsBlocksAddForm extends FormBase {
   protected $bundle;
 
   /**
-   * The context for the group.
+   * The context for the block.
    *
    * @var string
    */
-  protected $context;
+  protected $context = 'view';
 
   /**
-   * The mode for the group.
+   * The mode for the display.
    *
    * @var string
    */
@@ -142,7 +139,6 @@ class MrcDsBlocksAddForm extends FormBase {
       '#title' => $this->t('Block Configuration'),
       '#prefix' => '<div id="block-config">',
       '#suffix' => '</div>',
-      //      '#tree' => TRUE,
     ];
 
     $selected_block = $form_state->getValue('block') ?: $first_block;
@@ -202,69 +198,8 @@ class MrcDsBlocksAddForm extends FormBase {
     }
 
     mrc_ds_blocks_save($new_block);
-
     drupal_set_message(t('New block %label successfully added.', ['%label' => $block_label]));
-
-    $form_state->setRedirectUrl(self::getRoute($new_block));
-  }
-
-  /**
-   * Get the field ui route that should be used for given arguments.
-   *
-   * @param stdClass $group
-   *   The group to get the field ui route for.
-   *
-   * @return \Drupal\Core\Url
-   *   A URL object.
-   */
-  public static function getRoute($group) {
-
-    $entity_type = \Drupal::entityTypeManager()
-      ->getDefinition($group->entity_type);
-    if ($entity_type->get('field_ui_base_route')) {
-
-      $context_route_name = "";
-      $mode_route_name = "default";
-      $route_parameters = self::getRouteBundleParameter($entity_type, $group->bundle);
-
-      // Get correct route name based on context and mode.
-      if ($group->context == 'form') {
-        $context_route_name = 'entity_form_display';
-
-        if ($group->mode != 'default') {
-          $mode_route_name = 'form_mode';
-          $route_parameters['form_mode_name'] = $group->mode;
-        }
-
-      }
-      else {
-        $context_route_name = 'entity_view_display';
-
-        if ($group->mode != 'default') {
-          $mode_route_name = 'view_mode';
-          $route_parameters['view_mode_name'] = $group->mode;
-        }
-
-      }
-
-      return new Url("entity.{$context_route_name}.{$group->entity_type}.{$mode_route_name}", $route_parameters);
-    }
-  }
-
-  /**
-   * Gets the route parameter that should be used for Field UI routes.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
-   *   The actual entity type, not the bundle (e.g. the content entity type).
-   * @param string $bundle
-   *   The bundle name.
-   *
-   * @return array
-   *   An array that can be used a route parameter.
-   */
-  public static function getRouteBundleParameter(EntityTypeInterface $entity_type, $bundle) {
-    $bundle_parameter_key = $entity_type->getBundleEntityType() ?: 'bundle';
-    return [$bundle_parameter_key => $bundle];
+    $form_state->setRedirectUrl(MrcDsBlocks::getFieldUiRoute($new_block));
   }
 
 }

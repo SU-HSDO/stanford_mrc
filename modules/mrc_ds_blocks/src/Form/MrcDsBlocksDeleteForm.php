@@ -7,14 +7,14 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\mrc_ds_blocks\MrcDsBlocks;
 
 /**
- * Provides a form for removing a fieldgroup from a bundle.
+ * Provides a form for removing a block from a bundle.
  */
 class MrcDsBlocksDeleteForm extends ConfirmFormBase {
 
   /**
-   * The fieldgroup to delete.
+   * The block to delete.
    *
-   * @var stdClass
+   * @var \stdClass
    */
   protected $block;
 
@@ -52,8 +52,8 @@ class MrcDsBlocksDeleteForm extends ConfirmFormBase {
 
     mrc_ds_blocks_delete_block($this->block);
 
-    drupal_set_message(t('The block %group has been deleted from the %type content type.', [
-      '%group' => t($this->block->blockId),
+    drupal_set_message(t('The block %block_id has been deleted from the %type content type.', [
+      '%block_id' => t($this->block->blockId),
       '%type' => $bundle_label,
     ]));
 
