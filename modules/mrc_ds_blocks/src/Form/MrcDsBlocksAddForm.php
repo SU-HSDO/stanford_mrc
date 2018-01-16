@@ -7,6 +7,8 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\mrc_ds_blocks\MrcDsBlocks;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Plugin\Context\LazyContextRepository;
+use Drupal\Core\Routing\CurrentRouteMatch;
 
 /**
  * Provides a form for adding a block to a bundle.
@@ -47,16 +49,25 @@ class MrcDsBlocksAddForm extends FormBase {
   protected $blockManager;
 
   /**
+   * @var \Drupal\Core\Plugin\Context\LazyContextRepository
+   */
+  protected $contextRepository;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('plugin.manager.block')
+      $container->get('plugin.manager.block'),
+      $container->get('context.repository'),
+      $container->get('current_route_match')
     );
   }
 
-  public function __construct(BlockManager $block_manager) {
+  public function __construct(BlockManager $block_manager, LazyContextRepository $context_repository, CurrentRouteMatch $route_match) {
     $this->blockManager = $block_manager;
+    $this->contextRepository = $context_repository;
+    $this->routeMatch = $route_match;
   }
 
   /**
@@ -70,13 +81,7 @@ class MrcDsBlocksAddForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $entity_type_id = NULL, $bundle = NULL, $context = NULL) {
-
-    if ($context == 'form') {
-      $this->mode = \Drupal::request()->get('form_mode_name');
-    }
-    else {
-      $this->mode = \Drupal::request()->get('view_mode_name');
-    }
+    $this->mode = \Drupal::request()->get('view_mode_name');
 
     if (empty($this->mode)) {
       $this->mode = 'default';
@@ -92,48 +97,72 @@ class MrcDsBlocksAddForm extends FormBase {
       $form_state->set('bundle', $bundle);
     }
     if (!$form_state->get('step')) {
-      $form_state->set('step', 'formatter');
+      $form_state->set('step', 'selection');
     }
 
     $this->entityTypeId = $form_state->get('entity_type_id');
     $this->bundle = $form_state->get('bundle');
     $this->context = $form_state->get('context');
-    $this->currentStep = $form_state->get('step');
 
-    $this->buildConfigurationForm($form, $form_state);
+    if ($form_state->get('step') == 'config') {
+      $this->buildConfigurationForm($form, $form_state);
+      $form['#attached']['library'][] = 'block/drupal.block.admin';
+      return $form;
+    }
+
+    $this->buildSelectionForm($form, $form_state);
     return $form;
+  }
 
+  private function buildSelectionForm(array &$form, FormStateInterface $form_state) {
+    // Only add blocks which work without any available context.
+    $definitions = $this->blockManager->getDefinitionsForContexts($this->contextRepository->getAvailableContexts());
+    // Order by category, and then by admin label.
+    $definitions = $this->blockManager->getSortedDefinitions($definitions);
+
+    $form['filter'] = [
+      '#type' => 'search',
+      '#title' => $this->t('Filter'),
+      '#title_display' => 'invisible',
+      '#size' => 30,
+      '#placeholder' => $this->t('Filter by block name'),
+      '#attributes' => [
+        'class' => ['block-filter-text'],
+        'data-element' => '.block-add-table',
+        'title' => $this->t('Enter a part of the block name to filter by.'),
+      ],
+    ];
+
+    $form['blocks'] = [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['block-add-table']],
+    ];
+
+    foreach ($definitions as $plugin_id => $plugin_definition) {
+      $form['blocks'][$plugin_id]['title'] = [
+        '#type' => 'inline_template',
+        '#template' => '<div class="block-filter-text-source">{{ label }}</div>',
+        '#context' => [
+          'label' => $plugin_definition['admin_label'],
+        ],
+      ];
+
+      $form['blocks'][$plugin_id]['category'] = [
+        '#markup' => $plugin_definition['category'],
+      ];
+
+      $form['blocks'][$plugin_id]['submit'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Place block'),
+        '#name' => 'submit_' . $plugin_id,
+      ];
+    }
   }
 
   /**
    * Build the formatter configuration form.
    */
-  function buildConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $options = [];
-    $first_block = NULL;
-    foreach ($this->blockManager->getDefinitions() as $block_id => $block) {
-      $category = is_string($block['category']) ? $block['category'] : $block['category']->render();
-      $label = is_string($block['admin_label']) ? $block['admin_label'] : $block['admin_label']->render();
-      $options[$category][$block_id] = $label;
-
-      if (empty($first_block)) {
-        $first_block = $block_id;
-      }
-    }
-
-    $form['block'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Block'),
-      '#options' => $options,
-      '#ajax' => [
-        'callback' => 'Drupal\mrc_ds_blocks\Form\MrcDsBlocksAddForm::ajaxSubmit',
-        'wrapper' => 'block-config',
-        'event' => 'change',
-        'method' => 'replace',
-      ],
-    ];
-
-
+  private function buildConfigurationForm(array &$form, FormStateInterface $form_state) {
     $form['block_config'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Block Configuration'),
@@ -141,7 +170,7 @@ class MrcDsBlocksAddForm extends FormBase {
       '#suffix' => '</div>',
     ];
 
-    $selected_block = $form_state->getValue('block') ?: $first_block;
+    $selected_block = $block_id = $form_state->get('block_id');
     $block = $this->blockManager->createInstance($selected_block);
 
     $block_form = [];
@@ -155,29 +184,21 @@ class MrcDsBlocksAddForm extends FormBase {
     ];
   }
 
-  /**
-   * @param array $form
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *
-   * @return mixed
-   */
-  public static function ajaxSubmit(array &$form, FormStateInterface $form_state) {
-    return $form['block_config'];
-  }
 
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $block_label = '';
-    $block_id = $form_state->getValue('block');
-
-    foreach ($form['block']['#options'] as $grouping) {
-      if (isset($grouping[$block_id])) {
-        $block_label = $grouping[$block_id];
-        break;
-      }
+    if ($form_state->get('step') != 'config') {
+      $block_id = $form_state->getTriggeringElement()['#name'];
+      $block_id = substr($block_id, 7);
+      $form_state->set('step', 'config');
+      $form_state->set('block_id', $block_id);
+      $form_state->setRebuild();
+      return;
     }
+
+    $block_id = $form_state->get('block_id');
     $form_state->cleanValues();
 
     $new_block = (object) [
@@ -192,13 +213,11 @@ class MrcDsBlocksAddForm extends FormBase {
     ];
 
     foreach ($form_state->getValues() as $key => $value) {
-      if ($key != 'block') {
-        $new_block->config[$key] = $value;
-      }
+      $new_block->config[$key] = $value;
     }
 
     mrc_ds_blocks_save($new_block);
-    drupal_set_message(t('New block %label successfully added.', ['%label' => $block_label]));
+    drupal_set_message(t('New block %label successfully added.', ['%label' => $block_id]));
     $form_state->setRedirectUrl(MrcDsBlocks::getFieldUiRoute($new_block));
   }
 

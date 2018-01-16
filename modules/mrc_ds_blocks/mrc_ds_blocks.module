@@ -16,6 +16,19 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\mrc_ds_blocks\MrcDsBlocks;
 
 /**
+ * Implements hook_preprocess().
+ */
+function mrc_ds_blocks_preprocess(&$variables, $hook) {
+  static $hooks = [];
+  if(!isset($hooks[$hook])){
+//    dpm($hook);
+    $hooks[$hook] = $hook;
+  }
+  if($hook == 'table'){
+//    kint($variables);
+  }
+}
+/**
  * Implements hook_entity_view_alter().
  */
 function mrc_ds_blocks_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
