@@ -14,20 +14,8 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\mrc_ds_blocks\MrcDsBlocks;
+use Drupal\Core\Form\SubformState;
 
-/**
- * Implements hook_preprocess().
- */
-function mrc_ds_blocks_preprocess(&$variables, $hook) {
-  static $hooks = [];
-  if(!isset($hooks[$hook])){
-//    dpm($hook);
-    $hooks[$hook] = $hook;
-  }
-  if($hook == 'table'){
-//    kint($variables);
-  }
-}
 /**
  * Implements hook_entity_view_alter().
  */
@@ -82,14 +70,39 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
 
   $form['#mrc_ds_blocks'] = array_keys($params->blocks);
 
+  $base_button = [
+    '#submit' => [
+      [
+        $form_state->getBuildInfo()['callback_object'],
+        'multistepSubmit',
+      ],
+    ],
+    '#ajax' => [
+      'callback' => [
+        $form_state->getBuildInfo()['callback_object'],
+        'multistepAjax',
+      ],
+      'wrapper' => 'field-display-overview-wrapper',
+      'effect' => 'fade',
+    ],
+  ];
+
+  $form_values = $form_state->getValues();
+
   // Go through each block and add it to the table.
   foreach ($params->blocks as $block_id => $block) {
+
     // Skip if the block doesn't exist.
     if (!$block_manager->hasDefinition($block_id)) {
       continue;
     }
 
-    $table[$block_id] = [
+    if ($form_state->get('plugin_settings_update') == $block_id) {
+      mrc_ds_blocks_form_update_block($form, $form_state);
+    }
+
+    $base_button['#field_name'] = $block_id;
+    $block_row = [
       '#attributes' => [
         'class' => ['draggable', 'tabledrag-leaf'],
         'id' => $block_id,
@@ -130,7 +143,40 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
         '#markup' => '&nbsp;',
       ],
       'settings_summary' => ['#markup' => ''],
-      'settings_edit' => [
+    ];
+
+    if ($form_state->get('plugin_settings_edit') == $block_id) {
+      $block_row['settings_edit']['#cell_attributes'] = ['colspan' => 2];
+      $block_row['format']['format_settings'] = [
+        '#type' => 'container',
+        '#attributes' => ['class' => ['field-plugin-settings-edit-form']],
+        '#parents' => ['fields', $block_id, 'settings_edit_form'],
+        '#weight' => -5,
+        // Create a settings form where hooks can pick in.
+        'settings' => mrc_ds_blocks_block_form($form_state, $block_id, $block->config),
+        'actions' => [
+          '#type' => 'actions',
+          'save_settings' => $base_button + [
+              '#type' => 'submit',
+              '#name' => $block_id . '_plugin_settings_update',
+              '#value' => t('Update'),
+              '#op' => 'update',
+            ],
+          'cancel_settings' => $base_button + [
+              '#type' => 'submit',
+              '#name' => $block_id . '_plugin_settings_cancel',
+              '#value' => t('Cancel'),
+              '#op' => 'cancel',
+              // Do not check errors for the 'Cancel' button.
+              '#limit_validation_errors' => [],
+            ],
+        ],
+      ];
+      $block_row['#attributes']['class'][] = 'field-formatter-settings-editing';
+      $block_row['format']['type']['#attributes']['class'] = ['visually-hidden'];
+    }
+    else {
+      $block_row['settings_edit'] = [
         '#type' => 'image_button',
         '#name' => $block_id . '_block_settings_edit',
         '#src' => 'core/misc/icons/787878/cog.svg',
@@ -144,28 +190,85 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
         '#limit_validation_errors' => [['fields', $block_id, 'type']],
         '#prefix' => '<div class="field-plugin-settings-edit-wrapper">',
         '#suffix' => '</div>',
-        '#submit' => [
-          [$form_state->getBuildInfo()['callback_object'], 'multistepSubmit'],
-        ],
-        '#ajax' => [
-          'callback' => [
-            $form_state->getBuildInfo()['callback_object'],
-            'multistepAjax',
-          ],
-          'wrapper' => 'field-display-overview-wrapper',
-          'effect' => 'fade',
-        ],
-        '#field_name' => $block_id,
-      ],
-    ];
+      ];
 
-    // Add the delete button.
-    $block->blockId = $block_id;
-    $delete_route = MrcDsBlocks::getDeleteRoute($block);
-    $table[$block_id]['settings_edit']['#suffix'] .= Drupal::l(t('delete'), $delete_route);
+      $block_row['settings_edit'] += $base_button;
+
+      // Add the delete button.
+      $block->blockId = $block_id;
+      $delete_route = MrcDsBlocks::getDeleteRoute($block);
+      $block_row['settings_edit']['#suffix'] .= Drupal::l(t('delete'), $delete_route);
+    }
+
+    $table[$block_id] = $block_row;
   }
 
   array_unshift($form['actions']['submit']['#submit'], 'mrc_ds_blocks_field_overview_submit');
+}
+
+/**
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $block_id
+ * @param array $config
+ *
+ * @return array
+ */
+function mrc_ds_blocks_block_form(FormStateInterface $form_state, $block_id, $config = []) {
+  $form = [];
+  $block_manager = \Drupal::service('plugin.manager.block');
+  $block = $block_manager->createInstance($block_id, $config);
+  $form = $block->buildConfigurationForm($form, $form_state);
+
+  return $form;
+}
+
+/**
+ * @param string $block_id
+ * @param \stdClass $parameters
+ * @param array $settings
+ */
+function mrc_ds_blocks_form_update_block(array $form, FormStateInterface $form_state) {
+  $callback_object = $form_state->getBuildInfo()['callback_object'];
+  if (!$callback_object instanceof EntityDisplayFormBase) {
+    throw new InvalidArgumentException('Unkown callback object.');
+  }
+
+  $display = $callback_object->getEntity();
+
+//  $parameters = mrc_ds_blocks_field_ui_form_params($form, $display);
+  $block_id = $form_state->get('plugin_settings_update');
+
+  $complete_form = $form_state->getCompleteForm();
+  $block_form = &$complete_form['fields'][$block_id]['format']['format_settings']['settings'];
+
+  if(empty($block_form)){
+    return;
+  }
+
+  $sub_form_state = SubformState::createForSubform($block_form, $form, $form_state);
+  // Call the plugin submit handler.
+  $block = \Drupal::service('plugin.manager.block')->createInstance($block_id);
+  mrc_ds_blocks_get_plugin_form($block)
+    ->submitConfigurationForm($form, $sub_form_state);
+
+//  ddl($form);
+  ddl($form_state->getValues());
+
+//  $block = new stdClass();
+//  $block->blockId = $block_id;
+//  $block->entity_type = $parameters->entity_type;
+//  $block->bundle = $parameters->bundle;
+//  $block->mode = $parameters->mode;
+//  $block->context = 'view';
+//  $block->config = $settings;
+//  mrc_ds_blocks_save($block);
+}
+
+function mrc_ds_blocks_get_plugin_form($block){
+  if ($block instanceof \Drupal\Core\Plugin\PluginWithFormsInterface) {
+    return \Drupal::service('plugin_form.factory')->createInstance($block, 'configure');
+  }
+  return $block;
 }
 
 /**
@@ -240,6 +343,10 @@ function mrc_ds_blocks_save($block, $display = NULL) {
   if (isset($display)) {
     $data = (array) $block;
     unset($data['blockId'], $data['entity_type'], $data['bundle'], $data['mode'], $data['form'], $data['context']);
+
+    // Merge old data if there is any.
+    $old_data = $display->getThirdPartySetting('mrc_ds_blocks', $block->blockId, $data);
+    $data = ((array) $block) + $old_data;
     $display->setThirdPartySetting('mrc_ds_blocks', $block->blockId, $data);
     $display->save();
   }

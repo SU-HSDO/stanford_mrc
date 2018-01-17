@@ -112,6 +112,22 @@ class RouteSubscriber extends RouteSubscriberBase {
         );
         $collection->add("mrc_ds_blocks.mrc_ds_blocks_add_$entity_type_id.display.view_mode", $route);
 
+        $route = new Route(
+          "$path/display/add-block/{block_id}",
+          ['context' => 'view'] + $defaults_add,
+          array('_permission' => 'administer ' . $entity_type_id . ' display'),
+          $options
+        );
+        $collection->add("mrc_ds_blocks.mrc_ds_blocks_add_$entity_type_id.display.block", $route);
+
+        $route = new Route(
+          "$path/display/{view_mode_name}/add-block/{block_id}",
+          ['context' => 'view'] + $defaults_add,
+          array('_permission' => 'administer ' . $entity_type_id . ' display'),
+          $options
+        );
+        $collection->add("mrc_ds_blocks.mrc_ds_blocks_add_$entity_type_id.display.view_mode.block", $route);
+
       }
     }
   }
