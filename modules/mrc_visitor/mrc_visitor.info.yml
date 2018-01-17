@@ -14,3 +14,4 @@ dependencies:
   - pathauto
   - entity_reference_revisions
   - yearonly
+  - ds

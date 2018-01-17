@@ -1,0 +1,15 @@
+{% set attributes = attributes.addClass('simple-node') %}
+
+<div{{ attributes }}>
+  {% if image %}
+    <div class="mrc-simple__img">{{ image }}</div>
+  {% endif %}
+
+  {% if above_break %}
+    <div class="mrc-simple__above-break">{{ above_break }}</div>
+  {% endif %}
+
+  {% if below_break %}
+    <div class="mrc-simple__below-break">{{ below_break }}</div>
+  {% endif %}
+</div>
