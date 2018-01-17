@@ -43,7 +43,6 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
     }
 
     $display = $callback_object->getEntity();
-
     $params = mrc_ds_blocks_field_ui_form_params($form, $display);
 
     $table = &$form['fields'];
@@ -85,7 +84,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
       }
 
       if ($form_state->get('plugin_settings_update') == $block_id) {
-        $this->updateBlock($form, $form_state);
+        $block = $this->updateBlock($form, $form_state);
       }
 
       $base_button['#field_name'] = $block_id;
@@ -94,7 +93,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
           'class' => ['draggable', 'tabledrag-leaf'],
           'id' => $block_id,
         ],
-        '#row_type' => 'field',
+        '#row_type' => 'block',
         '#region_callback' => $params->region_callback,
         '#js_settings' => ['rowHandler' => 'field'],
         'human_name' => [
@@ -123,18 +122,22 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
             '#attributes' => ['class' => ['field-name']],
           ],
         ],
-        'spacer' => [
-          '#markup' => '&nbsp;',
+        'region' => [
+          '#type' => 'select',
+          '#title' => $this->t('Region for @title', ['@title' => $block_id]),
+          '#title_display' => 'invisible',
+          '#options' => $callback_object->getRegionOptions(),
+          '#default_value' => key($callback_object->getRegionOptions()),
+          '#attributes' => ['class' => ['field-region']],
         ],
-        'format' => [
-          '#markup' => '&nbsp;',
-        ],
-        'settings_summary' => ['#markup' => ''],
+        'label' => [],
+        'plugin' => [],
+        'settings_summary' => [],
       ];
 
       if ($form_state->get('plugin_settings_edit') == $block_id) {
         $block_row['settings_edit']['#cell_attributes'] = ['colspan' => 2];
-        $block_row['format']['format_settings'] = [
+        $block_row['plugin'] = [
           '#type' => 'container',
           '#attributes' => ['class' => ['field-plugin-settings-edit-form']],
           '#array_parents' => ['fields', $block_id, 'settings_edit_form'],
@@ -160,7 +163,6 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
           ],
         ];
         $block_row['#attributes']['class'][] = 'field-formatter-settings-editing';
-        $block_row['format']['type']['#attributes']['class'] = ['visually-hidden'];
       }
       else {
         $block_row['settings_edit'] = [
@@ -184,7 +186,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
         // Add the delete button.
         $block->blockId = $block_id;
         $delete_route = MrcDsBlocks::getDeleteRoute($block);
-        $block_row['settings_edit']['#suffix'] .= Link::fromTextAndUrl(t('delete'), $delete_route)
+        $block_row['settings_summary']['#markup'] = Link::fromTextAndUrl(t('delete'), $delete_route)
           ->toString();
       }
 
@@ -198,7 +200,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
    */
   public function formSubmit(array $form, FormStateInterface $form_state) {
     $form_values = $form_state->getValue('fields');
-ddl($form_values);
+
     /** @var \Drupal\Core\Entity\EntityDisplayBase $display */
     $display = $form['#context'];
 
@@ -267,14 +269,13 @@ ddl($form_values);
     $form_values = $form_state->getValue([
       'fields',
       $block_id,
-      'format',
-      'format_settings',
+      'plugin',
       'settings',
     ]);
 
     if (!empty($form_values)) {
       $this->matchConfig($config, $form_values);
-      mrc_ds_blocks_save($blocks[$block_id]);
+      return mrc_ds_blocks_save($blocks[$block_id]);
     }
   }
 
@@ -314,6 +315,19 @@ ddl($form_values);
       }
     }
     return NULL;
+  }
+
+  /**
+   * @param array $row
+   *
+   * @return mixed
+   */
+  public static function getRowRegion(&$row) {
+//    kint(__LINE__);
+//        kint($row);
+//    return 'content';
+//    \Drupal\field_ui\Form\EntityViewDisplayEditForm::getRowRegion();
+    return $row['region']['#value'];
   }
 
 }

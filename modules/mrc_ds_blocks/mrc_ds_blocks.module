@@ -64,8 +64,8 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
  * @param \Drupal\Core\Entity\Display\EntityDisplayInterface $display
  *   The display to update if known.
  *
- * @return \Drupal\Core\Entity\Display\EntityDisplayInterface|NULL
- *   The updated entity display.
+ * @return \stdClass|NULL
+ *   The updated block configuration.
  */
 function mrc_ds_blocks_save($block, $display = NULL) {
   if ($display === NULL) {
@@ -92,7 +92,11 @@ function mrc_ds_blocks_save($block, $display = NULL) {
     $display->save();
   }
 
-  return $display;
+  foreach ($data as $key => $value) {
+    $block->{$key} = $value;
+  }
+
+  return $block;
 }
 
 /**
@@ -110,7 +114,8 @@ function mrc_ds_blocks_field_ui_form_params($form, EntityDisplayBase $display) {
   $params = new stdClass();
   $params->entity_type = $display->getTargetEntityTypeId();
   $params->bundle = $display->getTargetBundle();
-  $params->region_callback = '';
+  $params->region_callback = [MrcDsBlocksFieldUi::class, 'getRowRegion'];
+
   $params->mode = $display->getMode();
   $params->context = mrc_ds_blocks_get_context_from_display($display);
 
