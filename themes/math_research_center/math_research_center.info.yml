@@ -6,7 +6,6 @@ package: MRC
 version: VERSION
 core: 8.x
 libraries:
-  - core/normalize
   - math_research_center/fontawesome
 
 regions:
