@@ -281,7 +281,7 @@ class MrcDsBlocksAddForm extends FormBase {
     foreach ($form_state->getValues() as $key => $value) {
       $new_block->config[$key] = $value;
     }
-
+    unset($new_block->config['block_id']);
     mrc_ds_blocks_save($new_block);
     drupal_set_message(t('New block %label successfully added.', ['%label' => $block_id]));
     $form_state->setRedirectUrl(MrcDsBlocks::getFieldUiRoute($new_block));

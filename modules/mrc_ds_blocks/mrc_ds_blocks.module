@@ -14,7 +14,6 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\mrc_ds_blocks\MrcDsBlocks;
-use Drupal\Core\Form\SubformState;
 
 /**
  * Implements hook_entity_view_alter().
@@ -87,8 +86,6 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
     ],
   ];
 
-  $form_values = $form_state->getValues();
-
   // Go through each block and add it to the table.
   foreach ($params->blocks as $block_id => $block) {
 
@@ -150,7 +147,7 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
       $block_row['format']['format_settings'] = [
         '#type' => 'container',
         '#attributes' => ['class' => ['field-plugin-settings-edit-form']],
-        '#parents' => ['fields', $block_id, 'settings_edit_form'],
+        '#array_parents' => ['fields', $block_id, 'settings_edit_form'],
         '#weight' => -5,
         // Create a settings form where hooks can pick in.
         'settings' => mrc_ds_blocks_block_form($form_state, $block_id, $block->config),
@@ -218,7 +215,6 @@ function mrc_ds_blocks_block_form(FormStateInterface $form_state, $block_id, $co
   $block_manager = \Drupal::service('plugin.manager.block');
   $block = $block_manager->createInstance($block_id, $config);
   $form = $block->buildConfigurationForm($form, $form_state);
-
   return $form;
 }
 
@@ -228,6 +224,7 @@ function mrc_ds_blocks_block_form(FormStateInterface $form_state, $block_id, $co
  * @param array $settings
  */
 function mrc_ds_blocks_form_update_block(array $form, FormStateInterface $form_state) {
+
   $callback_object = $form_state->getBuildInfo()['callback_object'];
   if (!$callback_object instanceof EntityDisplayFormBase) {
     throw new InvalidArgumentException('Unkown callback object.');
@@ -235,40 +232,61 @@ function mrc_ds_blocks_form_update_block(array $form, FormStateInterface $form_s
 
   $display = $callback_object->getEntity();
 
-//  $parameters = mrc_ds_blocks_field_ui_form_params($form, $display);
+  $parameters = mrc_ds_blocks_field_ui_form_params($form, $display);
   $block_id = $form_state->get('plugin_settings_update');
+  $blocks = $parameters->blocks;
+  $config = &$blocks[$block_id]->config;
 
-  $complete_form = $form_state->getCompleteForm();
-  $block_form = &$complete_form['fields'][$block_id]['format']['format_settings']['settings'];
+  $form_values = $form_state->getValue([
+    'fields',
+    $block_id,
+    'format',
+    'format_settings',
+    'settings',
+  ]);
 
-  if(empty($block_form)){
+  if (!empty($form_values)) {
+    mrc_ds_blocks_match_config($config, $form_values);
+    mrc_ds_blocks_save($blocks[$block_id]);
+  }
+}
+
+/**
+ * @param $config
+ * @param $form_values
+ */
+function mrc_ds_blocks_match_config(&$config, $form_values) {
+  if (!is_array($config)) {
     return;
   }
 
-  $sub_form_state = SubformState::createForSubform($block_form, $form, $form_state);
-  // Call the plugin submit handler.
-  $block = \Drupal::service('plugin.manager.block')->createInstance($block_id);
-  mrc_ds_blocks_get_plugin_form($block)
-    ->submitConfigurationForm($form, $sub_form_state);
-
-//  ddl($form);
-  ddl($form_state->getValues());
-
-//  $block = new stdClass();
-//  $block->blockId = $block_id;
-//  $block->entity_type = $parameters->entity_type;
-//  $block->bundle = $parameters->bundle;
-//  $block->mode = $parameters->mode;
-//  $block->context = 'view';
-//  $block->config = $settings;
-//  mrc_ds_blocks_save($block);
+  foreach ($config as $key => &$value) {
+    if (is_array($value)) {
+      mrc_ds_blocks_match_config($value, $form_values);
+      continue;
+    }
+    $value = mrc_ds_blocks_find_value($key, $form_values);
+  }
 }
 
-function mrc_ds_blocks_get_plugin_form($block){
-  if ($block instanceof \Drupal\Core\Plugin\PluginWithFormsInterface) {
-    return \Drupal::service('plugin_form.factory')->createInstance($block, 'configure');
+/**
+ * Find a nested value
+ *
+ * @param $key
+ * @param array $values
+ *
+ * @return mixed|null
+ */
+function mrc_ds_blocks_find_value($key, array $values) {
+  if (isset($values[$key])) {
+    return $values[$key];
   }
-  return $block;
+  foreach ($values as $value) {
+    if (is_array($value)) {
+      return mrc_ds_blocks_find_value($key, $value);
+    }
+  }
+  return NULL;
 }
 
 /**
