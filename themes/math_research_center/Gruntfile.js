@@ -113,12 +113,13 @@ module.exports = function(grunt) {
           'patterns/molecules/event-date-stacked/css/event-date-stacked.scss.css':  'patterns/molecules/event-date-stacked/scss/event-date-stacked.scss',
           'patterns/molecules/featured-event-card/css/featured-event-card.css':     'patterns/molecules/featured-event-card/scss/featured-event-card.scss',
           'patterns/molecules/news-card/css/news-card.css':                         'patterns/molecules/news-card/scss/news-card.scss',
-          'patterns/molecules/news-recent/css/news-recent.css':                      'patterns/molecules/news-recent/scss/news-recent.scss',
+          'patterns/molecules/news-recent/css/news-recent.css':                     'patterns/molecules/news-recent/scss/news-recent.scss',
           'patterns/molecules/postcard/css/postcard.css':                           'patterns/molecules/postcard/scss/postcard.scss',
           'patterns/molecules/postcard-horizontal/css/postcard-horizontal.css':     'patterns/molecules/postcard-horizontal/scss/postcard-horizontal.scss',
           'patterns/molecules/visitors-grid/css/visitors-grid.css':                 'patterns/molecules/visitors-grid/scss/visitors-grid.scss',
           'patterns/templates/node-event/css/node-event.css':                       'patterns/templates/node-event/scss/node-event.scss',
           'patterns/templates/node-news/css/node-news.css':                         'patterns/templates/node-news/scss/node-news.scss',
+          'patterns/templates/node-simple/css/node-simple.css':                     'patterns/templates/node-simple/scss/node-simple.scss',
 
           // EXAMPLES
           'examples/atoms/date-stacked/css/date-stacked.css':                   'examples/atoms/date-stacked/scss/date-stacked.scss',
@@ -126,7 +127,7 @@ module.exports = function(grunt) {
           'examples/molecules/event-date-stacked/css/event-date-stacked.css':   'examples/molecules/event-date-stacked/scss/event-date-stacked.scss',
           'examples/molecules/featured-event-card/css/featured-event-card.css': 'examples/molecules/featured-event-card/scss/featured-event-card.scss',
           'examples/molecules/news-card/css/news-card.css':                     'examples/molecules/news-card/scss/news-card.scss',
-          'examples/molecules/news-recent/css/news-recent.css':                  'examples/molecules/news-recent/scss/news-recent.scss',
+          'examples/molecules/news-recent/css/news-recent.css':                 'examples/molecules/news-recent/scss/news-recent.scss',
           'examples/molecules/postcard/css/postcard.css':                       'examples/molecules/postcard/scss/postcard.scss',
           'examples/molecules/postcard-horizontal/css/postcard-horizontal.css': 'examples/molecules/postcard-horizontal/scss/postcard-horizontal.scss',
           'examples/molecules/visitors-grid/css/visitors-grid.css':             'examples/molecules/visitors-grid/scss/visitors-grid.scss',
