@@ -1,28 +1,23 @@
-postcard_horizontal:
-  label: "Postcard Horizontal"
+news_recent:
+  label: "Recent News"
   fields:
-    title:
-      label: "Title"
-      preview: "<a href=\"#\">Postcard Title</a>"
     image:
       label: "Image"
       preview:
         theme: image
-        uri: "http://via.placeholder.com/370x170"
-    super_head:
-      label: "Super Head"
-      preview: "Optional Superhead"
-    description:
-      label: "Description"
-      preview: "Optional wysiwyg lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum aliquet iaculis. Cras faucibus turpis non facilisis laoreet."
-    button:
-      label: "Button"
-      preview: "<a href=\"#\" class=\"decanter-button\">Optional Button</a>"
+        uri: "http://via.placeholder.com/100x100"
+    title:
+      label: "Title"
+      preview: "<a href=\"#\">News Item Title</a>"
+    date:
+      label: "Date"
+      preview: "January 23, 2018"
+    source:
+      label: "Source"
+      preview: "<a href=\"#\">Stanford News</a>"
   libraries:
-    - postcard:
+    - news_recent:
         css:
           component:
-            css/postcard-horizontal.css: {}
-        dependencies:
-          - ui_patterns/postcard.postcard
-  use: "@math_research_center/molecules/postcard-horizontal/postcard-horizontal.html.twig"
+            css/news-recent.css: {}
+  use: "@math_research_center/molecules/news-recent/news-recent.html.twig"
