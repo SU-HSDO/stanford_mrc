@@ -57,6 +57,49 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
 }
 
 /**
+ * @param array $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function mrc_ds_blocks_form_submit(array &$form, FormStateInterface $form_state) {
+  $form_values = $form_state->getValue('fields');
+
+  /** @var \Drupal\Core\Entity\EntityDisplayBase $display */
+  $display = $form['#context'];
+
+  $entity_type = $display->get('targetEntityType');
+  $bundle = $display->get('bundle');
+  $mode = $display->get('mode');
+  $context = mrc_ds_blocks_get_context_from_display($display);
+
+  // Update existing blocks.
+  $blocks = mrc_ds_blocks_get_blocks($entity_type, $bundle, $context, $mode);
+
+  foreach ($form['#mrc_ds_blocks'] as $block_id) {
+
+    // Only save updated blocks.
+    if (!isset($blocks[$block_id]) || !\Drupal::service('plugin.manager.block')
+        ->hasDefinition($block_id)) {
+      continue;
+    }
+
+    $block = $blocks[$block_id];
+    $block->parent_name = $form_values[$block_id]['parent'];
+    $block->weight = $form_values[$block_id]['weight'];
+    $block->region = $form_values[$block_id]['region'];
+
+    /** @var \Drupal\Core\Entity\EntityFormInterface $entity_form */
+    $entity_form = $form_state->getFormObject();
+
+    /** @var \Drupal\Core\Entity\Display\EntityDisplayInterface $display */
+    $display = $entity_form->getEntity();
+
+    $block->blockId = $block_id;
+    mrc_ds_blocks_save($block, $display);
+  }
+}
+
+
+/**
  * Saves a block configuration.
  *
  * @param \stdClass $block
@@ -83,12 +126,14 @@ function mrc_ds_blocks_save($block, $display = NULL) {
 
   if (isset($display)) {
     $data = (array) $block;
+    $block_id = $data['blockId'];
     unset($data['blockId'], $data['entity_type'], $data['bundle'], $data['mode'], $data['form'], $data['context']);
 
     // Merge old data if there is any.
     $old_data = $display->getThirdPartySetting('mrc_ds_blocks', $block->blockId, $data);
-    $data = ((array) $block) + $old_data;
-    $display->setThirdPartySetting('mrc_ds_blocks', $block->blockId, $data);
+    $data += $old_data;
+
+    $display->setThirdPartySetting('mrc_ds_blocks', $block_id, $data);
     $display->save();
   }
 

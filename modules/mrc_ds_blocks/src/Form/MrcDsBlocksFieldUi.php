@@ -24,10 +24,18 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
    */
   protected $blockManager;
 
+  /**
+   * {@inheritdoc}
+   */
   public static function create(ContainerInterface $container) {
     return new static($container->get('plugin.manager.block'));
   }
 
+  /**
+   * MrcDsBlocksFieldUi constructor.
+   *
+   * @param \Drupal\Core\Block\BlockManager $block_manager
+   */
   public function __construct(BlockManager $block_manager) {
     $this->blockManager = $block_manager;
   }
@@ -47,14 +55,6 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
 
     $table = &$form['fields'];
     $blocks = $this->blockManager->getDefinitions();
-
-    if (!$form_state->get('mrc_ds_blocks_added')) {
-      array_unshift($form['actions']['submit']['#submit'], [
-        $this,
-        'formSubmit',
-      ]);
-      $form_state->set('mrc_ds_blocks_added', TRUE);
-    }
 
     $form['#mrc_ds_blocks'] = array_keys($params->blocks);
 
@@ -89,11 +89,12 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
 
       $base_button['#field_name'] = $block_id;
       $block_row = [
+        '#block' => $block,
         '#attributes' => [
           'class' => ['draggable', 'tabledrag-leaf'],
           'id' => $block_id,
         ],
-        '#row_type' => 'block',
+        '#row_type' => 'field',
         '#region_callback' => $params->region_callback,
         '#js_settings' => ['rowHandler' => 'field'],
         'human_name' => [
@@ -127,7 +128,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
           '#title' => $this->t('Region for @title', ['@title' => $block_id]),
           '#title_display' => 'invisible',
           '#options' => $callback_object->getRegionOptions(),
-          '#default_value' => key($callback_object->getRegionOptions()),
+          '#default_value' => isset($block->region) ? $block->region : 'hidden',
           '#attributes' => ['class' => ['field-region']],
         ],
         'label' => [],
@@ -192,46 +193,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
 
       $table[$block_id] = $block_row;
     }
-  }
-
-  /**
-   * @param array $form
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   */
-  public function formSubmit(array $form, FormStateInterface $form_state) {
-    $form_values = $form_state->getValue('fields');
-
-    /** @var \Drupal\Core\Entity\EntityDisplayBase $display */
-    $display = $form['#context'];
-
-    $entity_type = $display->get('targetEntityType');
-    $bundle = $display->get('bundle');
-    $mode = $display->get('mode');
-    $context = mrc_ds_blocks_get_context_from_display($display);
-
-    // Update existing blocks.
-    $blocks = mrc_ds_blocks_get_blocks($entity_type, $bundle, $context, $mode);
-
-    foreach ($form['#mrc_ds_blocks'] as $block_id) {
-
-      // Only save updated blocks.
-      if (!isset($blocks[$block_id]) || !$this->blockManager->hasDefinition($block_id)) {
-        continue;
-      }
-
-      $block = $blocks[$block_id];
-      $block->parent_name = $form_values[$block_id]['parent'];
-      $block->weight = $form_values[$block_id]['weight'];
-
-      /** @var \Drupal\Core\Entity\EntityFormInterface $entity_form */
-      $entity_form = $form_state->getFormObject();
-
-      /** @var \Drupal\Core\Entity\Display\EntityDisplayInterface $display */
-      $display = $entity_form->getEntity();
-
-      $block->blockId = $block_id;
-      mrc_ds_blocks_save($block, $display);
-    }
+    array_unshift($form['actions']['submit']['#submit'], 'mrc_ds_blocks_form_submit');
   }
 
   /**
@@ -251,6 +213,8 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
   /**
    * @param array $form
    * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return \stdClass
    */
   protected function updateBlock(array $form, FormStateInterface $form_state) {
 
@@ -280,8 +244,8 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
   }
 
   /**
-   * @param $config
-   * @param $form_values
+   * @param mixed $config
+   * @param mixed $form_values
    */
   protected function matchConfig(&$config, $form_values) {
     if (!is_array($config)) {
@@ -323,11 +287,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
    * @return mixed
    */
   public static function getRowRegion(&$row) {
-//    kint(__LINE__);
-//        kint($row);
-//    return 'content';
-//    \Drupal\field_ui\Form\EntityViewDisplayEditForm::getRowRegion();
-    return $row['region']['#value'];
+    return $row['#block']->region;
   }
 
 }
