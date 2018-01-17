@@ -1,28 +1,23 @@
-postcard_horizontal:
-  label: "Postcard Horizontal"
+visitors_grid:
+  label: "Visitors Grid"
   fields:
-    title:
-      label: "Title"
-      preview: "<a href=\"#\">Postcard Title</a>"
     image:
       label: "Image"
       preview:
         theme: image
-        uri: "http://via.placeholder.com/370x170"
-    super_head:
-      label: "Super Head"
-      preview: "Optional Superhead"
-    description:
-      label: "Description"
-      preview: "Optional wysiwyg lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum aliquet iaculis. Cras faucibus turpis non facilisis laoreet."
-    button:
-      label: "Button"
-      preview: "<a href=\"#\" class=\"decanter-button\">Optional Button</a>"
+        uri: "http://via.placeholder.com/200x200"
+    name:
+      label: "Name"
+      preview: "<a href=\"#\">Person's Name</a>"
+    title:
+      label: "Title"
+      preview: "Job Title"
+    research_areas:
+      label: "Research Areas"
+      preview: "Lorem Ipsum, Dolor Sit Amet, Consectetur"
   libraries:
-    - postcard:
+    - visitors_grid:
         css:
           component:
-            css/postcard-horizontal.css: {}
-        dependencies:
-          - ui_patterns/postcard.postcard
-  use: "@math_research_center/molecules/postcard-horizontal/postcard-horizontal.html.twig"
+            css/visitors-grid.css: {}
+  use: "@math_research_center/molecules/visitors-grid/visitors-grid.html.twig"

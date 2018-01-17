@@ -1,4 +1,4 @@
-event-date-stacked:
+event_date_stacked:
   label: "Event Date Stacked"
   fields:
     month:
