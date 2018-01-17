@@ -1,0 +1,26 @@
+event-date-stacked:
+  label: "Event Date Stacked"
+  fields:
+    month:
+      label: "Month"
+      preview: "Jan"
+    day:
+      label: "Day"
+      preview: "23"
+    title:
+      label: "Title"
+      preview: "<a href=\"#\">Event Title</a>"
+    time:
+      label: "Time"
+      preview: "4:30 PM"
+    location:
+      label: "Location"
+      preview: "Bldg. 380-380W"
+  libraries:
+    - event_date_stacked:
+        css:
+          component:
+            css/postcard-horizontal.css: {}
+        dependencies:
+          - ui_patterns/date-stacked.date-stacked
+  use: "@math_research_center/molecules/event-date-stacked/event-date-stacked.html.twig"
