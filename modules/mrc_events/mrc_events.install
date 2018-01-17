@@ -75,7 +75,5 @@ function mrc_events_update_8004() {
     'label' => 'Featured',
   ])->save();
 
-  module_load_install('stanford_mrc');
-  $path = drupal_get_path('module', 'mrc_events') . '/config/install';
-  stanford_mrc_update_configs(TRUE, 'all', $path);
+  // Removed the config update since it happens in mrc_helper_install().
 }

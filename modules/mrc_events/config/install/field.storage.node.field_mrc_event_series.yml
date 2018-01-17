@@ -4,8 +4,8 @@ dependencies:
   module:
     - node
     - taxonomy
-id: node.field_s_visitor_program_type
-field_name: field_s_visitor_program_type
+id: node.field_mrc_event_series
+field_name: field_mrc_event_series
 entity_type: node
 type: entity_reference
 settings:
