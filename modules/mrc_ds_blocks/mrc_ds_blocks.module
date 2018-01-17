@@ -54,11 +54,18 @@ function mrc_ds_blocks_form_entity_view_display_edit_form_alter(&$form, FormStat
   \Drupal::classResolver()
     ->getInstanceFromDefinition(MrcDsBlocksFieldUi::class)
     ->alterForm($form, $form_state);
+
+  // Put our submit handler first.
+  array_unshift($form['actions']['submit']['#submit'], 'mrc_ds_blocks_form_submit');
 }
 
 /**
+ * Submit handler for entity_view_display form to save blocks.
+ *
  * @param array $form
+ *   Existing form.
  * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Current state of the form.
  */
 function mrc_ds_blocks_form_submit(array &$form, FormStateInterface $form_state) {
   $form_values = $form_state->getValue('fields');

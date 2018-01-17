@@ -41,8 +41,14 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
   }
 
   /**
+   * Alter the entity_view_display form.
+   *
    * @param array $form
+   *   Existing display form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current state of the form.
+   *
+   * @see mrc_ds_blocks_form_entity_view_display_edit_form_alter()
    */
   public function alterForm(array &$form, FormStateInterface $form_state) {
     $callback_object = $form_state->getBuildInfo()['callback_object'];
@@ -58,23 +64,6 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
 
     $form['#mrc_ds_blocks'] = array_keys($params->blocks);
 
-    $base_button = [
-      '#submit' => [
-        [
-          $form_state->getBuildInfo()['callback_object'],
-          'multistepSubmit',
-        ],
-      ],
-      '#ajax' => [
-        'callback' => [
-          $form_state->getBuildInfo()['callback_object'],
-          'multistepAjax',
-        ],
-        'wrapper' => 'field-display-overview-wrapper',
-        'effect' => 'fade',
-      ],
-    ];
-
     // Go through each block and add it to the table.
     foreach ($params->blocks as $block_id => $block) {
 
@@ -83,13 +72,13 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
         continue;
       }
 
+      // Block settings has changed, so update the block.
       if ($form_state->get('plugin_settings_update') == $block_id) {
         $block = $this->updateBlock($form, $form_state);
       }
 
-      $base_button['#field_name'] = $block_id;
+      // Create the table row.
       $block_row = [
-        '#block' => $block,
         '#attributes' => [
           'class' => ['draggable', 'tabledrag-leaf'],
           'id' => $block_id,
@@ -119,7 +108,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
           ],
           'hidden_name' => [
             '#type' => 'hidden',
-            '#default_value' => $block_id,
+            '#value' => $block_id,
             '#attributes' => ['class' => ['field-name']],
           ],
         ],
@@ -136,6 +125,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
         'settings_summary' => [],
       ];
 
+      // If the edit settings button was pushed, show the settings form.
       if ($form_state->get('plugin_settings_edit') == $block_id) {
         $block_row['settings_edit']['#cell_attributes'] = ['colspan' => 2];
         $block_row['plugin'] = [
@@ -147,25 +137,14 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
           'settings' => $this->getBlockForm($form_state, $block_id, $block->config),
           'actions' => [
             '#type' => 'actions',
-            'save_settings' => $base_button + [
-                '#type' => 'submit',
-                '#name' => $block_id . '_plugin_settings_update',
-                '#value' => $this->t('Update'),
-                '#op' => 'update',
-              ],
-            'cancel_settings' => $base_button + [
-                '#type' => 'submit',
-                '#name' => $block_id . '_plugin_settings_cancel',
-                '#value' => $this->t('Cancel'),
-                '#op' => 'cancel',
-                // Do not check errors for the 'Cancel' button.
-                '#limit_validation_errors' => [],
-              ],
+            'save_settings' => $this->getButton('update', $block_id, $form_state),
+            'cancel_settings' => $this->getButton('cancel', $block_id, $form_state),
           ],
         ];
         $block_row['#attributes']['class'][] = 'field-formatter-settings-editing';
       }
       else {
+        // Add the edit settings button.
         $block_row['settings_edit'] = [
           '#type' => 'image_button',
           '#name' => $block_id . '_block_settings_edit',
@@ -182,7 +161,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
           '#suffix' => '</div>',
         ];
 
-        $block_row['settings_edit'] += $base_button;
+        $block_row['settings_edit'] += $this->getButton(NULL, $block_id, $form_state);
 
         // Add the delete button.
         $block->blockId = $block_id;
@@ -191,17 +170,74 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
           ->toString();
       }
 
+      // Add the block row to the table.
       $table[$block_id] = $block_row;
     }
-    array_unshift($form['actions']['submit']['#submit'], 'mrc_ds_blocks_form_submit');
   }
 
   /**
+   * Get a button for the field ui form.
+   *
+   * @param string $type
+   *   Type of button to get.
+   * @param string $block_id
+   *   Machine name of block.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   * @param $block_id
-   * @param array $config
+   *   Current state of form.
    *
    * @return array
+   *   Built button.
+   */
+  protected function getButton($type, $block_id, FormStateInterface $form_state) {
+    // Base button that we'll add to the edit, update and save buttons.
+    $object = $form_state->getBuildInfo()['callback_object'];
+    $button = [
+      '#field_name' => $block_id,
+      '#submit' => [[$object, 'multistepSubmit']],
+      '#ajax' => [
+        'callback' => [$object, 'multistepAjax'],
+        'wrapper' => 'field-display-overview-wrapper',
+        'effect' => 'fade',
+      ],
+    ];
+
+    switch ($type) {
+      case 'update':
+        $button += [
+          '#type' => 'submit',
+          '#name' => $block_id . '_plugin_settings_update',
+          '#value' => $this->t('Update'),
+          '#op' => 'update',
+        ];
+        break;
+
+      case 'cancel':
+        $button += [
+          '#type' => 'submit',
+          '#name' => $block_id . '_plugin_settings_cancel',
+          '#value' => $this->t('Cancel'),
+          '#op' => 'cancel',
+          // Do not check errors for the 'Cancel' button.
+          '#limit_validation_errors' => [],
+        ];
+        break;
+    }
+
+    return $button;
+  }
+
+  /**
+   * Get the configuration form for a particular block.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current state of the form.
+   * @param string $block_id
+   *   Machine name of the block to load.
+   * @param array $config
+   *   Existing configuration of the block.
+   *
+   * @return array
+   *   The block config form.
    */
   protected function getBlockForm(FormStateInterface $form_state, $block_id, $config = []) {
     $form = [];
@@ -211,10 +247,15 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
   }
 
   /**
+   * Update blocks when the "edit settings" dialog is closed.
+   *
    * @param array $form
+   *   Complete form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current state of the form.
    *
    * @return \stdClass
+   *   The updated block.
    */
   protected function updateBlock(array $form, FormStateInterface $form_state) {
 
@@ -237,6 +278,7 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
       'settings',
     ]);
 
+    // Set the block configurations and save the block to the display.
     if (!empty($form_values)) {
       $this->matchConfig($config, $form_values);
       return mrc_ds_blocks_save($blocks[$block_id]);
@@ -244,8 +286,18 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
   }
 
   /**
+   * Match original configurations with the new values.
+   *
+   * The add block form and edit settings form has different structures mainly
+   * because while in the edit dialog, the form has '#tree' => TRUE, so the
+   * submitted value structure doesn't match the original configurations. So we
+   * navigate through the original configuration and the submitted values to
+   * retain the original configuration structure with new values.
+   *
    * @param mixed $config
+   *   Original configuration.
    * @param mixed $form_values
+   *   Newly submitted values.
    */
   protected function matchConfig(&$config, $form_values) {
     if (!is_array($config)) {
@@ -262,32 +314,43 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
   }
 
   /**
-   * Find a nested value
+   * Find a nested value within an array.
    *
-   * @param $key
+   * @param string $key
+   *   Key of the desired value.
    * @param array $values
+   *   Array ideally with the key and value nested somewhere.
    *
    * @return mixed|null
    */
   protected function findValue($key, array $values) {
     if (isset($values[$key])) {
+      // Found the key, return its value.
       return $values[$key];
     }
+
+    // The key didn't exist, so continue the depth of the array.
     foreach ($values as $value) {
       if (is_array($value)) {
+        // Recursively dive deeper into the values array.
         return $this->findValue($key, $value);
       }
     }
+    // No results found.
     return NULL;
   }
 
   /**
-   * @param array $row
+   * Get the display region for the row.
    *
-   * @return mixed
+   * @param array $row
+   *   Table row.
+   *
+   * @return string
+   *   Display region.
    */
   public static function getRowRegion(&$row) {
-    return $row['#block']->region;
+    return $row['region']['#value'];
   }
 
 }
