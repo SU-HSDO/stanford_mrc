@@ -33,7 +33,7 @@
     @include margin(0 null 0.25em);
   }
 
-  .mrc-visitors-grid__title {
+  .mrc-visitors-list__title {
     @include margin(null null 0.25em);
 
     @include media($medium-screen) {
@@ -45,7 +45,7 @@
     @include margin(null null 0.25em);
   }
 
-  .mrc-visitors-grid__academic-year {
+  .mrc-visitors-list__academic-year {
     @include margin(null null 0.25em);
 
     @include media($medium-screen) {
