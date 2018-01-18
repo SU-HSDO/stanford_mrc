@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.stanford_news_item.body
+    - field.field.node.stanford_news_item.field_mrc_event_series
     - field.field.node.stanford_news_item.field_s_news_attachment
     - field.field.node.stanford_news_item.field_s_news_categories
     - field.field.node.stanford_news_item.field_s_news_date
@@ -41,6 +42,7 @@ third_party_settings:
       children:
         - field_s_news_categories
         - field_s_news_featured
+        - field_mrc_event_series
       parent_name: ''
       weight: 8
       format_type: fieldset
@@ -69,6 +71,15 @@ content:
     weight: 10
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_mrc_event_series:
+    type: entity_reference_autocomplete
+    weight: 16
+    region: content
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_s_news_attachment:
     weight: 4
@@ -172,5 +183,10 @@ content:
       size: 60
       placeholder: ''
     region: content
+    third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden: {  }

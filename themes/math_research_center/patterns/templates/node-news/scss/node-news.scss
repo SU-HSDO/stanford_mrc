@@ -6,19 +6,16 @@
 
 // Decanter
 @import
-'decanter/scss/lib/bourbon',
-'decanter/scss/core/variables',
-'decanter/scss/core/utilities';
+  'decanter-no-markup';
 
 // Stanford Math Research Center
 @import
 '../utilities/mixins/mixins';
 
 .mrc-news__date-source {
+  display: flex;
   flex-wrap: wrap;
   margin-bottom: 1em;
-
-  @include mrc-flex-medium;
 
   .mrc-news__date {
     margin: 0 0 0.25em 0;
@@ -30,6 +27,13 @@
 
   .mrc-news__source {
     margin-top: 0;
+  }
+}
+
+.mrc-news__img {
+  img {
+    height: auto;
+    width: 100%;
   }
 }
 

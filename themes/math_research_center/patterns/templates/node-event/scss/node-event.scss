@@ -6,9 +6,7 @@
 
 // Decanter
 @import
-  'decanter/scss/lib/bourbon',
-  'decanter/scss/core/variables',
-  'decanter/scss/core/utilities';
+  'decanter-no-markup';
 
 // Stanford Math Research Center
 @import
@@ -32,6 +30,14 @@
 .mrc-event__map-admission {
   margin: 1em 0;
 
+  &:after {
+    content: "\2014";
+    display: block;
+    font-size: $lead-font-size;
+    font-weight: $font-bold;
+    @include margin (1em null null);
+  }
+
   .mrc-event__map {
     float: none;
     margin-right: 0;
@@ -40,7 +46,6 @@
       float: left;
       margin-right: 0.5em;
     }
-
 
     &:before {
       color: $color-bright-red;
@@ -57,22 +62,11 @@
       margin-left: 0.5em;
     }
 
-
     &:before {
       content: "\f145";
       font-family: FontAwesome;
       margin-right: 0.15em;
     }
-  }
-}
-
-.mrc-event__description {
-  &:before {
-    content: "\2014";
-    display: block;
-    font-size: $lead-font-size;
-    font-weight: $font-bold;
-    margin-bottom: 0.5em;
   }
 }
 
