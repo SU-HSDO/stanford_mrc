@@ -1,5 +1,15 @@
 Stanford MRC
 
+Version 8.0.3                                                         2018-01-17
+--------------------------------------------------------------------------------
+- Saml configured
+- new views for visitor content type
+- Newly refactored decanter
+- new patterns
+- New content type: "Basic Page" with bricks and paragraphs
+- 3 new paragraph types: views, CTA, & WYSIWYG
+- mrc_ds_blocks module to place blocks in entity view displays.
+
 Version 8.0.2                                                         2017-11-09
 --------------------------------------------------------------------------------
 - Set Display settings for news nodes & events nodes.

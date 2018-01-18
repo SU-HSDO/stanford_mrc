@@ -1,5 +1,5 @@
 mrc_media.autocomplete:
-  version: VERSION
+  version: 8.0.3
   js:
     js/mrc_media.autocomplete.js: {}
   css:
@@ -12,13 +12,13 @@ mrc_media.autocomplete:
     - core/underscore
 
 mrc_media.browser:
-  version: VERSION
+  version: 8.0.3
   css:
     component:
       css/mrc_media.browser.css: {}
 
 mrc_media.embed:
-  version: VERSION
+  version: 8.0.3
   js:
     js/mrc_media.embed.js: {}
   dependencies:
