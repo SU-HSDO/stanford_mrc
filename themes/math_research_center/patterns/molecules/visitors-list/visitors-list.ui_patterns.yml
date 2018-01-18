@@ -3,7 +3,7 @@ visitors_list:
   fields:
     name:
       label: "Name"
-      preview: "<a href=\"#\">Person's Name</a>"
+      preview: "<a href=\"#\">Jane Stanford</a>"
     title:
       label: "Title"
       preview: "Professor of Mathematics"
