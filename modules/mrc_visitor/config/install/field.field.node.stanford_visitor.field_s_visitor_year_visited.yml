@@ -13,7 +13,7 @@ field_name: field_s_visitor_year_visited
 entity_type: node
 bundle: stanford_visitor
 label: 'Academic year'
-description: 'Select the academic year in which they visited. For example, If they visited 2017-2018, select the academic year 2018.'
+description: ''
 required: true
 translatable: false
 default_value: {  }

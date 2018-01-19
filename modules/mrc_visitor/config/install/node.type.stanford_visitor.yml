@@ -7,9 +7,9 @@ third_party_settings:
   menu_ui:
     available_menus: {  }
     parent: ''
-name: 'Stanford Visitor'
+name: 'MRC Visitor'
 type: stanford_visitor
-description: ''
+description: 'A person visiting Stanford for the MRC Visitor Program'
 help: ''
 new_revision: false
 preview_mode: 1
