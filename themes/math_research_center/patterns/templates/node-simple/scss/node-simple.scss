@@ -1,2 +1,12 @@
 @charset "UTF-8";
 
+///
+/// SIMPLE NODE STYLES
+///
+
+// Roll up file for all node-specific
+// styles using the node-simple template.
+
+// Visitor Node
+@import
+  'scss/node/stanford_visitor';
