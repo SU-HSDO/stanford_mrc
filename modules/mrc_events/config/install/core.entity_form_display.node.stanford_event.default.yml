@@ -53,6 +53,8 @@ third_party_settings:
         - field_s_event_image
         - field_s_event_link
         - field_s_event_featured
+        - field_s_event_type
+        - field_mrc_event_series
       parent_name: group_event_tabs
       weight: 2
       format_type: tab
@@ -73,8 +75,6 @@ third_party_settings:
         - field_s_event_contact_email
         - field_s_event_contact_phone
         - field_s_event_admission
-        - field_s_event_type
-        - field_mrc_event_series
       parent_name: group_event_tabs
       weight: 5
       format_type: tab
@@ -116,18 +116,15 @@ content:
     third_party_settings: {  }
   created:
     type: datetime_timestamp
-    weight: 9
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   field_mrc_event_series:
-    type: entity_reference_autocomplete
-    weight: 15
+    type: options_select
+    weight: 24
     region: content
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_s_event_admission:
     weight: 13
@@ -226,20 +223,11 @@ content:
     third_party_settings: {  }
     type: string_textarea
     region: content
-  field_s_event_status:
-    weight: 4
+  field_s_event_type:
+    weight: 23
     settings: {  }
     third_party_settings: {  }
     type: options_select
-    region: content
-  field_s_event_type:
-    weight: 14
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
     region: content
   field_s_event_video_recap:
     weight: 24
@@ -249,7 +237,7 @@ content:
     region: content
   path:
     type: path
-    weight: 8
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -264,14 +252,14 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 7
+    weight: 3
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 3
+    weight: 2
     region: content
     third_party_settings: {  }
   title:
@@ -284,7 +272,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 10
+    weight: 6
     settings:
       match_operator: CONTAINS
       size: 60
@@ -296,4 +284,5 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_s_event_status: true

@@ -10,8 +10,8 @@ id: node.stanford_event.field_s_event_video_recap
 field_name: field_s_event_video_recap
 entity_type: node
 bundle: stanford_event
-label: 'Post Event Video'
-description: ''
+label: 'Event Video'
+description: 'Enter the Youtube or Vimeo url of the video for this event. This will display as an embedded video on the event page.'
 required: false
 translatable: false
 default_value: {  }

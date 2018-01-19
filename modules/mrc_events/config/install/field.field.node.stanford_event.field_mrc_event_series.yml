@@ -10,7 +10,7 @@ field_name: field_mrc_event_series
 entity_type: node
 bundle: stanford_event
 label: 'MRC Event Series'
-description: ''
+description: 'Select which Event Series this belongs to.'
 required: false
 translatable: true
 default_value: {  }

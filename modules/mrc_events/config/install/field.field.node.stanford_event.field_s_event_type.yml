@@ -12,7 +12,7 @@ field_name: field_s_event_type
 entity_type: node
 bundle: stanford_event
 label: 'Event Type'
-description: ''
+description: 'Select which type of event this is.'
 required: false
 translatable: false
 default_value: {  }
