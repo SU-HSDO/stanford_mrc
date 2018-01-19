@@ -191,7 +191,7 @@ function stanford_mrc_update_8007() {
 }
 
 /**
- * Enables mrc_helper module.
+ * Resets the basic_html text format settings.
  */
 function stanford_mrc_update_8008() {
   $configs = [
