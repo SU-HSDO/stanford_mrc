@@ -5,7 +5,7 @@ dependencies:
     - field.storage.node.field_s_news_categories
     - field.storage.node.field_s_news_date
     - field.storage.node.field_s_news_image
-    - field.storage.node.field_s_news_source
+    - field.storage.node.field_s_news_link
     - image.style.large
     - node.type.stanford_news_item
   module:
@@ -89,12 +89,12 @@ display:
           default_field_elements: 1
           inline:
             path: 0
-            field_s_news_source_1: 0
+            field_s_news_link_1: 0
             title: 0
             field_s_news_date: 0
             field_s_news_image: 0
             field_s_news_categories: 0
-            field_s_news_source: 0
+            field_s_news_link: 0
           separator: ''
           hide_empty: 0
           pattern: news_card
@@ -119,11 +119,11 @@ display:
               weight: 3
               plugin: views_row
               source: field_s_news_categories
-            'views_row:field_s_news_source':
+            'views_row:field_s_news_link':
               destination: link
               weight: 4
               plugin: views_row
-              source: field_s_news_source
+              source: field_s_news_link
       fields:
         path:
           id: path
@@ -432,10 +432,10 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-        field_s_news_source:
-          id: field_s_news_source
-          table: node__field_s_news_source
-          field: field_s_news_source
+        field_s_news_link:
+          id: field_s_news_link
+          table: node__field_s_news_link
+          field: field_s_news_link
           relationship: none
           group_type: group
           admin_label: ''
@@ -445,7 +445,7 @@ display:
             alter_text: false
             text: ''
             make_link: false
-            path: '{{ field_s_news_source__uri }}'
+            path: '{{ field_s_news_link__uri }}'
             absolute: true
             external: false
             replace_spaces: false
@@ -552,7 +552,7 @@ display:
         - 'config:field.storage.node.field_s_news_categories'
         - 'config:field.storage.node.field_s_news_date'
         - 'config:field.storage.node.field_s_news_image'
-        - 'config:field.storage.node.field_s_news_source'
+        - 'config:field.storage.node.field_s_news_link'
   block_1:
     display_plugin: block
     id: block_1
@@ -624,7 +624,7 @@ display:
         - 'config:field.storage.node.field_s_news_categories'
         - 'config:field.storage.node.field_s_news_date'
         - 'config:field.storage.node.field_s_news_image'
-        - 'config:field.storage.node.field_s_news_source'
+        - 'config:field.storage.node.field_s_news_link'
   list:
     display_plugin: block
     id: list
@@ -645,4 +645,4 @@ display:
         - 'config:field.storage.node.field_s_news_categories'
         - 'config:field.storage.node.field_s_news_date'
         - 'config:field.storage.node.field_s_news_image'
-        - 'config:field.storage.node.field_s_news_source'
+        - 'config:field.storage.node.field_s_news_link'

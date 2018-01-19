@@ -3,20 +3,19 @@ status: true
 dependencies:
   config:
     - field.field.node.stanford_news_item.body
-    - field.field.node.stanford_news_item.field_s_news_attachment
+    - field.field.node.stanford_news_item.field_mrc_event_series
+    - field.field.node.stanford_news_item.field_s_news_byline
     - field.field.node.stanford_news_item.field_s_news_categories
     - field.field.node.stanford_news_item.field_s_news_date
     - field.field.node.stanford_news_item.field_s_news_featured
     - field.field.node.stanford_news_item.field_s_news_image
     - field.field.node.stanford_news_item.field_s_news_link
     - field.field.node.stanford_news_item.field_s_news_meta_tags
-    - field.field.node.stanford_news_item.field_s_news_source
     - image.style.hero_banner
     - node.type.stanford_news_item
   module:
     - datetime
     - ds
-    - file
     - image
     - link
     - text
@@ -35,20 +34,13 @@ third_party_settings:
       date:
         - field_s_news_date
       link:
-        - field_s_news_source
+        - field_s_news_link
       image:
         - field_s_news_image
       content:
         - body
-        - field_s_news_attachment
       author:
-        - node_author
-    fields:
-      node_author:
-        plugin_id: node_author
-        weight: 5
-        label: hidden
-        formatter: author
+        - field_s_news_byline
 _core:
   default_config_hash: tHz7HH0TLEM8PMHeA5HIwZZUcXxOJq2d4Ro2Fbo3WZY
 id: node.stanford_news_item.default
@@ -63,15 +55,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
-  field_s_news_attachment:
-    type: file_default
+  field_s_news_byline:
     weight: 4
-    region: content
     label: hidden
-    settings: {  }
-    third_party_settings:
-      ds:
-        ds_limit: ''
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: author
   field_s_news_date:
     weight: 0
     label: hidden
@@ -90,8 +81,10 @@ content:
     third_party_settings: {  }
     type: image
     region: image
-  field_s_news_source:
+  field_s_news_link:
+    type: link
     weight: 1
+    region: link
     label: hidden
     settings:
       trim_length: 80
@@ -100,11 +93,9 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
-    region: link
 hidden:
+  field_mrc_event_series: true
   field_s_news_categories: true
   field_s_news_featured: true
-  field_s_news_link: true
   field_s_news_meta_tags: true
   links: true
