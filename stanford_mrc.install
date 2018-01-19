@@ -186,6 +186,17 @@ function stanford_mrc_update_8006() {
 /**
  * Enables mrc_helper module.
  */
-function stanford_mrc_update_8007(){
+function stanford_mrc_update_8007() {
   \Drupal::service('module_installer')->install(['mrc_helper']);
+}
+
+/**
+ * Enables mrc_helper module.
+ */
+function stanford_mrc_update_8008() {
+  $configs = [
+    'editor.editor.basic_html',
+    'filter.format.basic_html',
+  ];
+  stanford_mrc_update_configs(TRUE, $configs);
 }
