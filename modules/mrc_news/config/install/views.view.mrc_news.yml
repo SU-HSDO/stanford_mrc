@@ -5,14 +5,12 @@ dependencies:
     - field.storage.node.field_s_news_categories
     - field.storage.node.field_s_news_date
     - field.storage.node.field_s_news_image
-    - field.storage.node.field_s_news_source
     - image.style.large
     - image.style.mrc_news_thumbnail
     - node.type.stanford_news_item
   module:
     - datetime
     - image
-    - link
     - node
     - ui_patterns_views
     - user
@@ -553,7 +551,6 @@ display:
         - 'config:field.storage.node.field_s_news_categories'
         - 'config:field.storage.node.field_s_news_date'
         - 'config:field.storage.node.field_s_news_image'
-        - 'config:field.storage.node.field_s_news_source'
   event_series_related_news:
     display_plugin: block
     id: event_series_related_news
@@ -570,6 +567,11 @@ display:
         style: false
         row: false
         fields: false
+        use_more: false
+        use_more_always: false
+        use_more_text: false
+        link_display: false
+        link_url: false
       pager:
         type: some
         options:
@@ -1033,6 +1035,11 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+      use_more: true
+      use_more_always: false
+      use_more_text: 'See all related news'
+      link_display: custom_url
+      link_url: 'news?series={{ raw_arguments.field_mrc_event_series_target_id }}'
     cache_metadata:
       max-age: -1
       contexts:
@@ -1045,7 +1052,6 @@ display:
         - 'config:field.storage.node.field_s_news_categories'
         - 'config:field.storage.node.field_s_news_date'
         - 'config:field.storage.node.field_s_news_image'
-        - 'config:field.storage.node.field_s_news_source'
   list:
     display_plugin: block
     id: list
@@ -1066,4 +1072,3 @@ display:
         - 'config:field.storage.node.field_s_news_categories'
         - 'config:field.storage.node.field_s_news_date'
         - 'config:field.storage.node.field_s_news_image'
-        - 'config:field.storage.node.field_s_news_source'

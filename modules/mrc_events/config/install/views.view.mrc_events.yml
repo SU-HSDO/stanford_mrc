@@ -593,6 +593,11 @@ display:
         row: false
         fields: false
         pager: false
+        use_more: false
+        use_more_always: false
+        use_more_text: false
+        link_display: false
+        link_url: false
       filter_groups:
         operator: AND
         groups:
@@ -990,6 +995,11 @@ display:
         options:
           items_per_page: 2
           offset: 0
+      use_more: true
+      use_more_always: false
+      use_more_text: 'See all past events'
+      link_display: custom_url
+      link_url: 'events/past-events?series={{ raw_arguments.field_mrc_event_series_target_id }} '
     cache_metadata:
       max-age: -1
       contexts:
@@ -1079,6 +1089,11 @@ display:
         row: false
         fields: false
         pager: false
+        use_more: false
+        use_more_always: false
+        use_more_text: false
+        link_display: false
+        link_url: false
       filter_groups:
         operator: AND
         groups:
@@ -1476,6 +1491,11 @@ display:
         options:
           items_per_page: 2
           offset: 0
+      use_more: true
+      use_more_always: false
+      use_more_text: 'View all upcoming events'
+      link_display: custom_url
+      link_url: 'events?series={{ arguments.field_mrc_event_series_target_id }}'
     cache_metadata:
       max-age: -1
       contexts:
