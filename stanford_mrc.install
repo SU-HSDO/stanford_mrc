@@ -189,3 +189,11 @@ function stanford_mrc_update_8006() {
 function stanford_mrc_update_8007(){
   \Drupal::service('module_installer')->install(['mrc_helper']);
 }
+
+
+/**
+ * Enables mrc_helper module.
+ */
+function stanford_mrc_update_8008(){
+  \Drupal::service('module_installer')->install(['mrc_ds_blocks']);
+}

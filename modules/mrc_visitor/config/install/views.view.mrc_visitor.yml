@@ -1,4 +1,4 @@
-uuid: null
+uuid: 08bd8f1b-64ba-4785-bec9-8f9aec62079e
 langcode: en
 status: true
 dependencies:
@@ -79,7 +79,7 @@ display:
           pattern: visitors_grid
           pattern_mapping:
             'views_row:title':
-              destination: title
+              destination: name
               weight: 0
               plugin: views_row
               source: title
@@ -217,7 +217,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Research Area(s)'
           exclude: false
           alter:
             alter_text: false
@@ -427,10 +427,10 @@ display:
         - 'config:field.storage.node.field_s_visitor_photo'
         - 'config:field.storage.node.field_s_visitor_position_title'
         - 'config:field.storage.node.field_s_visitor_research_area'
-  block_1:
+  event_series_visitors:
     display_plugin: block
-    id: block_1
-    display_title: Visitors
+    id: event_series_visitors
+    display_title: 'Event Series Visitors'
     position: 1
     display_options:
       display_extenders: {  }

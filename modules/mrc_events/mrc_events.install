@@ -101,5 +101,8 @@ function mrc_events_update_8005() {
 
   module_load_install('stanford_mrc');
   $path = drupal_get_path('module', 'mrc_events') . '/config/install';
-  stanford_mrc_update_configs(TRUE, ['core.entity_form_display.node.stanford_event.default'], $path);
+  stanford_mrc_update_configs(TRUE, [
+    'core.entity_form_display.node.stanford_event.default',
+    'views.view.mrc_events',
+  ], $path);
 }

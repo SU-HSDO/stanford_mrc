@@ -66,4 +66,8 @@ function mrc_visitor_update_8003() {
   $config_entity->set('content.field_mrc_event_series.type', 'options_select');
   $config_entity->set('content.field_mrc_event_series.settings', []);
   $config_entity->save();
+
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_visitor') . '/config/install';
+  stanford_mrc_update_configs(TRUE, ['views.view.mrc_visitor'], $path);
 }
