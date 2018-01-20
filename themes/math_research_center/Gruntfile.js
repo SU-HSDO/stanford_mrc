@@ -120,9 +120,11 @@ module.exports = function(grunt) {
           'patterns/molecules/postcard/css/postcard.css':                           'patterns/molecules/postcard/scss/postcard.scss',
           'patterns/molecules/postcard-horizontal/css/postcard-horizontal.css':     'patterns/molecules/postcard-horizontal/scss/postcard-horizontal.scss',
           'patterns/molecules/visitors-grid/css/visitors-grid.css':                 'patterns/molecules/visitors-grid/scss/visitors-grid.scss',
+          'patterns/molecules/visitors-list/css/visitors-list.css':                 'patterns/molecules/visitors-list/scss/visitors-list.scss',
           'patterns/templates/node-event/css/node-event.css':                       'patterns/templates/node-event/scss/node-event.scss',
           'patterns/templates/node-news/css/node-news.css':                         'patterns/templates/node-news/scss/node-news.scss',
           'patterns/templates/node-simple/css/node-simple.css':                     'patterns/templates/node-simple/scss/node-simple.scss',
+          'patterns/templates/terms-event-series/css/terms-event-series.css':       'patterns/templates/terms-event-series/scss/terms-event-series.scss',
 
           // EXAMPLES
           'examples/atoms/date-stacked/css/date-stacked.css':                   'examples/atoms/date-stacked/scss/date-stacked.scss',
@@ -134,6 +136,7 @@ module.exports = function(grunt) {
           'examples/molecules/postcard/css/postcard.css':                       'examples/molecules/postcard/scss/postcard.scss',
           'examples/molecules/postcard-horizontal/css/postcard-horizontal.css': 'examples/molecules/postcard-horizontal/scss/postcard-horizontal.scss',
           'examples/molecules/visitors-grid/css/visitors-grid.css':             'examples/molecules/visitors-grid/scss/visitors-grid.scss',
+          'examples/molecules/visitors-list/css/visitors-list.css':             'examples/molecules/visitors-list/scss/visitors-list.scss',
           'examples/templates/event/css/event.css':                             'examples/templates/event/scss/event.scss',
           'examples/templates/news/css/news.css':                               'examples/templates/news/scss/news.scss'
         }
