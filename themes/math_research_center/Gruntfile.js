@@ -108,7 +108,7 @@ module.exports = function(grunt) {
           // conditionally using logic built in to the theme template or module.
 
           // BASE
-          'scss/node/stanford_visitor.css':                     'css/node/stanford_visitor',
+          'css/node/stanford_visitor.css':                     'scss/node/stanford_visitor.scss',
 
           // PATTERNS
           'patterns/atoms/date-stacked/css/date-stacked.css':                       'patterns/atoms/date-stacked/scss/date-stacked.scss',
