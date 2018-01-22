@@ -4,9 +4,29 @@
 /// SIMPLE NODE STYLES
 ///
 
-// Roll up file for all node-specific
-// styles using the node-simple template.
-
-// Visitor Node
+// Decanter
 @import
-  'scss/node/stanford_visitor';
+  'decanter-no-markup';
+
+// Stanford Math Research Center
+@import
+  '../utilities/mixins/mixins';
+
+.simple-node {
+  .field-s-visitor-photo {
+    @include mrc-float-left;
+  }
+
+  .node-title h1 {
+    clear: none;
+  }
+
+  .mrc-simple__separator:before {
+    content: "\2014";
+    display: block;
+    font-size: $lead-font-size;
+    font-weight: $font-bold;
+
+    @include margin(1em null null);
+  }
+}
