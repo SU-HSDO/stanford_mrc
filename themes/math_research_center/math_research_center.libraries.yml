@@ -98,6 +98,17 @@ fontawesome:
     base:
       https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css: {}
 
+hover_menu:
+  version: VERSION
+  css:
+    base:
+      css/molecules/hover-menu.css: {}
+  js:
+    js/math_research_center.hover_menu.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
 stanford_visitor:
   version: VERSION
   css:

@@ -7,6 +7,7 @@ version: VERSION
 core: 8.x
 libraries:
   - math_research_center/fontawesome
+  - math_research_center/hover_menu
 
 regions:
   page_top: 'Page top'
