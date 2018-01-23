@@ -25,9 +25,17 @@
       z-index: 99;
 
       li {
+        position: relative;
         display: block;
         margin: 0;
         padding: 0;
+      }
+
+      button {
+        position: absolute;
+        right: 20px;
+        bottom: calc(50% - 13px);
+        z-index: 999;
       }
 
       a {
@@ -71,4 +79,7 @@
     }
   }
 
+  button {
+    padding: 0;
+  }
 }

@@ -27,9 +27,25 @@
       ]
       %}
       <li{{ item.attributes.addClass(classes) }}>
-        {{ link(item.title, item.url) }}
+
         {% if item.below %}
+          {{ link(item.title, item.url, {'aria-haspopup': 'true', 'aria-expanded': 'false'}) }}
+
+          {#
+          Removed button but keep it here in case we need it.
+
+          <button class="show-hide-submenu fa fa-plus">
+            <span class="visually-hidden">
+              Show {{ item.title }} Submenu
+            </span>
+          </button>
+
+          #}
+
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+
+        {% else %}
+          {{ link(item.title, item.url) }}
         {% endif %}
       </li>
     {% endfor %}
