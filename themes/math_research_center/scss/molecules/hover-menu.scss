@@ -16,7 +16,6 @@
       visibility: hidden;
       opacity: 0;
       transition: visibility 0s, opacity 0.2s linear;
-
       position: absolute;
       background: #fff;
       padding: 0.5em;
@@ -44,6 +43,11 @@
           background: #eaeaea;
           padding-bottom: 0.5em;
         }
+      }
+
+      ul {
+        left: calc(100% - 10px);
+        margin-top: -45px;
       }
     }
 
