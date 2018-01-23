@@ -47,12 +47,11 @@
       }
     }
 
-    &:hover {
-      > ul {
-        visibility: visible;
-        opacity: 1;
-      }
+    &:hover > ul, ul.focused {
+      visibility: visible;
+      opacity: 1;
     }
+
   }
 
   a {
