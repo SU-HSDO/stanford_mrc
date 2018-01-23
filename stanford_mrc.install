@@ -186,14 +186,22 @@ function stanford_mrc_update_8006() {
 /**
  * Enables mrc_helper module.
  */
-function stanford_mrc_update_8007(){
+function stanford_mrc_update_8007() {
   \Drupal::service('module_installer')->install(['mrc_helper']);
 }
 
-
 /**
- * Enables mrc_helper module.
+ * Resets the text format settings & enables 2 module.
  */
-function stanford_mrc_update_8008(){
-  \Drupal::service('module_installer')->install(['mrc_ds_blocks']);
+function stanford_mrc_update_8008() {
+  $configs = [
+    'editor.editor.basic_html',
+    'filter.format.basic_html',
+  ];
+  stanford_mrc_update_configs(TRUE, $configs);
+
+  \Drupal::service('module_installer')->install([
+    'mrc_ds_blocks',
+    'mrc_paragraphs_slideshow',
+  ]);
 }
