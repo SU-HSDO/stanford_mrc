@@ -10,11 +10,14 @@ id: node.stanford_news_item.field_s_news_date
 field_name: field_s_news_date
 entity_type: node
 bundle: stanford_news_item
-label: Date
-description: ''
+label: 'Publish date'
+description: 'Enter the date the external article was published on.'
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    default_date_type: now
+    default_date: now
 default_value_callback: ''
 settings: {  }
 field_type: datetime

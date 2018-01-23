@@ -191,7 +191,7 @@ function stanford_mrc_update_8007() {
 }
 
 /**
- * Resets the text format settings & enables mrc_paragraphs_slideshow module.
+ * Resets the text format settings & enables 2 module.
  */
 function stanford_mrc_update_8008() {
   $configs = [
@@ -200,5 +200,8 @@ function stanford_mrc_update_8008() {
   ];
   stanford_mrc_update_configs(TRUE, $configs);
 
-  \Drupal::service('module_installer')->install(['mrc_paragraphs_slideshow']);
+  \Drupal::service('module_installer')->install([
+    'mrc_ds_blocks',
+    'mrc_paragraphs_slideshow',
+  ]);
 }

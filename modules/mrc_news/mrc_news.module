@@ -13,13 +13,15 @@ use Drupal\node\Entity\Node;
  */
 function mrc_news_entity_presave(EntityInterface $entity) {
   if ($entity instanceof Node && $entity->bundle() == 'stanford_news_item') {
-    /** @var \Drupal\Core\Field\FieldItemList $field */
-    $field = $entity->get('field_s_news_source');
-    if (!$field->count()) {
-      $entity->set('rh_action', 'display_page');
-    }
-    else {
-      $entity->set('rh_action', 'bundle_default');
+    if ($entity->hasField('field_s_news_link')) {
+      /** @var \Drupal\Core\Field\FieldItemList $field */
+      $field = $entity->get('field_s_news_link');
+      if (!$field->count()) {
+        $entity->set('rh_action', 'display_page');
+      }
+      else {
+        $entity->set('rh_action', 'bundle_default');
+      }
     }
   }
 }
