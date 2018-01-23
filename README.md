@@ -7,7 +7,7 @@ Changelog: [Changelog.txt](CHANGELOG.txt)
 Description
 ---
 
-Math Research Center installation profile. Contains all the theme and necessary modules for the MRC website.
+Math Research Center (MRC) installation profile. Contains all the theme files and settings and all necessary modules for the MRC website.
 
 
 Troubleshooting

@@ -191,7 +191,7 @@ function stanford_mrc_update_8007() {
 }
 
 /**
- * Resets the basic_html text format settings.
+ * Resets the text format settings & enables mrc_paragraphs_slideshow module.
  */
 function stanford_mrc_update_8008() {
   $configs = [
@@ -199,4 +199,6 @@ function stanford_mrc_update_8008() {
     'filter.format.basic_html',
   ];
   stanford_mrc_update_configs(TRUE, $configs);
+
+  \Drupal::service('module_installer')->install(['mrc_paragraphs_slideshow']);
 }

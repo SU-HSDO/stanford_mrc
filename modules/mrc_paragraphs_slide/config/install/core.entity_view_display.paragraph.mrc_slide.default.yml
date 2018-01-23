@@ -1,0 +1,58 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.mrc_slide.field_mrc_slide_body
+    - field.field.paragraph.mrc_slide.field_mrc_slide_image
+    - field.field.paragraph.mrc_slide.field_mrc_slide_link
+    - field.field.paragraph.mrc_slide.field_mrc_slide_title
+    - image.style.hero_banner
+    - paragraphs.paragraphs_type.mrc_slide
+  module:
+    - image
+    - link
+    - text
+_core:
+  default_config_hash: Unw6U8X9LR31qFYPm-BcX6NVdgwgop1gtWiz8RMnAg8
+id: paragraph.mrc_slide.default
+targetEntityType: paragraph
+bundle: mrc_slide
+mode: default
+content:
+  field_mrc_slide_body:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mrc_slide_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: hero_banner
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_mrc_slide_link:
+    weight: 3
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_mrc_slide_title:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }
