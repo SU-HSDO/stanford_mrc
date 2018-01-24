@@ -11,12 +11,12 @@ field_name: field_s_news_link
 entity_type: node
 bundle: stanford_news_item
 label: 'Link to External Article'
-description: ''
+description: "Insert the article's source for the URL link (e.g. Stanford News)"
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  link_type: 17
+  link_type: 16
   title: 1
 field_type: link

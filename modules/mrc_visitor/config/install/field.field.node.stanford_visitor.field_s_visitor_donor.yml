@@ -9,7 +9,7 @@ field_name: field_s_visitor_donor
 entity_type: node
 bundle: stanford_visitor
 label: Donor
-description: ''
+description: 'Enter the donor/sponsor information for this visitor.'
 required: false
 translatable: false
 default_value: {  }

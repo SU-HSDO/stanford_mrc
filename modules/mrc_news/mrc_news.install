@@ -128,3 +128,17 @@ function mrc_news_update_8002() {
   $path = drupal_get_path('module', 'mrc_news') . '/config/install';
   stanford_mrc_update_configs(TRUE, $configs, $path);
 }
+
+/**
+ * Feedback changes.
+ */
+function mrc_news_update_8003() {
+  /** @var \Drupal\Core\Config\Config $config_entity */
+  /** @var \Drupal\Core\Config\ConfigFactoryInterface $config_factory */
+  $config_factory = \Drupal::configFactory();
+
+  $config_entity = $config_factory->getEditable('field.field.node.stanford_news_item.field_s_news_link');
+  $config_entity->set('description', "Insert the article's source for the URL link (e.g. Stanford News)");
+  $config_entity->set('settings.link_type', 16);
+  $config_entity->save();
+}
