@@ -478,6 +478,9 @@ display:
         filters: false
         filter_groups: false
         header: false
+        use_ajax: false
+        group_by: true
+        query: false
       arguments: {  }
       style:
         type: default
@@ -501,12 +504,12 @@ display:
           pattern: visitors_list
           pattern_mapping:
             'views_row:title':
-              destination: title
+              destination: name
               weight: 0
               plugin: views_row
               source: title
             'views_row:field_s_visitor_position_title':
-              destination: name
+              destination: title
               weight: 1
               plugin: views_row
               source: field_s_visitor_position_title
@@ -816,7 +819,7 @@ display:
           settings: {  }
           group_column: value
           group_columns: {  }
-          group_rows: false
+          group_rows: true
           delta_limit: 0
           delta_offset: 0
           delta_reversed: false
@@ -1007,6 +1010,15 @@ display:
         groups:
           1: AND
       header: {  }
+      use_ajax: true
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: true
+          replica: false
+          query_comment: ''
+          query_tags: null
     cache_metadata:
       max-age: -1
       contexts:

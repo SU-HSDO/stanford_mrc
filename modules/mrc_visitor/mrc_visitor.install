@@ -71,3 +71,24 @@ function mrc_visitor_update_8003() {
   $path = drupal_get_path('module', 'mrc_visitor') . '/config/install';
   stanford_mrc_update_configs(TRUE, ['views.view.mrc_visitor'], $path);
 }
+
+/**
+ * Creates path auto pattern.
+ */
+function mrc_visitor_update_8004() {
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_visitor') . '/config/install';
+  stanford_mrc_update_configs(TRUE, [
+    'views.view.mrc_visitor',
+    'pathauto.pattern.mrc_visitors',
+  ], $path);
+
+  // Save the pathauto pattern so that it's uuids correct and it applies.
+  /** @var \Drupal\pathauto\Entity\PathautoPattern $entity */
+  $entity = \Drupal::entityTypeManager()
+    ->getStorage('pathauto_pattern')
+    ->load('mrc_visitors');
+  if ($entity) {
+    $entity->save();
+  }
+}
