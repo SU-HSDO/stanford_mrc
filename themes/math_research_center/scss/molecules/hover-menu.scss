@@ -1,6 +1,26 @@
 @charset "UTF-8";
 
-.decanter-main-menu--hover-reveal {
+.js .decanter-main-menu--hover-reveal {
+
+  .decanter-nav-primary > li > a .ui-menu-icon {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
+  ul ul {
+    li {
+      position: relative;
+      display: block;
+    }
+    ul {
+      left: 100%;
+      top: 0;
+    }
+  }
+}
+
+// Styles for no javascript
+.no-js .decanter-main-menu--hover-reveal {
   ul li {
     display: inline-block;
 
@@ -29,13 +49,6 @@
         display: block;
         margin: 0;
         padding: 0;
-      }
-
-      button {
-        position: absolute;
-        right: 20px;
-        bottom: calc(50% - 13px);
-        z-index: 999;
       }
 
       a {
@@ -77,9 +90,5 @@
       color: #2e2d29;
       padding-bottom: 15px;
     }
-  }
-
-  button {
-    padding: 0;
   }
 }

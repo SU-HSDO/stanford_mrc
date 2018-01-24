@@ -106,8 +106,7 @@ hover_menu:
   js:
     js/math_research_center.hover_menu.js: {}
   dependencies:
-    - core/jquery
-    - core/drupal
+    - core/jquery.ui.menu
 
 stanford_visitor:
   version: VERSION
