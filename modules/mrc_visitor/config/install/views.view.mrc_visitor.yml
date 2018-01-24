@@ -13,11 +13,11 @@ dependencies:
     - taxonomy.vocabulary.stanford_mrc_research_area
   module:
     - image
+    - mrc_yearonly
     - node
     - taxonomy
     - ui_patterns_views
     - user
-    - yearonly
 id: mrc_visitor
 label: 'MRC Visitor'
 module: views
@@ -447,7 +447,7 @@ display:
       pager:
         type: full
         options:
-          items_per_page: 10
+          items_per_page: 20
           offset: 0
           id: 0
           total_pages: null
@@ -776,8 +776,8 @@ display:
           label: 'Academic Year'
           exclude: false
           alter:
-            alter_text: true
-            text: '{{ field_s_visitor_year_visited__value -1 }} - {{ field_s_visitor_year_visited__value }}'
+            alter_text: false
+            text: ''
             make_link: false
             path: ''
             absolute: false
@@ -815,7 +815,7 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: yearonly_default
+          type: yearonly_academic
           settings: {  }
           group_column: value
           group_columns: {  }
@@ -1005,6 +1005,45 @@ display:
           hierarchy: false
           error_message: true
           plugin_id: taxonomy_index_tid
+        field_s_visitor_year_visited_value:
+          id: field_s_visitor_year_visited_value
+          table: node__field_s_visitor_year_visited
+          field: field_s_visitor_year_visited_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '2000'
+          group: 1
+          exposed: true
+          expose:
+            operator_id: ''
+            label: 'Academic year (field_s_visitor_year_visited)'
+            description: ''
+            use_operator: false
+            operator: field_s_visitor_year_visited_value_op
+            identifier: field_s_visitor_year_visited_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          academic: null
+          plugin_id: numeric
       filter_groups:
         operator: AND
         groups:
@@ -1018,7 +1057,8 @@ display:
           distinct: true
           replica: false
           query_comment: ''
-          query_tags: null
+          query_tags:
+            - unique
     cache_metadata:
       max-age: -1
       contexts:
