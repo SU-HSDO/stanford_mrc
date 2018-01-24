@@ -19,6 +19,9 @@ settings:
             - Outdent
             - Indent
             - Table
+            - JustifyLeft
+            - JustifyCenter
+            - JustifyRight
         -
           name: Links
           items:
@@ -55,7 +58,7 @@ settings:
     language:
       language_list: un
     stylescombo:
-      styles: "a.btn|Button\r\na.some-class|My Class"
+      styles: "a.decanter-button|Primary Button\r\na.decanter-button--big|Big Primary Button\r\na.decanter-button--secondary|Secondary Button\r\na.decanter-more-link|More Link\r\na.decanter-external-link|External Link\r\np.decanter-font-lead|Lead Font\r\np.decanter-font-splash|Splash Font\r\np.decanter-short-line-length|Short Line Length\r\np.decanter-caption|Caption\r\np.decanter-credits|Credits\r\ntable.decanter-table--borderless|Borderless Table"
 image_upload:
   status: false
   scheme: public

@@ -109,6 +109,7 @@ module.exports = function(grunt) {
 
           // BASE
           'css/molecules/hover-menu.css':                     'scss/molecules/hover-menu.scss',
+          'css/ckeditor.css':                                   'scss/ckeditor.scss',
           'css/node/stanford_visitor.css':                     'scss/node/stanford_visitor.scss',
 
           // PATTERNS
@@ -125,6 +126,7 @@ module.exports = function(grunt) {
           'patterns/templates/node-event/css/node-event.css':                       'patterns/templates/node-event/scss/node-event.scss',
           'patterns/templates/node-news/css/node-news.css':                         'patterns/templates/node-news/scss/node-news.scss',
           'patterns/templates/node-simple/css/node-simple.css':                     'patterns/templates/node-simple/scss/node-simple.scss',
+          'patterns/templates/terms-event-series/css/terms-event-series.css':       'patterns/templates/terms-event-series/scss/terms-event-series.scss',
 
           // EXAMPLES
           'examples/atoms/date-stacked/css/date-stacked.css':                   'examples/atoms/date-stacked/scss/date-stacked.scss',
