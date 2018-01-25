@@ -22,7 +22,6 @@ class YearOnly extends FilterPluginBase {
    */
   public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
     parent::init($view, $display, $options);
-    $this->valueTitle = t('Allowed node titles');
     $this->operator = '=';
   }
 
@@ -31,7 +30,8 @@ class YearOnly extends FilterPluginBase {
    */
   protected function defineOptions() {
     $options = parent::defineOptions();
-    $options['academic'] = FALSE;
+    $options['academic']['default'] = FALSE;
+    $options['option_sort']['default'] = 'desc';
     return $options;
   }
 
@@ -40,15 +40,19 @@ class YearOnly extends FilterPluginBase {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
-
-    if ($exposed = $form_state->get('exposed')) {
-      return;
-    }
-
     $form['academic'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Display Academic Year options'),
-      '#default_value' => FALSE,
+      '#default_value' => $this->options['academic'],
+    ];
+    $form['option_sort'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Options Sort'),
+      '#default_value' => $this->options['option_sort'],
+      '#options' => [
+        'desc' => $this->t('Descending'),
+        'asc' => $this->t('Ascending'),
+      ],
     ];
   }
 
@@ -82,24 +86,22 @@ class YearOnly extends FilterPluginBase {
       '#type' => 'select',
       '#title' => 'value',
       '#options' => $this->getYears(),
+      '#multiple' => $this->options['expose']['multiple'],
     ];
   }
 
   /**
-   * @param string $sort
-   * @param bool $academic
-   *
-   * @return mixed
+   * @return array
    */
-  protected function getYears($sort = 'desc', $academic = FALSE) {
+  protected function getYears() {
     $query = \Drupal::database()
       ->select($this->table, 't')
       ->fields('t', [$this->realField])
       ->distinct()
-      ->orderBy($this->realField, $sort)
+      ->orderBy($this->realField, $this->options['option_sort'])
       ->execute();
     $years = $query->fetchAllKeyed(0, 0);
-    if ($academic) {
+    if ($this->options['academic']) {
       foreach ($years as &$year) {
         $year = ($year - 1) . " - $year";
       }
@@ -111,6 +113,9 @@ class YearOnly extends FilterPluginBase {
    * {@inheritdoc}
    */
   public function query() {
+    if ($this->options['expose']['multiple']) {
+      $this->operator = 'in';
+    }
     parent::query();
   }
 

@@ -76,7 +76,7 @@ function mrc_visitor_update_8003() {
  * Creates path auto pattern.
  */
 function mrc_visitor_update_8004() {
-  \Drupal::service('module_installer')->install(['mrc_yearonly']);
+
 
   module_load_install('stanford_mrc');
   $path = drupal_get_path('module', 'mrc_visitor') . '/config/install';
@@ -93,4 +93,14 @@ function mrc_visitor_update_8004() {
   if ($entity) {
     $entity->save();
   }
+}
+
+/**
+ * Rebuilds the view.
+ */
+function mrc_visitor_update_8005(){
+  \Drupal::service('module_installer')->install(['mrc_yearonly']);
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_visitor') . '/config/install';
+  stanford_mrc_update_configs(TRUE, ['views.view.mrc_visitor'], $path);
 }
