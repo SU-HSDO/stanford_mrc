@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\ViewExecutable;
 
 
 /**
@@ -20,4 +22,35 @@ function mrc_visitor_field_widget_form_alter(&$element, FormStateInterface $form
 
     krsort($element['value']['#options']);
   }
+}
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function mrc_visitor_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+  if (!empty($query->options['query_tags']) && in_array('unique', $query->options['query_tags'])) {
+
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function mrc_visitor_views_pre_render(ViewExecutable $view) {
+  if ($view->id() == 'mrc_visitor' && $view->current_display == 'all_visitors') {
+    $ids = [];
+//    foreach ($view->result as $key => $result) {
+//      $entity = $result->_entity;
+//      if (in_array($entity->id(), $ids)) {
+//        unset($view->result[$key]);
+//        $view->total_rows--;
+//        continue;
+//      }
+//      $ids[] = $entity->id();
+//    }
+//dpm(count($view->result));
+//    ddl($view);
+  }
+
+
 }

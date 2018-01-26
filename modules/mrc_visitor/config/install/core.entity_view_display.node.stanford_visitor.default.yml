@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.stanford_visitor.body
+    - field.field.node.stanford_visitor.field_mrc_event_series
     - field.field.node.stanford_visitor.field_s_visitor_curr_inst
     - field.field.node.stanford_visitor.field_s_visitor_donor
     - field.field.node.stanford_visitor.field_s_visitor_external_link
@@ -18,9 +19,9 @@ dependencies:
     - ds
     - image
     - link
+    - mrc_yearonly
     - text
     - user
-    - yearonly
 third_party_settings:
   ds:
     layout:
@@ -124,13 +125,17 @@ content:
       ds:
         ds_limit: ''
   field_s_visitor_year_visited:
-    type: yearonly_default
+    type: yearonly_academic
     weight: 4
     region: above_break
     label: inline
-    settings: {  }
-    third_party_settings: {  }
+    settings:
+      order: asc
+    third_party_settings:
+      ds:
+        ds_limit: ''
 hidden:
+  field_mrc_event_series: true
   field_s_visitor_first_name: true
   field_s_visitor_last_name: true
   links: true

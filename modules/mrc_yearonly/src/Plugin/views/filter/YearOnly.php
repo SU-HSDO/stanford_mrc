@@ -22,7 +22,7 @@ class YearOnly extends FilterPluginBase {
    */
   public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
     parent::init($view, $display, $options);
-    $this->operator = '=';
+    $this->operator = 'in';
   }
 
   /**
@@ -61,14 +61,7 @@ class YearOnly extends FilterPluginBase {
    */
   public function showExposeForm(&$form, FormStateInterface $form_state) {
     parent::showExposeForm($form, $form_state);
-    $exposed = $form_state->get('exposed');
-
-    $form['value'] = [
-      '#type' => 'number',
-      '#title' => !$exposed ? $this->t('Value') : '',
-      '#size' => 4,
-      '#default_value' => !$exposed ? $this->value : '',
-    ];
+    $this->valueForm($form, $form_state);
   }
 
   /**
@@ -107,16 +100,6 @@ class YearOnly extends FilterPluginBase {
       }
     }
     return $years;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function query() {
-    if ($this->options['expose']['multiple']) {
-      $this->operator = 'in';
-    }
-    parent::query();
   }
 
 }

@@ -26,8 +26,10 @@ function mrc_yearonly_views_data_alter(array &$data) {
   /** @var FieldStorageConfig $field */
   foreach ($fields as $field) {
     if ($field->getType() == 'yearonly') {
+      // Add our sorting and filter plugins.
       $key = $field->getTargetEntityTypeId() . '__' . $field->getName();
       $data[$key][$field->getName() . '_value']['filter']['id'] = 'yearonly';
+      $data[$key][$field->getName() . '_value']['sort']['id'] = 'yearonly';
     }
   }
 }
