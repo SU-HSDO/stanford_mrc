@@ -8,7 +8,7 @@
 /**
  * Adds menu block to node display.
  */
-function mrc_page_page_post_update_8_0_4() {
+function mrc_page_post_update_8_0_4() {
   \Drupal::service('module_installer')->install(['menu_block']);
 
   $data = [

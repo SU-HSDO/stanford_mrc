@@ -36,6 +36,6 @@ function mrc_helper_post_update_8_0_4() {
   /** @var \Drupal\Core\Config\Config $config_entity */
   $config_entity = $config_factory->getEditable('core.entity_view_display.taxonomy_term.mrc_event_series.default');
   $config_entity->set('third_party_settings.mrc_ds_blocks.menu_block:main', $data);
-  $config_entity->set('third_party_settings.regions.sidebar', ['menu_block:main']);
+  $config_entity->set('third_party_settings.ds.regions.sidebar', ['menu_block:main']);
   $config_entity->save();
 }
