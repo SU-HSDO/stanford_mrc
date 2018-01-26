@@ -73,12 +73,6 @@ function math_research_center_preprocess_field(&$variables) {
       }
       break;
 
-    case 'field_s_visitor_year_visited':
-      foreach ($variables['items'] as &$item) {
-        $year = (int) $item['content']['#markup'];
-        $item['content']['#markup'] = ($year - 1) . ' - ' . $item['content']['#markup'];
-      }
-      break;
   }
 
 }
