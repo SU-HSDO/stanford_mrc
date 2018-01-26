@@ -11,7 +11,7 @@ field_name: field_s_visitor_external_link
 entity_type: node
 bundle: stanford_visitor
 label: 'External Link'
-description: 'Enter an external URL such as http://example.com'
+description: 'Insert the text for the link'
 required: false
 translatable: false
 default_value: {  }
