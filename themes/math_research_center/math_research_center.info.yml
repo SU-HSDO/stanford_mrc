@@ -8,6 +8,7 @@ core: 8.x
 libraries:
   - math_research_center/fontawesome
   - math_research_center/hover_menu
+  - math_research_center/base
 
 regions:
   page_top: 'Page top'

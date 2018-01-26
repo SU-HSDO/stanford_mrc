@@ -98,6 +98,12 @@ fontawesome:
     base:
       https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css: {}
 
+base:
+  version: VERSION
+  css:
+    base:
+      css/base/base.css: {}
+
 hover_menu:
   version: VERSION
   css:
