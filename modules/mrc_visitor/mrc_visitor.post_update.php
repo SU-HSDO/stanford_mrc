@@ -6,7 +6,7 @@
  */
 
 /**
- *
+ * Changes field settings on visitor & reverts the view.
  */
 function mrc_visitor_post_update_8_0_4() {
   \Drupal::service('module_installer')->install(['mrc_yearonly']);
@@ -19,9 +19,8 @@ function mrc_visitor_post_update_8_0_4() {
   $config_factory = \Drupal::configFactory();
   /** @var \Drupal\Core\Config\Config $config_entity */
   $config_entity = $config_factory->getEditable('core.entity_view_display.node.stanford_visitor.default');
-  $config_entity->set('field_s_visitor_year_visited.type', 'yearonly_academic');
-  $config_entity->set('field_s_visitor_year_visited.type', 'yearonly_academic');
-  $config_entity->set('field_s_visitor_year_visited.settings.order', 'asc');
+  $config_entity->set('content.field_s_visitor_year_visited.type', 'yearonly_academic');
+  $config_entity->set('content.field_s_visitor_year_visited.settings.order', 'asc');
   $config_entity->set('hidden.field_mrc_event_series', 'true');
 
   $config_entity->save();

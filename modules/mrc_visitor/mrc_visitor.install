@@ -77,7 +77,6 @@ function mrc_visitor_update_8003() {
  */
 function mrc_visitor_update_8004() {
 
-
   module_load_install('stanford_mrc');
   $path = drupal_get_path('module', 'mrc_visitor') . '/config/install';
   stanford_mrc_update_configs(TRUE, [
