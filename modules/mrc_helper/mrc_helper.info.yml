@@ -5,3 +5,11 @@ type: module
 version: 8.x
 package: Stanford MRC
 dependencies:
+  - menu_block
+  - image
+  - text
+  - ds
+  - mrc_ds_blocks
+  - ctools
+  - taxonomy
+  - pathauto

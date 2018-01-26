@@ -35,8 +35,25 @@ function mrc_ds_blocks_entity_view_alter(array &$build, EntityInterface $entity,
 
     // Create the block and add it to the the entity.
     $block_instance = $block_manager->createInstance($block_id, $block->config);
-    $build[$block_id] = $block_instance->build();
-    $build[$block_id]['#weight'] = $block->weight;
+    $block_view = $block_instance->build();
+
+    $build[$block_id] = [
+      '#theme' => 'block',
+      '#weight' => $block->weight,
+      '#attributes' => [],
+      '#configuration' => $block->config,
+      '#plugin_id' => $block_id,
+      '#base_plugin_id' => $block_id,
+      '#derivative_plugin_id' => $block_id,
+      '#id' => $block_id,
+      // Add the entity so that it can be used in the #pre_render method.
+      '#block' => $block_instance,
+      'content' => $block_view,
+    ];
+    \Drupal::moduleHandler()->alter([
+      'block_view',
+      "block_view_$block_id",
+    ], $build[$block_id], $block_instance);
   }
 }
 
