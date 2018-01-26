@@ -1,0 +1,23 @@
+{% set attributes = attributes.addClass('event-basic') %}
+
+
+<div{{ attributes }}>
+
+  {% if sidebar %}
+
+    <div class="decanter-width-one-fourth">
+      {{ sidebar }}
+    </div>
+
+    <div class="decanter-width-three-fourths">
+      {{ content }}
+    </div>
+
+  {% else %}
+
+    {{ content }}
+
+  {% endif %}
+
+
+</div>

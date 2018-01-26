@@ -4,6 +4,10 @@ terms_event_series:
   label: "Terms: Event Series"
   description: "Simple layout with lower regions."
   fields:
+    sidebar:
+      label: "Sidebar"
+      preview: "Some content goes here"
+      type: text
     top:
       label: "Top"
       preview:
