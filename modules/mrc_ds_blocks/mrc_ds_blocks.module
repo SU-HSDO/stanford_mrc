@@ -20,7 +20,7 @@ use Drupal\block\Entity\Block;
 function mrc_ds_blocks_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
   /** @var \Drupal\Core\Block\BlockManager $block_manager */
   $block_manager = \Drupal::service('plugin.manager.block');
-  /** @var \Drupal\mrc_ds_blocks\BlocksLazyLoader $lazy_loader */
+  /** @var \Drupal\mrc_ds_blocks\BlockLazyLoader $lazy_loader */
   $lazy_loader = \Drupal::service('mrc_ds_blocks.block_lazyloader');
   /** @var \Drupal\Core\Session\AccountInterface $current_user */
   $current_user = \Drupal::currentUser();

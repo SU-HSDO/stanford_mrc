@@ -7,7 +7,7 @@ use Drupal\Core\Entity\EntityManager;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Language\LanguageManager;
 
-class BlocksLazyLoader extends BlockViewBuilder {
+class BlockLazyLoader extends BlockViewBuilder {
 
   /**
    * {@inheritdoc}

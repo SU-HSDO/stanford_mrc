@@ -1000,6 +1000,7 @@ display:
       use_more_text: 'See all past events'
       link_display: custom_url
       link_url: 'events/past-events?series={{ raw_arguments.field_mrc_event_series_target_id }} '
+      block_hide_empty: true
     cache_metadata:
       max-age: -1
       contexts:
@@ -1496,6 +1497,7 @@ display:
       use_more_text: 'View all upcoming events'
       link_display: custom_url
       link_url: 'events?series={{ arguments.field_mrc_event_series_target_id }}'
+      block_hide_empty: true
     cache_metadata:
       max-age: -1
       contexts:
@@ -1993,6 +1995,7 @@ display:
     display_options:
       display_extenders: {  }
       display_description: ''
+      block_hide_empty: true
     cache_metadata:
       max-age: -1
       contexts:
