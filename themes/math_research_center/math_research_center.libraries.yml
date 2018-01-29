@@ -103,6 +103,10 @@ base:
   css:
     base:
       css/base/base.css: {}
+  dependencies:
+    - classy/base
+    - core/modernizr
+    - core/normalize
 
 hover_menu:
   version: VERSION
@@ -112,8 +116,8 @@ hover_menu:
   js:
     js/math_research_center.hover_menu.js: {}
   dependencies:
-    - core/jquery.ui.menu
     - core/drupal
+    - core/jquery.ui.menu
 
 stanford_visitor:
   version: VERSION

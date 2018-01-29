@@ -28,10 +28,15 @@ function math_research_center_preprocess_patterns_overview_page(&$variables) {
 function math_research_center_preprocess(&$variables, $hook) {
   // UI Patterns don't have a general hook_preprocess_pattern() so we check
   // here first and then find the correct pattern next.
-  if (strpos($hook, 'pattern') === FALSE) {
-    return;
+  if (strpos($hook, 'pattern') !== FALSE) {
+    math_research_center_preprocess_pattern($variables, $hook);
   }
+}
 
+/**
+ * Helper function to preprocess all patterns.
+ */
+function math_research_center_preprocess_pattern(&$variables, $hook) {
   foreach (UiPatterns::getManager()->getPatterns() as $pattern) {
     if ($hook == 'pattern_' . $pattern->getPluginId()) {
       /** @var \Drupal\ui_patterns\Definition\PatternDefinition $pattern_definition */
