@@ -12,6 +12,7 @@ use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\mrc_ds_blocks\Form\MrcDsBlocksFieldUi;
+use Drupal\block\Entity\Block;
 
 /**
  * Implements hook_entity_view_alter().
@@ -19,6 +20,10 @@ use Drupal\mrc_ds_blocks\Form\MrcDsBlocksFieldUi;
 function mrc_ds_blocks_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
   /** @var \Drupal\Core\Block\BlockManager $block_manager */
   $block_manager = \Drupal::service('plugin.manager.block');
+  /** @var \Drupal\mrc_ds_blocks\BlocksLazyLoader $lazy_loader */
+  $lazy_loader = \Drupal::service('mrc_ds_blocks.block_lazyloader');
+  /** @var \Drupal\Core\Session\AccountInterface $current_user */
+  $current_user = \Drupal::currentUser();
 
   $entity_type = $display->getTargetEntityTypeId();
   $bundle = $entity->bundle();
@@ -36,19 +41,20 @@ function mrc_ds_blocks_entity_view_alter(array &$build, EntityInterface $entity,
     // Create the block and add it to the the entity.
     /** @var \Drupal\menu_block\Plugin\Block\MenuBlock $block_instance */
     $block_instance = $block_manager->createInstance($block_id, $block->config);
-    if (!$block_instance->access(\Drupal::currentUser())) {
+
+    // Check for correct permissions
+    if (!$block_instance->access($current_user)) {
       continue;
     }
 
+    // Create a temporary block that doesn't get saved to the db or config.
     $values = [
       'id' => bin2hex("$block_id.$entity_type.$bundle.$mode"),
       'settings' => $block->config,
       'plugin' => $block_id,
     ];
-    $block = \Drupal\block\Entity\Block::create($values);
-    $lazy_loader = \Drupal::service('mrc_ds_blocks.block_lazyloader');
+    $block = Block::create($values);
     $build[$block_id] = $lazy_loader->buildBlock($block);
-
   }
 }
 
