@@ -4,3 +4,6 @@ services:
     arguments: ['@entity.manager']
     tags:
      - { name: event_subscriber }
+  mrc_ds_blocks.block_lazyloader:
+    class: Drupal\mrc_ds_blocks\BlocksLazyLoader
+    arguments: ['@entity.manager','@language_manager','@module_handler']
