@@ -21,7 +21,7 @@ letsencrypt_challenge.challenge_form:
     _form: '\Drupal\letsencrypt_challenge\Form\ChallengeForm'
     _title: 'ChallengeForm'
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'administer letsencrypt challenge'
   options:
     _admin_route: TRUE
 
