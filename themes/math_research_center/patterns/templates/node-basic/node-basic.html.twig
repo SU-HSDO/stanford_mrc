@@ -1,0 +1,21 @@
+{% set attributes = attributes.addClass('basic-node') %}
+
+<div{{ attributes }}>
+
+  {% if sidebar %}
+
+    <div class="decanter-width-one-fourth">
+      {{ sidebar }}
+    </div>
+
+    <div class="decanter-width-three-fourths">
+      {{ content }}
+    </div>
+
+  {% else %}
+
+    {{ content }}
+
+  {% endif %}
+
+</div>

@@ -1091,6 +1091,9 @@ display:
       display_extenders: {  }
       display_description: ''
       block_hide_empty: true
+      title: Visitors
+      defaults:
+        title: false
     cache_metadata:
       max-age: 0
       contexts:

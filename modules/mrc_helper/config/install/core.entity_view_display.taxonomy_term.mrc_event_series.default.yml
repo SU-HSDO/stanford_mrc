@@ -21,9 +21,9 @@ third_party_settings:
         field_mrc_event_series_target_id: ''
         items_per_page: none
         views_label_checkbox: 0
-        views_label: 'Past Events'
+        views_label: ''
       parent_name: ''
-      weight: 4
+      weight: 20
       region: bottom_left
     'views_block:mrc_events-event_series_upcoming_events':
       config:
@@ -34,9 +34,9 @@ third_party_settings:
         field_mrc_event_series_target_id: ''
         items_per_page: none
         views_label_checkbox: 0
-        views_label: 'Upcoming Events'
+        views_label: ''
       parent_name: ''
-      weight: 3
+      weight: 20
       region: bottom_left
     'views_block:mrc_news-event_series_related_news':
       config:
@@ -47,9 +47,9 @@ third_party_settings:
         field_mrc_event_series_target_id: ''
         items_per_page: none
         views_label_checkbox: 0
-        views_label: 'Related News'
+        views_label: ''
       parent_name: ''
-      weight: 5
+      weight: 20
       region: bottom_right
     'views_block:mrc_visitor-event_series_visitors':
       config:
@@ -62,8 +62,24 @@ third_party_settings:
         views_label_checkbox: 0
         views_label: ''
       parent_name: ''
-      weight: 6
+      weight: 20
       region: footer
+    'menu_block:main':
+      config:
+        provider: menu_block
+        admin_label: ''
+        label: 'Main navigation'
+        label_display: visible
+        level: '1'
+        depth: '0'
+        expand: 1
+        parent: 'main:'
+        label_type: root
+        follow: 1
+        follow_parent: '0'
+        suggestion: main
+      parent_name: ''
+      weight: 20
   ds:
     layout:
       id: pattern_terms_event_series
@@ -74,13 +90,15 @@ third_party_settings:
         pattern:
           field_templates: default
     regions:
+      sidebar:
+        - 'menu_block:main'
       top:
         - field_mrc_event_series_name
         - field_mrc_event_series_image
         - description
       bottom_left:
-        - 'views_block:mrc_events-event_series_upcoming_events'
         - 'views_block:mrc_events-event_series_past_events'
+        - 'views_block:mrc_events-event_series_upcoming_events'
       bottom_right:
         - 'views_block:mrc_news-event_series_related_news'
       footer:

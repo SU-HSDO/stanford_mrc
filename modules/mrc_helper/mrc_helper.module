@@ -7,6 +7,7 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\menu_block\Plugin\Block\MenuBlock;
 
 /**
  * Implements hook_ENTITY_TYPE_view_alter().
@@ -15,5 +16,22 @@ function mrc_helper_taxonomy_term_view_alter(array &$build, EntityInterface $ent
   if ($entity->bundle() == 'mrc_event_series' && $display->getMode() == 'default' && !empty($build['field_mrc_event_series_name'])) {
     $build['name'] = $build['field_mrc_event_series_name'];
     unset($build['field_mrc_event_series_name']);
+  }
+}
+
+/**
+ * Implements hook_block_view_alter().
+ */
+function mrc_helper_block_view_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+  if ($block instanceof MenuBlock) {
+    /** @var \Drupal\Core\Menu\MenuLinkTree $menu_tree */
+    $menu_tree = \Drupal::service('menu.link_tree');
+    $menu_name = $block->getDerivativeId();
+    /** @var \Drupal\Core\Menu\MenuTreeParameters $parameters */
+    $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+
+    if (empty(array_filter($parameters->activeTrail))) {
+      $build = [];
+    }
   }
 }

@@ -27,7 +27,6 @@ function mrc_visitor_post_update_8_0_4() {
   $config_entity->set('content.field_s_visitor_year_visited.type', 'yearonly_academic');
   $config_entity->set('content.field_s_visitor_year_visited.settings.order', 'asc');
   $config_entity->set('hidden.field_mrc_event_series', 'true');
-
   $config_entity->save();
 
     // Save the pathauto pattern so that it's uuids correct and it applies.
@@ -38,5 +37,4 @@ function mrc_visitor_post_update_8_0_4() {
   if ($entity) {
     $entity->save();
   }
-
 }

@@ -66,7 +66,6 @@ class MrcDsBlocksFieldUi implements ContainerInjectionInterface {
 
     // Go through each block and add it to the table.
     foreach ($params->blocks as $block_id => $block) {
-
       // Skip if the block doesn't exist.
       if (!$this->blockManager->hasDefinition($block_id)) {
         continue;

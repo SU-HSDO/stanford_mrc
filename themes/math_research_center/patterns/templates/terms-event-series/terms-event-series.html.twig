@@ -2,34 +2,46 @@
 
 <div{{ attributes }}>
 
-  {% if top %}
-    <div class="terms-event-series--top">
-      {{ top }}
-    </div>
-  {% endif %}
+  {% if sidebar %}
+  <div class="decanter-width-one-fourth">
+    {{ sidebar }}
+  </div>
+  <div class="decanter-width-three-fourths">
+    {% endif %}
 
-  {% if bottom_left or bottom_right %}
-    <div class="terms-event-series-bottom decanter-grid">
+    {% if top %}
+      <div class="terms-event-series--top">
+        {{ top }}
+      </div>
+    {% endif %}
 
-      {% if bottom_left %}
-        <div class="terms-event-series--bottom-left decanter-width-one-half">
-          {{ bottom_left }}
-        </div>
-      {% endif %}
+    {% if bottom_left or bottom_right %}
+      <div class="terms-event-series-bottom decanter-grid">
 
-      {% if bottom_right %}
-        <div class="terms-event-series--bottom-right decanter-width-one-half">
-          {{ bottom_right }}
-        </div>
-      {% endif %}
+        {% if bottom_left %}
+          <div class="terms-event-series--bottom-left decanter-width-one-half">
+            {{ bottom_left }}
+          </div>
+        {% endif %}
 
-    </div>
-  {% endif %}
+        {% if bottom_right %}
+          <div class="terms-event-series--bottom-right decanter-width-one-half">
+            {{ bottom_right }}
+          </div>
+        {% endif %}
 
-  {% if footer %}
-    <div class="terms-event-series--footer decanter-grid">
-      {{ footer }}
-    </div>
+      </div>
+    {% endif %}
+
+    {% if footer %}
+      <div class="terms-event-series--footer decanter-grid">
+        {{ footer }}
+      </div>
+    {% endif %}
+
+
+    {% if sidebar %}
+  </div>
   {% endif %}
 
 </div>
