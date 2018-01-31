@@ -36,7 +36,14 @@ class vbfbPluginDisplayBlock extends Block {
    * Block views use exposed widgets only if AJAX is set.
    */
   public function usesExposed() {
-    return TRUE;
+    /** @var \Drupal\views\Plugin\views\HandlerBase $filter */
+    foreach ($this->view->filter as $filter) {
+      if ($filter->isExposed()) {
+        return TRUE;
+      }
+    }
+
+    return FALSE;
   }
 
 }
