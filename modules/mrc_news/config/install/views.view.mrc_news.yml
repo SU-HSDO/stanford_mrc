@@ -1520,9 +1520,9 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-      use_more: true
+      use_more: false
       use_more_always: false
-      use_more_text: 'See all related news'
+      use_more_text: 'See all news'
       link_display: custom_url
       link_url: 'news?series={{ raw_arguments.field_mrc_event_series_target_id }}'
     cache_metadata:

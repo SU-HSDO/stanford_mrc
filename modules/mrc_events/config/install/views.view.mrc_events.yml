@@ -2580,7 +2580,7 @@ display:
   short_upcoming:
     display_plugin: block
     id: short_upcoming
-    display_title: 'Event Series Upcoming Events Block'
+    display_title: 'Short Upcoming Events Block'
     position: 4
     display_options:
       display_extenders: {  }
@@ -3018,7 +3018,7 @@ display:
         options:
           items_per_page: 3
           offset: 0
-      use_more: true
+      use_more: false
       use_more_always: false
       use_more_text: 'View all upcoming events'
       link_display: custom_url
