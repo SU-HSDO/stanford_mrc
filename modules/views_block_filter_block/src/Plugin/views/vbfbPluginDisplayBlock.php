@@ -24,6 +24,7 @@ use Drupal\views\Plugin\views\display\Block;
  * @see \Drupal\views\Plugin\Derivative\ViewsBlock
  */
 class vbfbPluginDisplayBlock extends Block {
+
   /**
    * Allows block views to put exposed filter forms in blocks.
    */
@@ -37,4 +38,5 @@ class vbfbPluginDisplayBlock extends Block {
   public function usesExposed() {
     return TRUE;
   }
+
 }

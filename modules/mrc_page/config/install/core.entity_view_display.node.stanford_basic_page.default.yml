@@ -3,8 +3,10 @@ status: true
 dependencies:
   config:
     - field.field.node.stanford_basic_page.field_s_mrc_page_bricks
+    - field.field.node.stanford_basic_page.field_s_mrc_page_sidebar_block
     - node.type.stanford_basic_page
   module:
+    - block_field
     - bricks
     - ds
     - mrc_ds_blocks
@@ -26,17 +28,19 @@ third_party_settings:
         follow_parent: '0'
         suggestion: main
       parent_name: ''
-      weight: 20
+      weight: 0
+      region: sidebar
   ds:
     regions:
-      content:
-        - field_s_mrc_page_bricks
       sidebar:
         - 'menu_block:main'
+        - field_s_mrc_page_sidebar_block
+      content:
+        - field_s_mrc_page_bricks
     layout:
-      disable_css: false
-      library: null
       id: pattern_node_basic
+      library: null
+      disable_css: false
       entity_classes: all_classes
       settings:
         pattern:
@@ -49,7 +53,7 @@ bundle: stanford_basic_page
 mode: default
 content:
   field_s_mrc_page_bricks:
-    weight: 101
+    weight: 2
     label: hidden
     settings:
       view_mode: default
@@ -57,8 +61,12 @@ content:
     third_party_settings: {  }
     type: bricks_nested
     region: content
-  links:
-    weight: 100
-    region: content
+  field_s_mrc_page_sidebar_block:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: block_field
+    region: sidebar
 hidden:
   links: true
