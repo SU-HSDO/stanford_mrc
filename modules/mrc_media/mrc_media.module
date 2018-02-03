@@ -16,7 +16,14 @@ use Drupal\file\Entity\File;
  */
 function mrc_media_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
   if (isset($element['#type']) && $element['#type'] == 'managed_file') {
+    //dpm($element);
     $element['#element_validate'][] = 'mrc_media_save_file_managed_media';
+  }
+  //if (isset($element['value']['#title']) && $element['value']['#title'] == 'Event Video') {
+  if ($context['widget']->getPluginId() == 'video_embed_field_textfield') {
+    //dpm('firing');
+    //kint($element);
+    $element['#element_validate'][] = 'mrc_media_save_video_media';
   }
 }
 
@@ -38,6 +45,7 @@ function mrc_media_save_file_managed_media(array $element, FormStateInterface $f
 
 
   if (!empty($element['#files'])) {
+    //kint($element);
     foreach ($element['#files'] as $file) {
       if ($file instanceof File) {
         $media_bundle = 'file';
@@ -144,5 +152,58 @@ function mrc_media_preprocess_media(&$variables) {
   // description. This should mostly be needed for the entity view page.
   if ($variables['media']->bundle() == 'file' && empty($variables['content'][$source_field]['0']['#description'])) {
     $variables['content'][$source_field]['0']['#description'] = $variables['name'];
+  }
+}
+
+/**
+ * Create a new media entity when a video is uploaded.
+ *
+ * @param array $element
+ *   Managed file form element.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Submitted form state.
+ */
+function mrc_media_save_video_media(array $element, FormStateInterface $form_state) {
+  $parents = $form_state->getTriggeringElement()['#array_parents'];
+  $button_key = array_pop($parents);
+
+  if ($button_key == 'remove_button' || $form_state::hasAnyErrors()) {
+    return;
+  }
+
+  if (!empty($element['value']['#default_value'])) {
+
+    $media_bundle = 'video';
+
+    $uri = $element['value']['#default_value'];
+
+    // Grab video data through the service.
+    $video_data = \Drupal::service('mrc_media.video_data');
+
+    // Check if video is already in media browser
+    $video_data_uri = $video_data->videoExists($uri);
+
+    // If the video doesn't already exist in the media browser, create it.
+    if (empty($video_data_uri)) {
+      // Load the media type entity to get the source field.
+      $entity_type_manager = \Drupal::entityTypeManager();
+      $media_type = $entity_type_manager->getStorage('media_type')
+        ->load($media_bundle);
+      $source_field = $media_type->getSource()
+        ->getConfiguration()['source_field'];
+
+
+      // Create the new media entity.
+      $media_entity = $entity_type_manager->getStorage('media')
+        ->create([
+          'bundle' => $media_type->id(),
+          $source_field => $uri,
+          'uid' => \Drupal::currentUser()->id(),
+          'status' => TRUE,
+          'type' => $media_type->getSource()->getPluginId(),
+        ]);
+
+      $media_entity->save();
+    }
   }
 }
