@@ -16,13 +16,10 @@ use Drupal\file\Entity\File;
  */
 function mrc_media_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
   if (isset($element['#type']) && $element['#type'] == 'managed_file') {
-    //dpm($element);
     $element['#element_validate'][] = 'mrc_media_save_file_managed_media';
   }
-  //if (isset($element['value']['#title']) && $element['value']['#title'] == 'Event Video') {
   if ($context['widget']->getPluginId() == 'video_embed_field_textfield') {
-    //dpm('firing');
-    //kint($element);
+    kint($context);
     $element['#element_validate'][] = 'mrc_media_save_video_media';
   }
 }
@@ -177,8 +174,8 @@ function mrc_media_save_video_media(array $element, FormStateInterface $form_sta
 
     $uri = $element['value']['#default_value'];
 
-    // Grab video data through the service.
-    $video_data = \Drupal::service('mrc_media.video_data');
+    // Grab video info through the service.
+    $video_data = \Drupal::service('mrc_media.media_info');
 
     // Check if video is already in media browser
     $video_data_uri = $video_data->videoExists($uri);

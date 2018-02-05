@@ -6,10 +6,10 @@ use Drupal\Core\Database\Database;
 
 /**
 * @file
-* Contains \Drupal\mrc_media\VideoData.
+* Contains \Drupal\mrc_media\MediaInfo.
 */
 
-class VideoData {
+class MediaInfo {
 
   /**
    * Constructor.
