@@ -40,6 +40,29 @@ function mrc_events_field_widget_form_alter(&$element, FormStateInterface $form_
 }
 
 /**
+ * Implements hook_preprocess().
+ */
+function mrc_events_preprocess(&$variables, $hook) {
+  // Limit the number of years in the date field.
+  if ($hook == 'select' && strpos($variables['element']['#name'], 'field_s_event_date') !== FALSE) {
+    if (strpos($variables['element']['#name'], '[year]') !== FALSE) {
+      $this_year = (int) date('Y');
+      foreach ($variables['options'] as $key => $option) {
+        if (!(int) $option['value']) {
+          continue;
+        }
+
+        $diff = abs($this_year - $option['value']);
+        if ($diff > 10) {
+          unset($variables['options'][$key]);
+        }
+      }
+    }
+
+  }
+}
+
+/**
  * Validation for event dates in nodes form.
  */
 function mrc_events_node_validate_date(array &$element, FormStateInterface $form_state) {
