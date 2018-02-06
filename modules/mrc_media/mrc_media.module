@@ -19,9 +19,6 @@ function mrc_media_field_widget_form_alter(&$element, FormStateInterface $form_s
     $element['#element_validate'][] = 'mrc_media_save_file_managed_media';
   }
   if ($context['widget']->getPluginId() == 'video_embed_field_textfield') {
-    //kint($context);
-    //kint($form_state);
-    kint($element);
     $element['#element_validate'][] = 'mrc_media_save_video_media';
   }
 }
@@ -44,7 +41,6 @@ function mrc_media_save_file_managed_media(array $element, FormStateInterface $f
 
 
   if (!empty($element['#files'])) {
-    //kint($element);
     foreach ($element['#files'] as $file) {
       if ($file instanceof File) {
         $media_bundle = 'file';
