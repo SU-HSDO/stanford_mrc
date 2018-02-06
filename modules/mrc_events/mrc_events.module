@@ -15,6 +15,10 @@ function mrc_events_field_widget_form_alter(&$element, FormStateInterface $form_
     /** @var \Drupal\Core\Field\WidgetBaseInterface $widget */
     $widget = $context['widget'];
     if ($widget->getBaseId() == 'daterange_datelist') {
+      $element['value']['#prefix'] = '<div class="start-date">';
+      $element['value']['#suffix'] = '</div>';
+      $element['end_value']['#prefix'] = '<div class="end-date">';
+      $element['end_value']['#suffix'] = '</div>';
       $show_end = FALSE;
 
       if (!empty($element['value']['#default_value']) && !empty($element['end_value']['#default_value'])) {
