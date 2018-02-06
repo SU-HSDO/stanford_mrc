@@ -166,11 +166,11 @@ function mrc_media_save_video_media(array $element, FormStateInterface $form_sta
     return;
   }
 
-  if (!empty($element['value']['#default_value'])) {
+  $uri = $form_state->getValue('field_s_event_video_recap')[0]['value'];
+
+  if (!empty($uri)) {
 
     $media_bundle = 'video';
-
-    $uri = $element['value']['#default_value'];
 
     // Grab video info through the service.
     $video_data = \Drupal::service('mrc_media.media_info');
