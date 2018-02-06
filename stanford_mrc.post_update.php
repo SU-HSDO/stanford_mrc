@@ -11,3 +11,13 @@ function stanford_mrc_post_update_8_0_4() {
   $path = drupal_get_path('module', 'mrc_events') . '/config/install';
   stanford_mrc_update_configs(TRUE, ['views.view.mrc_events'], $path);
 }
+
+/**
+ * Release 8.0.5 changes.
+ */
+function stanford_mrc_post_update_8_0_5() {
+  // Load videos list view.
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_events') . '/config/install';
+  stanford_mrc_update_configs(TRUE, ['views.view.mrc_videos'], $path);
+}
