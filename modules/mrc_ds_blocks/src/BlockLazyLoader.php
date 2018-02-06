@@ -2,11 +2,17 @@
 
 namespace Drupal\mrc_ds_blocks;
 
+use Drupal\block\BlockInterface;
 use Drupal\block\BlockViewBuilder;
 use Drupal\Core\Entity\EntityManager;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Language\LanguageManager;
 
+/**
+ * Class BlockLazyLoader.
+ *
+ * @package Drupal\mrc_ds_blocks
+ */
 class BlockLazyLoader extends BlockViewBuilder {
 
   /**
@@ -17,8 +23,13 @@ class BlockLazyLoader extends BlockViewBuilder {
     parent::__construct($entity_type, $entity_manager, $language_manager, $module_handler);
   }
 
-  public function buildBlock($block) {
-    return static::buildPreRenderableBlock($block, \Drupal::service('module_handler'));
+  /**
+   * @param \Drupal\block\BlockInterface $block
+   *
+   * @return array
+   */
+  public function buildBlock(BlockInterface $block) {
+    return static::buildPreRenderableBlock( $block, \Drupal::service('module_handler'));
   }
 
 }
