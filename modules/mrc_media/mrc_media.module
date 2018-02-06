@@ -19,7 +19,9 @@ function mrc_media_field_widget_form_alter(&$element, FormStateInterface $form_s
     $element['#element_validate'][] = 'mrc_media_save_file_managed_media';
   }
   if ($context['widget']->getPluginId() == 'video_embed_field_textfield') {
-    kint($context);
+    //kint($context);
+    //kint($form_state);
+    kint($element);
     $element['#element_validate'][] = 'mrc_media_save_video_media';
   }
 }
@@ -201,6 +203,19 @@ function mrc_media_save_video_media(array $element, FormStateInterface $form_sta
         ]);
 
       $media_entity->save();
+
+      // TODO: use services to grab target id, then use entity_usage services.
+      // $video_data_entity_id = $video_data->getVideoTargetId($uri);
+      //$add_usage = \Drupal::service('entity_usage.usage');
+      //$add_usage->add(
+      //  $t_id,
+      //  $t_type,
+      //  $re_id,
+      //  $re_type,
+      //  $method = 'entity_reference',
+      //  $count = 1
+      //);
+
     }
   }
 }

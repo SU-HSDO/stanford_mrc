@@ -33,4 +33,18 @@ class MediaInfo {
     return $results->fetchCol();
   }
 
+  /**
+   * Returns entity_id for a given uri.
+   *
+   * @param $uri
+   *
+   */
+  public function getVideoTargetId($uri) {
+    $select = Database::getConnection()->select('media__field_media_video_embed_field', 've');
+    $select->fields('ve', array('entity_id'));
+    $select->condition('field_media_video_embed_field_value', $uri, '=');
+    $results = $select->execute();
+    return $results->fetchCol();
+  }
+
 }
