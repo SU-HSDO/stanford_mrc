@@ -166,7 +166,7 @@ function mrc_media_save_video_media(array $element, FormStateInterface $form_sta
     return;
   }
 
-  $uri = $form_state->getValue('field_s_event_video_recap')[0]['value'];
+  $uri = $form_state->getValue(['field_s_event_video_recap', 0, 'value']);
 
   if (!empty($uri)) {
 
