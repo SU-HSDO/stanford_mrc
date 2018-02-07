@@ -2,88 +2,30 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.mrc_event_series.field_mrc_event_series_image
-    - field.field.taxonomy_term.mrc_event_series.field_mrc_event_series_name
-    - taxonomy.vocabulary.mrc_event_series
+    - field.field.node.stanford_visitor.body
+    - field.field.node.stanford_visitor.field_mrc_event_series
+    - field.field.node.stanford_visitor.field_s_visitor_curr_inst
+    - field.field.node.stanford_visitor.field_s_visitor_donor
+    - field.field.node.stanford_visitor.field_s_visitor_external_link
+    - field.field.node.stanford_visitor.field_s_visitor_first_name
+    - field.field.node.stanford_visitor.field_s_visitor_last_name
+    - field.field.node.stanford_visitor.field_s_visitor_photo
+    - field.field.node.stanford_visitor.field_s_visitor_position_title
+    - field.field.node.stanford_visitor.field_s_visitor_research_area
+    - field.field.node.stanford_visitor.field_s_visitor_year_visited
+    - image.style.medium
+    - node.type.stanford_visitor
   module:
     - ds
     - image
-    - mrc_ds_blocks
+    - link
+    - mrc_yearonly
     - text
+    - user
 third_party_settings:
-  mrc_ds_blocks:
-    'views_block:mrc_events-event_series_past_events':
-      config:
-        provider: views
-        admin_label: ''
-        label: ''
-        label_display: visible
-        field_mrc_event_series_target_id: ''
-        items_per_page: none
-        views_label_checkbox: 0
-        views_label: ''
-      parent_name: ''
-      weight: 5
-      region: bottom_left
-    'views_block:mrc_events-event_series_upcoming_events':
-      config:
-        provider: views
-        admin_label: ''
-        label: ''
-        label_display: visible
-        field_mrc_event_series_target_id: ''
-        items_per_page: none
-        views_label_checkbox: 0
-        views_label: ''
-      parent_name: ''
-      weight: 4
-      region: sidebar
-    'views_block:mrc_news-event_series_related_news':
-      config:
-        provider: views
-        admin_label: ''
-        label: ''
-        label_display: visible
-        field_mrc_event_series_target_id: ''
-        items_per_page: none
-        views_label_checkbox: 0
-        views_label: ''
-      parent_name: ''
-      weight: 6
-      region: bottom_right
-    'views_block:mrc_visitor-event_series_visitors':
-      config:
-        provider: views
-        admin_label: ''
-        label: ''
-        label_display: visible
-        field_mrc_event_series_target_id: ''
-        items_per_page: none
-        views_label_checkbox: 0
-        views_label: ''
-      parent_name: ''
-      weight: 7
-      region: footer
-    'menu_block:main':
-      config:
-        provider: menu_block
-        admin_label: ''
-        label: 'Main navigation'
-        label_display: visible
-        level: '1'
-        depth: '0'
-        expand: 1
-        parent: 'main:'
-        label_type: root
-        follow: 1
-        follow_parent: '0'
-        suggestion: main
-      parent_name: ''
-      weight: 0
-      region: sidebar
   ds:
     layout:
-      id: pattern_terms_event_series
+      id: pattern_node_simple
       library: null
       disable_css: false
       entity_classes: all_classes
@@ -91,46 +33,109 @@ third_party_settings:
         pattern:
           field_templates: default
     regions:
-      sidebar:
-        - 'menu_block:main'
-        - 'views_block:mrc_events-event_series_upcoming_events'
-      top:
-        - field_mrc_event_series_name
-        - field_mrc_event_series_image
-        - description
-      bottom_left:
-        - 'views_block:mrc_events-event_series_past_events'
-      bottom_right:
-        - 'views_block:mrc_news-event_series_related_news'
-      footer:
-        - 'views_block:mrc_visitor-event_series_visitors'
-id: taxonomy_term.mrc_event_series.default
-targetEntityType: taxonomy_term
-bundle: mrc_event_series
+      image:
+        - field_s_visitor_photo
+      above_break:
+        - node_title
+        - field_s_visitor_position_title
+        - field_s_visitor_curr_inst
+        - field_s_visitor_year_visited
+        - field_s_visitor_research_area
+      below_break:
+        - body
+        - field_s_visitor_donor
+        - field_s_visitor_external_link
+    fields:
+      node_title:
+        plugin_id: node_title
+        weight: 1
+        label: hidden
+        formatter: default
+        settings:
+          wrapper: h1
+          class: ''
+          link: false
+_core:
+  default_config_hash: gNzzw-gxLhYU8k5kJuePMCvgR3aIqeSDqXtxIIUFhHE
+id: node.stanford_visitor.default
+targetEntityType: node
+bundle: stanford_visitor
 mode: default
 content:
-  description:
-    label: hidden
+  body:
     type: text_default
-    weight: 3
-    region: top
+    weight: 6
+    region: below_break
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-  field_mrc_event_series_image:
-    weight: 2
-    label: hidden
-    settings:
-      image_style: ''
-      image_link: ''
-    third_party_settings: {  }
-    type: image
-    region: top
-  field_mrc_event_series_name:
-    weight: 1
+  field_s_visitor_curr_inst:
+    type: string
+    weight: 3
+    region: above_break
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+  field_s_visitor_donor:
     type: string
-    region: top
-hidden: {  }
+    weight: 7
+    region: below_break
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_s_visitor_external_link:
+    type: link
+    weight: 8
+    region: below_break
+    label: inline
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+  field_s_visitor_photo:
+    type: image
+    weight: 0
+    region: image
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: ''
+    third_party_settings: {  }
+  field_s_visitor_position_title:
+    type: string
+    weight: 2
+    region: above_break
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_s_visitor_research_area:
+    type: entity_reference_label
+    weight: 5
+    region: above_break
+    label: inline
+    settings:
+      link: false
+    third_party_settings:
+      ds:
+        ds_limit: ''
+  field_s_visitor_year_visited:
+    type: yearonly_academic
+    weight: 4
+    region: above_break
+    label: inline
+    settings:
+      order: asc
+    third_party_settings:
+      ds:
+        ds_limit: ''
+hidden:
+  field_mrc_event_series: true
+  field_s_visitor_first_name: true
+  field_s_visitor_last_name: true
+  links: true
