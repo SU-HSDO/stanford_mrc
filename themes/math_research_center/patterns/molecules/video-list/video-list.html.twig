@@ -1,0 +1,20 @@
+
+{% set attributes = attributes.addClass('mrc-video-list') %}
+
+<div{{ attributes }}>
+    <div class="mrc-video-list__item">
+        <div class="mrc-video-list__content">
+            {% if title %}
+                <div class="mrc-video-list__title">
+                    {{ title }}
+                </div>
+            {% endif %}
+
+            {% if video %}
+                <div class="mrc-video-list__video">
+                    {{ video }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
