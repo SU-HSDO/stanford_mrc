@@ -172,7 +172,7 @@ content:
     settings:
       date_order: MDY
       time_type: '12'
-      increment: 1
+      increment: 15
     third_party_settings: {  }
     type: daterange_datelist
     region: content
