@@ -165,6 +165,7 @@ function mrc_media_save_video_media(array $element, FormStateInterface $form_sta
   if ($button_key == 'remove_button' || $form_state::hasAnyErrors()) {
     return;
   }
+
   if ($uri = $form_state->getValue($element['#parents'])) {
     $uri = reset($uri);
 
