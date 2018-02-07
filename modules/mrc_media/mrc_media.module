@@ -165,14 +165,13 @@ function mrc_media_save_video_media(array $element, FormStateInterface $form_sta
   if ($button_key == 'remove_button' || $form_state::hasAnyErrors()) {
     return;
   }
-
-  if (!empty($element['value']['#default_value'])) {
+  if ($uri = $form_state->getValue($element['#parents'])) {
+    $uri = reset($uri);
 
     $media_bundle = 'video';
 
-    $uri = $element['value']['#default_value'];
-
     // Grab video info through the service.
+    /** @var \Drupal\mrc_media\MediaInfo $video_data */
     $video_data = \Drupal::service('mrc_media.media_info');
 
     // Check if video is already in media browser
@@ -187,16 +186,21 @@ function mrc_media_save_video_media(array $element, FormStateInterface $form_sta
       $source_field = $media_type->getSource()
         ->getConfiguration()['source_field'];
 
+      $media_data = [
+        'bundle' => $media_type->id(),
+        $source_field => $uri,
+        'uid' => \Drupal::currentUser()->id(),
+        'status' => TRUE,
+        'type' => $media_type->getSource()->getPluginId(),
+      ];
+
+      if ($title = $form_state->getValue(['title', 0, 'value'])) {
+        $media_data['name'] = $title;
+      }
 
       // Create the new media entity.
       $media_entity = $entity_type_manager->getStorage('media')
-        ->create([
-          'bundle' => $media_type->id(),
-          $source_field => $uri,
-          'uid' => \Drupal::currentUser()->id(),
-          'status' => TRUE,
-          'type' => $media_type->getSource()->getPluginId(),
-        ]);
+        ->create($media_data);
 
       $media_entity->save();
 
