@@ -49,7 +49,7 @@ widgets:
     settings:
       upload_location: 'public://media'
       dropzone_description: 'Drop file here to upload'
-      submit_text: 'Upload File'
+      submit_text: 'Add to Library'
       max_filesize: '25'
       extensions:
         file: 'txt doc docx xls xlsx pdf ppt pps odt ods odp'
@@ -57,5 +57,5 @@ widgets:
         video: ''
     uuid: e837394f-45b5-4198-962a-406e24baf0ec
     weight: -9
-    label: 'Upload a File'
+    label: 'Embed a File'
     id: dropzonejs_media

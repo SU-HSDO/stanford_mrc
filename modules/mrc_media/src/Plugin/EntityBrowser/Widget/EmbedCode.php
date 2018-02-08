@@ -4,10 +4,15 @@ namespace Drupal\mrc_media\Plugin\EntityBrowser\Widget;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\entity_browser\WidgetBase;
+use Drupal\entity_browser\WidgetValidationManager;
 use Drupal\inline_entity_form\ElementSubmit;
 use Drupal\media\MediaInterface;
+use Drupal\mrc_media\BundleSuggestion;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * An Entity Browser widget for creating media entities from embed codes.
@@ -19,6 +24,34 @@ use Drupal\media\MediaInterface;
  * )
  */
 class EmbedCode extends WidgetBase {
+
+  /**
+   * @var \Drupal\mrc_media\BundleSuggestion
+   */
+  protected $bundleSuggestion;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('event_dispatcher'),
+      $container->get('entity_type.manager'),
+      $container->get('plugin.manager.entity_browser.widget_validation'),
+      $container->get('mrc_media.bundle_suggestion')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, BundleSuggestion $bundles) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $event_dispatcher, $entity_type_manager, $validation_manager);
+    $this->bundleSuggestion = $bundles;
+  }
 
   /**
    * {@inheritdoc}
@@ -53,7 +86,7 @@ class EmbedCode extends WidgetBase {
       '#weight' => 99,
     ];
 
-    $value = $this->getInputValue($form_state);
+    $value = $form_state->getValue('input');
     if (empty($value)) {
       $form['entity']['#markup'] = NULL;
       return $form;
@@ -86,14 +119,17 @@ class EmbedCode extends WidgetBase {
    */
   public function getForm(array &$original_form, FormStateInterface $form_state, array $additional_widget_parameters) {
     $form = parent::getForm($original_form, $form_state, $additional_widget_parameters);
-    $this->getEntityForm($form, $form_state, $additional_widget_parameters);
 
+    $form['name'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Name'),
+      '#required' => TRUE,
+    ];
     $form['input'] = [
-      '#type' => 'textarea',
+      '#type' => 'textfield',
+      '#title' => $this->t('Video URL'),
+      '#required' => TRUE,
       '#placeholder' => $this->t('Enter a URL...'),
-      '#attributes' => [
-        'class' => ['keyup-change'],
-      ],
       '#ajax' => [
         'event' => 'change',
         'wrapper' => 'entity',
@@ -101,8 +137,19 @@ class EmbedCode extends WidgetBase {
         'callback' => [static::class, 'ajax'],
       ],
     ];
-    $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
-    $form['#attached']['library'][] = 'mrc_media/mrc_media.embed';
+    $form['preview'] = [
+      '#prefix' => '<div id="video-preview">',
+      '#suffix' => '</div>',
+    ];
+    $form['actions'] = ['#type' => 'actions'];
+    $form['actions']['add'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Add Video'),
+    ];
+    //    $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
+    //    $form['#attached']['library'][] = 'mrc_media/mrc_media.embed';
+
+    $this->getEntityForm($form, $form_state, $additional_widget_parameters);
     return $form;
   }
 
@@ -110,18 +157,10 @@ class EmbedCode extends WidgetBase {
    * {@inheritdoc}
    */
   public function validate(array &$form, FormStateInterface $form_state) {
-    $value = trim($this->getInputValue($form_state));
-
-    if ($value) {
-      try {
-        $this->getBundleFromInput($value, TRUE, $this->getAllowedBundles($form_state));
-      }
-      catch (\Exception $e) {
-        $form_state->setError($form['widget'], $e->getMessage());
-      }
-    }
-    else {
-      $form_state->setError($form['widget'], $this->t('You must enter a URL or embed code.'));
+    $value = trim($form_state->getValue('input'));
+    $bundle = $this->bundleSuggestion->getBundleFromInput($value);
+    if (!$bundle) {
+      $form_state->setError($form['widget']['input'], $this->t('You must enter a URL or embed code.'));
     }
   }
 
@@ -147,24 +186,28 @@ class EmbedCode extends WidgetBase {
    *   The AJAX response.
    */
   public static function ajax(array &$form, FormStateInterface $form_state) {
-    return (new AjaxResponse())
-      ->addCommand(
-        new ReplaceCommand('#entity', $form['widget']['entity'])
-      );
-  }
+    /** @var \Drupal\video_embed_field\ProviderPluginBase $video_provider */
+    $video_provider = \Drupal::service('video_embed_field.provider_manager')
+      ->loadProviderFromInput($form_state->getValue('input'));
 
-  /**
-   * Returns the current input value, if any.
-   *
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current form state.
-   *
-   * @return mixed
-   *   The input value, ready for further processing. Nothing will be done with
-   *   the value if it's empty.
-   */
-  protected function getInputValue(FormStateInterface $form_state) {
-    return $form_state->getValue('input');
+    $iframe = [
+      '#markup' => '',
+      '#prefix' => '<div id="video-preview">',
+      '#suffix' => '</div>',
+    ];
+
+    if ($video_provider) {
+      $iframe = $video_provider->renderEmbedCode(300, 200, FALSE);
+      $iframe += [
+        '#prefix' => '<div id="video-preview">',
+        '#suffix' => '</div>',
+      ];
+    }
+
+    $response = new AjaxResponse();
+    $response->addCommand((new ReplaceCommand('#video-preview', $iframe)));
+    $form_state->setRebuild();
+    return $response;
   }
 
   /**

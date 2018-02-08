@@ -184,6 +184,7 @@ class DropzoneUpload extends WidgetBase {
     return $form;
   }
 
+
   /**
    * Add the inline entity form after the files have been uploaded.
    *
