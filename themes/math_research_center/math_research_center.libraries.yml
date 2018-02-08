@@ -119,6 +119,12 @@ hover_menu:
     - core/drupal
     - core/jquery.ui.menu
 
+slideshow:
+  version: VERSION
+  css:
+    base:
+      css/molecules/slideshow.css: {}
+
 stanford_visitor:
   version: VERSION
   css:
