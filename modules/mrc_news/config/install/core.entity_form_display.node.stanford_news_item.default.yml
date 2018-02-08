@@ -58,13 +58,10 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_mrc_event_series:
-    type: entity_reference_autocomplete
+    type: options_select
     weight: 17
     region: content
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_s_news_byline:
     type: string_textfield

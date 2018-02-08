@@ -9,11 +9,13 @@ dependencies:
     - image.style.large
     - image.style.mrc_news_thumbnail
     - node.type.stanford_news_item
+    - taxonomy.vocabulary.mrc_event_series
   module:
     - datetime
     - image
     - link
     - node
+    - taxonomy
     - ui_patterns_views
     - user
 id: mrc_news
@@ -90,12 +92,11 @@ display:
           default_field_elements: 1
           inline:
             path: 0
-            field_s_news_source_1: 0
             title: 0
             field_s_news_date: 0
             field_s_news_image: 0
             field_s_news_categories: 0
-            field_s_news_source: 0
+            field_s_news_link: 0
           separator: ''
           hide_empty: 0
           pattern: news_card
@@ -105,26 +106,26 @@ display:
               weight: 0
               plugin: views_row
               source: title
+            'views_row:field_s_news_link':
+              destination: link
+              weight: 1
+              plugin: views_row
+              source: field_s_news_link
             'views_row:field_s_news_date':
               destination: time
-              weight: 1
+              weight: 2
               plugin: views_row
               source: field_s_news_date
             'views_row:field_s_news_image':
               destination: image
-              weight: 2
+              weight: 3
               plugin: views_row
               source: field_s_news_image
             'views_row:field_s_news_categories':
               destination: program
-              weight: 3
-              plugin: views_row
-              source: field_s_news_categories
-            'views_row:field_s_news_source':
-              destination: link
               weight: 4
               plugin: views_row
-              source: field_s_news_source
+              source: field_s_news_categories
       fields:
         path:
           id: path
@@ -433,10 +434,10 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-        field_s_news_source:
-          id: field_s_news_source
-          table: node__field_s_news_source
-          field: field_s_news_source
+        field_s_news_link:
+          id: field_s_news_link
+          table: node__field_s_news_link
+          field: field_s_news_link
           relationship: none
           group_type: group
           admin_label: ''
@@ -446,13 +447,13 @@ display:
             alter_text: false
             text: ''
             make_link: false
-            path: '{{ field_s_news_source__uri }}'
-            absolute: true
+            path: ''
+            absolute: false
             external: false
             replace_spaces: false
             path_case: none
             trim_whitespace: false
-            alt: '{{ title }}'
+            alt: ''
             rel: ''
             link_class: ''
             prefix: ''
@@ -541,6 +542,7 @@ display:
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
+      use_ajax: true
     cache_metadata:
       max-age: -1
       contexts:
@@ -553,6 +555,7 @@ display:
         - 'config:field.storage.node.field_s_news_categories'
         - 'config:field.storage.node.field_s_news_date'
         - 'config:field.storage.node.field_s_news_image'
+        - 'config:field.storage.node.field_s_news_link'
   event_series_related_news:
     display_plugin: block
     id: event_series_related_news
@@ -574,16 +577,17 @@ display:
         use_more_text: false
         link_display: false
         link_url: false
+        relationships: false
       pager:
         type: some
         options:
           items_per_page: 2
           offset: 0
       arguments:
-        field_mrc_event_series_target_id:
-          id: field_mrc_event_series_target_id
-          table: node__field_mrc_event_series
-          field: field_mrc_event_series_target_id
+        tid:
+          id: tid
+          table: taxonomy_index
+          field: tid
           relationship: none
           group_type: group
           admin_label: ''
@@ -592,8 +596,8 @@ display:
             value: all
             title_enable: false
             title: All
-          title_enable: false
-          title: ''
+          title_enable: true
+          title: 'Related {{ arguments.tid }} News'
           default_argument_type: taxonomy_tid
           default_argument_options:
             term_page: '1'
@@ -611,14 +615,21 @@ display:
             sort_order: asc
             number_of_records: 0
             format: default_summary
-          specify_validation: false
+          specify_validation: true
           validate:
-            type: none
+            type: 'entity:taxonomy_term'
             fail: 'not found'
-          validate_options: {  }
+          validate_options:
+            bundles:
+              mrc_event_series: mrc_event_series
+            operation: view
+            multiple: 0
+            access: false
           break_phrase: false
-          not: false
-          plugin_id: numeric
+          add_table: false
+          require_value: false
+          reduce_duplicates: false
+          plugin_id: taxonomy_index_tid
       block_hide_empty: true
       style:
         type: default
@@ -1041,7 +1052,20 @@ display:
       use_more_always: false
       use_more_text: 'See all related news'
       link_display: custom_url
-      link_url: 'news?series={{ raw_arguments.field_mrc_event_series_target_id }}'
+      link_url: 'news?series={{ raw_arguments.tid }}'
+      relationships:
+        term_node_tid:
+          id: term_node_tid
+          table: node_field_data
+          field: term_node_tid
+          relationship: none
+          group_type: group
+          admin_label: term
+          required: true
+          vids:
+            - mrc_event_series
+          entity_type: node
+          plugin_id: node_term_data
     cache_metadata:
       max-age: -1
       contexts:
@@ -1063,18 +1087,138 @@ display:
     display_options:
       display_extenders: {  }
       display_description: ''
+      exposed_block: true
+      filters:
+        status:
+          value: '1'
+          table: node_field_data
+          field: status
+          plugin_id: boolean
+          entity_type: node
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          value:
+            stanford_news_item: stanford_news_item
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          group: 1
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: word
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: title_op
+            label: 'Search by Title'
+            description: ''
+            use_operator: false
+            operator: title_op
+            identifier: title
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              site_owner: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: node
+          entity_field: title
+          plugin_id: string
+        field_mrc_event_series_target_id:
+          id: field_mrc_event_series_target_id
+          table: node__field_mrc_event_series
+          field: field_mrc_event_series_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_mrc_event_series_target_id_op
+            label: 'Filter by Series'
+            description: ''
+            use_operator: false
+            operator: field_mrc_event_series_target_id_op
+            identifier: series
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              site_owner: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          limit: true
+          vid: mrc_event_series
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
+      defaults:
+        filters: false
+        filter_groups: false
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
         - url.query_args
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags:
         - 'config:field.storage.node.field_s_news_categories'
         - 'config:field.storage.node.field_s_news_date'
         - 'config:field.storage.node.field_s_news_image'
+        - 'config:field.storage.node.field_s_news_link'
   short_list:
     display_plugin: block
     id: short_list

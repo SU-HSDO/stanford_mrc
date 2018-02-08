@@ -16,8 +16,20 @@ function stanford_mrc_post_update_8_0_4() {
  * Release 8.0.5 changes.
  */
 function stanford_mrc_post_update_8_0_5() {
-  // Load videos list view.
   module_load_install('stanford_mrc');
-  $path = drupal_get_path('module', 'mrc_events') . '/config/install';
-  stanford_mrc_update_configs(TRUE, ['views.view.mrc_videos'], $path);
+
+  $configs = [
+    'mrc_events' => ['views.view.mrc_videos'],
+    'mrc_helper' => ['core.entity_view_display.taxonomy_term.mrc_event_series.default'],
+    'mrc_news' => [
+      'core.entity_form_display.node.stanford_news_item.default',
+      'views.view.mrc_news',
+    ],
+    'mrc_visitor' => ['views.view.mrc_visitor'],
+  ];
+
+  foreach ($configs as $module => $config) {
+    $path = drupal_get_path('module', $module) . '/config/install';
+    stanford_mrc_update_configs(TRUE, $config, $path);
+  }
 }
