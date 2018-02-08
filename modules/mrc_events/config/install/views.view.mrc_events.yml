@@ -1598,7 +1598,7 @@ display:
       use_more_always: false
       use_more_text: 'See all past events'
       link_display: custom_url
-      link_url: 'events/past-events?series={{ arguments.field_mrc_event_series_target_id }}'
+      link_url: 'events/past-events?series={{ raw_arguments.tid }} '
       block_hide_empty: true
       relationships:
         term_node_tid:
@@ -2116,7 +2116,7 @@ display:
       use_more_always: false
       use_more_text: 'View all upcoming events'
       link_display: '0'
-      link_url: 'events?series={{ arguments.field_mrc_event_series_target_id }}'
+      link_url: 'events?series={{ raw_arguments.tid }}'
       block_hide_empty: true
       relationships:
         term_node_tid:
