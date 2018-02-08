@@ -605,7 +605,7 @@ display:
             description: ''
             use_operator: false
             operator: field_s_event_type_target_id_op
-            identifier: field_s_event_type_target_id
+            identifier: type
             required: false
             remember: false
             multiple: false
@@ -651,7 +651,7 @@ display:
             description: ''
             use_operator: false
             operator: field_mrc_event_series_target_id_op
-            identifier: field_mrc_event_series_target_id
+            identifier: series
             required: false
             remember: false
             multiple: false
@@ -1189,15 +1189,16 @@ display:
         use_more_text: false
         link_display: false
         link_url: false
+        relationships: false
       filter_groups:
         operator: AND
         groups:
           1: AND
       arguments:
-        field_mrc_event_series_target_id:
-          id: field_mrc_event_series_target_id
-          table: node__field_mrc_event_series
-          field: field_mrc_event_series_target_id
+        tid:
+          id: tid
+          table: taxonomy_index
+          field: tid
           relationship: none
           group_type: group
           admin_label: ''
@@ -1206,8 +1207,8 @@ display:
             value: all
             title_enable: false
             title: All
-          title_enable: false
-          title: ''
+          title_enable: true
+          title: 'Past {{ arguments.tid }} Events'
           default_argument_type: taxonomy_tid
           default_argument_options:
             term_page: '1'
@@ -1225,14 +1226,21 @@ display:
             sort_order: asc
             number_of_records: 0
             format: default_summary
-          specify_validation: false
+          specify_validation: true
           validate:
-            type: none
+            type: 'entity:taxonomy_term'
             fail: 'not found'
-          validate_options: {  }
+          validate_options:
+            bundles:
+              mrc_event_series: mrc_event_series
+            operation: view
+            multiple: 0
+            access: false
           break_phrase: false
-          not: false
-          plugin_id: numeric
+          add_table: false
+          require_value: false
+          reduce_duplicates: false
+          plugin_id: taxonomy_index_tid
       title: 'Past Events'
       style:
         type: default
@@ -1590,8 +1598,21 @@ display:
       use_more_always: false
       use_more_text: 'See all past events'
       link_display: custom_url
-      link_url: 'events/past-events?series={{ raw_arguments.field_mrc_event_series_target_id }} '
+      link_url: 'events/past-events?series={{ arguments.field_mrc_event_series_target_id }}'
       block_hide_empty: true
+      relationships:
+        term_node_tid:
+          id: term_node_tid
+          table: node_field_data
+          field: term_node_tid
+          relationship: none
+          group_type: group
+          admin_label: term
+          required: true
+          vids:
+            - mrc_event_series
+          entity_type: node
+          plugin_id: node_term_data
     cache_metadata:
       max-age: -1
       contexts:
@@ -1686,15 +1707,16 @@ display:
         use_more_text: false
         link_display: false
         link_url: false
+        relationships: false
       filter_groups:
         operator: AND
         groups:
           1: AND
       arguments:
-        field_mrc_event_series_target_id:
-          id: field_mrc_event_series_target_id
-          table: node__field_mrc_event_series
-          field: field_mrc_event_series_target_id
+        tid:
+          id: tid
+          table: taxonomy_index
+          field: tid
           relationship: none
           group_type: group
           admin_label: ''
@@ -1703,8 +1725,8 @@ display:
             value: all
             title_enable: false
             title: All
-          title_enable: false
-          title: ''
+          title_enable: true
+          title: 'Upcoming {{ arguments.tid }} Events'
           default_argument_type: taxonomy_tid
           default_argument_options:
             term_page: '1'
@@ -1722,14 +1744,21 @@ display:
             sort_order: asc
             number_of_records: 0
             format: default_summary
-          specify_validation: false
+          specify_validation: true
           validate:
-            type: none
+            type: 'entity:taxonomy_term'
             fail: 'not found'
-          validate_options: {  }
+          validate_options:
+            bundles:
+              mrc_event_series: mrc_event_series
+            operation: view
+            multiple: 0
+            access: false
           break_phrase: false
-          not: false
-          plugin_id: numeric
+          add_table: false
+          require_value: false
+          reduce_duplicates: false
+          plugin_id: taxonomy_index_tid
       title: 'Upcoming Events'
       style:
         type: default
@@ -2083,12 +2112,25 @@ display:
         options:
           items_per_page: 2
           offset: 0
-      use_more: true
+      use_more: false
       use_more_always: false
       use_more_text: 'View all upcoming events'
-      link_display: custom_url
+      link_display: '0'
       link_url: 'events?series={{ arguments.field_mrc_event_series_target_id }}'
       block_hide_empty: true
+      relationships:
+        term_node_tid:
+          id: term_node_tid
+          table: node_field_data
+          field: term_node_tid
+          relationship: none
+          group_type: group
+          admin_label: term
+          required: true
+          vids:
+            - mrc_event_series
+          entity_type: node
+          plugin_id: node_term_data
     cache_metadata:
       max-age: -1
       contexts:

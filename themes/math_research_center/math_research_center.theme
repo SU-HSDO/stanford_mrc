@@ -34,6 +34,16 @@ function math_research_center_preprocess(&$variables, $hook) {
 }
 
 /**
+ * Implements hook_preprocess_views_view().
+ */
+function math_research_center_preprocess_views_view(&$vars) {
+  if (!empty($vars['more'])) {
+    // Add class to read more link in views.
+    $vars['more']['#options']['attributes']['class'][] = 'decanter-button';
+  }
+}
+
+/**
  * Helper function to preprocess all patterns.
  */
 function math_research_center_preprocess_pattern(&$variables, $hook) {
