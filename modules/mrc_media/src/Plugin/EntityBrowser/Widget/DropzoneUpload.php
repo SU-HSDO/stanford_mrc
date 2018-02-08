@@ -157,22 +157,27 @@ class DropzoneUpload extends WidgetBase {
   public function getForm(array &$original_form, FormStateInterface $form_state, array $additional_widget_parameters) {
     $form = parent::getForm($original_form, $form_state, $additional_widget_parameters);
     $storage = $form_state->getStorage();
-    if (empty($storage['dropzonejs'])) {
-      $form['upload'] = [
-        '#title' => $this->t('File upload'),
-        '#type' => 'dropzonejs',
-        '#required' => TRUE,
-        '#dropzone_description' => $this->configuration['dropzone_description'],
-        '#max_filesize' => $this->bundleSuggestion->getMaxFilesize(),
-        '#extensions' => $this->bundleSuggestion->getAllExtensions(),
-        '#max_files' => !empty($storage['entity_browser']['validators']['cardinality']['cardinality']) ? $storage['entity_browser']['validators']['cardinality']['cardinality'] : 1,
-        '#clientside_resize' => FALSE,
-      ];
 
-      $form['#attached']['library'][] = 'dropzonejs/widget';
-      // Disable the submit button until the upload sucesfully completed.
-      $form['#attached']['library'][] = 'dropzonejs_eb_widget/common';
-      $original_form['#attributes']['class'][] = 'dropzonejs-disable-submit';
+    $form['upload'] = [
+      '#title' => $this->t('File upload'),
+      '#type' => 'dropzonejs',
+      '#required' => TRUE,
+      '#dropzone_description' => $this->configuration['dropzone_description'],
+      '#max_filesize' => $this->bundleSuggestion->getMaxFilesize(),
+      '#extensions' => $this->bundleSuggestion->getAllExtensions(),
+      '#max_files' => !empty($storage['entity_browser']['validators']['cardinality']['cardinality']) ? $storage['entity_browser']['validators']['cardinality']['cardinality'] : 1,
+      '#clientside_resize' => FALSE,
+    ];
+
+    $form['#attached']['library'][] = 'dropzonejs/widget';
+    // Disable the submit button until the upload sucesfully completed.
+    $form['#attached']['library'][] = 'dropzonejs_eb_widget/common';
+    $original_form['#attributes']['class'][] = 'dropzonejs-disable-submit';
+
+    // Files have already been added, so lets hide the upload form.
+    if (!empty($storage['dropzonejs'])) {
+      $form['upload']['#type'] = 'hidden';
+      $form['upload']['#required'] = FALSE;
     }
 
     $this->getEntityForm($form, $form_state, $additional_widget_parameters);
@@ -294,22 +299,6 @@ class DropzoneUpload extends WidgetBase {
     $media_entities = $this->prepareEntities($form, $form_state);
 
     $this->selectEntities($media_entities, $form_state);
-    $this->clearFormValues($element, $form_state);
-  }
-
-  /**
-   * Clear values from upload form element.
-   *
-   * @param array $element
-   *   Upload form element.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state object.
-   */
-  protected function clearFormValues(array &$element, FormStateInterface $form_state) {
-    // We propagated entities to the other parts of the system. We can now
-    // remove them from our values.
-    $form_state->setValueForElement($element['upload']['uploaded_files'], '');
-    NestedArray::setValue($form_state->getUserInput(), $element['upload']['uploaded_files']['#parents'], '');
     $form_state->set(['dropzonejs', $this->uuid(), 'files'], []);
   }
 
