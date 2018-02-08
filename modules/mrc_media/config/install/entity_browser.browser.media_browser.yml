@@ -35,7 +35,7 @@ widgets:
       auto_select: true
     uuid: 39f2b6ed-f27d-42d8-a161-004510188d8d
     weight: -10
-    label: Library
+    label: 'Media Library'
     id: view
   ffe1badf-f391-4e5a-8fe4-da745c9da5af:
     settings:
@@ -48,14 +48,14 @@ widgets:
   e837394f-45b5-4198-962a-406e24baf0ec:
     settings:
       upload_location: 'public://media'
-      dropzone_description: 'Drop files here to upload them'
+      dropzone_description: 'Drop file here to upload'
+      submit_text: 'Upload File'
       max_filesize: '25'
       extensions:
         file: 'txt doc docx xls xlsx pdf ppt pps odt ods odp'
         image: 'jpg jpeg gif png'
         video: ''
-      submit_text: 'Select Media'
     uuid: e837394f-45b5-4198-962a-406e24baf0ec
     weight: -9
-    label: 'Upload Media'
+    label: 'Upload a File'
     id: dropzonejs_media

@@ -157,22 +157,23 @@ class DropzoneUpload extends WidgetBase {
   public function getForm(array &$original_form, FormStateInterface $form_state, array $additional_widget_parameters) {
     $form = parent::getForm($original_form, $form_state, $additional_widget_parameters);
     $storage = $form_state->getStorage();
+    if (empty($storage['dropzonejs'])) {
+      $form['upload'] = [
+        '#title' => $this->t('File upload'),
+        '#type' => 'dropzonejs',
+        '#required' => TRUE,
+        '#dropzone_description' => $this->configuration['dropzone_description'],
+        '#max_filesize' => $this->bundleSuggestion->getMaxFilesize(),
+        '#extensions' => $this->bundleSuggestion->getAllExtensions(),
+        '#max_files' => !empty($storage['entity_browser']['validators']['cardinality']['cardinality']) ? $storage['entity_browser']['validators']['cardinality']['cardinality'] : 1,
+        '#clientside_resize' => FALSE,
+      ];
 
-    $form['upload'] = [
-      '#title' => $this->t('File upload'),
-      '#type' => 'dropzonejs',
-      '#required' => TRUE,
-      '#dropzone_description' => $this->configuration['dropzone_description'],
-      '#max_filesize' => $this->bundleSuggestion->getMaxFilesize(),
-      '#extensions' => $this->bundleSuggestion->getAllExtensions(),
-      '#max_files' => !empty($storage['entity_browser']['validators']['cardinality']['cardinality']) ? $storage['entity_browser']['validators']['cardinality']['cardinality'] : 1,
-      '#clientside_resize' => FALSE,
-    ];
-
-    $form['#attached']['library'][] = 'dropzonejs/widget';
-    // Disable the submit button until the upload sucesfully completed.
-    $form['#attached']['library'][] = 'dropzonejs_eb_widget/common';
-    $original_form['#attributes']['class'][] = 'dropzonejs-disable-submit';
+      $form['#attached']['library'][] = 'dropzonejs/widget';
+      // Disable the submit button until the upload sucesfully completed.
+      $form['#attached']['library'][] = 'dropzonejs_eb_widget/common';
+      $original_form['#attributes']['class'][] = 'dropzonejs-disable-submit';
+    }
 
     $this->getEntityForm($form, $form_state, $additional_widget_parameters);
     return $form;
