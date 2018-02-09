@@ -130,6 +130,7 @@ module.exports = function(grunt) {
           'patterns/molecules/news-recent/css/news-recent.css':                     'patterns/molecules/news-recent/scss/news-recent.scss',
           'patterns/molecules/postcard/css/postcard.css':                           'patterns/molecules/postcard/scss/postcard.scss',
           'patterns/molecules/postcard-horizontal/css/postcard-horizontal.css':     'patterns/molecules/postcard-horizontal/scss/postcard-horizontal.scss',
+          'patterns/molecules/video-list/css/video-list.css':                       'patterns/molecules/video-list/scss/video-list.scss',
           'patterns/molecules/visitors-grid/css/visitors-grid.css':                 'patterns/molecules/visitors-grid/scss/visitors-grid.scss',
           'patterns/molecules/visitors-list/css/visitors-list.css':                 'patterns/molecules/visitors-list/scss/visitors-list.scss',
           'patterns/templates/node-event/css/node-event.css':                       'patterns/templates/node-event/scss/node-event.scss',
