@@ -26,6 +26,7 @@ function stanford_mrc_post_update_8_0_5() {
       'views.view.mrc_news',
     ],
     'mrc_visitor' => ['views.view.mrc_visitor'],
+    'mrc_paragraphs_slide' => ['core.entity_view_display.paragraph.mrc_slide.default'],
   ];
 
   foreach ($configs as $module => $config) {
