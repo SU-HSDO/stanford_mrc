@@ -39,7 +39,7 @@ widgets:
     id: view
   ffe1badf-f391-4e5a-8fe4-da745c9da5af:
     settings:
-      submit_text: Embed
+      submit_text: Add
       form_mode: media_browser
     uuid: ffe1badf-f391-4e5a-8fe4-da745c9da5af
     weight: -8

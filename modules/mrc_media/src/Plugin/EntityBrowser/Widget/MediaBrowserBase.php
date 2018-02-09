@@ -5,9 +5,11 @@ namespace Drupal\mrc_media\Plugin\EntityBrowser\Widget;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\entity_browser\WidgetBase;
 use Drupal\entity_browser\WidgetValidationManager;
 use Drupal\inline_entity_form\ElementSubmit;
+use Drupal\media\Entity\MediaType;
 use Drupal\mrc_media\BundleSuggestion;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -20,6 +22,13 @@ abstract class MediaBrowserBase extends WidgetBase {
   protected $bundleSuggestion;
 
   /**
+   * Current user service.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $currentUser;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -30,16 +39,18 @@ abstract class MediaBrowserBase extends WidgetBase {
       $container->get('event_dispatcher'),
       $container->get('entity_type.manager'),
       $container->get('plugin.manager.entity_browser.widget_validation'),
-      $container->get('mrc_media.bundle_suggestion')
+      $container->get('mrc_media.bundle_suggestion'),
+      $container->get('current_user')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, BundleSuggestion $bundles) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, BundleSuggestion $bundles, AccountProxyInterface $current_user) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $event_dispatcher, $entity_type_manager, $validation_manager);
     $this->bundleSuggestion = $bundles;
+    $this->currentUser = $current_user;
   }
 
   /**
@@ -127,10 +138,13 @@ abstract class MediaBrowserBase extends WidgetBase {
 
     $media_entities = $this->prepareEntities($form, $form_state);
 
+    // No entities to create forms/previews for.
     if (empty($media_entities)) {
       $form['entities']['#markup'] = NULL;
       return $form;
     }
+
+    unset($form['actions']);
 
     $view_builder = $this->entityTypeManager->getViewBuilder('media');
     foreach ($media_entities as $entity) {
@@ -144,6 +158,7 @@ abstract class MediaBrowserBase extends WidgetBase {
 
       $form['entities'][$entity->id()]['entity_preview'] = [
         '#type' => 'container',
+        '#title' => $this->t('Preview:'),
         '#attributes' => ['class' => ['entity-preview']],
       ];
       $form['entities'][$entity->id()]['entity_preview']['preview'] = $view_builder->view($entity, 'full');
@@ -156,6 +171,23 @@ abstract class MediaBrowserBase extends WidgetBase {
 
     $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
     return $form;
+  }
+
+  protected function prepareMediaEntity(MediaType $media_type, $source_value){
+    $media_storage = $this->entityTypeManager->getStorage('media');
+
+    $source_field = $media_type->getSource()
+      ->getConfiguration()['source_field'];
+
+    $entity_data = [
+      'bundle' => $media_type->id(),
+      $source_field => [$source_value],
+      'uid' => $this->currentUser->id(),
+      'status' => TRUE,
+      'type' => $media_type->getSource()->getPluginId(),
+    ];
+
+    return $media_storage->create($entity_data);
   }
 
 }

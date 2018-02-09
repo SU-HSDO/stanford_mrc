@@ -8,7 +8,6 @@ use Drupal\dropzonejs\DropzoneJsUploadSave;
 use Drupal\entity_browser\WidgetValidationManager;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\file\Entity\File;
-use Drupal\media\Entity\Media;
 use Drupal\mrc_media\BundleSuggestion;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -32,12 +31,6 @@ class DropzoneUpload extends MediaBrowserBase {
    */
   private $dropzoneJsSave;
 
-  /**
-   * Current user service.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected $currentUser;
 
   /**
    * {@inheritdoc}
@@ -51,18 +44,17 @@ class DropzoneUpload extends MediaBrowserBase {
       $container->get('entity_type.manager'),
       $container->get('plugin.manager.entity_browser.widget_validation'),
       $container->get('mrc_media.bundle_suggestion'),
-      $container->get('dropzonejs.upload_save'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('dropzonejs.upload_save')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, BundleSuggestion $bundle_suggestion, DropzoneJsUploadSave $dropzone_save, AccountProxyInterface $current_user) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $event_dispatcher, $entity_type_manager, $validation_manager,$bundle_suggestion);
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, BundleSuggestion $bundle_suggestion, AccountProxyInterface $current_user, DropzoneJsUploadSave $dropzone_save) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $event_dispatcher, $entity_type_manager, $validation_manager, $bundle_suggestion, $current_user);
     $this->dropzoneJsSave = $dropzone_save;
-    $this->currentUser = $current_user;
   }
 
   /**
@@ -70,6 +62,7 @@ class DropzoneUpload extends MediaBrowserBase {
    */
   public function defaultConfiguration() {
     $config = [
+      'auto_select' => FALSE,
       'upload_location' => 'public://media',
       'dropzone_description' => $this->t('Drop files here to upload them'),
     ];
@@ -102,30 +95,22 @@ class DropzoneUpload extends MediaBrowserBase {
    * {@inheritdoc}
    */
   public function prepareEntities(array $form, FormStateInterface $form_state) {
-    $file_entities = [];
     $media_entities = [];
 
     if ($form_state->get(['dropzonejs', $this->uuid(), 'media'])) {
       return $form_state->get(['dropzonejs', $this->uuid(), 'media']);
     }
 
-    $files = $this->getFiles($form, $form_state);
-    foreach ($files as $file) {
+    foreach ($this->getFiles($form, $form_state) as $file) {
       if ($file instanceof File) {
-        $file_entities[] = $file;
+        /** @var \Drupal\media\Entity\MediaType $media_type */
         $media_type = $this->bundleSuggestion->getBundleFromFile($file->getFileUri());
-
-        $media_entities[] = $this->entityTypeManager->getStorage('media')
-          ->create([
-            'bundle' => $media_type->id(),
-            $media_type->getSource()
-              ->getConfiguration()['source_field'] => $file,
-            'uid' => $this->currentUser->id(),
-            'status' => TRUE,
-            'type' => $media_type->getSource()->getPluginId(),
-          ]);
+        $media = $this->prepareMediaEntity($media_type, $file);
+        $media->save();
+        $media_entities[] = $media;
       }
     }
+
     $form_state->set(['dropzonejs', $this->uuid(), 'media'], $media_entities);
     return $media_entities;
   }
@@ -152,32 +137,12 @@ class DropzoneUpload extends MediaBrowserBase {
     // Disable the submit button until the upload sucesfully completed.
     $form['#attached']['library'][] = 'dropzonejs_eb_widget/common';
     $original_form['#attributes']['class'][] = 'dropzonejs-disable-submit';
+
+    if ($form_state->get(['dropzonejs', $this->uuid(), 'media'])) {
+      $form['upload']['#type'] = 'hidden';
+    }
+
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validate(array &$form, FormStateInterface $form_state) {
-    parent::validate($form, $form_state);
-
-    // Any errors, don't save the entities yet.
-    if ($form_state::hasAnyErrors()) {
-      return;
-    }
-    $media_entities = $this->prepareEntities($form, $form_state);
-
-    foreach ($media_entities as &$media_entity) {
-      if ($media_entity instanceof Media) {
-        $source_field = $media_entity->getSource()
-          ->getConfiguration()['source_field'];
-        // If we don't save file at this point Media entity creates another file
-        // entity with same uri for the thumbnail. That should probably be fixed
-        // in Media entity, but this workaround should work for now.
-        $media_entity->$source_field->entity->save();
-        $media_entity->save();
-      }
-    }
   }
 
   /**

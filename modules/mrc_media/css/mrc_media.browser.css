@@ -19,5 +19,13 @@ div[data-drupal-selector="edit-actions"] input:disabled {
 }
 
 .entity-preview {
-  max-width: 300px;
+  float: right;
+  max-height: 200px;
+  display: block;
+  overflow: hidden;
+}
+
+.entity-preview * {
+  max-height: 200px;
+  width: auto;
 }

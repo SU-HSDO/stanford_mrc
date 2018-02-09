@@ -19,14 +19,26 @@ class EmbedCode extends MediaBrowserBase {
    * {@inheritdoc}
    */
   protected function prepareEntities(array $form, FormStateInterface $form_state) {
-    if (isset($form['widget']['entity']['#entity'])) {
-      return [
-        $form['widget']['entity']['#entity'],
-      ];
+    if ($form_state->get(['embed_code', $this->uuid(), 'media'])) {
+      return $form_state->get(['embed_code', $this->uuid(), 'media']);
     }
-    else {
+
+    $media_entities = [];
+    $value = $form_state->getValue('input');
+
+    $media_type = $this->bundleSuggestion->getBundleFromInput($value);
+    if (!$value || !$media_type) {
       return [];
     }
+
+    $entity = $this->prepareMediaEntity($media_type, $value);
+    if ($entity) {
+      $entity->save();
+      $media_entities[] = $entity;
+    }
+
+    $form_state->set(['embed_code', $this->uuid(), 'media'], $media_entities);
+    return $media_entities;
   }
 
   /**
@@ -41,18 +53,10 @@ class EmbedCode extends MediaBrowserBase {
       '#required' => TRUE,
       '#placeholder' => $this->t('Enter a URL...'),
     ];
-    $form['preview'] = [
-      '#prefix' => '<div id="video-preview">',
-      '#suffix' => '</div>',
-    ];
-    $form['actions'] = ['#type' => 'actions'];
 
-
-    $form['actions']['add'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Save'),
-      '#name' => 'next',
-    ];
+    if ($form_state->get(['embed_code', $this->uuid(), 'media'])) {
+      $form['input']['#type'] = 'hidden';
+    }
 
     $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
     $form['#attached']['library'][] = 'mrc_media/mrc_media.embed';
@@ -63,46 +67,12 @@ class EmbedCode extends MediaBrowserBase {
    * {@inheritdoc}
    */
   public function validate(array &$form, FormStateInterface $form_state) {
+    parent::validate($form, $form_state);
     $value = trim($form_state->getValue('input'));
     $bundle = $this->bundleSuggestion->getBundleFromInput($value);
     if (!$bundle) {
       $form_state->setError($form['widget']['input'], $this->t('You must enter a URL or embed code.'));
     }
-  }
-
-  /**
-   * Creates a media entity from an input value.
-   *
-   * @param mixed $value
-   *   The input value.
-   * @param string[] $bundles
-   *   (optional) A set of media bundle IDs which might match the input value.
-   *   If omitted, all bundles to which the user has create access are checked.
-   *
-   * @return \Drupal\media\MediaInterface
-   *   The unsaved media entity.
-   * @throws
-   */
-  public function createFromInput($value, array $bundles = []) {
-    /** @var \Drupal\media\Entity\MediaType $bundle */
-    $bundle = $this->bundleSuggestion->getBundleFromInput($value);
-    if (!$bundle) {
-      return NULL;
-    }
-    /** @var \Drupal\media\MediaInterface $entity */
-    $entity = $this->entityTypeManager
-      ->getStorage('media')
-      ->create([
-        'bundle' => $bundle->id(),
-      ]);
-
-    $field_name = $bundle->getSource()
-      ->getConfiguration()['source_field'];
-    $field = $entity->get($field_name);
-    if ($field) {
-      $field->setValue($value);
-    }
-    return $entity;
   }
 
 }
