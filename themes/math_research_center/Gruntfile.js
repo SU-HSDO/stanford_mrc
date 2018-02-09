@@ -111,9 +111,6 @@ module.exports = function(grunt) {
           'css/base/base.css':  'scss/base/base.scss',
           'css/ckeditor.css':   'scss/ckeditor.scss',
 
-          // ELEMENTS
-          'css/elements/inputs.css':  'scss/elements/inputs.scss',
-
           // NODE
           'css/node/stanford_visitor.css':  'scss/node/stanford_visitor.scss',
 

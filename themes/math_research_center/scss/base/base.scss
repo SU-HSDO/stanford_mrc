@@ -1,8 +1,158 @@
+@charset "UTF-8";
+
+///
+/// BASE STYLES
+///
+
+// For overriding or making additions to the
+// stanford_basic theme and/or Decanter.
+
+// Decanter
+@import
+  'decanter-no-markup';
+
+// Stanford Math Research Center
+@import
+  '../utilities/mixins/mixins';
+
+// Inputs
+// Block form elements.
+input,
+textarea,
+select {
+  appearance: none;
+  border: $input-border-width solid $color-driftwood;
+  border-radius: 0;
+  box-sizing: border-box;
+  color: $color-black;
+
+  // standardize on firefox
+  display: block;
+  font-size: $base-font-size;
+  line-height: $input-line-height;
+  margin: 0.2em 0;
+  outline: none;
+  padding: $input-padding-vertical 0.7em;
+
+  &:focus {
+    box-shadow: $focus-shadow;
+  }
+}
+
+label {
+  display: block;
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: $color-white;
+}
+
+legend {
+  font-size: $h2-font-size;
+  font-weight: $font-bold;
+}
+
+fieldset {
+  border: none;
+}
+
+// Custom checkboxes and radio buttons.
+[type=checkbox],
+[type=radio] {
+  // The actual input element is only visible to screen readers, because
+  // all visual styling is done via the label.
+  @include sr-only;
+
+  .lt-ie9 & {
+    border: 0;
+    float: left;
+    margin: 0.4em 0.4em 0 0;
+    position: static;
+    width: auto;
+  }
+}
+
+[type=checkbox] + label,
+[type=radio] + label {
+  cursor: pointer;
+  font-weight: 400;
+}
+
+[type=checkbox] + label::before,
+[type=radio] + label::before {
+  background: $color-white;
+  border-radius: $border-radius;
+  box-shadow: 0 0 0 1px $color-driftwood;
+  content: '\a0';
+  display: inline-block;
+  line-height: 1rem;
+  margin-right: 0.6em;
+  text-indent: 0.15em;
+  vertical-align: middle\0;
+
+  // Target IE 11 and below to vertically center inputs.
+  width: 1rem;
+}
+
+[type=radio] + label::before {
+  box-shadow: 0 0 0 2px $color-white, 0 0 0 3px $color-driftwood;
+  line-height: 1rem;
+  width: 1rem;
+  border-radius: 100%;
+}
+
+[type=checkbox]:checked + label::before,
+[type=radio]:checked + label::before {
+  background-color: $color-bright-red;
+  box-shadow: 0 0 0 1px $color-bright-red;
+}
+
+[type=radio]:checked + label::before {
+  box-shadow: 0 0 0 2px $color-white, 0 0 0 4px $color-bright-red;
+}
+
+[type=radio]:focus + label::before {
+  box-shadow: 0 0 0 2px $color-white, 0 0 0 4px $color-bright-red, 0 0 3px 4px $color-black, 0 0 7px 4px $color-black;
+}
+
+[type=checkbox]:checked + label::before,
+[type=checkbox]:checked:disabled + label::before {
+  background-image: url("../img/check.png");
+  background-image: url("../img/check.svg");
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 10px;
+}
+
+[type=checkbox]:focus + label::before {
+  box-shadow: 0 0 0 1px $color-white, 0 0 0 3px $color-bright-red;
+}
+
+[type=checkbox]:disabled + label {
+  color: $color-driftwood;
+}
+
+[type=checkbox]:disabled + label::before,
+[type=radio]:disabled + label::before {
+  background: $color-driftwood;
+  cursor: not-allowed;
+}
+
+.form-checkboxes .form-item,
+.form-radios .form-item {
+  @include margin(null null 0.8em);
+}
+
+// Images
 img {
   max-width: 100%;
   height: auto;
 }
 
+// Typography
 .decanter-font-lead {
   font-weight: 400;
 }
