@@ -173,7 +173,18 @@ abstract class MediaBrowserBase extends WidgetBase {
     return $form;
   }
 
-  protected function prepareMediaEntity(MediaType $media_type, $source_value){
+  /**
+   * Build a media entity using the given media type and source data.
+   *
+   * @param \Drupal\media\Entity\MediaType $media_type
+   *   Media type to create entity in.
+   * @param mixed $source_value
+   *   Files, string or other to put into the source field.
+   *
+   * @return \Drupal\Core\Entity\EntityInterface
+   *   Created media entity.
+   */
+  protected function prepareMediaEntity(MediaType $media_type, $source_value) {
     $media_storage = $this->entityTypeManager->getStorage('media');
 
     $source_field = $media_type->getSource()
@@ -181,7 +192,7 @@ abstract class MediaBrowserBase extends WidgetBase {
 
     $entity_data = [
       'bundle' => $media_type->id(),
-      $source_field => [$source_value],
+      $source_field => is_array($source_value) ? $source_value : [$source_value],
       'uid' => $this->currentUser->id(),
       'status' => TRUE,
       'type' => $media_type->getSource()->getPluginId(),
