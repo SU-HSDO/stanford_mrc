@@ -27,7 +27,7 @@ function stanford_mrc_post_update_8_0_5() {
     ],
     'mrc_visitor' => [
       'views.view.mrc_visitor',
-      'field.field.node.stanford_visitor.field_s_visitor_photo.yml'
+      'field.field.node.stanford_visitor.field_s_visitor_photo.yml',
     ],
     'mrc_paragraphs_slide' => ['core.entity_view_display.paragraph.mrc_slide.default'],
   ];
