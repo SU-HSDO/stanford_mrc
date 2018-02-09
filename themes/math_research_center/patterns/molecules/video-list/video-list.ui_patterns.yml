@@ -1,0 +1,17 @@
+video_list:
+  label: "Video List"
+  fields:
+    title:
+      label: "Title"
+      preview: "Title"
+    video:
+      label: "Event Video"
+      preview:
+        theme: image
+        uri: "http://via.placeholder.com/400x400"
+  libraries:
+    - video_list:
+        css:
+          component:
+            css/video-list.css: {}
+  use: "@math_research_center/molecules/video-list/video-list.html.twig"

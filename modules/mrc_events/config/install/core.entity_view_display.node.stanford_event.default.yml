@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.stanford_event.body
+    - field.field.node.stanford_event.field_mrc_event_series
     - field.field.node.stanford_event.field_s_event_admission
     - field.field.node.stanford_event.field_s_event_audience
     - field.field.node.stanford_event.field_s_event_category
@@ -46,6 +47,8 @@ third_party_settings:
         - field_s_event_location
       date:
         - field_s_event_date
+      event_link:
+        - field_s_event_link
       map:
         - field_s_event_map_link
       admission:
@@ -69,27 +72,27 @@ mode: default
 content:
   body:
     type: text_default
-    weight: 5
+    weight: 6
     region: description
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_s_event_admission:
-    weight: 4
+    weight: 5
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: admission
   field_s_event_contact_email:
-    weight: 7
+    weight: 8
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: email
   field_s_event_contact_phone:
-    weight: 8
+    weight: 9
     label: hidden
     settings:
       title: ''
@@ -115,6 +118,18 @@ content:
       image_style: large
       image_link: ''
     third_party_settings: {  }
+  field_s_event_link:
+    type: link
+    weight: 3
+    region: event_link
+    label: above
+    settings:
+      trim_length: 80
+      rel: ''
+      target: ''
+      url_only: false
+      url_plain: false
+    third_party_settings: {  }
   field_s_event_location:
     weight: 1
     label: hidden
@@ -123,7 +138,7 @@ content:
     type: basic_string
     region: location
   field_s_event_map_link:
-    weight: 3
+    weight: 4
     label: hidden
     settings:
       trim_length: 80
@@ -135,14 +150,14 @@ content:
     type: link
     region: map
   field_s_event_sponsor:
-    weight: 6
+    weight: 7
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: sponsor
   field_s_event_video_recap:
-    weight: 9
+    weight: 10
     label: hidden
     settings:
       responsive: true
@@ -153,10 +168,10 @@ content:
     type: video_embed_field_video
     region: embed_video
 hidden:
+  field_mrc_event_series: true
   field_s_event_audience: true
   field_s_event_category: true
   field_s_event_featured: true
-  field_s_event_link: true
   field_s_event_status: true
   field_s_event_type: true
   links: true
