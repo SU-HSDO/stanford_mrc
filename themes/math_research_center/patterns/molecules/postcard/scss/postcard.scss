@@ -17,6 +17,11 @@
 .mrc-postcard {
   @include mrc-card-container;
 
+  .mrc-postcard__superhead {
+    font-weight: $font-bold;
+    margin: 0 0 .2em;
+  }
+
   .mrc-postcard__img {
     img {
       width: 100%;
@@ -24,17 +29,19 @@
   }
 
   .mrc-postcard__content {
-    .mrc-postcard__superhead {
-      font-weight: $font-bold;
-      margin: 0 0 .2em;
-    }
-
     .mrc-postcard__title {
       margin-top: 0;
+      text-align: center;
+    }
+
+    .mrc-postcard__description {
+      text-align: center;
     }
 
     .mrc-postcard__button {
       text-align: center;
+
+      @include more-link(more-link, more-link-hover);
     }
   }
 }

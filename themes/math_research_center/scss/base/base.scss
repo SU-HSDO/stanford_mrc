@@ -20,3 +20,8 @@ img {
 .decanter-font-lead {
   font-weight: 400;
 }
+
+// Grid
+.decanter-grid [class*="decanter-width-"] {
+  margin-bottom: 2em;
+}
