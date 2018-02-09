@@ -18,6 +18,10 @@ node_event:
       label: "Date"
       preview: "Week Day, Month, Day, Year"
       type: text
+    event_link:
+      label: "Event Link"
+      preview: "<a href=\"#\">More information on this event</a>"
+      type: text
     map:
       label: "Map"
       preview: "<a href=\"#\">Map</a>"

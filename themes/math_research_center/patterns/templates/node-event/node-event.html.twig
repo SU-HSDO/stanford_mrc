@@ -18,6 +18,11 @@
     <div class="mrc-event__time">{{ time }}</div>
   {% endif %}
 
+  {% if event_link %}
+     <div class="mrc-event__event-link">{{ event_link }}</div>
+  {% endif %}
+
+
   <div class="mrc-event__map-admission">
     {% if map %}
       <div class="mrc-event__map">{{ map }}</div>
