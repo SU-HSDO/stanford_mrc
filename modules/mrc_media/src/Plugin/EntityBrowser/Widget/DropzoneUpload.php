@@ -28,7 +28,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  *   Media entities and allows to edit them.")
  * )
  */
-class DropzoneUpload extends WidgetBase {
+class DropzoneUpload extends MediaBrowserBase {
 
   /**
    * Dropzone upload save service.
@@ -45,21 +45,6 @@ class DropzoneUpload extends WidgetBase {
   protected $currentUser;
 
   /**
-   * @var \Drupal\mrc_media\BundleSuggestion
-   */
-  protected $bundleSuggestion;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, DropzoneJsUploadSave $dropzone_save, AccountProxyInterface $current_user, BundleSuggestion $bundle_suggestion) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $event_dispatcher, $entity_type_manager, $validation_manager);
-    $this->dropzoneJsSave = $dropzone_save;
-    $this->currentUser = $current_user;
-    $this->bundleSuggestion = $bundle_suggestion;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -70,10 +55,20 @@ class DropzoneUpload extends WidgetBase {
       $container->get('event_dispatcher'),
       $container->get('entity_type.manager'),
       $container->get('plugin.manager.entity_browser.widget_validation'),
+      $container->get('mrc_media.bundle_suggestion'),
       $container->get('dropzonejs.upload_save'),
-      $container->get('current_user'),
-      $container->get('mrc_media.bundle_suggestion')
+      $container->get('current_user')
     );
+  }
+
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, BundleSuggestion $bundle_suggestion, DropzoneJsUploadSave $dropzone_save, AccountProxyInterface $current_user) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $event_dispatcher, $entity_type_manager, $validation_manager,$bundle_suggestion);
+    $this->dropzoneJsSave = $dropzone_save;
+    $this->currentUser = $current_user;
   }
 
   /**
@@ -107,16 +102,6 @@ class DropzoneUpload extends WidgetBase {
     ];
 
     return $form;
-  }
-
-  /**
-   * Get the configured upload location.
-   *
-   * @return string
-   *   Upload URI location.
-   */
-  public function getUploadLocation() {
-    return $this->configuration['upload_location'];
   }
 
   /**
@@ -173,84 +158,7 @@ class DropzoneUpload extends WidgetBase {
     // Disable the submit button until the upload sucesfully completed.
     $form['#attached']['library'][] = 'dropzonejs_eb_widget/common';
     $original_form['#attributes']['class'][] = 'dropzonejs-disable-submit';
-
-    // Files have already been added, so lets hide the upload form.
-    if (!empty($storage['dropzonejs'])) {
-      $form['upload']['#type'] = 'hidden';
-      $form['upload']['#required'] = FALSE;
-    }
-
-    $this->getEntityForm($form, $form_state, $additional_widget_parameters);
     return $form;
-  }
-
-
-  /**
-   * Add the inline entity form after the files have been uploaded.
-   *
-   * @param array $form
-   *   Original form from getFrom().
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state object.
-   * @param array $additional_widget_parameters
-   *   Additional parameters we dont need.
-   *
-   * @return array
-   */
-  public function getEntityForm(array &$form, FormStateInterface $form_state, array $additional_widget_parameters) {
-
-    if (isset($form['actions'])) {
-      $form['actions']['#weight'] = 100;
-    }
-
-    $form['entities'] = [
-      '#prefix' => '<div id="entities">',
-      '#suffix' => '</div>',
-      '#weight' => 99,
-    ];
-
-    $media_entities = $this->prepareEntities($form, $form_state);
-
-    if (empty($media_entities)) {
-      $form['entities']['#markup'] = NULL;
-      return $form;
-    }
-
-    foreach ($media_entities as $entity) {
-      $form['entities'][$entity->id()] = [
-        '#type' => 'inline_entity_form',
-        '#entity_type' => $entity->getEntityTypeId(),
-        '#bundle' => $entity->bundle(),
-        '#default_value' => $entity,
-        '#form_mode' => 'media_browser',
-      ];
-    }
-
-    // Without this, IEF won't know where to hook into the widget. Don't pass
-    // $original_form as the second argument to addCallback(), because it's not
-    // just the entity browser part of the form, not the actual complete form.
-    ElementSubmit::addCallback($form['actions']['submit'], $form_state->getCompleteForm());
-
-    $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
-    return $form;
-  }
-
-  /**
-   * Returns the bundles that this widget may use.
-   *
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current form state.
-   *
-   * @return string[]
-   *   The bundles that this widget may use. If all bundles may be used, the
-   *   returned array will be empty.
-   */
-  protected function getAllowedBundles(FormStateInterface $form_state) {
-    return (array) $form_state->get([
-      'entity_browser',
-      'widget_context',
-      'target_bundles',
-    ]);
   }
 
   /**
@@ -336,7 +244,7 @@ class DropzoneUpload extends WidgetBase {
 
         $entity = $this->dropzoneJsSave->createFile(
           $file['path'],
-          $this->getUploadLocation(),
+          $this->configuration['upload_location'],
           $this->bundleSuggestion->getAllExtensions(),
           $this->currentUser,
           $additional_validators

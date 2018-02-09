@@ -1,19 +1,23 @@
-/*#entities .field--name-revision-log-message,*/
-/*#entities input[value="Remove"],*/
-/*div[data-drupal-selector="edit-actions"] input:disabled {*/
-  /*display: none;*/
-/*}*/
+#entities .field--name-revision-log-message,
+#entities input[value="Remove"],
+div[data-drupal-selector="edit-actions"] input:disabled {
+  display: none;
+}
 
-/*#entity .field--name-revision-log-message,*/
-/*#entity input[value="Remove"],*/
-/*div[data-drupal-selector="edit-actions"] input:disabled {*/
-  /*display: none;*/
-/*}*/
+#entity .field--name-revision-log-message,
+#entity input[value="Remove"],
+div[data-drupal-selector="edit-actions"] input:disabled {
+  display: none;
+}
 
-/*#entities > div {*/
-  /*border-bottom: 1px solid #ccc;*/
-/*}*/
+#entities > div {
+  border-bottom: 1px solid #ccc;
+}
 
-/*#entities > div:last-child {*/
-  /*border-bottom: none;*/
-/*}*/
+#entities > div:last-child {
+  border-bottom: none;
+}
+
+.entity-preview {
+  max-width: 300px;
+}
