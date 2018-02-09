@@ -1,8 +1,22 @@
+@charset "UTF-8";
+
+///
+/// BASE STYLES
+///
+
+// For overriding or making additions to the
+// stanford_basic theme and/or Decanter.
+
+// Inputs
+@import 'inputs';
+
+// Images
 img {
   max-width: 100%;
   height: auto;
 }
 
+// Typography
 .decanter-font-lead {
   font-weight: 400;
 }
