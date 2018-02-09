@@ -4,6 +4,7 @@ namespace Drupal\mrc_media\Plugin\EntityBrowser\Widget;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
 use Drupal\entity_browser\WidgetBase;
 use Drupal\entity_browser\WidgetValidationManager;
 use Drupal\inline_entity_form\ElementSubmit;
@@ -77,6 +78,29 @@ abstract class MediaBrowserBase extends WidgetBase {
     return $form;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function submit(array &$element, array &$form, FormStateInterface $form_state) {
+    parent::submit($element, $form, $form_state);
+
+    $children = Element::children($element['entities']);
+    foreach ($children as $child) {
+      $entity_form = $element['entities'][$child];
+
+      if (!isset($entity_form['#ief_element_submit'])) {
+        continue;
+      }
+
+      foreach ($entity_form['#ief_element_submit'] as $submit_function) {
+        call_user_func_array($submit_function, [&$entity_form, $form_state]);
+      }
+    }
+
+    $media_entities = $this->prepareEntities($form, $form_state);
+
+    $this->selectEntities($media_entities, $form_state);
+  }
 
   /**
    * Add the inline entity form after the files have been uploaded.

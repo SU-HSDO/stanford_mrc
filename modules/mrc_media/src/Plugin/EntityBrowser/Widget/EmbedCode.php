@@ -2,17 +2,7 @@
 
 namespace Drupal\mrc_media\Plugin\EntityBrowser\Widget;
 
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\entity_browser\WidgetBase;
-use Drupal\entity_browser\WidgetValidationManager;
-use Drupal\inline_entity_form\ElementSubmit;
-use Drupal\media\MediaInterface;
-use Drupal\mrc_media\BundleSuggestion;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * An Entity Browser widget for creating media entities from embed codes.
@@ -78,17 +68,6 @@ class EmbedCode extends MediaBrowserBase {
     if (!$bundle) {
       $form_state->setError($form['widget']['input'], $this->t('You must enter a URL or embed code.'));
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submit(array &$element, array &$form, FormStateInterface $form_state) {
-    // IEF will take care of creating the entity upon submission. All we need to
-    // do is send it upstream to Entity Browser.
-    $entities = $form['widget']['entity']['#entity'];
-    $this->selectEntities($entities, $form_state);
-    $form_state->setRebuild();
   }
 
   /**
