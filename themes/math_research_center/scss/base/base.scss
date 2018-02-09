@@ -88,10 +88,11 @@ fieldset {
   box-shadow: 0 0 0 1px $color-driftwood;
   content: '\a0';
   display: inline-block;
+  height: 1rem;
   line-height: 1rem;
   margin-right: 0.6em;
   text-indent: 0.15em;
-  vertical-align: middle\0;
+  vertical-align: middle;
 
   // Target IE 11 and below to vertically center inputs.
   width: 1rem;
@@ -120,8 +121,8 @@ fieldset {
 
 [type=checkbox]:checked + label::before,
 [type=checkbox]:checked:disabled + label::before {
-  background-image: url("../img/check.png");
-  background-image: url("../img/check.svg");
+  background-image: url("../../img/check.png");
+  background-image: url("../../img/check.svg");
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: 10px;
