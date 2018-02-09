@@ -17,13 +17,17 @@
 
   @include margin(null null 3em);
 
+  .paragraph {
+    position: relative;
+  }
+
   .slick-content {
     background-color: rgba(0, 0, 0, 0.6);
     bottom: 0;
     color: $color-white;
     position: absolute;
     text-align: center;
-    width: 50%;
+    width: 100%;
 
     @include padding(35px);
 

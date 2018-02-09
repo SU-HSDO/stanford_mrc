@@ -9,7 +9,7 @@ use Drupal\ui_patterns\UiPatterns;
 
 function math_research_center_preprocess_page(&$variables) {
   if (isset($variables['node'])) {
-    $variables['#attached']['library'][] = 'math_research_center/' . $variables['node']->bundle();
+    $variables['#attached']['library'][] = 'math_research_center/node.' . $variables['node']->bundle();
   }
 }
 
@@ -31,6 +31,13 @@ function math_research_center_preprocess(&$variables, $hook) {
   if (strpos($hook, 'pattern') !== FALSE) {
     math_research_center_preprocess_pattern($variables, $hook);
   }
+}
+
+/**
+ * Implements hook_preprocess_paragraph
+ */
+function math_research_center_preprocess_paragraph(&$variables){
+  $variables['#attached']['library'][] = 'math_research_center/paragraph.' . $variables['paragraph']->bundle();
 }
 
 /**

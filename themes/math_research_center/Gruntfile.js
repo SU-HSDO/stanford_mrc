@@ -108,15 +108,17 @@ module.exports = function(grunt) {
           // conditionally using logic built in to the theme template or module.
 
           // BASE
-           'css/base/base.css':  'scss/base/base.scss',
-           'css/ckeditor.css':   'scss/ckeditor.scss',
+          'css/base/base.css':  'scss/base/base.scss',
+          'css/ckeditor.css':   'scss/ckeditor.scss',
 
-           // NODE
-           'css/node/stanford_visitor.css':  'scss/node/stanford_visitor.scss',
+          // NODE
+          'css/node/stanford_visitor.css':  'scss/node/stanford_visitor.scss',
 
-           // MOLECULES
-           'css/molecules/hover-menu.css':  'scss/molecules/hover-menu.scss',
-           'css/molecules/slideshow.css':   'scss/molecules/slideshow.scss',
+          // PARAGRAPH
+          'css/paragraph/mrc_slideshow.css':   'scss/paragraph/mrc_slideshow.scss',
+
+          // MOLECULES
+          'css/molecules/hover-menu.css':  'scss/molecules/hover-menu.scss',
 
           // PATTERNS
           'patterns/atoms/date-stacked/css/date-stacked.css':                       'patterns/atoms/date-stacked/scss/date-stacked.scss',
