@@ -29,3 +29,8 @@ div[data-drupal-selector="edit-actions"] input:disabled {
   max-height: 200px;
   width: auto;
 }
+
+form .entities-list .item-container {
+  display: block;
+  max-width: 400px;
+}

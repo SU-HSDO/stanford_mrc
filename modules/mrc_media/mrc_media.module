@@ -12,6 +12,26 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\file\Entity\File;
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function mrc_media_form_entity_browser_media_browser_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $widget_uuid = $form_state->get('entity_browser_current_widget');
+
+  if ($entities = $form_state->get(['embed_code', $widget_uuid, 'media'])) {
+    $view_builder = \Drupal::entityTypeManager()->getViewBuilder('media');
+
+    /** @var \Drupal\media\Entity\Media $entity */
+    foreach($entities as $entity){
+      $id = $entity->id();
+      $display = &$form['selection_display']['selected']["items_{$id}_0"]['display'];
+      $display = $view_builder->view($entity,'full');
+
+      unset($form['selection_display']['selected']["items_{$id}_0"]['remove_button']);
+    }
+  }
+}
+
+/**
  * Implements hook_field_widget_form_alter().
  */
 function mrc_media_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {

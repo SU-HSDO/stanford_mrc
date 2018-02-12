@@ -6,6 +6,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\dropzonejs\DropzoneJsUploadSave;
 use Drupal\entity_browser\WidgetBase;
 use Drupal\entity_browser\WidgetValidationManager;
 use Drupal\inline_entity_form\ElementSubmit;
@@ -15,6 +16,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class MediaBrowserBase extends WidgetBase {
+
+  /**
+   * Dropzone upload save service.
+   *
+   * @var \Drupal\dropzonejs\DropzoneJsUploadSave
+   */
+  protected $dropzoneJsSave;
 
   /**
    * @var \Drupal\mrc_media\BundleSuggestion
@@ -40,17 +48,19 @@ abstract class MediaBrowserBase extends WidgetBase {
       $container->get('entity_type.manager'),
       $container->get('plugin.manager.entity_browser.widget_validation'),
       $container->get('mrc_media.bundle_suggestion'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('dropzonejs.upload_save')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, BundleSuggestion $bundles, AccountProxyInterface $current_user) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, BundleSuggestion $bundles, AccountProxyInterface $current_user, DropzoneJsUploadSave $dropzone_save) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $event_dispatcher, $entity_type_manager, $validation_manager);
     $this->bundleSuggestion = $bundles;
     $this->currentUser = $current_user;
+    $this->dropzoneJsSave = $dropzone_save;
   }
 
   /**
@@ -109,7 +119,9 @@ abstract class MediaBrowserBase extends WidgetBase {
     }
 
     $media_entities = $this->prepareEntities($form, $form_state);
-
+    foreach ($media_entities as &$media_entity) {
+      $media_entity->save();
+    }
     $this->selectEntities($media_entities, $form_state);
   }
 
