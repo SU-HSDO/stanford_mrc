@@ -16,7 +16,8 @@
   '../utilities/mixins/mixins';
 
 // Inputs
-@import 'inputs';
+@import
+  'inputs';
 
 // Images
 img {
@@ -32,8 +33,15 @@ img {
 // Header
 #header {
   background: $color-cloud;
-}
 
+  @include padding(1em null);
+
+  .block--lockup__site-name-and-slogan a {
+    color: $color-black;
+    display: inherit;
+    text-decoration: none;
+  }
+}
 
 // Grid
 .decanter-grid [class*="decanter-width-"] {
