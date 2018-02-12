@@ -7,6 +7,14 @@
 // For overriding or making additions to the
 // stanford_basic theme and/or Decanter.
 
+// Decanter
+@import
+  'decanter-no-markup';
+
+// Stanford Math Research Center
+@import
+  '../utilities/mixins/mixins';
+
 // Inputs
 @import 'inputs';
 
@@ -20,6 +28,12 @@ img {
 .decanter-font-lead {
   font-weight: 400;
 }
+
+// Header
+#header {
+  background: $color-cloud;
+}
+
 
 // Grid
 .decanter-grid [class*="decanter-width-"] {
