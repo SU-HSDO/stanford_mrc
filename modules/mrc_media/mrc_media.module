@@ -15,18 +15,36 @@ use Drupal\file\Entity\File;
  * Implements hook_form_FORM_ID_alter().
  */
 function mrc_media_form_entity_browser_media_browser_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $widget_uuid = $form_state->get('entity_browser_current_widget');
+  $media_entities = $form_state->get(['entity_browser', 'selected_entities']);
+  $view_builder = \Drupal::entityTypeManager()->getViewBuilder('media');
 
-  if ($entities = $form_state->get(['embed_code', $widget_uuid, 'media'])) {
-    $view_builder = \Drupal::entityTypeManager()->getViewBuilder('media');
+  /** @var \Drupal\media\Entity\Media $entity */
+  foreach ($media_entities as $entity) {
+    $id = $entity->id();
+    $display = &$form['selection_display']['selected']["items_{$id}_0"]['display'];
+    $display = $view_builder->view($entity, 'full');
+  }
 
-    /** @var \Drupal\media\Entity\Media $entity */
-    foreach($entities as $entity){
-      $id = $entity->id();
-      $display = &$form['selection_display']['selected']["items_{$id}_0"]['display'];
-      $display = $view_builder->view($entity,'full');
+  if ($form_state->get('embed_code')) {
+    unset($form['selection_display']['selected']["items_{$id}_0"]['remove_button']);
+  }
+  $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
 
-      unset($form['selection_display']['selected']["items_{$id}_0"]['remove_button']);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Adds Linkit support for the link field in the entity embed dialog.
+ */
+function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (isset($form['attributes']['data-entity-embed-display-settings'])) {
+
+    $editor = $form_state->getBuildInfo()['args'][0];
+    if ($editor instanceof Editor) {
+      \Drupal::classResolver()
+        ->getInstanceFromDefinition(EntityEmbedDialog::class)
+        ->alterForm($form, $form_state);
     }
   }
 }
@@ -105,22 +123,6 @@ function mrc_media_save_file_managed_media(array $element, FormStateInterface $f
         $media_entity->$source_field->entity->save();
         $media_entity->save();
       }
-    }
-  }
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- *
- * Adds Linkit support for the link field in the entity embed dialog.
- */
-function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_state, $form_id) {
-  if (isset($form['attributes']['data-entity-embed-display-settings'])) {
-    $editor = $form_state->getBuildInfo()['args'][0];
-    if ($editor instanceof Editor) {
-      \Drupal::classResolver()
-        ->getInstanceFromDefinition(EntityEmbedDialog::class)
-        ->alterForm($form, $form_state);
     }
   }
 }

@@ -34,3 +34,10 @@ form .entities-list .item-container {
   display: block;
   max-width: 400px;
 }
+
+.entities-list span.media--type-video, .entities-list iframe, .entities-list img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+}
