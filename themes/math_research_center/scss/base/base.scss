@@ -43,6 +43,13 @@ img {
   }
 }
 
+// Footer
+#footer {
+  background: $color-cloud;
+
+  @include padding(1em null);
+}
+
 // Grid
 .decanter-grid [class*="decanter-width-"] {
   margin-bottom: 2em;
