@@ -43,7 +43,7 @@ widgets:
       form_mode: media_browser
     uuid: ffe1badf-f391-4e5a-8fe4-da745c9da5af
     weight: -8
-    label: 'Add Video'
+    label: 'Embed a Video'
     id: embed_code
   e837394f-45b5-4198-962a-406e24baf0ec:
     settings:
@@ -51,10 +51,6 @@ widgets:
       dropzone_description: 'Drop file here to upload'
       submit_text: 'Add to Library'
       max_filesize: '25'
-      extensions:
-        file: 'txt doc docx xls xlsx pdf ppt pps odt ods odp'
-        image: 'jpg jpeg gif png'
-        video: ''
     uuid: e837394f-45b5-4198-962a-406e24baf0ec
     weight: -9
     label: 'Embed a File'
