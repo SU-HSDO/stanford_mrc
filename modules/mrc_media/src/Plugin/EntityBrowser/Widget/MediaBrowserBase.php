@@ -158,7 +158,6 @@ abstract class MediaBrowserBase extends WidgetBase {
 
     unset($form['actions']);
 
-    $view_builder = $this->entityTypeManager->getViewBuilder('media');
     foreach ($media_entities as $entity) {
       $form['entities'][$entity->id()] = [
         '#type' => 'inline_entity_form',
@@ -167,13 +166,6 @@ abstract class MediaBrowserBase extends WidgetBase {
         '#default_value' => $entity,
         '#form_mode' => 'media_browser',
       ];
-
-      $form['entities'][$entity->id()]['entity_preview'] = [
-        '#type' => 'container',
-        '#title' => $this->t('Preview:'),
-        '#attributes' => ['class' => ['entity-preview']],
-      ];
-      $form['entities'][$entity->id()]['entity_preview']['preview'] = $view_builder->view($entity, 'full');
     }
 
     // Without this, IEF won't know where to hook into the widget. Don't pass

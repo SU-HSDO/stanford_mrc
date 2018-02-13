@@ -35,9 +35,44 @@ form .entities-list .item-container {
   max-width: 400px;
 }
 
-.entities-list span.media--type-video, .entities-list iframe, .entities-list img {
+.entities-list span.media--type-video,
+.entities-list iframe,
+.entities-list img {
   display: block;
   max-width: 100%;
+  max-height: 200px;
   height: auto;
   width: auto;
+}
+
+input.entity-browser-use-selected {
+  display: block;
+  position: fixed;
+  bottom: 0;
+}
+
+.entities-list .item-container > input.entity-browser-remove-selected-entity {
+  margin: 5px auto -15px;
+}
+
+.entities-list {
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  width: 100%;
+  box-shadow: 10px 10px 8px 10px #888;
+}
+
+.ui-dialog .ui-widget-content.ui-dialog-content {
+  overflow: hidden;
+}
+
+.ui-dialog-buttonpane,
+input.entity-browser-show-selection,
+.ui-dialog .ui-widget-content.ui-dialog-buttonpane {
+  display: none;
+}
+
+#drupal-modal {
+  padding: 0;
 }
