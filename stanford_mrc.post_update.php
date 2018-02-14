@@ -30,6 +30,19 @@ function stanford_mrc_post_update_8_0_5() {
       'field.field.node.stanford_visitor.field_s_visitor_photo',
     ],
     'mrc_paragraphs_slide' => ['core.entity_view_display.paragraph.mrc_slide.default'],
+    'mrc_media' => [
+      'image.style.event',
+      'image.style.event_series',
+      'image.style.hero_banner',
+      'image.style.large',
+      'image.style.linkit_result_thumbnail',
+      'image.style.medium',
+      'image.style.mrc_news_thumbnail',
+      'image.style.news',
+      'image.style.slideshow',
+      'image.style.spotlight',
+      'image.style.thumbnail',
+    ],
   ];
 
   foreach ($configs as $module => $config) {
