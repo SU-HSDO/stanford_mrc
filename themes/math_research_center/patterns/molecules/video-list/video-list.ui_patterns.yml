@@ -6,9 +6,7 @@ video_list:
       preview: "Title"
     video:
       label: "Event Video"
-      preview:
-        theme: image
-        uri: "http://via.placeholder.com/400x400"
+      preview: "<iframe width='560' height='315' src='https://www.youtube.com/embed/_Nq4Z5i7lcs' frameborder='0' allow='autoplay; encrypted-media' allowfullscreen></iframe>"
   libraries:
     - video_list:
         css:
