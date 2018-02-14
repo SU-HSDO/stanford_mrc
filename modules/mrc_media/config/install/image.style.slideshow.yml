@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: slideshow
+label: 'Slideshow (1220x500)'
+effects:
+  e37ee82c-aacb-4624-802f-381697d9327a:
+    uuid: e37ee82c-aacb-4624-802f-381697d9327a
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1220
+      height: 500
