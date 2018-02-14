@@ -19,48 +19,44 @@ function mrc_media_form_entity_browser_media_browser_form_alter(&$form, FormStat
   mrc_media_form_entity_browser_media_browser_form_cardinality($form, $form_state);
   mrc_media_form_entity_browser_media_browser_form_previews($form, $form_state);
   $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
-
   ddl($form);
 }
 
 function mrc_media_form_entity_browser_media_browser_form_cardinality(&$form, FormStateInterface $form_state) {
-//  $media_entities = $form_state->get(['entity_browser', 'selected_entities']);
-//
-//  $cardinality = $form_state->get([
-//    'entity_browser',
-//    'validators',
-//    'cardinality',
-//    'cardinality',
-//  ]);
-//
-//  $rejected = [];
-//  $children = Element::children($form['selection_display']['selected']);
-//  if ($cardinality && $cardinality > 0 && count($media_entities) > $cardinality) {
-//    $media_entities = array_slice($media_entities, 0, $cardinality);
-//    $form_state->set(['entity_browser', 'selected_entities'], $media_entities);
-//    $rejected = array_slice($children, $cardinality);
-//  }
-//
-//  foreach($rejected as $rejected_key){
-//    unset($form['selection_display']['selected'][$rejected_key]);
-//  }
-//
-//  ddl($form_state);
+  $media_entities = $form_state->get(['entity_browser', 'selected_entities']);
+
+  $cardinality = $form_state->get([
+    'entity_browser',
+    'validators',
+    'cardinality',
+    'cardinality',
+  ]);
+
+  if ($cardinality && $cardinality > 0) {
+    $selected = array_slice($media_entities, 0, $cardinality);
+    $rejected = array_slice($media_entities, $cardinality, NULL, TRUE);
+    foreach ($rejected as $key => $entity) {
+      unset($form['selection_display']['selected']["items_{$entity->id()}_$key"]);
+    }
+
+    $form_state->set(['entity_browser', 'selected_entities'], $selected);
+  }
 }
 
 function mrc_media_form_entity_browser_media_browser_form_previews(&$form, FormStateInterface $form_state) {
   $media_entities = $form_state->get(['entity_browser', 'selected_entities']);
   $view_builder = \Drupal::entityTypeManager()->getViewBuilder('media');
-
+  $children = Element::children($form['selection_display']['selected']);
+ddl($form);
   /** @var \Drupal\media\Entity\Media $entity */
   foreach ($media_entities as $entity) {
     $id = $entity->id();
 
-    foreach (Element::children($form['selection_display']['selected']) as $child) {
+    foreach ($children as $child) {
       $child = &$form['selection_display']['selected'][$child];
 
       // Find the part of the form for this media entity.
-      if ($child['#attributes']['data-entity-id'] == $id) {
+      if ($child['#attributes']['data-entity-id'] == $id && !isset($child['display']['filename'])) {
 
         // Change the display part to be a preview with the file name.
         $child['display'] = [
