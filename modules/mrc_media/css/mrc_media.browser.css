@@ -1,13 +1,72 @@
-#entities .field--name-revision-log-message,
-#entities input[value="Remove"],
-div[data-drupal-selector="edit-actions"] input:disabled {
+#drupal-modal {
+  padding: 0;
+}
+
+#entity-embed-dialog-form .field--name-revision-log-message,
+#entity-embed-dialog-form .ui-dialog .ui-widget-content.ui-dialog-buttonpane, .entity-browser-media-browser-form .field--name-revision-log-message,
+.entity-browser-media-browser-form .ui-dialog .ui-widget-content.ui-dialog-buttonpane {
   display: none;
 }
 
-#entity .field--name-revision-log-message,
-#entity input[value="Remove"],
-div[data-drupal-selector="edit-actions"] input:disabled {
-  display: none;
+#entity-embed-dialog-form .entities-list, .entity-browser-media-browser-form .entities-list {
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  width: 100%;
+  box-shadow: 10px 10px 8px 10px #888;
+}
+
+#entity-embed-dialog-form .entities-list .item-container, .entity-browser-media-browser-form .entities-list .item-container {
+  border: 1px dashed #ccc;
+  margin: 10px 10px 30px;
+  position: relative;
+}
+
+#entity-embed-dialog-form .entities-list input.entity-browser-remove-selected-entity, .entity-browser-media-browser-form .entities-list input.entity-browser-remove-selected-entity {
+  display: block;
+  position: absolute;
+  background: url("../img/remove.svg") no-repeat;
+  background-size: 24px 24px;
+  top: 0;
+  right: 0;
+  border: 0;
+  font-size: 0;
+  width: 24px;
+  height: 24px;
+}
+
+#entity-embed-dialog-form .entities-list input.entity-browser-remove-selected-entity:hover, .entity-browser-media-browser-form .entities-list input.entity-browser-remove-selected-entity:hover {
+  background: url("../img/remove-hover.svg") no-repeat;
+  background-size: 24px 24px;
+}
+
+#entity-embed-dialog-form .entities-list span.media--type-video, #entity-embed-dialog-form .entities-list iframe, #entity-embed-dialog-form .entities-list img, .entity-browser-media-browser-form .entities-list span.media--type-video, .entity-browser-media-browser-form .entities-list iframe, .entity-browser-media-browser-form .entities-list img {
+  display: block;
+  max-width: 100%;
+  max-height: 200px;
+  height: auto;
+  width: auto;
+}
+
+#entity-embed-dialog-form .entities-list .filename, .entity-browser-media-browser-form .entities-list .filename {
+  text-align: center;
+}
+
+#entity-embed-dialog-form input.entity-browser-use-selected,
+#entity-embed-dialog-form input.entity-browser-show-selection, .entity-browser-media-browser-form input.entity-browser-use-selected,
+.entity-browser-media-browser-form input.entity-browser-show-selection {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+#entity-embed-dialog-form input.entity-browser-show-selection, .entity-browser-media-browser-form input.entity-browser-show-selection {
+  bottom: 50px;
+}
+
+#entity-embed-dialog-form .ui-dialog .ui-widget-content.ui-dialog-content, .entity-browser-media-browser-form .ui-dialog .ui-widget-content.ui-dialog-content {
+  overflow: hidden;
 }
 
 #entities > div {
@@ -16,63 +75,4 @@ div[data-drupal-selector="edit-actions"] input:disabled {
 
 #entities > div:last-child {
   border-bottom: none;
-}
-
-.entity-preview {
-  float: right;
-  max-height: 200px;
-  display: block;
-  overflow: hidden;
-}
-
-.entity-preview * {
-  max-height: 200px;
-  width: auto;
-}
-
-form .entities-list .item-container {
-  display: block;
-  max-width: 400px;
-}
-
-.entities-list span.media--type-video,
-.entities-list iframe,
-.entities-list img {
-  display: block;
-  max-width: 100%;
-  max-height: 200px;
-  height: auto;
-  width: auto;
-}
-
-input.entity-browser-use-selected {
-  display: block;
-  position: fixed;
-  bottom: 0;
-}
-
-.entities-list .item-container > input.entity-browser-remove-selected-entity {
-  margin: 5px auto -15px;
-}
-
-.entities-list {
-  position: fixed;
-  bottom: 0;
-  background: #fff;
-  width: 100%;
-  box-shadow: 10px 10px 8px 10px #888;
-}
-
-.ui-dialog .ui-widget-content.ui-dialog-content {
-  overflow: hidden;
-}
-
-.ui-dialog-buttonpane,
-input.entity-browser-show-selection,
-.ui-dialog .ui-widget-content.ui-dialog-buttonpane {
-  display: none;
-}
-
-#drupal-modal {
-  padding: 0;
 }

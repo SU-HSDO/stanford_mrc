@@ -12,7 +12,7 @@ display: iframe
 display_configuration:
   width: 100%
   height: '650'
-  link_text: 'Select Media'
+  link_text: 'Continue'
   auto_open: true
 selection_display: multi_step_display
 selection_display_configuration:
@@ -20,7 +20,7 @@ selection_display_configuration:
   display: label
   display_settings:
     view_mode: default
-  select_text: 'Use selected'
+  select_text: 'Continue'
   selection_hidden: false
   view: null
   view_display: null
@@ -31,7 +31,7 @@ widgets:
     settings:
       view: media_entity_browser
       view_display: media_browser
-      submit_text: 'Select Media'
+      submit_text: 'Continue'
       auto_select: true
     uuid: 39f2b6ed-f27d-42d8-a161-004510188d8d
     weight: -10

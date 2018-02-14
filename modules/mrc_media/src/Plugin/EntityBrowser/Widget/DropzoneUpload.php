@@ -22,7 +22,7 @@ class DropzoneUpload extends MediaBrowserBase {
    */
   public function defaultConfiguration() {
     $config = [
-      'auto_select' => TRUE,
+      'auto_select' => FALSE,
       'upload_location' => 'public://media',
       'dropzone_description' => $this->t('Drop files here to upload them'),
     ];
