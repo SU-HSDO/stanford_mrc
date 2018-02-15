@@ -40,16 +40,13 @@ class MultiStepSelection extends MultiStepDisplay {
       'entity_browser',
       'selected_entities',
     ]);
-    $view_builder = $this->entityTypeManager->getViewBuilder('media');
+
     foreach ($selected_entities as $id => $entity) {
-      $display = &$form['selected']['items_' . $entity->id() . '_' . $id]['display'];
-      $display = [
-        'preview' => $view_builder->view($entity, 'full'),
-        'filename' => [
-          '#markup' => $entity->label(),
-          '#prefix' => '<div class="filename">',
-          '#suffix' => '</div>',
-        ],
+      $form['selected']['items_' . $entity->id() . '_' . $id]['filename'] = [
+        '#markup' => $entity->label(),
+        '#prefix' => '<div class="filename">',
+        '#suffix' => '</div>',
+        '#weight' => 99,
       ];
     }
   }

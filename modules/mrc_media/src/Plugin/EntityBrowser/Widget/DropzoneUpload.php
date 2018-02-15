@@ -26,7 +26,10 @@ class DropzoneUpload extends MediaBrowserBase {
       'upload_location' => 'public://media',
       'dropzone_description' => $this->t('Drop files here to upload them'),
     ];
-    return $config + parent::defaultConfiguration();
+
+    $config += parent::defaultConfiguration();
+    unset($config['form_mode']);
+    return $config;
   }
 
   /**
@@ -82,13 +85,16 @@ class DropzoneUpload extends MediaBrowserBase {
     $form = parent::getForm($original_form, $form_state, $additional_widget_parameters);
     $storage = $form_state->getStorage();
 
+    $allowed_bundles = $this->getAllowedBundles($form_state);
+    $allowed_extensions = $this->bundleSuggestion->getMultipleBundleExtensions($allowed_bundles);
+
     $form['upload'] = [
       '#title' => $this->t('File upload'),
       '#type' => 'dropzonejs',
       '#required' => TRUE,
       '#dropzone_description' => $this->configuration['dropzone_description'],
       '#max_filesize' => $this->bundleSuggestion->getMaxFilesize(),
-      '#extensions' => $this->bundleSuggestion->getAllExtensions(),
+      '#extensions' => $allowed_extensions,
       '#max_files' => !empty($storage['entity_browser']['validators']['cardinality']['cardinality']) ? $storage['entity_browser']['validators']['cardinality']['cardinality'] : 1,
       '#clientside_resize' => FALSE,
     ];

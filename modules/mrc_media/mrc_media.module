@@ -35,8 +35,24 @@ function mrc_media_field_widget_form_alter(&$element, FormStateInterface $form_s
   if (isset($element['#type']) && $element['#type'] == 'managed_file') {
     $element['#element_validate'][] = 'mrc_media_save_file_managed_media';
   }
-  if ($context['widget']->getPluginId() == 'video_embed_field_textfield') {
-    $element['#element_validate'][] = 'mrc_media_save_video_media';
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function mrc_media_field_widget_video_embed_field_textfield_form_alter(&$element, FormStateInterface $form_state, $context) {
+  $element['#element_validate'][] = 'mrc_media_save_video_media';
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function mrc_media_field_widget_entity_browser_entity_reference_form_alter(&$element, FormStateInterface $form_state, $context) {
+  /** @var  \Drupal\field\Entity\FieldConfig $field_definition */
+  $field_definition = $context['items']->getFieldDefinition();
+  $handler = $field_definition->getSetting('handler_settings');
+  if(!empty($handler['target_bundles'])){
+    $element['entity_browser']['#widget_context']['target_bundles'] = $handler['target_bundles'];
   }
 }
 

@@ -3,8 +3,14 @@
 }
 
 #entity-embed-dialog-form .field--name-revision-log-message,
-#entity-embed-dialog-form .ui-dialog .ui-widget-content.ui-dialog-buttonpane, .entity-browser-media-browser-form .field--name-revision-log-message,
-.entity-browser-media-browser-form .ui-dialog .ui-widget-content.ui-dialog-buttonpane {
+#entity-embed-dialog-form .ui-dialog .ui-widget-content.ui-dialog-buttonpane,
+#entity-embed-dialog-form .image-widget .image-preview,
+#entity-embed-dialog-form .form-type-managed-file input[type="submit"],
+#entity-embed-dialog-form .form-type-managed-file label[for*="-0-upload"], .entity-browser-media-browser-form .field--name-revision-log-message,
+.entity-browser-media-browser-form .ui-dialog .ui-widget-content.ui-dialog-buttonpane,
+.entity-browser-media-browser-form .image-widget .image-preview,
+.entity-browser-media-browser-form .form-type-managed-file input[type="submit"],
+.entity-browser-media-browser-form .form-type-managed-file label[for*="-0-upload"] {
   display: none;
 }
 

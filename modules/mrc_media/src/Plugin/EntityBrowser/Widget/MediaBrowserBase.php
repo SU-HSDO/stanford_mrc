@@ -119,9 +119,6 @@ abstract class MediaBrowserBase extends WidgetBase {
     }
 
     $media_entities = $this->prepareEntities($form, $form_state);
-    foreach ($media_entities as &$media_entity) {
-      $media_entity->save();
-    }
     $this->selectEntities($media_entities, $form_state);
   }
 

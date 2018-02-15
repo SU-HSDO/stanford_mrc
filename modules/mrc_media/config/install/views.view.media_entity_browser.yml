@@ -10,7 +10,7 @@ dependencies:
     - mrc_media
     - user
 _core:
-  default_config_hash: X1XP3yBNnl0kHGDw1fc3DbVLqEOdZtkcHzvPAelUlLk
+  default_config_hash: hnzT7Mwai0CQ2L0lo1ey53Qc97VU0vVqyREDBoP1lT4
 id: media_entity_browser
 label: 'MRC Media'
 module: views
@@ -29,7 +29,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'administer media'
+          perm: 'access media_browser entity browser pages'
       cache:
         type: none
         options: {  }
@@ -393,11 +393,11 @@ display:
         - url.query_args
         - user.permissions
       tags:
+        - 'config:core.entity_view_display.media.video.full'
         - 'config:core.entity_view_display.media.file.default'
         - 'config:core.entity_view_display.media.image.default'
         - 'config:core.entity_view_display.media.image.thumbnail'
         - 'config:core.entity_view_display.media.video.default'
-        - 'config:core.entity_view_display.media.video.full'
   media_browser:
     display_plugin: entity_browser
     id: media_browser
@@ -405,6 +405,8 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
+      defaults:
+        arguments: true
     cache_metadata:
       max-age: 0
       contexts:

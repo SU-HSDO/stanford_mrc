@@ -92,6 +92,25 @@ class BundleSuggestion {
   }
 
   /**
+   * Get allowed extensions from the allowed media types.
+   *
+   * @param array $media_types
+   *   Array of machine names of the allowed bundles.
+   *
+   * @return string
+   *   All file extensions for the give media types.
+   */
+  public function getMultipleBundleExtensions(array $media_types) {
+    $media_types = $this->getMediaBundles($media_types);
+    $extensions = '';
+    foreach ($media_types as $media_type) {
+      $extensions .= ' ' . $this->getBundleExtensions($media_type);
+      $extensions = trim($extensions);
+    }
+    return $extensions;
+  }
+
+  /**
    * Load the media type from the file uri.
    *
    * @param string $uri
@@ -204,7 +223,7 @@ class BundleSuggestion {
    * @return MediaType[]
    *   Keyed array of all media types.
    */
-  private function getMediaBundles($bundles = []) {
+  protected function getMediaBundles($bundles = []) {
     return $this->entityTypeManager->getStorage('media_type')
       ->loadMultiple($bundles ?: NULL);
   }
