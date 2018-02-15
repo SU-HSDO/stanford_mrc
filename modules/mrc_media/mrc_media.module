@@ -10,69 +10,6 @@ use Drupal\editor\Entity\Editor;
 use Drupal\mrc_media\Form\EntityEmbedDialog;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\file\Entity\File;
-use Drupal\Core\Render\Element;
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function mrc_media_form_entity_browser_media_browser_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  mrc_media_form_entity_browser_media_browser_form_cardinality($form, $form_state);
-  mrc_media_form_entity_browser_media_browser_form_previews($form, $form_state);
-  $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
-  ddl($form);
-}
-
-function mrc_media_form_entity_browser_media_browser_form_cardinality(&$form, FormStateInterface $form_state) {
-  $media_entities = $form_state->get(['entity_browser', 'selected_entities']);
-
-  $cardinality = $form_state->get([
-    'entity_browser',
-    'validators',
-    'cardinality',
-    'cardinality',
-  ]);
-
-  if ($cardinality && $cardinality > 0) {
-    $selected = array_slice($media_entities, 0, $cardinality);
-    $rejected = array_slice($media_entities, $cardinality, NULL, TRUE);
-    foreach ($rejected as $key => $entity) {
-      unset($form['selection_display']['selected']["items_{$entity->id()}_$key"]);
-    }
-
-    $form_state->set(['entity_browser', 'selected_entities'], $selected);
-  }
-}
-
-function mrc_media_form_entity_browser_media_browser_form_previews(&$form, FormStateInterface $form_state) {
-  $media_entities = $form_state->get(['entity_browser', 'selected_entities']);
-  $view_builder = \Drupal::entityTypeManager()->getViewBuilder('media');
-  $children = Element::children($form['selection_display']['selected']);
-ddl($form);
-  /** @var \Drupal\media\Entity\Media $entity */
-  foreach ($media_entities as $entity) {
-    $id = $entity->id();
-
-    foreach ($children as $child) {
-      $child = &$form['selection_display']['selected'][$child];
-
-      // Find the part of the form for this media entity.
-      if ($child['#attributes']['data-entity-id'] == $id && !isset($child['display']['filename'])) {
-
-        // Change the display part to be a preview with the file name.
-        $child['display'] = [
-          'preview' => $view_builder->view($entity, 'full'),
-          'filename' => [
-            '#markup' => $entity->label(),
-            '#prefix' => '<div class="filename">',
-            '#suffix' => '</div>',
-          ],
-        ];
-
-        break;
-      }
-    }
-  }
-}
 
 /**
  * Implements hook_form_FORM_ID_alter().
