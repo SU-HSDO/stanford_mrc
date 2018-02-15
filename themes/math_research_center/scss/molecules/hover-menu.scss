@@ -1,10 +1,29 @@
 @charset "UTF-8";
 
-.js .decanter-main-menu--hover-reveal {
+///
+/// HOVER MAIN MENU COMPONENT
+///
 
-  .decanter-nav-primary > li > a .ui-menu-icon {
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
+// Decanter
+@import
+  'decanter-no-markup';
+
+// Stanford Math Research Center
+@import
+  '../utilities/mixins/mixins';
+
+.js .decanter-main-menu--hover-reveal {
+  &.menu--main {
+    box-shadow: none;
+  }
+
+  .decanter-nav-primary {
+    border: none;
+
+    > li > a .ui-menu-icon {
+      -webkit-transform: rotate(90deg);
+      transform: rotate(90deg);
+    }
   }
 
   ul ul {
@@ -12,6 +31,7 @@
       position: relative;
       display: block;
     }
+
     ul {
       left: 100%;
       top: 0;
@@ -25,11 +45,11 @@
     display: inline-block;
 
     &:first-child {
-      padding-left: 0;
+      @include padding(null null null 0);
     }
 
     &:last-child {
-      padding-right: 0;
+      @include padding(null 0 null null);
     }
 
     ul {
@@ -37,38 +57,43 @@
       opacity: 0;
       transition: visibility 0s, opacity 0.2s linear;
       position: absolute;
-      background: #fff;
-      padding: 0.5em;
-      margin: 0;
+      background: $color-white;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
       border-radius: 0.25em;
       z-index: 99;
 
+      @include margin(0);
+      @include padding(0.5em);
+
       li {
         position: relative;
         display: block;
-        margin: 0;
-        padding: 0;
+
+        @include margin(0);
+        @include padding(0);
       }
 
       a {
         font-weight: normal;
-        color: #b1040e;
-        padding: 0.5em;
+        color: $color-bright-red;
         display: block;
         border-radius: 0.25em;
 
+        @include padding(0.5em);
+
         &:hover {
           border-bottom: none;
-          color: #2a333b;
-          background: #eaeaea;
-          padding-bottom: 0.5em;
+          color: $color-black;
+          background: $color-cool-grey;
+
+          @include padding(null null 0.5em);
         }
       }
 
       ul {
         left: calc(100% - 10px);
-        margin-top: -45px;
+
+        @include margin((-45px) null null);
       }
     }
 
@@ -76,19 +101,20 @@
       visibility: visible;
       opacity: 1;
     }
-
   }
 
   a {
-    color: #b1040e;
-    font-weight: bold;
+    color: $color-bright-red;
+    font-weight: $font-bold;
     text-decoration: none;
-    padding-top: 1em;
+
+    @include padding(1em null null);
 
     &:hover {
-      border-bottom: 2px solid #2e2d29;
-      color: #2e2d29;
-      padding-bottom: 15px;
+      border-bottom: 2px solid $color-black;
+      color: $color-black;
+
+      @include padding(null null 15px);
     }
   }
 }

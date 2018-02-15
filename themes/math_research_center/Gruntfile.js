@@ -108,20 +108,29 @@ module.exports = function(grunt) {
           // conditionally using logic built in to the theme template or module.
 
           // BASE
-          'css/base/base.css':                                  'scss/base/base.scss',
-          'css/molecules/hover-menu.css':                       'scss/molecules/hover-menu.scss',
-          'css/ckeditor.css':                                   'scss/ckeditor.scss',
-          'css/node/stanford_visitor.css':                      'scss/node/stanford_visitor.scss',
+          'css/base/base.css':  'scss/base/base.scss',
+          'css/ckeditor.css':   'scss/ckeditor.scss',
+
+          // NODE
+          'css/node/stanford_visitor.css':  'scss/node/stanford_visitor.scss',
+
+          // PARAGRAPH
+          'css/paragraph/mrc_slideshow.css':   'scss/paragraph/mrc_slideshow.scss',
+
+          // MOLECULES
+          'css/molecules/hover-menu.css':  'scss/molecules/hover-menu.scss',
 
           // PATTERNS
           'patterns/atoms/date-stacked/css/date-stacked.css':                       'patterns/atoms/date-stacked/scss/date-stacked.scss',
           'patterns/molecules/event-card/css/event-card.css':                       'patterns/molecules/event-card/scss/event-card.scss',
           'patterns/molecules/event-date-stacked/css/event-date-stacked.scss.css':  'patterns/molecules/event-date-stacked/scss/event-date-stacked.scss',
+          'patterns/molecules/event-past/css/event-past.css':                       'patterns/molecules/event-past/scss/event-past.scss',
           'patterns/molecules/featured-event-card/css/featured-event-card.css':     'patterns/molecules/featured-event-card/scss/featured-event-card.scss',
           'patterns/molecules/news-card/css/news-card.css':                         'patterns/molecules/news-card/scss/news-card.scss',
           'patterns/molecules/news-recent/css/news-recent.css':                     'patterns/molecules/news-recent/scss/news-recent.scss',
           'patterns/molecules/postcard/css/postcard.css':                           'patterns/molecules/postcard/scss/postcard.scss',
           'patterns/molecules/postcard-horizontal/css/postcard-horizontal.css':     'patterns/molecules/postcard-horizontal/scss/postcard-horizontal.scss',
+          'patterns/molecules/video-list/css/video-list.css':                       'patterns/molecules/video-list/scss/video-list.scss',
           'patterns/molecules/visitors-grid/css/visitors-grid.css':                 'patterns/molecules/visitors-grid/scss/visitors-grid.scss',
           'patterns/molecules/visitors-list/css/visitors-list.css':                 'patterns/molecules/visitors-list/scss/visitors-list.scss',
           'patterns/templates/node-event/css/node-event.css':                       'patterns/templates/node-event/scss/node-event.scss',
@@ -133,6 +142,7 @@ module.exports = function(grunt) {
           'examples/atoms/date-stacked/css/date-stacked.css':                   'examples/atoms/date-stacked/scss/date-stacked.scss',
           'examples/molecules/event-card/css/event-card.css':                   'examples/molecules/event-card/scss/event-card.scss',
           'examples/molecules/event-date-stacked/css/event-date-stacked.css':   'examples/molecules/event-date-stacked/scss/event-date-stacked.scss',
+          'examples/molecules/event-past/css/event-past.css':                   'examples/molecules/event-past/scss/event-past.scss',
           'examples/molecules/featured-event-card/css/featured-event-card.css': 'examples/molecules/featured-event-card/scss/featured-event-card.scss',
           'examples/molecules/news-card/css/news-card.css':                     'examples/molecules/news-card/scss/news-card.scss',
           'examples/molecules/news-recent/css/news-recent.css':                 'examples/molecules/news-recent/scss/news-recent.scss',

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 ///
-/// POSTCARD COMPONENT
+/// POSTCARD HORIZONTAL COMPONENT
 ///
 
 // An extensible content container with options for a wide variety of content.
@@ -15,6 +15,7 @@
   '../utilities/mixins/mixins';
 
 .mrc-postcard--horizontal {
+  @include mrc-card-container;
   @include mrc-flex-medium;
 
   .mrc-postcard__img {
