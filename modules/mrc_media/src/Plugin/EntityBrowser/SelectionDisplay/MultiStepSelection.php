@@ -179,8 +179,8 @@ class MultiStepSelection extends MultiStepDisplay {
     }
     $cardinality = self::getCardinality($form_state);
     $ajax = new AjaxResponse();
-    $message = t('Only %cardinality item(s) can be used.',[])->render();
-    $ajax->addCommand(new ReplaceCommand('div[id="message"]', "<div id=\"message\">Only $cardinality item(s) can be used.</div>"));
+    $message = t('Only %cardinality item(s) can be used.', ['%cardinality' => $cardinality])->render();
+    $ajax->addCommand(new ReplaceCommand('div[id="message"]', "<div id=\"message\">$message</div>"));
     return $ajax;
   }
 
