@@ -6,15 +6,17 @@
 #entity-embed-dialog-form .ui-dialog .ui-widget-content.ui-dialog-buttonpane,
 #entity-embed-dialog-form .image-widget .image-preview,
 #entity-embed-dialog-form .form-type-managed-file input[type="submit"],
-#entity-embed-dialog-form .form-type-managed-file label[for*="-0-upload"], .entity-browser-media-browser-form .field--name-revision-log-message,
-.entity-browser-media-browser-form .ui-dialog .ui-widget-content.ui-dialog-buttonpane,
-.entity-browser-media-browser-form .image-widget .image-preview,
-.entity-browser-media-browser-form .form-type-managed-file input[type="submit"],
-.entity-browser-media-browser-form .form-type-managed-file label[for*="-0-upload"] {
+#entity-embed-dialog-form .form-type-managed-file label[for*="-0-upload"],
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .field--name-revision-log-message,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .ui-dialog .ui-widget-content.ui-dialog-buttonpane,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .image-widget .image-preview,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .form-type-managed-file input[type="submit"],
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .form-type-managed-file label[for*="-0-upload"] {
   display: none;
 }
 
-#entity-embed-dialog-form .entities-list, .entity-browser-media-browser-form .entities-list {
+#entity-embed-dialog-form .entities-list,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .entities-list {
   position: fixed;
   bottom: 0;
   background: #fff;
@@ -22,13 +24,15 @@
   box-shadow: 10px 10px 8px 10px #888;
 }
 
-#entity-embed-dialog-form .entities-list .item-container, .entity-browser-media-browser-form .entities-list .item-container {
+#entity-embed-dialog-form .entities-list .item-container,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .entities-list .item-container {
   border: 1px dashed #ccc;
   margin: 10px 10px 30px;
   position: relative;
 }
 
-#entity-embed-dialog-form .entities-list input.entity-browser-remove-selected-entity, .entity-browser-media-browser-form .entities-list input.entity-browser-remove-selected-entity {
+#entity-embed-dialog-form .entities-list input.entity-browser-remove-selected-entity,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .entities-list input.entity-browser-remove-selected-entity {
   display: block;
   position: absolute;
   background: url("../img/remove.svg") no-repeat;
@@ -41,38 +45,84 @@
   height: 24px;
 }
 
-#entity-embed-dialog-form .entities-list input.entity-browser-remove-selected-entity:hover, .entity-browser-media-browser-form .entities-list input.entity-browser-remove-selected-entity:hover {
+#entity-embed-dialog-form .entities-list input.entity-browser-remove-selected-entity:hover,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .entities-list input.entity-browser-remove-selected-entity:hover {
   background: url("../img/remove-hover.svg") no-repeat;
   background-size: 24px 24px;
 }
 
-#entity-embed-dialog-form .entities-list span.media--type-video, #entity-embed-dialog-form .entities-list iframe, #entity-embed-dialog-form .entities-list img, .entity-browser-media-browser-form .entities-list span.media--type-video, .entity-browser-media-browser-form .entities-list iframe, .entity-browser-media-browser-form .entities-list img {
+#entity-embed-dialog-form .entities-list span.media--type-video, #entity-embed-dialog-form .entities-list iframe, #entity-embed-dialog-form .entities-list img,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .entities-list span.media--type-video,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .entities-list iframe,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .entities-list img {
   display: block;
-  max-width: 100%;
+  max-width: 300px;
   max-height: 200px;
   height: auto;
   width: auto;
 }
 
-#entity-embed-dialog-form .entities-list .filename, .entity-browser-media-browser-form .entities-list .filename {
+#entity-embed-dialog-form .entities-list .filename,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .entities-list .filename {
   text-align: center;
 }
 
 #entity-embed-dialog-form input.entity-browser-use-selected,
-#entity-embed-dialog-form input.entity-browser-show-selection, .entity-browser-media-browser-form input.entity-browser-use-selected,
-.entity-browser-media-browser-form input.entity-browser-show-selection {
+#entity-embed-dialog-form input.entity-browser-show-selection,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) input.entity-browser-use-selected,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) input.entity-browser-show-selection {
   display: block;
   position: fixed;
   bottom: 0;
   right: 0;
 }
 
-#entity-embed-dialog-form input.entity-browser-show-selection, .entity-browser-media-browser-form input.entity-browser-show-selection {
+#entity-embed-dialog-form input.entity-browser-show-selection,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) input.entity-browser-show-selection {
   bottom: 50px;
 }
 
-#entity-embed-dialog-form .ui-dialog .ui-widget-content.ui-dialog-content, .entity-browser-media-browser-form .ui-dialog .ui-widget-content.ui-dialog-content {
+#entity-embed-dialog-form .ui-dialog .ui-widget-content.ui-dialog-content,
+.entity-browser-media-browser-form:not(.dropzonejs-media):not(.embed-code) .ui-dialog .ui-widget-content.ui-dialog-content {
   overflow: hidden;
+}
+
+.entity-browser-media-browser-form.dropzonejs-media .field--name-revision-log-message,
+.entity-browser-media-browser-form.dropzonejs-media .ui-dialog .ui-widget-content.ui-dialog-buttonpane,
+.entity-browser-media-browser-form.dropzonejs-media .image-widget .image-preview,
+.entity-browser-media-browser-form.dropzonejs-media .form-type-managed-file input[type="submit"],
+.entity-browser-media-browser-form.dropzonejs-media .form-type-managed-file label[for*="-0-upload"],
+.entity-browser-media-browser-form.dropzonejs-media .entity-browser-show-selection,
+.entity-browser-media-browser-form.dropzonejs-media .entity-browser-remove-selected-entity,
+.entity-browser-media-browser-form.embed-code .field--name-revision-log-message,
+.entity-browser-media-browser-form.embed-code .ui-dialog .ui-widget-content.ui-dialog-buttonpane,
+.entity-browser-media-browser-form.embed-code .image-widget .image-preview,
+.entity-browser-media-browser-form.embed-code .form-type-managed-file input[type="submit"],
+.entity-browser-media-browser-form.embed-code .form-type-managed-file label[for*="-0-upload"],
+.entity-browser-media-browser-form.embed-code .entity-browser-show-selection,
+.entity-browser-media-browser-form.embed-code .entity-browser-remove-selected-entity {
+  display: none;
+}
+
+.entity-browser-media-browser-form.dropzonejs-media img, .entity-browser-media-browser-form.dropzonejs-media iframe,
+.entity-browser-media-browser-form.embed-code img,
+.entity-browser-media-browser-form.embed-code iframe {
+  max-width: 300px;
+  max-height: 200px;
+  height: auto;
+  width: auto;
+}
+
+.entity-browser-media-browser-form.dropzonejs-media #entities,
+.entity-browser-media-browser-form.embed-code #entities {
+  float: left;
+  width: 50%;
+}
+
+.entity-browser-media-browser-form.dropzonejs-media .entities-list,
+.entity-browser-media-browser-form.embed-code .entities-list {
+  float: right;
+  width: 50%;
 }
 
 #entities > div {

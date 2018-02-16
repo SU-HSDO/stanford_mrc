@@ -64,8 +64,8 @@ class MediaAdd extends EntityController {
     // Add a bulk upload for all bundles with upload ability.
     $url = new Url('mrc_media.bulk_upload');
     $page['#bundles']['bulk'] = [
-      'label' => $this->t('Bulk Upload'),
-      'description' => $this->t('Create %bundles.', ['%bundles' => implode(', ', $bulk_bundles)]),
+      'label' => $this->t('Upload File(s)'),
+      'description' => $this->t('Add one or more files to the Media Library.'),
       'add_link' => new Link($this->t('Bulk Upload'), $url),
     ];
 

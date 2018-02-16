@@ -10,6 +10,31 @@ use Drupal\editor\Entity\Editor;
 use Drupal\mrc_media\Form\EntityEmbedDialog;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\file\Entity\File;
+use Drupal\entity_browser\EntityBrowserFormInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function mrc_media_preprocess_dropzonejs(&$variables) {
+  // Adds additional things to the template for the dropzone js widget.
+  $variables['allowed_files'] = str_replace(' ', ', ', $variables['element']['#extensions']);
+  $url = Url::fromRoute('mrc_media.bulk_upload');
+  $link = Link::fromTextAndUrl('click here', $url)->toString();
+  $variables['help_text'] = t('To bulk upload to the media library %link', ['%link' => $link]);
+}
+
+/**
+ * Implements hook_inline_entity_form_entity_form_alter().
+ */
+function mrc_media_inline_entity_form_entity_form_alter(&$entity_form, FormStateInterface $form_state) {
+  $object = $form_state->getBuildInfo()['callback_object'];
+  if ($object instanceof EntityBrowserFormInterface && !empty($entity_form['name'])) {
+    // Adds a description for inline entity forms within the media browser.
+    $entity_form['name']['widget'][0]['value']['#description'] = t('This name will make it easy to find later in the library.');
+  }
+}
 
 /**
  * Implements hook_form_FORM_ID_alter().
@@ -20,6 +45,7 @@ function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $fo
   if (isset($form['attributes']['data-entity-embed-display-settings'])) {
 
     $editor = $form_state->getBuildInfo()['args'][0];
+    // Alter the media embed dialog form.
     if ($editor instanceof Editor) {
       \Drupal::classResolver()
         ->getInstanceFromDefinition(EntityEmbedDialog::class)
@@ -51,7 +77,7 @@ function mrc_media_field_widget_entity_browser_entity_reference_form_alter(&$ele
   /** @var  \Drupal\field\Entity\FieldConfig $field_definition */
   $field_definition = $context['items']->getFieldDefinition();
   $handler = $field_definition->getSetting('handler_settings');
-  if(!empty($handler['target_bundles'])){
+  if (!empty($handler['target_bundles'])) {
     $element['entity_browser']['#widget_context']['target_bundles'] = $handler['target_bundles'];
   }
 }
@@ -132,6 +158,7 @@ function mrc_media_theme_registry_alter(&$theme_registry) {
   $theme_registry['image_formatter']['variables']['attributes'] = NULL;
   $theme_registry['entity_embed_container']['path'] = $path;
   $theme_registry['media']['path'] = $path;
+  $theme_registry['dropzonejs']['path'] = $path;
 }
 
 /**

@@ -26,10 +26,7 @@ class DropzoneUpload extends MediaBrowserBase {
       'upload_location' => 'public://media',
       'dropzone_description' => $this->t('Drop files here to upload them'),
     ];
-
-    $config += parent::defaultConfiguration();
-    unset($config['form_mode']);
-    return $config;
+    return $config + parent::defaultConfiguration();
   }
 
   /**
@@ -64,6 +61,7 @@ class DropzoneUpload extends MediaBrowserBase {
       return $form_state->get(['dropzonejs', $this->uuid(), 'media']);
     }
 
+    // Get the files and make media entities.
     foreach ($this->getFiles($form, $form_state) as $file) {
       if ($file instanceof File) {
         /** @var \Drupal\media\Entity\MediaType $media_type */
@@ -104,6 +102,7 @@ class DropzoneUpload extends MediaBrowserBase {
     $form['#attached']['library'][] = 'dropzonejs_eb_widget/common';
     $original_form['#attributes']['class'][] = 'dropzonejs-disable-submit';
 
+    // Remove the upload after we have some files.
     if ($form_state->get(['dropzonejs', $this->uuid(), 'media'])) {
       $form['upload']['#type'] = 'hidden';
     }

@@ -31,6 +31,7 @@ class EmbedCode extends MediaBrowserBase {
       return [];
     }
 
+    // Create the media item.
     $entity = $this->prepareMediaEntity($media_type, $value);
     if ($entity) {
       $entity->save();

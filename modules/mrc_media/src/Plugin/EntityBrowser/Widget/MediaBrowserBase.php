@@ -2,6 +2,7 @@
 
 namespace Drupal\mrc_media\Plugin\EntityBrowser\Widget;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
@@ -95,6 +96,7 @@ abstract class MediaBrowserBase extends WidgetBase {
    */
   public function getForm(array &$original_form, FormStateInterface $form_state, array $additional_widget_parameters) {
     $form = parent::getForm($original_form, $form_state, $additional_widget_parameters);
+    $original_form['#attributes']['class'][] = Html::cleanCssIdentifier($this->id());
     $this->getEntityForm($form, $form_state, $additional_widget_parameters);
     return $form;
   }
@@ -105,6 +107,8 @@ abstract class MediaBrowserBase extends WidgetBase {
   public function submit(array &$element, array &$form, FormStateInterface $form_state) {
     parent::submit($element, $form, $form_state);
 
+    // Execute any Inline Entity Form submit functions on each entity.
+    // This will save any changes such as media title etc.
     $children = Element::children($element['entities']);
     foreach ($children as $child) {
       $entity_form = $element['entities'][$child];
@@ -155,7 +159,9 @@ abstract class MediaBrowserBase extends WidgetBase {
 
     unset($form['actions']);
 
+    // Build the entity form.
     foreach ($media_entities as $entity) {
+      $labels[] = $entity->label();
       $form['entities'][$entity->id()] = [
         '#type' => 'inline_entity_form',
         '#entity_type' => $entity->getEntityTypeId(),
@@ -163,6 +169,11 @@ abstract class MediaBrowserBase extends WidgetBase {
         '#default_value' => $entity,
         '#form_mode' => 'media_browser',
       ];
+    }
+
+    // Prompt the user of a successful addition.
+    if (!empty($labels)) {
+      drupal_set_message($this->t('%name has been added to the media library', ['%name' => implode(', ', $labels)]));
     }
 
     // Without this, IEF won't know where to hook into the widget. Don't pass

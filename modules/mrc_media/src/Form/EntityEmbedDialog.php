@@ -67,6 +67,7 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
    */
   public function alterForm(array &$form, FormStateInterface $form_state) {
     $entity = $form_state->get('entity');
+    $form['entity']['#title'] = $this->t('Selected Item');
 
     switch ($entity->bundle()) {
       case 'image':

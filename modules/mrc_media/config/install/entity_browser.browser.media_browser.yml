@@ -49,7 +49,7 @@ widgets:
     settings:
       auto_select: false
       upload_location: 'public://media'
-      dropzone_description: 'Drop file here to upload'
+      dropzone_description: 'To embed a file, you must first upload it to the library. Drop file here to upload'
       submit_text: 'Add to Library'
       form_mode: media_browser
       max_filesize: '25'
