@@ -8,7 +8,7 @@
 /**
  * Revert the media browsers.
  */
-function mrc_media_post_update_8_0_5() {
+function mrc_media_post_update_8_0_6() {
   $configs = [
     'entity_browser.browser.media_browser',
     'views.view.media_entity_browser',
