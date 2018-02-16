@@ -16,6 +16,8 @@ mrc_media.browser:
   css:
     component:
       css/mrc_media.browser.css: {}
+  js:
+    js/mrc_media.browser.js: {}
 
 mrc_media.embed:
   version: 8.0.3
