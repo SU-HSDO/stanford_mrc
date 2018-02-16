@@ -39,7 +39,7 @@ options:
     draggable: true
     fade: false
     focusOnSelect: true
-    infinite: false
+    infinite: true
     initialSlide: 0
     lazyLoad: ondemand
     mouseWheel: false
