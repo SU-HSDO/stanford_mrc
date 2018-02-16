@@ -6,13 +6,19 @@ use Drupal\Component\Utility\Bytes;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\media\Entity\MediaType;
+use Drupal\video_embed_field\ProviderManager;
 
 class BundleSuggestion {
 
   /**
    * @var \Drupal\Core\Entity\EntityTypeManager
    */
-  private $entityTypeManager;
+  protected $entityTypeManager;
+
+  /**
+   * @var \Drupal\video_embed_field\ProviderManager
+   */
+  protected $videoProvider;
 
   /**
    * MediaHelper constructor.
@@ -20,8 +26,9 @@ class BundleSuggestion {
    * @param \Drupal\Core\Entity\EntityTypeManager $entity_type_manager
    *   The entity type manager.
    */
-  public function __construct(EntityTypeManager $entity_type_manager) {
+  public function __construct(EntityTypeManager $entity_type_manager, ProviderManager $providers) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->videoProvider = $providers;
   }
 
   /**
@@ -85,6 +92,25 @@ class BundleSuggestion {
   }
 
   /**
+   * Get allowed extensions from the allowed media types.
+   *
+   * @param array $media_types
+   *   Array of machine names of the allowed bundles.
+   *
+   * @return string
+   *   All file extensions for the give media types.
+   */
+  public function getMultipleBundleExtensions(array $media_types) {
+    $media_types = $this->getMediaBundles($media_types);
+    $extensions = '';
+    foreach ($media_types as $media_type) {
+      $extensions .= ' ' . $this->getBundleExtensions($media_type);
+      $extensions = trim($extensions);
+    }
+    return $extensions;
+  }
+
+  /**
    * Load the media type from the file uri.
    *
    * @param string $uri
@@ -145,6 +171,11 @@ class BundleSuggestion {
     return 0;
   }
 
+  /**
+   * @param \Drupal\media\Entity\MediaType $media_type
+   *
+   * @return string
+   */
   public function getUploadPath(MediaType $media_type) {
     $source_field = $media_type->getSource()
       ->getConfiguration()['source_field'];
@@ -161,6 +192,29 @@ class BundleSuggestion {
   }
 
   /**
+   * Get the media bundle that corresponds to the input string.
+   *
+   * @param string $input
+   *   A url or string to embed.
+   *
+   * @return \Drupal\media\Entity\MediaType
+   */
+  public function getBundleFromInput($input) {
+    $video_provider = $this->videoProvider->loadProviderFromInput($input);
+    foreach ($this->getMediaBundles() as $media_type) {
+      $source_field = $media_type->getSource()
+        ->getConfiguration()['source_field'];
+
+      $field = FieldConfig::loadByName('media', $media_type->id(), $source_field);
+
+      if ($video_provider && $field->getType() == 'video_embed_field') {
+        return $media_type;
+      }
+    }
+    return NULL;
+  }
+
+  /**
    * Get all or some media bundles.
    *
    * @param array $bundles
@@ -169,7 +223,7 @@ class BundleSuggestion {
    * @return MediaType[]
    *   Keyed array of all media types.
    */
-  private function getMediaBundles($bundles = []) {
+  protected function getMediaBundles($bundles = []) {
     return $this->entityTypeManager->getStorage('media_type')
       ->loadMultiple($bundles ?: NULL);
   }

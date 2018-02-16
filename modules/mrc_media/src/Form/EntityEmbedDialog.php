@@ -67,6 +67,7 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
    */
   public function alterForm(array &$form, FormStateInterface $form_state) {
     $entity = $form_state->get('entity');
+    $form['entity']['#title'] = $this->t('Selected Item');
 
     switch ($entity->bundle()) {
       case 'image':
@@ -124,9 +125,9 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
     $linkit_profile_id = $editor->getSettings()['plugins']['drupallink']['linkit_profile'];
 
     $link_form = [
-      '#title' => $this->t('Link'),
+      '#title' => $this->t('Add Link to image'),
       '#type' => 'textfield',
-      '#description' => $this->t('Start typing to find content.'),
+      '#description' => $this->t('If you would like to make this image a link, enter the url here. Or start typing to find content.'),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => $linkit_profile_id,
@@ -255,15 +256,23 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
     ];
     $form['attributes'][$this->settingsKey]['alt_text'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Alt Text'),
+      '#title' => $this->t('Alternative text'),
+      '#description' => $this->t('This text will be used by screen readers, search engines, or when the image cannot be loaded.'),
       '#default_value' => isset($input['alt_text']) ? $input['alt_text'] : $default_alt,
     ];
+    $this->buildLinkitField($form, $form_state);
     $form['attributes'][$this->settingsKey]['title_text'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Title Text'),
+      '#title' => $this->t('Link Title Text'),
+      '#description' => $this->t('Please describe wht the link above leads to. (ie. Stanford University Home Page'),
       '#default_value' => isset($input['title_text']) ? $input['title_text'] : '',
+      '#weight' => 199,
+      '#states' => [
+        'visible' => [
+          'input[name*="[linkit][href]"]' => ['filled' => TRUE],
+        ],
+      ],
     ];
-    $this->buildLinkitField($form, $form_state);
   }
 
   /**

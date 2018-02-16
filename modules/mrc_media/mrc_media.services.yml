@@ -7,5 +7,6 @@ services:
     class: '\Drupal\mrc_media\BundleSuggestion'
     arguments:
       - '@entity_type.manager'
+      - '@video_embed_field.provider_manager'
   mrc_media.media_info:
     class: '\Drupal\mrc_media\MediaInfo'
