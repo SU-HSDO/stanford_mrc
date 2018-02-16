@@ -57,3 +57,17 @@ function mrc_page_post_update_8_0_4() {
   ];
   stanford_mrc_update_configs(TRUE, $configs, $path);
 }
+
+/**
+ * Change permissions on sidebar field.
+ */
+function mrc_page_post_update_8_0_6() {
+  \Drupal::service('module_installer')->install(['field_permissions']);
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_page') . '/config/install';
+
+  $configs = [
+    'field.storage.node.field_s_mrc_page_sidebar_block',
+  ];
+  stanford_mrc_update_configs(TRUE, $configs, $path);
+}
