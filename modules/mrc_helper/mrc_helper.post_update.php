@@ -18,3 +18,16 @@ function mrc_helper_post_update_8_0_4() {
   ];
   stanford_mrc_update_configs(TRUE, $configs, $path);
 }
+
+/**
+ * Create new view.
+ */
+function mrc_helper_post_update_8_0_6() {
+  module_load_install('stanford_mrc');
+  $path = drupal_get_path('module', 'mrc_helper') . '/config/install';
+
+  $configs = [
+    'views.view.mrc_event_series',
+  ];
+  stanford_mrc_update_configs(TRUE, $configs, $path);
+}
