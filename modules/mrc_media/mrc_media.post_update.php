@@ -12,6 +12,9 @@ function mrc_media_post_update_8_0_6() {
   $configs = [
     'entity_browser.browser.media_browser',
     'views.view.media_entity_browser',
+    'entity_browser.browser.file_browser',
+    'entity_browser.browser.image_browser',
+    'entity_browser.browser.video_browser',
   ];
 
   module_load_install('stanford_mrc');
