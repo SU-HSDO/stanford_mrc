@@ -42,7 +42,6 @@ function mrc_media_inline_entity_form_entity_form_alter(&$entity_form, FormState
  * Adds Linkit support for the link field in the entity embed dialog.
  */
 function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
   if (isset($form['attributes']['data-entity-embed-display-settings'])) {
 
     $editor = $form_state->getBuildInfo()['args'][0];
@@ -61,6 +60,19 @@ function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $fo
 function mrc_media_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
   if (isset($element['#type']) && $element['#type'] == 'managed_file') {
     $element['#element_validate'][] = 'mrc_media_save_file_managed_media';
+  }
+}
+
+/**
+ * Implements hook_preprocess_image_widget().
+ */
+function mrc_media_preprocess_image_widget(&$variables) {
+  if (isset($variables['data']['focal_point']) && !empty($variables['data']['preview'])) {
+    $variables['data']['preview']['help'] = [
+      '#prefix' => '<div class="focal-point-help-text description">',
+      '#suffix' => '</div>',
+      '#markup' => t('To set the focal point (the central focus area) of the image, click and drag the “+” on the image. If no focal point is set, the focal point will default to the center of the image.'),
+    ];
   }
 }
 

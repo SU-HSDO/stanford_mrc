@@ -2,6 +2,7 @@
 
 namespace Drupal\mrc_media\Plugin\EntityBrowser\SelectionDisplay;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
@@ -38,10 +39,14 @@ class MultiStepSelection extends MultiStepDisplay {
       }
     }
 
+    $original_form['#attributes']['class'][] = Html::cleanCssIdentifier($this->getPluginId());
+    if (isset($original_form['widget']['view'])) {
+      $original_form['#attributes']['class'][] = 'view';
+    }
     $form = parent::getForm($original_form, $form_state);
 
     $this->changeFormDisplay($form, $form_state);
-    $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
+    $form['#attached']['library'][] = 'mrc_media/mrc_media.multi_step';
     $form['selected']['message'] = [
       '#prefix' => '<div id="message">',
       '#suffix' => '</div>',

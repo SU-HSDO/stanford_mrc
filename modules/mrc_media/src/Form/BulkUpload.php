@@ -292,7 +292,7 @@ class BulkUpload extends FormBase {
     // the actual complete form.
     ElementSubmit::addCallback($form['actions']['submit'], $form_state->getCompleteForm());
 
-    $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
+    $form['#attached']['library'][] = 'mrc_media/mrc_media.dropzone';
   }
 
 

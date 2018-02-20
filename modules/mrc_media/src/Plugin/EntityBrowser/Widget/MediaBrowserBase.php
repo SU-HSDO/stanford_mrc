@@ -181,7 +181,6 @@ abstract class MediaBrowserBase extends WidgetBase {
     // just the entity browser part of the form, not the actual complete form.
     ElementSubmit::addCallback($form['actions']['submit'], $form_state->getCompleteForm());
 
-    $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
     return $form;
   }
 

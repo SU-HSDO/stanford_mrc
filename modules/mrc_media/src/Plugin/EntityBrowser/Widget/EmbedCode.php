@@ -59,7 +59,6 @@ class EmbedCode extends MediaBrowserBase {
       $form['input']['#type'] = 'hidden';
     }
 
-    $form['#attached']['library'][] = 'mrc_media/mrc_media.browser';
     $form['#attached']['library'][] = 'mrc_media/mrc_media.embed';
     return $form;
   }

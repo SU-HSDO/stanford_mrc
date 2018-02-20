@@ -1,13 +1,16 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - focal_point
 name: news
 label: 'News (1220x500)'
 effects:
   6f433d8e-9cab-4211-85d0-baa14d4f1602:
     uuid: 6f433d8e-9cab-4211-85d0-baa14d4f1602
-    id: image_scale_and_crop
+    id: focal_point_scale_and_crop
     weight: 1
     data:
       width: 1220
       height: 500
+      crop_type: focal_point

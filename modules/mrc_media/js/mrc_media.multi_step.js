@@ -1,7 +1,7 @@
 (function ($, window, Drupal) {
   'use strict';
 
-  Drupal.behaviors.mrcMediaBrowser = {
+  Drupal.behaviors.mrcMediaMultiStep = {
     attach: function attach() {
 
       // Resize the iframe to be as tall as the container.

@@ -23,6 +23,14 @@ function mrc_media_install() {
     $data['hidden'][$hide_field] = TRUE;
   }
   $config->setData($data);
+  $settings = [
+    'preview:image_style' => 'medium',
+    'offsets' => '50,50',
+    'progress_indicator' => 'throbber',
+    'preview_link' => FALSE,
+  ];
+  $config->set('content.field_media_image.settings', $settings);
+  $config->set('content.field_media_image.type', 'image_focal_point');
   $config->save(TRUE);
 
   // Media Image display.

@@ -26,4 +26,16 @@ function mrc_media_post_update_8_0_6() {
   $config = $config_factory->getEditable('field.field.media.file.field_media_file');
   $config->set('settings.file_extensions', 'txt rtf doc docx ppt pptx xls xlsx pdf');
   $config->save();
+
+  \Drupal::service('module_installer')->install(['focal_point']);
+  $settings = [
+    'preview:image_style' => 'medium',
+    'offsets' => '50,50',
+    'progress_indicator' => 'throbber',
+    'preview_link' => FALSE,
+  ];
+  $config = $config_factory->getEditable('core.entity_form_display.media.image.default');
+  $config->set('content.field_media_image.settings', $settings);
+  $config->set('content.field_media_image.type', 'image_focal_point');
+  $config->save();
 }

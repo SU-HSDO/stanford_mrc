@@ -1,13 +1,16 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - focal_point
 name: event
 label: 'Event (200x200)'
 effects:
   b8abafed-d089-453d-bfec-70ed29ce47eb:
     uuid: b8abafed-d089-453d-bfec-70ed29ce47eb
-    id: image_scale_and_crop
+    id: focal_point_scale_and_crop
     weight: 1
     data:
       width: 200
       height: 200
+      crop_type: focal_point
