@@ -5,6 +5,7 @@
 ///
 
 // An extensible content container with options for a wide variety of content.
+// Vertical layout.
 
 // Decanter
 @import
@@ -19,7 +20,8 @@
 
   .mrc-postcard__superhead {
     font-weight: $font-bold;
-    margin: 0 0 .2em;
+
+    @include margin(0 0 0.2em);
   }
 
   .mrc-postcard__img {
@@ -30,8 +32,9 @@
 
   .mrc-postcard__content {
     .mrc-postcard__title {
-      margin-top: 0;
       text-align: center;
+
+      @include margin(0 null null);
     }
 
     .mrc-postcard__description {
@@ -41,6 +44,7 @@
     .mrc-postcard__button {
       text-align: center;
 
+      @include margin(0.5em null null);
       @include more-link(more-link, more-link-hover);
     }
   }

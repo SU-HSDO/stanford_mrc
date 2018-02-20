@@ -17,7 +17,7 @@ postcard_horizontal:
       preview: "Optional wysiwyg lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum aliquet iaculis. Cras faucibus turpis non facilisis laoreet."
     button:
       label: "Button"
-      preview: "<a href=\"#\" class=\"decanter-button\">Optional Button</a>"
+      preview: "<a href=\"#\">Optional Button</a>"
   libraries:
     - postcard:
         css:

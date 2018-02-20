@@ -5,32 +5,47 @@
 ///
 
 // An extensible content container with options for a wide variety of content.
+// Horizontal layout.
 
 // Decanter
+
 @import
   'decanter-no-markup';
 
 // Stanford Math Research Center
+
 @import
   '../utilities/mixins/mixins';
 
 .mrc-postcard--horizontal {
   @include mrc-card-container;
-  @include mrc-flex-medium;
 
   .mrc-postcard__img {
-    margin-right: 0;
-
+    @include margin(null 0 null null);
     @include media($medium-screen) {
+      float: left;
       margin-right: 30px;
+    }
 
-      img {
+    img {
+      width: 100%;
+
+      @include margin(null null 0.5em);
+
+      @include media($medium-screen) {
         width: auto;
       }
     }
   }
 
   .mrc-postcard__title {
-    margin-top: 0;
+    clear: none;
+
+    @include margin(0 null null);
+  }
+
+  .mrc-postcard__button {
+    @include margin(0.5em null null);
+    @include more-link(more-link, more-link-hover);
   }
 }
