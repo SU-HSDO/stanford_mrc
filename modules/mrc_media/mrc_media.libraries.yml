@@ -11,17 +11,22 @@ mrc_media.autocomplete:
     - core/jquery.ui.autocomplete
     - core/underscore
 
-mrc_media.browser:
-  version: 8.0.3
+mrc_media.multi_step:
+  version: VERSION
   css:
     component:
-      css/mrc_media.browser.css: {}
+      css/mrc_media.multi_step.css: {}
   js:
-    js/mrc_media.browser.js: {}
+    js/mrc_media.multi_step.js: {}
 
 mrc_media.embed:
-  version: 8.0.3
-  js:
-    js/mrc_media.embed.js: {}
-  dependencies:
-    - core/jquery
+  version: VERSION
+  css:
+    component:
+      css/mrc_media.embed.css: {}
+
+mrc_media.dropzonejs:
+  version: VERSION
+  css:
+    component:
+      css/mrc_media.dropzonejs.css: {}

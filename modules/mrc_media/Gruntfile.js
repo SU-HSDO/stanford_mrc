@@ -74,13 +74,16 @@ module.exports = function(grunt) {
         ],
         sourceMap: false,
         // This controls the compiled css and can be changed to nested, compact or compressed.
-        outputStyle: 'expanded',
+        outputStyle: 'compressed',
         precision: 10
       },
       dist: {
         files: {
           // Compiled styles.
-          'css/mrc_media.browser.css':         'scss/mrc_media.browser.scss'
+          'css/mrc_media.multi_step.css':         'scss/mrc_media.multi_step.scss',
+          'css/mrc_media.dropzonejs.css':         'scss/mrc_media.dropzonejs.scss',
+          'css/mrc_media.embed.css':              'scss/mrc_media.embed.scss',
+          'css/mrc_media.autocomplete.css':       'scss/mrc_media.autocomplete.scss'
         }
       }
     },

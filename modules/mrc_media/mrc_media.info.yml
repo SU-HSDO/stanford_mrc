@@ -19,3 +19,4 @@ dependencies:
   - video_embed_field
   - video_embed_media
   - views
+  - focal_point

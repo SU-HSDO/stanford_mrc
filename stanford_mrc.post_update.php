@@ -16,6 +16,7 @@ function stanford_mrc_post_update_8_0_4() {
  * Release 8.0.5 changes.
  */
 function stanford_mrc_post_update_8_0_5() {
+  \Drupal::service('module_installer')->install(['focal_point']);
   module_load_install('stanford_mrc');
 
   $configs = [
@@ -42,6 +43,32 @@ function stanford_mrc_post_update_8_0_5() {
       'image.style.slideshow',
       'image.style.spotlight',
       'image.style.thumbnail',
+    ],
+  ];
+
+  foreach ($configs as $module => $config) {
+    $path = drupal_get_path('module', $module) . '/config/install';
+    stanford_mrc_update_configs(TRUE, $config, $path);
+  }
+}
+
+/**
+ * Release 8.0.6 changes.
+ */
+function stanford_mrc_post_update_8_0_6() {
+  module_load_install('stanford_mrc');
+
+  $configs = [
+    'mrc_news' => [
+      'image.style.mrc_news_thumbnail',
+    ],
+    'mrc_media' => [
+      'image.style.event',
+      'image.style.linkit_result_thumbnail',
+      'image.style.mrc_news_thumbnail',
+      'image.style.news',
+      'image.style.slideshow',
+      'image.style.spotlight',
     ],
   ];
 
