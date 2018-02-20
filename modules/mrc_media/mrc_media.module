@@ -64,6 +64,19 @@ function mrc_media_field_widget_form_alter(&$element, FormStateInterface $form_s
 }
 
 /**
+ * Implements hook_preprocess_image_widget().
+ */
+function mrc_media_preprocess_image_widget(&$variables) {
+  if (isset($variables['data']['focal_point']) && !empty($variables['data']['preview'])) {
+    $variables['data']['preview']['help'] = [
+      '#prefix' => '<div class="focal-point-help-text description">',
+      '#suffix' => '</div>',
+      '#markup' => t('To set the focal point (the central focus area) of the image, click and drag the “+” on the image. If no focal point is set, the focal point will default to the center of the image.'),
+    ];
+  }
+}
+
+/**
  * Implements hook_field_widget_WIDGET_TYPE_form_alter().
  */
 function mrc_media_field_widget_video_embed_field_textfield_form_alter(&$element, FormStateInterface $form_state, $context) {
