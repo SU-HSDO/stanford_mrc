@@ -12,6 +12,13 @@ function mrc_media_post_update_8_0_6() {
   $configs = [
     'entity_browser.browser.media_browser',
     'views.view.media_entity_browser',
+    'entity_browser.browser.file_browser',
+    'entity_browser.browser.image_browser',
+    'entity_browser.browser.video_browser',
+    'image.style.responsive_large',
+    'image.style.responsive_medium',
+    'image.style.responsive_small',
+    'responsive_image.styles.hero_image',
   ];
 
   module_load_install('stanford_mrc');
@@ -38,4 +45,13 @@ function mrc_media_post_update_8_0_6() {
   $config->set('content.field_media_image.settings', $settings);
   $config->set('content.field_media_image.type', 'image_focal_point');
   $config->save();
+
+  // Media Image display.
+  $config = $config_factory->getEditable('core.entity_view_display.media.image.default');
+  $config->set('content.field_media_image.settings', [
+    'responsive_image_style' => 'hero_image',
+    'image_link' => '',
+  ]);
+  $config->set('content.field_media_image.type', 'responsive_image');
+  $config->save(TRUE);
 }

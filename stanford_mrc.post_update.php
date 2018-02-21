@@ -69,6 +69,10 @@ function stanford_mrc_post_update_8_0_6() {
       'image.style.news',
       'image.style.slideshow',
       'image.style.spotlight',
+      'image.style.responsive_large',
+      'image.style.responsive_medium',
+      'image.style.responsive_small',
+      'responsive_image.styles.hero_image',
     ],
   ];
 
