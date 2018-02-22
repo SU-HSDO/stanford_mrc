@@ -1,5 +1,8 @@
 <?php
 
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+
 /**
  * Release 8.0.4 changes.
  */
@@ -80,4 +83,90 @@ function stanford_mrc_post_update_8_0_6() {
     $path = drupal_get_path('module', $module) . '/config/install';
     stanford_mrc_update_configs(TRUE, $config, $path);
   }
+}
+
+function stanford_mrc_post_update_8_0_61() {
+  module_load_install('mrc_helper');
+
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_factory = \Drupal::configFactory();
+
+  /** @var \Drupal\field\Entity\FieldConfig $field_config */
+  foreach (FieldConfig::loadMultiple() as $field_config) {
+    $handler_settings = [
+      'target_bundles' => [],
+      'sort' => ['field' => '_none'],
+      'auto_create' => FALSE,
+      'auto_create_bundle' => '',
+    ];
+
+    switch ($field_config->getType()) {
+      case 'image':
+        $handler_settings['target_bundles']['image'] = 'image';
+        $field_name = 'field_mrc_image';
+        break;
+      case 'file':
+        $handler_settings['target_bundles']['file'] = 'file';
+        $field_name = 'field_mrc_file';
+        break;
+      case 'video_embed_field':
+        $handler_settings['target_bundles']['video'] = 'video';
+        $field_name = 'field_mrc_video';
+        break;
+      default:
+        continue 2;
+    }
+
+    $entity_type = $field_config->getTargetEntityTypeId();
+    $bundle = $field_config->getTargetBundle();
+    $label = $field_config->label();
+
+    if ($entity_type == 'media') {
+      continue;
+    }
+
+    mrc_helper_create_field($entity_type, $bundle, $field_name, 'entity_reference', $label, 1);
+    $config_update->revert('field_storage_config', "$entity_type.$field_name");
+
+    $new_field_config = FieldConfig::loadByName($entity_type, $bundle, $field_name);
+    $new_field_config->setSetting('handler_settings', $handler_settings);
+    $new_field_config->set('required', $field_config->isRequired());
+    $new_field_config->save();
+
+    $config_update->revert('field_config', "$entity_type.$bundle.$field_name");
+//    $config_update->revert('entity_form_display', "$entity_type.$bundle.default");
+
+    $config = $config_factory->getEditable("core.entity_form_display.$entity_type.$bundle.default");
+    $form_settings = [
+      'type' => 'entity_browser_entity_reference',
+      'weight' => $config->get('content.' . $field_config->getName() . '.weight'),
+      'region' => 'content',
+      'settings' => [
+        'entity_browser' => 'image_browser',
+        'field_widget_display' => 'label',
+        'field_widget_remove' => TRUE,
+        'selection_mode' => 'selection_append',
+        'field_widget_edit' => FALSE,
+        'open' => 'false',
+        'field_widget_display_settings' => [],
+      ],
+    ];
+
+    $config->set("content.$field_name", $form_settings);
+    $field_groups = $config->get('third_party_settings.field_group') ?: [];
+    foreach ($field_groups as &$group) {
+      $pos = array_search($field_config->getName(), $group['children']);
+      if ($pos !== FALSE) {
+        $group['children'][$pos] = $field_name;
+      }
+    }
+
+    if (!empty($field_groups)) {
+      $config->set('third_party_settings.field_group', $field_groups);
+    }
+    $config->clear('content.' . $field_config->getName());
+    $config->save(TRUE);
+  }
+
 }

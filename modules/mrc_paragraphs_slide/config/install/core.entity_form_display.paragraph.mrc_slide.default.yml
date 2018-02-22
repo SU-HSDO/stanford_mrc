@@ -2,6 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.image_browser
+    - field.field.paragraph.mrc_slide.field_mrc_image
     - field.field.paragraph.mrc_slide.field_mrc_slide_body
     - field.field.paragraph.mrc_slide.field_mrc_slide_image
     - field.field.paragraph.mrc_slide.field_mrc_slide_link
@@ -9,18 +11,32 @@ dependencies:
     - image.style.thumbnail
     - paragraphs.paragraphs_type.mrc_slide
   module:
+    - entity_browser
     - image
     - link
     - text
 _core:
-  default_config_hash: C1YEYfgtM09btKRCp1IEP9eDxu1BvSoG4qwVNcn2iYg
+  default_config_hash: J_15SPHggneT4FTogMqTerWbPRSgA04-J1TCI8cVY2Q
 id: paragraph.mrc_slide.default
 targetEntityType: paragraph
 bundle: mrc_slide
 mode: default
 content:
+  field_mrc_image:
+    type: entity_browser_entity_reference
+    weight: 0
+    region: content
+    settings:
+      entity_browser: image_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      open: false
+      field_widget_display_settings: {  }
+    third_party_settings: {  }
   field_mrc_slide_body:
-    weight: 2
+    weight: 3
     settings:
       rows: 5
       placeholder: ''
@@ -28,7 +44,7 @@ content:
     type: text_textarea
     region: content
   field_mrc_slide_image:
-    weight: 0
+    weight: 1
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -36,7 +52,7 @@ content:
     type: image_image
     region: content
   field_mrc_slide_link:
-    weight: 3
+    weight: 4
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -44,7 +60,7 @@ content:
     type: link_default
     region: content
   field_mrc_slide_title:
-    weight: 1
+    weight: 2
     settings:
       size: 60
       placeholder: ''
