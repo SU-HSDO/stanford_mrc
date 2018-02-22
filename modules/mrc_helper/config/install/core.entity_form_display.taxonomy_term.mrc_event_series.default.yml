@@ -22,14 +22,6 @@ content:
       placeholder: ''
       rows: 5
     third_party_settings: {  }
-  field_mrc_event_series_image:
-    weight: 2
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
-    type: image_image
-    region: content
   field_mrc_event_series_name:
     weight: 0
     settings:
@@ -46,5 +38,18 @@ content:
       size: 60
       placeholder: Shortname
     third_party_settings: {  }
+  field_mrc_image:
+    type: entity_browser_entity_reference
+    weight: 2
+    region: content
+    third_party_settings: {  }
+    settings:
+      entity_browser: image_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      open: 'false'
+      field_widget_display_settings: {  }
 hidden:
   path: true

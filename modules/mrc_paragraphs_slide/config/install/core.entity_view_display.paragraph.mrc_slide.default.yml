@@ -2,15 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.mrc_slide.field_mrc_image
     - field.field.paragraph.mrc_slide.field_mrc_slide_body
-    - field.field.paragraph.mrc_slide.field_mrc_slide_image
     - field.field.paragraph.mrc_slide.field_mrc_slide_link
     - field.field.paragraph.mrc_slide.field_mrc_slide_title
-    - image.style.hero_banner
     - paragraphs.paragraphs_type.mrc_slide
   module:
     - field_group
-    - image
     - link
     - text
 third_party_settings:
@@ -40,21 +38,21 @@ targetEntityType: paragraph
 bundle: mrc_slide
 mode: default
 content:
+  field_mrc_image:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    third_party_settings: {  }
+    settings:
+      view_mode: full
+      link: false
   field_mrc_slide_body:
     weight: 3
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
-    region: content
-  field_mrc_slide_image:
-    weight: 0
-    label: hidden
-    settings:
-      image_style: hero_banner
-      image_link: ''
-    third_party_settings: {  }
-    type: image
     region: content
   field_mrc_slide_link:
     weight: 4

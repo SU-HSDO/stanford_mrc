@@ -4,20 +4,18 @@ dependencies:
   config:
     - field.field.node.stanford_visitor.body
     - field.field.node.stanford_visitor.field_mrc_event_series
+    - field.field.node.stanford_visitor.field_mrc_image
     - field.field.node.stanford_visitor.field_s_visitor_curr_inst
     - field.field.node.stanford_visitor.field_s_visitor_donor
     - field.field.node.stanford_visitor.field_s_visitor_external_link
     - field.field.node.stanford_visitor.field_s_visitor_first_name
     - field.field.node.stanford_visitor.field_s_visitor_last_name
-    - field.field.node.stanford_visitor.field_s_visitor_photo
     - field.field.node.stanford_visitor.field_s_visitor_position_title
     - field.field.node.stanford_visitor.field_s_visitor_research_area
     - field.field.node.stanford_visitor.field_s_visitor_year_visited
-    - image.style.medium
     - node.type.stanford_visitor
   module:
     - ds
-    - image
     - link
     - mrc_yearonly
     - text
@@ -34,7 +32,7 @@ third_party_settings:
           field_templates: default
     regions:
       image:
-        - field_s_visitor_photo
+        - field_mrc_image
       above_break:
         - node_title
         - field_s_visitor_position_title
@@ -69,6 +67,15 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
+  field_mrc_image:
+    type: entity_reference_entity_view
+    weight: 0
+    region: image
+    label: hidden
+    third_party_settings: {  }
+    settings:
+      view_mode: full
+      link: false
   field_s_visitor_curr_inst:
     type: string
     weight: 3
@@ -97,15 +104,6 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-  field_s_visitor_photo:
-    type: image
-    weight: 0
-    region: image
-    label: hidden
-    settings:
-      image_style: medium
-      image_link: ''
-    third_party_settings: {  }
   field_s_visitor_position_title:
     type: string
     weight: 2
@@ -131,9 +129,7 @@ content:
     label: inline
     settings:
       order: asc
-    third_party_settings:
-      ds:
-        ds_limit: ''
+    third_party_settings: {  }
 hidden:
   field_mrc_event_series: true
   field_s_visitor_first_name: true

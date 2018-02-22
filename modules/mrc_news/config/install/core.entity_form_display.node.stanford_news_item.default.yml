@@ -2,21 +2,21 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.image_browser
     - field.field.node.stanford_news_item.body
     - field.field.node.stanford_news_item.field_mrc_event_series
+    - field.field.node.stanford_news_item.field_mrc_image
     - field.field.node.stanford_news_item.field_s_news_byline
     - field.field.node.stanford_news_item.field_s_news_categories
     - field.field.node.stanford_news_item.field_s_news_date
     - field.field.node.stanford_news_item.field_s_news_featured
-    - field.field.node.stanford_news_item.field_s_news_image
     - field.field.node.stanford_news_item.field_s_news_link
     - field.field.node.stanford_news_item.field_s_news_meta_tags
-    - image.style.thumbnail
     - node.type.stanford_news_item
   module:
     - datetime
+    - entity_browser
     - field_group
-    - image
     - link
     - metatag
     - path
@@ -63,6 +63,19 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_mrc_image:
+    type: entity_browser_entity_reference
+    weight: 3
+    region: content
+    third_party_settings: {  }
+    settings:
+      entity_browser: image_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      open: true
+      field_widget_display_settings: {  }
   field_s_news_byline:
     type: string_textfield
     weight: 2
@@ -92,14 +105,6 @@ content:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
-    region: content
-  field_s_news_image:
-    weight: 3
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
-    type: image_image
     region: content
   field_s_news_link:
     weight: 5

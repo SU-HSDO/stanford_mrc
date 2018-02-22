@@ -5,14 +5,11 @@ dependencies:
     - entity_browser.browser.image_browser
     - field.field.paragraph.mrc_slide.field_mrc_image
     - field.field.paragraph.mrc_slide.field_mrc_slide_body
-    - field.field.paragraph.mrc_slide.field_mrc_slide_image
     - field.field.paragraph.mrc_slide.field_mrc_slide_link
     - field.field.paragraph.mrc_slide.field_mrc_slide_title
-    - image.style.thumbnail
     - paragraphs.paragraphs_type.mrc_slide
   module:
     - entity_browser
-    - image
     - link
     - text
 _core:
@@ -26,33 +23,25 @@ content:
     type: entity_browser_entity_reference
     weight: 0
     region: content
+    third_party_settings: {  }
     settings:
       entity_browser: image_browser
       field_widget_display: label
       field_widget_remove: true
       selection_mode: selection_append
       field_widget_edit: false
-      open: false
+      open: true
       field_widget_display_settings: {  }
-    third_party_settings: {  }
   field_mrc_slide_body:
-    weight: 3
+    weight: 2
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
     region: content
-  field_mrc_slide_image:
-    weight: 1
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
-    type: image_image
-    region: content
   field_mrc_slide_link:
-    weight: 4
+    weight: 3
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -60,7 +49,7 @@ content:
     type: link_default
     region: content
   field_mrc_slide_title:
-    weight: 2
+    weight: 1
     settings:
       size: 60
       placeholder: ''
