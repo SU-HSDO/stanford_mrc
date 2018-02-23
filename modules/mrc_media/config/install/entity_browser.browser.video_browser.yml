@@ -22,26 +22,24 @@ selection_display_configuration:
     view_mode: full
   select_text: Continue
   selection_hidden: false
-  view: null
-  view_display: null
 widget_selector: tabs
 widget_selector_configuration: {  }
 widgets:
-  d8477049-5627-4f25-981b-4a82f3d64f89:
+  22663d5c-deef-4eb2-80d7-6818fb17ccda:
     settings:
       view: media_entity_browser
-      view_display: bideo_browser
+      view_display: video_browser
       submit_text: Continue
-      auto_select: true
-    uuid: 39f2b6ed-f27d-42d8-a161-004510188d8d
-    weight: -10
+      auto_select: false
+    uuid: 22663d5c-deef-4eb2-80d7-6818fb17ccda
+    weight: 1
     label: 'Media Library'
     id: view
-  c95ccb44-4ca6-4cac-998a-b59e61f2d3ac:
+  8f88db67-c14d-4031-bcd0-c84e4184d838:
     settings:
       submit_text: Add
       form_mode: media_browser
-    uuid: ffe1badf-f391-4e5a-8fe4-da745c9da5af
-    weight: -8
-    label: 'Embed a Video'
+    uuid: 8f88db67-c14d-4031-bcd0-c84e4184d838
+    weight: 2
+    label: 'Add a Video'
     id: embed_code
