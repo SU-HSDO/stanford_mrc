@@ -33,7 +33,7 @@ widgets:
       view_display: image_browser
       submit_text: Continue
       auto_select: true
-    uuid: 39f2b6ed-f27d-42d8-a161-004510188d8d
+    uuid: fd073316-c81a-4422-9bd6-df59e2d0c638
     weight: -10
     label: 'Media Library'
     id: view
@@ -45,7 +45,7 @@ widgets:
       submit_text: 'Add to Library'
       form_mode: media_browser
       max_filesize: '25'
-    uuid: e837394f-45b5-4198-962a-406e24baf0ec
+    uuid: a605a231-49e3-420e-a098-c613124bfce2
     weight: -9
     label: 'Embed a File'
     id: dropzonejs_media
