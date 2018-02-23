@@ -48,8 +48,9 @@ content:
       field_widget_display: label
       field_widget_remove: true
       selection_mode: selection_append
-      field_widget_edit: false
+      field_widget_edit: true
       open: 'false'
-      field_widget_display_settings: {  }
+      field_widget_display_settings:
+        view_mode: thumbnail
 hidden:
   path: true

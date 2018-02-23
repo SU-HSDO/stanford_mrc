@@ -185,7 +185,7 @@ content:
       selection_mode: selection_append
       field_widget_display_settings:
         view_mode: thumbnail
-      field_widget_edit: false
+      field_widget_edit: true
   field_s_person_affiliation:
     weight: 6
     settings: {  }

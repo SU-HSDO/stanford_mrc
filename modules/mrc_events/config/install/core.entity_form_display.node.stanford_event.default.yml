@@ -138,7 +138,7 @@ content:
       selection_mode: selection_append
       field_widget_display_settings:
         view_mode: thumbnail
-      field_widget_edit: false
+      field_widget_edit: true
   field_mrc_video:
     type: entity_browser_entity_reference
     weight: 24
