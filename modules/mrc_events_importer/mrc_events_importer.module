@@ -100,7 +100,8 @@ function mrc_events_importer_migration_list($migration_ids = '') {
  */
 function mrc_events_importer_execute_migration(MigrationInterface $migration, $migration_id) {
   $log = new MigrateMessage();
-  $migration->getIdMap()->prepareUpdate();
+  // todo: look into updates.
+  //  $migration->getIdMap()->prepareUpdate();
   $executable = new MigrateExecutable($migration, $log);
   $executable->import();
 }

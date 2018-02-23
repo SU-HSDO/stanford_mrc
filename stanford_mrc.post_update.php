@@ -83,6 +83,12 @@ function stanford_mrc_post_update_8_0_6() {
     $path = drupal_get_path('module', $module) . '/config/install';
     stanford_mrc_update_configs(TRUE, $config, $path);
   }
+
+  // Set files with no usage to be deleted delete.
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('file.settings');
+  $config->set('make_unused_managed_files_temporary', TRUE);
+  $config->save();
 }
 
 /**
