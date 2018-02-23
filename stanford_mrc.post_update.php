@@ -1,7 +1,8 @@
 <?php
 
 use Drupal\field\Entity\FieldConfig;
-use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\media\Entity\Media;
+use Drupal\file\Entity\File;
 
 /**
  * Release 8.0.4 changes.
@@ -154,7 +155,11 @@ function stanford_mrc_post_update_8_0_61() {
 
 }
 
-
+/**
+ * Get all the image/file/video fields not on media entities.
+ *
+ * @return FieldConfig[]
+ */
 function _stanford_mrc_post_update_get_fields() {
   $fields = [];
   /** @var FieldConfig $field_config */
@@ -174,4 +179,158 @@ function _stanford_mrc_post_update_get_fields() {
     }
   }
   return $fields;
+}
+
+/**
+ * Migrate media field data.
+ */
+function stanford_mrc_post_update_8_0_63() {
+
+  foreach (_stanford_mrc_post_update_get_fields() as $field_config) {
+    switch ($field_config->getType()) {
+      case 'image':
+      case 'file':
+        _stanford_mrc_post_update_migrate_file($field_config);
+        break;
+      case 'video_embed_field':
+        _stanford_mrc_post_update_migrate_video($field_config);
+        break;
+    }
+  }
+}
+
+/**
+ * @param \Drupal\field\Entity\FieldConfig $field_config
+ */
+function _stanford_mrc_post_update_migrate_file(FieldConfig $field_config) {
+
+  $new_field = 'field_mrc_file';
+  $media_field = 'field_media_file';
+  $bundle = 'file';
+  if ($field_config->getType() == 'image') {
+    $new_field = 'field_mrc_image';
+    $media_field = 'field_media_image';
+    $bundle = 'image';
+  }
+  $query = \Drupal::entityQuery($field_config->getTargetEntityTypeId());
+  $query->condition($field_config->getName(), 0, '>');
+  $entities = \Drupal::entityTypeManager()
+    ->getStorage($field_config->getTargetEntityTypeId())
+    ->loadMultiple($query->execute());
+
+  /** @var \Drupal\Core\Entity\EntityInterface $entity */
+  foreach ($entities as $entity) {
+    /** @var \Drupal\Core\Field\FieldItemList $field_items */
+    $field_items = $entity->get($field_config->getName());
+    $new_field_data = [];
+    foreach ($field_items->getValue() as $value) {
+      $file = File::load($value['target_id']);
+      $media = _stanford_mrc_post_update_find_media_file($media_field, $file, $bundle);
+      $new_field_data[] = ['target_id' => $media->id()];
+    }
+    $entity->set($new_field, $new_field_data);
+    $entity->save();
+  }
+}
+
+/**
+ * @param \Drupal\field\Entity\FieldConfig $field_config
+ */
+function _stanford_mrc_post_update_migrate_video(FieldConfig $field_config) {
+  $new_field = 'field_mrc_video';
+
+  $query = \Drupal::entityQuery($field_config->getTargetEntityTypeId());
+  $query->condition($field_config->getName(), 0, '>');
+  $entities = \Drupal::entityTypeManager()
+    ->getStorage($field_config->getTargetEntityTypeId())
+    ->loadMultiple($query->execute());
+  /** @var \Drupal\Core\Entity\EntityInterface $entity */
+  foreach ($entities as $entity) {
+    /** @var \Drupal\Core\Field\FieldItemList $field_items */
+    $field_items = $entity->get($field_config->getName());
+    $new_field_data = [];
+    foreach ($field_items->getValue() as $value) {
+      $media = _stanford_mrc_post_update_find_media_video($value['value']);
+      $new_field_data[] = ['target_id' => $media->id()];
+    }
+    $entity->set($new_field, $new_field_data);
+    $entity->save();
+  }
+}
+
+/**
+ * @param $field_name
+ * @param $field_value
+ * @param $bundle
+ *
+ * @return \Drupal\Core\Entity\EntityInterface
+ */
+function _stanford_mrc_post_update_find_media_file($field_name, \Drupal\file\FileInterface $file, $media_bundle) {
+  $query = \Drupal::entityQuery('media');
+  $query->condition($field_name, $file->id());
+  if ($ids = $query->execute()) {
+    return \Drupal::entityTypeManager()
+      ->getStorage('media')
+      ->load(reset($ids));
+  }
+
+
+  // Load the media type entity to get the source field.
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $media_type = $entity_type_manager->getStorage('media_type')
+    ->load($media_bundle);
+  $source_field = $media_type->getSource()
+    ->getConfiguration()['source_field'];
+
+  // Create the new media entity.
+  $media_entity = $entity_type_manager->getStorage('media')
+    ->create([
+      'bundle' => $media_type->id(),
+      $source_field => $file,
+      'uid' => \Drupal::currentUser()->id(),
+      'status' => TRUE,
+      'type' => $media_type->getSource()->getPluginId(),
+    ]);
+
+  // If we don't save file at this point Media entity creates another file
+  // entity with same uri for the thumbnail. That should probably be fixed
+  // in Media entity, but this workaround should work for now.
+  $media_entity->$source_field->entity->save();
+  $media_entity->save();
+  return $media_entity;
+}
+
+/**
+ * @param $url
+ *
+ * @return \Drupal\Core\Entity\EntityInterface|null
+ */
+function _stanford_mrc_post_update_find_media_video($url) {
+  $query = \Drupal::entityQuery('media');
+  $query->condition('field_media_video_embed_field', $url);
+  if ($ids = $query->execute()) {
+    return \Drupal::entityTypeManager()
+      ->getStorage('media')
+      ->load(reset($ids));
+  }
+
+
+  // Load the media type entity to get the source field.
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $media_type = $entity_type_manager->getStorage('media_type')
+    ->load('video');
+  $source_field = $media_type->getSource()
+    ->getConfiguration()['source_field'];
+
+  // Create the new media entity.
+  $media_entity = $entity_type_manager->getStorage('media')
+    ->create([
+      'bundle' => $media_type->id(),
+      $source_field => $url,
+      'uid' => \Drupal::currentUser()->id(),
+      'status' => TRUE,
+      'type' => $media_type->getSource()->getPluginId(),
+    ]);
+  $media_entity->save();
+  return $media_entity;
 }
