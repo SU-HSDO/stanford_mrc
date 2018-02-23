@@ -7,7 +7,7 @@ field_plugin_method: null
 cck_plugin_method: null
 migration_tags: null
 migration_group: mrc_events
-label: 'My Events importer'
+label: 'Events importer'
 source:
   plugin: url
   data_fetcher_plugin: file
@@ -157,7 +157,7 @@ process:
     -
       plugin: default_value
       default_value: null
-  field_s_event_image/target_id:
+  field_mrc_image/target_id:
     -
       plugin: migration_lookup
       migration: events_image_importer

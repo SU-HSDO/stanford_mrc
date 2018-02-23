@@ -2,8 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.video_browser
     - field.field.node.stanford_event.body
     - field.field.node.stanford_event.field_mrc_event_series
+    - field.field.node.stanford_event.field_mrc_image
+    - field.field.node.stanford_event.field_mrc_video
     - field.field.node.stanford_event.field_s_event_admission
     - field.field.node.stanford_event.field_s_event_audience
     - field.field.node.stanford_event.field_s_event_category
@@ -11,25 +14,21 @@ dependencies:
     - field.field.node.stanford_event.field_s_event_contact_phone
     - field.field.node.stanford_event.field_s_event_date
     - field.field.node.stanford_event.field_s_event_featured
-    - field.field.node.stanford_event.field_s_event_image
     - field.field.node.stanford_event.field_s_event_link
     - field.field.node.stanford_event.field_s_event_location
     - field.field.node.stanford_event.field_s_event_map_link
     - field.field.node.stanford_event.field_s_event_sponsor
     - field.field.node.stanford_event.field_s_event_status
     - field.field.node.stanford_event.field_s_event_type
-    - field.field.node.stanford_event.field_s_event_video_recap
-    - image.style.thumbnail
     - node.type.stanford_event
   module:
     - datetime_range
+    - entity_browser
     - field_group
-    - image
     - link
     - path
     - telephone
     - text
-    - video_embed_field
 third_party_settings:
   field_group:
     group_event_tabs:
@@ -50,7 +49,7 @@ third_party_settings:
         - title
         - field_s_event_date
         - body
-        - field_s_event_image
+        - field_mrc_image
         - field_s_event_link
         - field_s_event_featured
         - field_s_event_type
@@ -87,7 +86,7 @@ third_party_settings:
       label: 'Supplement Info'
     group_post_event_details:
       children:
-        - field_s_event_video_recap
+        - field_mrc_video
       parent_name: group_event_tabs
       weight: 6
       format_type: tab
@@ -126,6 +125,33 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_mrc_image:
+    type: entity_browser_entity_reference
+    weight: 20
+    region: content
+    third_party_settings: {  }
+    settings:
+      entity_browser: image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      open: false
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: thumbnail
+      field_widget_edit: true
+  field_mrc_video:
+    type: entity_browser_entity_reference
+    weight: 24
+    region: content
+    third_party_settings: {  }
+    settings:
+      entity_browser: video_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      open: true
+      field_widget_display_settings: {  }
   field_s_event_admission:
     weight: 13
     settings:
@@ -183,14 +209,6 @@ content:
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
-  field_s_event_image:
-    type: image_image
-    weight: 20
-    region: content
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
   field_s_event_link:
     type: link_default
     weight: 21
@@ -228,12 +246,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_select
-    region: content
-  field_s_event_video_recap:
-    weight: 24
-    settings: {  }
-    third_party_settings: {  }
-    type: video_embed_field_textfield
     region: content
   path:
     type: path

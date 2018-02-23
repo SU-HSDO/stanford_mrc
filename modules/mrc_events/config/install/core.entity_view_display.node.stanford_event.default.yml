@@ -4,6 +4,8 @@ dependencies:
   config:
     - field.field.node.stanford_event.body
     - field.field.node.stanford_event.field_mrc_event_series
+    - field.field.node.stanford_event.field_mrc_image
+    - field.field.node.stanford_event.field_mrc_video
     - field.field.node.stanford_event.field_s_event_admission
     - field.field.node.stanford_event.field_s_event_audience
     - field.field.node.stanford_event.field_s_event_category
@@ -11,25 +13,21 @@ dependencies:
     - field.field.node.stanford_event.field_s_event_contact_phone
     - field.field.node.stanford_event.field_s_event_date
     - field.field.node.stanford_event.field_s_event_featured
-    - field.field.node.stanford_event.field_s_event_image
     - field.field.node.stanford_event.field_s_event_link
     - field.field.node.stanford_event.field_s_event_location
     - field.field.node.stanford_event.field_s_event_map_link
     - field.field.node.stanford_event.field_s_event_sponsor
     - field.field.node.stanford_event.field_s_event_status
     - field.field.node.stanford_event.field_s_event_type
-    - field.field.node.stanford_event.field_s_event_video_recap
-    - image.style.large
     - node.type.stanford_event
   module:
     - ds
-    - image
     - link
     - mrc_date
+    - mrc_media
     - telephone
     - text
     - user
-    - video_embed_field
 third_party_settings:
   ds:
     layout:
@@ -42,7 +40,7 @@ third_party_settings:
           field_templates: only_content
     regions:
       image:
-        - field_s_event_image
+        - field_mrc_image
       location:
         - field_s_event_location
       date:
@@ -62,7 +60,7 @@ third_party_settings:
       phone:
         - field_s_event_contact_phone
       embed_video:
-        - field_s_event_video_recap
+        - field_mrc_video
 _core:
   default_config_hash: '--Z_oePhErkaBTiWo881iUr_LbanS3gn3S1XXxQDkW0'
 id: node.stanford_event.default
@@ -77,6 +75,25 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
+  field_mrc_image:
+    type: media_image_formatter
+    weight: 0
+    region: image
+    label: hidden
+    third_party_settings: {  }
+    settings:
+      view_mode: full
+      image_style: event_350
+      link: false
+  field_mrc_video:
+    type: entity_reference_entity_view
+    weight: 10
+    region: embed_video
+    label: hidden
+    third_party_settings: {  }
+    settings:
+      view_mode: full
+      link: false
   field_s_event_admission:
     weight: 5
     label: hidden
@@ -109,15 +126,6 @@ content:
     third_party_settings: {  }
     type: datetimerange_custom
     region: date
-  field_s_event_image:
-    type: image
-    weight: 0
-    region: image
-    label: hidden
-    settings:
-      image_style: large
-      image_link: ''
-    third_party_settings: {  }
   field_s_event_link:
     type: link
     weight: 3
@@ -156,17 +164,6 @@ content:
     third_party_settings: {  }
     type: basic_string
     region: sponsor
-  field_s_event_video_recap:
-    weight: 10
-    label: hidden
-    settings:
-      responsive: true
-      width: 854
-      height: 480
-      autoplay: false
-    third_party_settings: {  }
-    type: video_embed_field_video
-    region: embed_video
 hidden:
   field_mrc_event_series: true
   field_s_event_audience: true

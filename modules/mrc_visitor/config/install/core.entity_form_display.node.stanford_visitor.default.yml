@@ -2,21 +2,21 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.image_browser
     - field.field.node.stanford_visitor.body
     - field.field.node.stanford_visitor.field_mrc_event_series
+    - field.field.node.stanford_visitor.field_mrc_image
     - field.field.node.stanford_visitor.field_s_visitor_curr_inst
     - field.field.node.stanford_visitor.field_s_visitor_donor
     - field.field.node.stanford_visitor.field_s_visitor_external_link
     - field.field.node.stanford_visitor.field_s_visitor_first_name
     - field.field.node.stanford_visitor.field_s_visitor_last_name
-    - field.field.node.stanford_visitor.field_s_visitor_photo
     - field.field.node.stanford_visitor.field_s_visitor_position_title
     - field.field.node.stanford_visitor.field_s_visitor_research_area
     - field.field.node.stanford_visitor.field_s_visitor_year_visited
-    - image.style.thumbnail
     - node.type.stanford_visitor
   module:
-    - image
+    - entity_browser
     - link
     - path
     - text
@@ -47,6 +47,20 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_mrc_image:
+    type: entity_browser_entity_reference
+    weight: 5
+    region: content
+    third_party_settings: {  }
+    settings:
+      entity_browser: image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      open: false
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: thumbnail
+      field_widget_edit: true
   field_s_visitor_curr_inst:
     type: string_textfield
     weight: 4
@@ -86,14 +100,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_s_visitor_photo:
-    type: image_image
-    weight: 5
-    region: content
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
     third_party_settings: {  }
   field_s_visitor_position_title:
     type: string_textfield

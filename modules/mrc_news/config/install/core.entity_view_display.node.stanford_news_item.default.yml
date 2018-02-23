@@ -4,20 +4,19 @@ dependencies:
   config:
     - field.field.node.stanford_news_item.body
     - field.field.node.stanford_news_item.field_mrc_event_series
+    - field.field.node.stanford_news_item.field_mrc_image
     - field.field.node.stanford_news_item.field_s_news_byline
     - field.field.node.stanford_news_item.field_s_news_categories
     - field.field.node.stanford_news_item.field_s_news_date
     - field.field.node.stanford_news_item.field_s_news_featured
-    - field.field.node.stanford_news_item.field_s_news_image
     - field.field.node.stanford_news_item.field_s_news_link
     - field.field.node.stanford_news_item.field_s_news_meta_tags
-    - image.style.hero_banner
     - node.type.stanford_news_item
   module:
     - datetime
     - ds
-    - image
     - link
+    - mrc_media
     - text
     - user
 third_party_settings:
@@ -36,7 +35,7 @@ third_party_settings:
       link:
         - field_s_news_link
       image:
-        - field_s_news_image
+        - field_mrc_image
       content:
         - body
       author:
@@ -55,6 +54,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  field_mrc_image:
+    type: media_image_formatter
+    weight: 2
+    region: image
+    label: hidden
+    third_party_settings: {  }
+    settings:
+      view_mode: full
+      image_style: hero_banner
+      link: false
   field_s_news_byline:
     weight: 4
     label: hidden
@@ -72,15 +81,6 @@ content:
     third_party_settings: {  }
     type: datetime_default
     region: date
-  field_s_news_image:
-    weight: 2
-    label: hidden
-    settings:
-      image_style: hero_banner
-      image_link: ''
-    third_party_settings: {  }
-    type: image
-    region: image
   field_s_news_link:
     type: link
     weight: 1

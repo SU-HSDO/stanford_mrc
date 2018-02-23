@@ -2,12 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.mrc_event_series.field_mrc_event_series_image
     - field.field.taxonomy_term.mrc_event_series.field_mrc_event_series_name
+    - field.field.taxonomy_term.mrc_event_series.field_mrc_image
     - taxonomy.vocabulary.mrc_event_series
   module:
     - ds
-    - image
     - mrc_ds_blocks
     - text
 third_party_settings:
@@ -95,7 +94,7 @@ third_party_settings:
         - 'menu_block:main'
       top:
         - field_mrc_event_series_name
-        - field_mrc_event_series_image
+        - field_mrc_image
         - description
       bottom_left:
         - 'views_block:mrc_events-event_series_upcoming_events'
@@ -116,15 +115,6 @@ content:
     region: top
     settings: {  }
     third_party_settings: {  }
-  field_mrc_event_series_image:
-    weight: 2
-    label: hidden
-    settings:
-      image_style: ''
-      image_link: ''
-    third_party_settings: {  }
-    type: image
-    region: top
   field_mrc_event_series_name:
     weight: 1
     label: hidden
@@ -133,4 +123,13 @@ content:
     third_party_settings: {  }
     type: string
     region: top
+  field_mrc_image:
+    type: entity_reference_entity_view
+    weight: 2
+    region: top
+    label: hidden
+    third_party_settings: {  }
+    settings:
+      view_mode: full
+      link: false
 hidden: {  }
