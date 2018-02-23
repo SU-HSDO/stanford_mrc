@@ -2,9 +2,12 @@
 
 namespace Drupal\mrc_media\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\field\Entity\FieldConfig;
 
 /**
  * Plugin implementation of the 'yearonly_academic' formatter.
@@ -34,11 +37,6 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
-    $handler_settings = $this->fieldDefinition->getSetting('handler_settings');
-
-    if (isset($handler_settings['target_bundles']) && !in_array('image', $handler_settings['target_bundles'])) {
-      return $elements;
-    }
 
     $elements['image_style'] = [
       '#type' => 'select',
@@ -48,6 +46,16 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
       '#empty_option' => $this->t('Use Entity Display'),
     ];
     return $elements;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function isApplicable(FieldDefinitionInterface $field_definition) {
+    $is_applicable = parent::isApplicable($field_definition);
+    $target_type = $field_definition->getFieldStorageDefinition()
+      ->getSetting('target_type');
+    return $is_applicable && $target_type == 'media';
   }
 
   /**
