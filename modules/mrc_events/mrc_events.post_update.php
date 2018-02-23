@@ -41,6 +41,7 @@ function mrc_events_post_update_8_0_5() {
  * Create new image style.
  */
 function mrc_events_post_update_8_0_6() {
+  \Drupal::service('module_installer')->install(['focal_point']);
   /** @var \Drupal\config_update\ConfigReverter $config_update */
   $config_update = \Drupal::service('config_update.config_update');
   $config_update->import('image_style', 'event_350');
