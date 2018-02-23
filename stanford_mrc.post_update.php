@@ -200,15 +200,6 @@ function stanford_mrc_post_update_8_0_6__3() {
 }
 
 /**
- * Delete migrated fields.
- */
-function stanford_mrc_post_update_8_0_6__4() {
-  foreach (_stanford_mrc_post_update_get_fields() as $field_config) {
-    $field_config->delete();
-  }
-}
-
-/**
  * @param \Drupal\field\Entity\FieldConfig $field_config
  */
 function _stanford_mrc_post_update_migrate_file(FieldConfig $field_config) {

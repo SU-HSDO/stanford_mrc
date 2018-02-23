@@ -1,3 +1,4 @@
+uuid: 6e2d4ead-8046-4a8d-93e6-bb746dbf6ebd
 langcode: en
 status: true
 dependencies:
@@ -16,6 +17,7 @@ dependencies:
     - datetime
     - ds
     - link
+    - mrc_media
     - text
     - user
 third_party_settings:
@@ -54,13 +56,14 @@ content:
     third_party_settings: {  }
     region: content
   field_mrc_image:
-    type: entity_reference_entity_view
+    type: media_image_formatter
     weight: 2
     region: image
     label: hidden
     third_party_settings: {  }
     settings:
       view_mode: full
+      image_style: hero_banner
       link: false
   field_s_news_byline:
     weight: 4

@@ -1,3 +1,4 @@
+uuid: 34f457c8-3715-414b-adb8-d95e23ac033d
 langcode: en
 status: true
 dependencies:
@@ -12,6 +13,7 @@ dependencies:
   module:
     - ds
     - link
+    - mrc_media
     - text
 third_party_settings:
   ds:
@@ -27,7 +29,7 @@ third_party_settings:
       title:
         - field_mrc_postcard_title
       image:
-        - field_mrc_postcard_image
+        - field_mrc_image
       super_head:
         - field_mrc_postcard_pre_heading
       description:
@@ -41,6 +43,16 @@ targetEntityType: paragraph
 bundle: mrc_postcard
 mode: mrc_postcard_vertical
 content:
+  field_mrc_image:
+    type: media_image_formatter
+    weight: 1
+    region: image
+    label: hidden
+    settings:
+      view_mode: default
+      image_style: spotlight
+      link: false
+    third_party_settings: {  }
   field_mrc_postcard_body:
     weight: 3
     label: hidden
@@ -60,15 +72,6 @@ content:
     third_party_settings: {  }
     type: link
     region: button
-  field_mrc_image:
-    type: entity_reference_entity_view
-    weight: 1
-    region: image
-    label: hidden
-    third_party_settings: {  }
-    settings:
-      view_mode: full
-      link: false
   field_mrc_postcard_pre_heading:
     weight: 2
     label: hidden
@@ -85,3 +88,4 @@ content:
     third_party_settings: {  }
     type: string
     region: title
+hidden: {  }

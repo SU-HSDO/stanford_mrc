@@ -24,6 +24,7 @@ dependencies:
     - ds
     - link
     - mrc_date
+    - mrc_media
     - telephone
     - text
     - user
@@ -75,13 +76,14 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_mrc_image:
-    type: entity_reference_entity_view
+    type: media_image_formatter
     weight: 0
     region: image
     label: hidden
     third_party_settings: {  }
     settings:
       view_mode: full
+      image_style: event_350
       link: false
   field_mrc_video:
     type: entity_reference_entity_view

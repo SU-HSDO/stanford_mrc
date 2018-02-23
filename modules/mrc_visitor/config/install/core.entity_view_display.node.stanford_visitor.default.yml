@@ -1,3 +1,4 @@
+uuid: d7b3af80-4a19-470b-bbdf-d034c54c73ce
 langcode: en
 status: true
 dependencies:
@@ -17,6 +18,7 @@ dependencies:
   module:
     - ds
     - link
+    - mrc_media
     - mrc_yearonly
     - text
     - user
@@ -68,13 +70,14 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_mrc_image:
-    type: entity_reference_entity_view
+    type: media_image_formatter
     weight: 0
     region: image
     label: hidden
     third_party_settings: {  }
     settings:
       view_mode: full
+      image_style: large
       link: false
   field_s_visitor_curr_inst:
     type: string

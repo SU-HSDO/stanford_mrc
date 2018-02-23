@@ -1,3 +1,4 @@
+uuid: e3e18aea-4d5a-4425-93f1-6ff6993c634b
 langcode: en
 status: true
 dependencies:
@@ -11,6 +12,7 @@ dependencies:
   module:
     - ds
     - link
+    - mrc_media
     - text
 third_party_settings:
   ds:
@@ -41,13 +43,14 @@ bundle: mrc_postcard
 mode: default
 content:
   field_mrc_image:
-    type: entity_reference_entity_view
+    type: media_image_formatter
     weight: 1
     region: image
     label: hidden
     third_party_settings: {  }
     settings:
       view_mode: full
+      image_style: large
       link: false
   field_mrc_postcard_body:
     weight: 3

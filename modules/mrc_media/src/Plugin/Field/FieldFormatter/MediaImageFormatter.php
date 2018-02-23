@@ -36,7 +36,7 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
     $elements = parent::settingsForm($form, $form_state);
     $handler_settings = $this->fieldDefinition->getSetting('handler_settings');
 
-    if (!in_array('image', $handler_settings['target_bundles'])) {
+    if (isset($handler_settings['target_bundles']) && !in_array('image', $handler_settings['target_bundles'])) {
       return $elements;
     }
 
@@ -44,8 +44,8 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
       '#type' => 'select',
       '#options' => image_style_options(FALSE),
       '#title' => t('Image Style'),
-      '#default_value' => $this->getSetting('image_style'),
-      '#required' => TRUE,
+      '#default_value' => $this->getSetting('image_style') ?: '',
+      '#empty_option' => $this->t('Use Entity Display'),
     ];
     return $elements;
   }

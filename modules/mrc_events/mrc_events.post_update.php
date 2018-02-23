@@ -20,8 +20,9 @@ function mrc_events_post_update_8_0_4() {
  * Enable new module and revert view.
  * Changes to events node.
  */
-function mrc_events_post_update_8_0_5(){
-  \Drupal::service('module_installer')->install(['views_taxonomy_term_name_depth']);
+function mrc_events_post_update_8_0_5() {
+  \Drupal::service('module_installer')
+    ->install(['views_taxonomy_term_name_depth']);
   $configs = [
     'views.view.mrc_events',
     'core.entity_view_display.node.stanford_event.default',
@@ -34,4 +35,13 @@ function mrc_events_post_update_8_0_5(){
   $config = $config_factory->getEditable('core.entity_form_display.node.stanford_event.default');
   $config->set('content.field_s_event_date.settings.increment', 15);
   $config->save();
+}
+
+/**
+ * Create new image style.
+ */
+function mrc_events_post_update_8_0_6() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+//  $config_update->import('image_style', 'event_350');
 }
