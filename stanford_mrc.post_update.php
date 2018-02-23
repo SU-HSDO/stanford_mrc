@@ -20,7 +20,6 @@ function stanford_mrc_post_update_8_0_4() {
  * Release 8.0.5 changes.
  */
 function stanford_mrc_post_update_8_0_5() {
-  \Drupal::service('module_installer')->install(['focal_point']);
   module_load_install('stanford_mrc');
 
   $configs = [
@@ -61,6 +60,7 @@ function stanford_mrc_post_update_8_0_5() {
  */
 function stanford_mrc_post_update_8_0_6() {
   module_load_install('stanford_mrc');
+  \Drupal::service('module_installer')->install(['focal_point']);
 
   $configs = [
     'mrc_news' => [
@@ -156,6 +156,24 @@ function stanford_mrc_post_update_8_0_6__1() {
 }
 
 /**
+ * Migrate media field data.
+ */
+function stanford_mrc_post_update_8_0_6__2() {
+
+  foreach (_stanford_mrc_post_update_get_fields() as $field_config) {
+    switch ($field_config->getType()) {
+      case 'image':
+      case 'file':
+        _stanford_mrc_post_update_migrate_file($field_config);
+        break;
+      case 'video_embed_field':
+        _stanford_mrc_post_update_migrate_video($field_config);
+        break;
+    }
+  }
+}
+
+/**
  * Get all the image/file/video fields not on media entities.
  *
  * @return FieldConfig[]
@@ -179,24 +197,6 @@ function _stanford_mrc_post_update_get_fields() {
     }
   }
   return $fields;
-}
-
-/**
- * Migrate media field data.
- */
-function stanford_mrc_post_update_8_0_6__3() {
-
-  foreach (_stanford_mrc_post_update_get_fields() as $field_config) {
-    switch ($field_config->getType()) {
-      case 'image':
-      case 'file':
-        _stanford_mrc_post_update_migrate_file($field_config);
-        break;
-      case 'video_embed_field':
-        _stanford_mrc_post_update_migrate_video($field_config);
-        break;
-    }
-  }
 }
 
 /**
