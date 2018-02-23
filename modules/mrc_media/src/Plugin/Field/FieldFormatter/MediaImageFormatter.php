@@ -82,8 +82,15 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = parent::viewElements($items, $langcode);
+    $image_styles = image_style_options(FALSE);
+    $style = $this->getSetting('image_style');
+
+    if (empty($style) || !isset($image_styles[$style])) {
+      return $elements;
+    }
+
     foreach ($elements as &$element) {
-      $element['#image_style'] = $this->getSetting('image_style');
+      $element['#image_style'] = $style;
     }
     return $elements;
   }

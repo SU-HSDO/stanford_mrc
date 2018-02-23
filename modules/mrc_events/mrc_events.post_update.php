@@ -43,5 +43,5 @@ function mrc_events_post_update_8_0_5() {
 function mrc_events_post_update_8_0_6() {
   /** @var \Drupal\config_update\ConfigReverter $config_update */
   $config_update = \Drupal::service('config_update.config_update');
-//  $config_update->import('image_style', 'event_350');
+  $config_update->import('image_style', 'event_350');
 }
