@@ -95,7 +95,7 @@ function stanford_mrc_post_update_8_0_6() {
 /**
  * Create new media fields.
  */
-function stanford_mrc_post_update_8_0_61() {
+function stanford_mrc_post_update_8_0_6__1() {
   module_load_install('mrc_helper');
 
   /** @var \Drupal\config_update\ConfigReverter $config_update */
@@ -184,7 +184,7 @@ function _stanford_mrc_post_update_get_fields() {
 /**
  * Migrate media field data.
  */
-function stanford_mrc_post_update_8_0_63() {
+function stanford_mrc_post_update_8_0_6__3() {
 
   foreach (_stanford_mrc_post_update_get_fields() as $field_config) {
     switch ($field_config->getType()) {
@@ -196,6 +196,15 @@ function stanford_mrc_post_update_8_0_63() {
         _stanford_mrc_post_update_migrate_video($field_config);
         break;
     }
+  }
+}
+
+/**
+ * Delete migrated fields.
+ */
+function stanford_mrc_post_update_8_0_6__4() {
+  foreach (_stanford_mrc_post_update_get_fields() as $field_config) {
+    $field_config->delete();
   }
 }
 
