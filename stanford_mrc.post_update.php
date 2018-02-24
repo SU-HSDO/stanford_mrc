@@ -60,7 +60,10 @@ function stanford_mrc_post_update_8_0_5() {
  */
 function stanford_mrc_post_update_8_0_6() {
   module_load_install('stanford_mrc');
-  \Drupal::service('module_installer')->install(['focal_point', 'environment_indicator']);
+  \Drupal::service('module_installer')->install([
+    'focal_point',
+    'environment_indicator',
+  ]);
 
   $configs = [
     'mrc_news' => [
@@ -93,9 +96,15 @@ function stanford_mrc_post_update_8_0_6() {
 
   /** @var \Drupal\config_update\ConfigReverter $config_update */
   $config_update = \Drupal::service('config_update.config_update');
-  $config_update->import('environment_indicator','2_staging');
-  $config_update->import('environment_indicator','1_development');
-  $config_update->import('environment_indicator','3_production');
+  $config_update->import('environment_indicator', '2_staging');
+  $config_update->import('environment_indicator', '1_development');
+  $config_update->import('environment_indicator', '3_production');
+
+  $config_update->revert('view', 'mrc_visitor');
+  $config_update->revert('view', 'mrc_events');
+  $config_update->revert('view', 'mrc_videos');
+  $config_update->revert('view', 'mrc_event_series');
+  $config_update->revert('view', 'mrc_news');
 }
 
 /**
