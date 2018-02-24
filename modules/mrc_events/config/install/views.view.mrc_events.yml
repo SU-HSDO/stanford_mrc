@@ -413,6 +413,7 @@ display:
           settings:
             view_mode: default
             image_style: event
+            link: 1
           group_column: target_id
           group_columns: {  }
           group_rows: true
@@ -2491,6 +2492,7 @@ display:
           settings:
             view_mode: default
             image_style: event_350
+            link: 1
           group_column: target_id
           group_columns: {  }
           group_rows: true

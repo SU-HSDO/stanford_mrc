@@ -29,6 +29,7 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
   public static function defaultSettings() {
     return [
         'image_style' => NULL,
+        'link' => 0,
       ] + parent::defaultSettings();
   }
 
@@ -44,6 +45,11 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
       '#title' => t('Image Style'),
       '#default_value' => $this->getSetting('image_style') ?: '',
       '#empty_option' => $this->t('Use Entity Display'),
+    ];
+    $elements['link'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Link Media to Parent'),
+      '#default_value' => $this->getSetting('link'),
     ];
     return $elements;
   }
@@ -88,9 +94,15 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
     if (empty($style) || !isset($image_styles[$style])) {
       return $elements;
     }
+    /** @var \Drupal\Core\Entity\EntityInterface $parent */
+    $parent = $items->getParent()->getValue();
 
     foreach ($elements as &$element) {
-      $element['#image_style'] = $style;
+      $element['#mrc_media_image_style'] = $style;
+
+      if ($this->getSetting('link')) {
+        $element['#mrc_media_url'] = $parent->toUrl();
+      }
     }
     return $elements;
   }

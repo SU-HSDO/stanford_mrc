@@ -180,11 +180,16 @@ function mrc_media_entity_embed_alter(array &$build, EntityInterface $entity, ar
 function mrc_media_preprocess_media(&$variables) {
 
   // Set the image style on the media field from the formatter settings.
-  if (isset($variables['elements']['#image_style']) && isset($variables['content']['field_media_image'])) {
+  if (isset($variables['elements']['#mrc_media_image_style']) && isset($variables['content']['field_media_image'])) {
     $variables['content']['field_media_image']['#formatter'] = 'image';
     foreach (Element::children($variables['content']['field_media_image']) as $delta) {
-      $variables['content']['field_media_image'][$delta]['#theme'] = 'image_formatter';
-      $variables['content']['field_media_image'][$delta]['#image_style'] = $variables['elements']['#image_style'];
+      $item = &$variables['content']['field_media_image'][$delta];
+      $item['#theme'] = 'image_formatter';
+      $item['#image_style'] = $variables['elements']['#mrc_media_image_style'];
+
+      if (isset($variables['elements']['#mrc_media_url'])) {
+        $item['#url'] = $variables['elements']['#mrc_media_url'];
+      }
     }
   }
 
