@@ -1,7 +1,7 @@
 <?php
 
 use Drupal\field\Entity\FieldConfig;
-use Drupal\media\Entity\Media;
+use Drupal\user\Entity\Role;
 use Drupal\file\Entity\File;
 
 /**
@@ -105,6 +105,19 @@ function stanford_mrc_post_update_8_0_6() {
   $config_update->revert('view', 'mrc_videos');
   $config_update->revert('view', 'mrc_event_series');
   $config_update->revert('view', 'mrc_news');
+
+  if ($role = Role::load('site_owner')) {
+    $add_permission = [
+      'access file_browser entity browser pages',
+      'access image_browser entity browser pages',
+      'access video_browser entity browser pages',
+    ];
+
+    foreach ($add_permission as $permission) {
+      $role->grantPermission($permission);
+    }
+    $role->save();
+  }
 }
 
 /**
