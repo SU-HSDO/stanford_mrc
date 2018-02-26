@@ -202,6 +202,15 @@ function stanford_mrc_post_update_8_0_6__2() {
 }
 
 /**
+ * Delete old fields now.
+ */
+function stanford_mrc_post_update_8_0_6__3(){
+  foreach(_stanford_mrc_post_update_get_fields() as $field){
+    $field->delete();
+  }
+}
+
+/**
  * Get all the image/file/video fields not on media entities.
  *
  * @return FieldConfig[]
