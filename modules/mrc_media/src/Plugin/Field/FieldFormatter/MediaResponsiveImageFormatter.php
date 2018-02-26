@@ -2,12 +2,7 @@
 
 namespace Drupal\mrc_media\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 
 /**
  * Plugin implementation of the 'yearonly_academic' formatter.
@@ -30,10 +25,11 @@ class MediaResponsiveImageFormatter extends MediaFormatter {
    *   Keyed array of image styles.
    */
   protected function getStyleOptions() {
-    $styles = [];
-    /** @var ResponsiveImageStyle $style */
-    foreach (ResponsiveImageStyle::loadMultiple() as $style) {
-      $styles[$style->id()] = $style->label();
+    $styles = $this->entityTypeManager->getStorage('responsive_image_style')
+      ->loadMultiple();
+    /** @var \Drupal\responsive_image\Entity\ResponsiveImageStyle $style */
+    foreach ($styles as &$style) {
+      $style = $style->label();
     }
     return $styles;
   }
