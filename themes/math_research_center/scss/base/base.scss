@@ -6,6 +6,10 @@
 
 // For overriding or making additions to the
 // stanford_basic theme and/or Decanter.
+//
+// If overrides exceed resonable number of lines
+// in code, create a partial in the base folder
+// and import the file here.
 
 // Decanter
 @import
@@ -47,7 +51,21 @@ img {
 #footer {
   background: $color-cloud;
 
-  @include padding(1em null);
+  @include padding(2em null null null);
+
+  h2 {
+    font-size: $h3-font-size;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  #block-givingbutton p,
+  .decanter-button,
+  a.decanter-button {
+    @include margin(0 null null);
+  }
 }
 
 // Grid
