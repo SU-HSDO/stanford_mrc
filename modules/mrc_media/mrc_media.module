@@ -9,19 +9,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\editor\Entity\Editor;
 use Drupal\mrc_media\Form\EntityEmbedDialog;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\mrc_media\Plugin\Field\FieldFormatter\MediaResponsiveImageFormatter;
-use Drupal\mrc_media\Plugin\Field\FieldFormatter\MediaImageFormatter;
 use Drupal\entity_browser\EntityBrowserFormInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
-
-/**
- * Implements hook_preprocess_HOOK().
- */
-function mrc_media_preprocess_field(&$variables) {
-//  dpm($variables);
-//  kint($variables);
-}
 
 /**
  * Implements hook_preprocess_HOOK().
