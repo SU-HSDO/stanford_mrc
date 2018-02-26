@@ -3,13 +3,37 @@
 namespace Drupal\mrc_media;
 
 use Drupal\Core\Database\Database;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\file\Entity\File;
+use Drupal\Core\Session\AccountProxyInterface;
 
 /**
  * @file
  * Contains \Drupal\mrc_media\MediaInfo.
  */
-class MediaInfo {
+class MediaFieldSave {
+
+  /**
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $accountProxy;
+
+  /**
+   * MediaFieldSave constructor.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
+   * @param \Drupal\Core\Session\AccountProxyInterface $account_proxy
+   */
+  protected function __construct(EntityTypeManagerInterface $entity_manager, AccountProxyInterface $account_proxy) {
+    $this->entityTypeManager = $entity_manager;
+    $this->accountProxy = $account_proxy;
+  }
 
   /**
    * Checks if a video already exists in the media browser.
@@ -18,7 +42,7 @@ class MediaInfo {
    *
    * @return string|null
    */
-  public function videoExists($uri) {
+  protected function videoExists($uri) {
     $select = Database::getConnection()
       ->select('media__field_media_video_embed_field', 've');
     $select->fields('ve', ['field_media_video_embed_field_value']);
@@ -34,7 +58,7 @@ class MediaInfo {
    *
    * @return string|null
    */
-  public function getVideoTargetId($uri) {
+  protected function getVideoTargetId($uri) {
     $select = Database::getConnection()
       ->select('media__field_media_video_embed_field', 've');
     $select->fields('ve', ['entity_id']);
@@ -51,7 +75,7 @@ class MediaInfo {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   Submitted form state.
    */
-  public function mrc_media_save_file_managed_media(array $element, FormStateInterface $form_state) {
+  public function saveFile(array $element, FormStateInterface $form_state) {
     $parents = $form_state->getTriggeringElement()['#array_parents'];
     $button_key = array_pop($parents);
 
@@ -71,15 +95,14 @@ class MediaInfo {
           }
 
           // Load the media type entity to get the source field.
-          $entity_type_manager = \Drupal::entityTypeManager();
-          $media_type = $entity_type_manager->getStorage('media_type')
+          $media_type = $this->entityTypeManager->getStorage('media_type')
             ->load($media_bundle);
           $source_field = $media_type->getSource()
             ->getConfiguration()['source_field'];
 
           // Check if a media entity has already been created.
-          $query = \Drupal::entityQuery('media')
-            ->condition($source_field, $file->id());
+          $query = $this->entityTypeManager->getStorage('media')->getQuery();
+          $query->condition($source_field, $file->id());
 
           // Media entity already created.
           if (!empty($query->execute())) {
@@ -87,11 +110,11 @@ class MediaInfo {
           }
 
           // Create the new media entity.
-          $media_entity = $entity_type_manager->getStorage('media')
+          $media_entity = $this->entityTypeManager->getStorage('media')
             ->create([
               'bundle' => $media_type->id(),
               $source_field => $file,
-              'uid' => \Drupal::currentUser()->id(),
+              'uid' => $this->accountProxy->id(),
               'status' => TRUE,
               'type' => $media_type->getSource()->getPluginId(),
             ]);
@@ -108,5 +131,61 @@ class MediaInfo {
     }
   }
 
+  public function saveVideo(array $element, FormStateInterface $form_state) {
+    $parents = $form_state->getTriggeringElement()['#array_parents'];
+    $button_key = array_pop($parents);
 
+    if ($button_key == 'remove_button' || $form_state::hasAnyErrors()) {
+      return;
+    }
+
+    if ($uri = $form_state->getValue($element['#parents'])) {
+      $uri = reset($uri);
+
+      $media_bundle = 'video';
+
+      // Check if video is already in media browser
+      $video_data_uri = $this->videoExists($uri);
+
+      // If the video doesn't already exist in the media browser, create it.
+      if (empty($video_data_uri)) {
+        // Load the media type entity to get the source field.
+        $media_type = $this->entityTypeManager->getStorage('media_type')
+          ->load($media_bundle);
+        $source_field = $media_type->getSource()
+          ->getConfiguration()['source_field'];
+
+        $media_data = [
+          'bundle' => $media_type->id(),
+          $source_field => $uri,
+          'uid' => $this->accountProxy->id(),
+          'status' => TRUE,
+          'type' => $media_type->getSource()->getPluginId(),
+        ];
+
+        if ($title = $form_state->getValue(['title', 0, 'value'])) {
+          $media_data['name'] = $title;
+        }
+
+        // Create the new media entity.
+        $media_entity = $this->entityTypeManager->getStorage('media')
+          ->create($media_data);
+
+        $media_entity->save();
+
+        // TODO: use services to grab target id, then use entity_usage services.
+        // $video_data_entity_id = $video_data->getVideoTargetId($uri);
+        //$add_usage = \Drupal::service('entity_usage.usage');
+        //$add_usage->add(
+        //  $t_id,
+        //  $t_type,
+        //  $re_id,
+        //  $re_type,
+        //  $method = 'entity_reference',
+        //  $count = 1
+        //);
+
+      }
+    }
+  }
 }

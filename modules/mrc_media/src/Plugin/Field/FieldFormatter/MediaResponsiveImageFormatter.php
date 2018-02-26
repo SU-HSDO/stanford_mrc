@@ -2,27 +2,26 @@
 
 namespace Drupal\mrc_media\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-use Drupal\field\Entity\FieldConfig;
+use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 
 /**
  * Plugin implementation of the 'yearonly_academic' formatter.
  *
  * @FieldFormatter (
- *   id = "media_image_formatter",
- *   label = @Translation("Media Image Style"),
- *   description = @Translation("Apply an image style to image media items."),
- *   field_types = {
+ *   id = "media_responsive_image_formatter",
+ *   label = @Translation("Media Responsive Image Style"),
+ *   description = @Translation("Apply a responsive image style to image media
+ *   items."), field_types = {
  *     "entity_reference"
  *   }
  * )
  */
-class MediaImageFormatter extends EntityReferenceEntityFormatter {
+class MediaResponsiveImageFormatter extends EntityReferenceEntityFormatter {
 
   /**
    * {@inheritdoc}
@@ -42,7 +41,7 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
 
     $elements['image_style'] = [
       '#type' => 'select',
-      '#options' => image_style_options(FALSE),
+      '#options' => $this->getResponsiveStyles(),
       '#title' => t('Image Style'),
       '#default_value' => $this->getSetting('image_style') ?: '',
       '#empty_option' => $this->t('Use Entity Display'),
@@ -53,6 +52,21 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
       '#default_value' => $this->getSetting('link'),
     ];
     return $elements;
+  }
+
+  /**
+   * Get available responsive image styles.
+   *
+   * @return array
+   *   Keyed array of image styles.
+   */
+  protected function getResponsiveStyles() {
+    $styles = [];
+    /** @var ResponsiveImageStyle $style */
+    foreach (ResponsiveImageStyle::loadMultiple() as $style) {
+      $styles[$style->id()] = $style->label();
+    }
+    return $styles;
   }
 
   /**
@@ -69,13 +83,13 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $image_styles = image_style_options(FALSE);
+    $image_styles = $this->getResponsiveStyles();
     $summary = parent::settingsSummary();
 
     unset($image_styles['']);
     $image_style_setting = $this->getSetting('image_style');
     if (isset($image_styles[$image_style_setting])) {
-      $summary[] = t('Image style: @style', ['@style' => $image_styles[$image_style_setting]]);
+      $summary[] = t('Responsive style: @style', ['@style' => $image_styles[$image_style_setting]]);
     }
     else {
       $summary[] = t('Use Entity Display');
@@ -89,17 +103,18 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = parent::viewElements($items, $langcode);
-    $image_styles = image_style_options(FALSE);
+    $image_styles = $this->getResponsiveStyles();
     $style = $this->getSetting('image_style');
 
     if (empty($style) || !isset($image_styles[$style])) {
       return $elements;
     }
+
     /** @var \Drupal\Core\Entity\EntityInterface $parent */
     $parent = $items->getParent()->getValue();
 
     foreach ($elements as &$element) {
-      $element['#mrc_media_image_style'] = $style;
+      $element['#mrc_media_responsive_image_style'] = $style;
 
       if ($this->getSetting('link')) {
         $element['#mrc_media_url'] = $parent->toUrl();
@@ -111,12 +126,13 @@ class MediaImageFormatter extends EntityReferenceEntityFormatter {
   /**
    * @param $element
    */
-  public static function alterMediaRender(&$element){
-    $element['content']['field_media_image']['#formatter'] = 'image';
+  public static function alterMediaRender(&$element) {
+    $element['content']['field_media_image']['#formatter'] = 'responsive_image';
+
     foreach (Element::children($element['content']['field_media_image']) as $delta) {
       $item = &$element['content']['field_media_image'][$delta];
-      $item['#theme'] = 'image_formatter';
-      $item['#image_style'] = $element['elements']['#mrc_media_image_style'];
+      $item['#theme'] = 'responsive_image_formatter';
+      $item['#responsive_image_style_id'] = $element['elements']['#mrc_media_responsive_image_style'];
 
       if (isset($element['elements']['#mrc_media_url'])) {
         $item['#url'] = $element['elements']['#mrc_media_url'];
