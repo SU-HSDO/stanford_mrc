@@ -96,6 +96,8 @@ function stanford_mrc_post_update_8_0_6() {
   $config_update->import('environment_indicator','2_staging');
   $config_update->import('environment_indicator','1_development');
   $config_update->import('environment_indicator','3_production');
+
+  $config_update->revert('filter_format', 'basic_html');
 }
 
 /**
