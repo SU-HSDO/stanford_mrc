@@ -103,10 +103,13 @@ base:
   css:
     base:
       css/base/base.css: {}
+  js:
+    js/math_research_center.js: {}
   dependencies:
     - classy/base
     - core/modernizr
     - core/normalize
+    - core/jquery
 
 hover_menu:
   version: VERSION

@@ -16,9 +16,35 @@
   '../utilities/mixins/mixins';
 
 #block-searchform {
+
+  form {
+    display: inline-block;
+    position: relative;
+
+    &.expanded {
+      input.button {
+        z-index: 999;
+      }
+      input.form-search {
+        background: transparent;
+        width: 145px;
+      }
+    }
+  }
+
   input {
     &.button {
-      display: none;
+      display: block;
+      position: absolute;
+      background: url('../../img/search.svg') no-repeat;
+      background-size: 45px 45px;
+      top: 5px;
+      right: 5px;
+      border: 0;
+      font-size: 0;
+      width: 45px;
+      height: 45px;
+      z-index: -999;
     }
 
     &.form-search {
