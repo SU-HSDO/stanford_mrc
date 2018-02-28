@@ -10,6 +10,37 @@ use Drupal\migrate\Plugin\RequirementsInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_entity_delete().
+ */
+function mrc_events_importer_entity_delete(EntityInterface $entity) {
+  $database = \Drupal::database();
+  /** @var \Drupal\migrate\Plugin\MigrationPluginManager $manager */
+  $manager = \Drupal::service('plugin.manager.migration');
+  $migrations = $manager->createInstances([]);
+
+  /** @var \Drupal\migrate_plus\Entity\Migration $migration */
+  foreach ($migrations as $migration) {
+    $destination = $migration->get('destination');
+
+    if (isset($destination['plugin']) && strpos($destination['plugin'], 'entity:') !== FALSE) {
+      list(, $type) = explode(':', $destination['plugin']);
+
+      if ($type == $entity->getEntityTypeId()) {
+        $table = 'migrate_map_' . $migration->id();
+
+        if ($database->schema()->tableExists($table)) {
+          $database->delete($table)
+            ->condition('destid1', $entity->id())
+            ->execute();
+        }
+        return;
+      }
+    }
+  }
+}
 
 /**
  * Implements hook_cron().
@@ -100,7 +131,6 @@ function mrc_events_importer_migration_list($migration_ids = '') {
  */
 function mrc_events_importer_execute_migration(MigrationInterface $migration, $migration_id) {
   $log = new MigrateMessage();
-  // todo: look into updates.
   //  $migration->getIdMap()->prepareUpdate();
   $executable = new MigrateExecutable($migration, $log);
   $executable->import();

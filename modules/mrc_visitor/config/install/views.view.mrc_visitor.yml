@@ -2,17 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_mrc_image
     - field.storage.node.field_s_visitor_curr_inst
-    - field.storage.node.field_s_visitor_photo
     - field.storage.node.field_s_visitor_position_title
     - field.storage.node.field_s_visitor_research_area
     - field.storage.node.field_s_visitor_year_visited
-    - image.style.thumbnail
     - node.type.stanford_visitor
     - taxonomy.vocabulary.mrc_event_series
     - taxonomy.vocabulary.stanford_mrc_research_area
   module:
-    - image
+    - mrc_media
     - mrc_yearonly
     - node
     - taxonomy
@@ -75,9 +74,9 @@ display:
           default_field_elements: 1
           inline:
             title: 0
-            field_s_visitor_photo: 0
             field_s_visitor_research_area: 0
             field_s_visitor_position_title: 0
+            field_mrc_image: 0
           separator: ''
           hide_empty: 0
           pattern: visitors_grid
@@ -87,21 +86,21 @@ display:
               weight: 0
               plugin: views_row
               source: title
+            'views_row:field_mrc_image':
+              destination: image
+              weight: 1
+              plugin: views_row
+              source: field_mrc_image
             'views_row:field_s_visitor_position_title':
               destination: title
-              weight: 1
+              weight: 2
               plugin: views_row
               source: field_s_visitor_position_title
             'views_row:field_s_visitor_research_area':
               destination: research_areas
-              weight: 2
-              plugin: views_row
-              source: field_s_visitor_research_area
-            'views_row:field_s_visitor_photo':
-              destination: image
               weight: 3
               plugin: views_row
-              source: field_s_visitor_photo
+              source: field_s_visitor_research_area
       fields:
         title:
           id: title
@@ -150,70 +149,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_s_visitor_photo:
-          id: field_s_visitor_photo
-          table: node__field_s_visitor_photo
-          field: field_s_visitor_photo
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: image
-          settings:
-            image_style: thumbnail
-            image_link: ''
-          group_column: ''
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          plugin_id: field
         field_s_visitor_research_area:
           id: field_s_visitor_research_area
           table: node__field_s_visitor_research_area
@@ -340,6 +275,70 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_mrc_image:
+          id: field_mrc_image
+          table: node__field_mrc_image
+          field: field_mrc_image
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: media_image_formatter
+          settings:
+            view_mode: default
+            image_style: thumbnail
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       filters:
         status:
           value: '1'
@@ -433,7 +432,7 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.node.field_s_visitor_photo'
+        - 'config:field.storage.node.field_mrc_image'
         - 'config:field.storage.node.field_s_visitor_position_title'
         - 'config:field.storage.node.field_s_visitor_research_area'
   all_visitors:
@@ -1166,6 +1165,6 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.node.field_s_visitor_photo'
+        - 'config:field.storage.node.field_mrc_image'
         - 'config:field.storage.node.field_s_visitor_position_title'
         - 'config:field.storage.node.field_s_visitor_research_area'

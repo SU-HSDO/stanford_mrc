@@ -34,7 +34,7 @@ function math_research_center_preprocess(&$variables, $hook) {
 }
 
 /**
- * Implements hook_preprocess_paragraph
+ * Implements hook_preprocess_paragraph().
  */
 function math_research_center_preprocess_paragraph(&$variables) {
   $variables['#attached']['library'][] = 'math_research_center/paragraph.' . $variables['paragraph']->bundle();
