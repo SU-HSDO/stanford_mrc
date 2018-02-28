@@ -44,10 +44,6 @@ process:
       method: row
       source: image
     -
-      plugin: entity_lookup
-      value_key: uri
-      entity_type: file
-    -
       plugin: download_file
       source:
         - image
