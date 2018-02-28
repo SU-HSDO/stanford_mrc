@@ -78,10 +78,6 @@
 
         @include padding(0 10px);
       }
-
-      &:focus:before {
-        box-shadow: $focus-shadow;
-      }
     }
 
     &.slick-prev {
@@ -95,10 +91,6 @@
         top: 0;
 
         @include padding(0 10px);
-      }
-
-      &:focus:before {
-        box-shadow: $focus-shadow;
       }
     }
   }
@@ -143,10 +135,6 @@
           width: 20px;
 
           @include font-smoothing;
-        }
-
-        &:focus:before {
-          box-shadow: $focus-shadow;
         }
       }
 
