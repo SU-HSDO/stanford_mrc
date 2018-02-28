@@ -100,6 +100,8 @@ function stanford_mrc_post_update_8_0_6() {
   $config_update->import('environment_indicator', '1_development');
   $config_update->import('environment_indicator', '3_production');
 
+  $config_update->revert('filter_format', 'basic_html');
+
   $config_update->revert('view', 'mrc_visitor');
   $config_update->revert('view', 'mrc_events');
   $config_update->revert('view', 'mrc_videos');
@@ -204,8 +206,8 @@ function stanford_mrc_post_update_8_0_6__2() {
 /**
  * Delete old fields now.
  */
-function stanford_mrc_post_update_8_0_6__3(){
-  foreach(_stanford_mrc_post_update_get_fields() as $field){
+function stanford_mrc_post_update_8_0_6__3() {
+  foreach (_stanford_mrc_post_update_get_fields() as $field) {
     $field->delete();
   }
 }
