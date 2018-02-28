@@ -16,3 +16,12 @@ function mrc_news_post_update_8_0_4() {
   $path = drupal_get_path('module', 'mrc_news') . '/config/install';
   stanford_mrc_update_configs(TRUE, $configs, $path);
 }
+
+/**
+ * Create new image style.
+ */
+function mrc_news_post_update_8_0_6(){
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->import('image_style', 'news_thumbnail');
+}

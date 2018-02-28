@@ -7,6 +7,8 @@
 
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\user\Entity\Role;
+use Drupal\user\RoleInterface;
 
 /**
  * @param string $entity_type
@@ -70,4 +72,22 @@ function mrc_page_post_update_8_0_6() {
     'field.storage.node.field_s_mrc_page_sidebar_block',
   ];
   stanford_mrc_update_configs(TRUE, $configs, $path);
+
+  $roles = Role::loadMultiple([
+    RoleInterface::ANONYMOUS_ID,
+    RoleInterface::AUTHENTICATED_ID,
+  ]);
+
+  $add_permission = [
+    'view field_s_mrc_page_sidebar_block',
+    'view own field_s_mrc_page_sidebar_block',
+  ];
+
+  foreach ($roles as $role) {
+    foreach ($add_permission as $permission) {
+      $role->grantPermission($permission);
+    }
+    $role->save();
+  }
+
 }

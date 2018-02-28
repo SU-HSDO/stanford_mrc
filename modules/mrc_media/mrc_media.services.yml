@@ -8,5 +8,8 @@ services:
     arguments:
       - '@entity_type.manager'
       - '@video_embed_field.provider_manager'
-  mrc_media.media_info:
-    class: '\Drupal\mrc_media\MediaInfo'
+  mrc_media.field_save:
+    class: '\Drupal\mrc_media\MediaFieldSave'
+    arguments:
+      - '@entity_type.manager'
+      - '@current_user'

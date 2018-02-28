@@ -9,11 +9,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\editor\Entity\Editor;
 use Drupal\mrc_media\Form\EntityEmbedDialog;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\file\Entity\File;
 use Drupal\entity_browser\EntityBrowserFormInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
-use Drupal\Core\Render\Element;
 
 /**
  * Implements hook_preprocess_HOOK().
@@ -60,6 +58,7 @@ function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $fo
  */
 function mrc_media_preprocess_image_widget(&$variables) {
   if (isset($variables['data']['focal_point']) && !empty($variables['data']['preview'])) {
+    // Adds some focal point help text.
     $variables['data']['preview']['help'] = [
       '#prefix' => '<div class="focal-point-help-text description">',
       '#suffix' => '</div>',
@@ -71,84 +70,12 @@ function mrc_media_preprocess_image_widget(&$variables) {
 /**
  * Implements hook_field_widget_WIDGET_TYPE_form_alter().
  */
-function mrc_media_field_widget_video_embed_field_textfield_form_alter(&$element, FormStateInterface $form_state, $context) {
-  $element['#element_validate'][] = 'mrc_media_save_video_media';
-}
-
-/**
- * Implements hook_field_widget_WIDGET_TYPE_form_alter().
- */
 function mrc_media_field_widget_entity_browser_entity_reference_form_alter(&$element, FormStateInterface $form_state, $context) {
   /** @var  \Drupal\field\Entity\FieldConfig $field_definition */
   $field_definition = $context['items']->getFieldDefinition();
   $handler = $field_definition->getSetting('handler_settings');
   if (!empty($handler['target_bundles'])) {
     $element['entity_browser']['#widget_context']['target_bundles'] = $handler['target_bundles'];
-  }
-}
-
-/**
- * Create a new media entity when a file_managed file is uploaded.
- *
- * @param array $element
- *   Managed file form element.
- * @param \Drupal\Core\Form\FormStateInterface $form_state
- *   Submitted form state.
- */
-function mrc_media_save_file_managed_media(array $element, FormStateInterface $form_state) {
-  $parents = $form_state->getTriggeringElement()['#array_parents'];
-  $button_key = array_pop($parents);
-
-  if ($button_key == 'remove_button' || $form_state::hasAnyErrors()) {
-    return;
-  }
-
-  if (!empty($element['#files'])) {
-    foreach ($element['#files'] as $file) {
-      if ($file instanceof File) {
-        $media_bundle = 'file';
-
-        // Switch the media bundle to image if there is a width attribute.
-        // Can't find a better solution than that.
-        if (isset($element['width'])) {
-          $media_bundle = 'image';
-        }
-
-        // Load the media type entity to get the source field.
-        $entity_type_manager = \Drupal::entityTypeManager();
-        $media_type = $entity_type_manager->getStorage('media_type')
-          ->load($media_bundle);
-        $source_field = $media_type->getSource()
-          ->getConfiguration()['source_field'];
-
-        // Check if a media entity has already been created.
-        $query = \Drupal::entityQuery('media')
-          ->condition($source_field, $file->id());
-
-        // Media entity already created.
-        if (!empty($query->execute())) {
-          continue;
-        }
-
-        // Create the new media entity.
-        $media_entity = $entity_type_manager->getStorage('media')
-          ->create([
-            'bundle' => $media_type->id(),
-            $source_field => $file,
-            'uid' => \Drupal::currentUser()->id(),
-            'status' => TRUE,
-            'type' => $media_type->getSource()->getPluginId(),
-          ]);
-
-        $source_field = $media_entity->getSource()
-          ->getConfiguration()['source_field'];
-        // If we don't save file at this point Media entity creates another file
-        // entity with same uri for the thumbnail. That should probably be fixed
-        // in Media entity, but this workaround should work for now.
-        $media_entity->$source_field->entity->save();
-        $media_entity->save();
-      }
-    }
   }
 }
 
@@ -178,16 +105,6 @@ function mrc_media_entity_embed_alter(array &$build, EntityInterface $entity, ar
  * Implements hook_preprocess_HOOK().
  */
 function mrc_media_preprocess_media(&$variables) {
-
-  // Set the image style on the media field from the formatter settings.
-  if (isset($variables['elements']['#image_style']) && isset($variables['content']['field_media_image'])) {
-    $variables['content']['field_media_image']['#formatter'] = 'image';
-    foreach (Element::children($variables['content']['field_media_image']) as $delta) {
-      $variables['content']['field_media_image'][$delta]['#theme'] = 'image_formatter';
-      $variables['content']['field_media_image'][$delta]['#image_style'] = $variables['elements']['#image_style'];
-    }
-  }
-
   /** @var \Drupal\media\Entity\MediaType $media_type */
   $media_type = \Drupal::entityTypeManager()->getStorage('media_type')
     ->load($variables['media']->bundle());
@@ -209,14 +126,10 @@ function mrc_media_preprocess_media(&$variables) {
 }
 
 /**
- * Implements hook_preprocess().
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
  */
-function mrc_media_preprocess(&$variables, $hook) {
-  if ($hook == 'image') {
-    //    dpm(debug_ba);
-  }
-  //  template_preprocess_image_style()
-  //    dpm($hook);
+function mrc_media_field_widget_video_embed_field_textfield_form_alter(&$element, FormStateInterface $form_state, $context) {
+  $element['#element_validate'][] = 'mrc_media_save_video_media';
 }
 
 /**
@@ -228,64 +141,17 @@ function mrc_media_preprocess(&$variables, $hook) {
  *   Submitted form state.
  */
 function mrc_media_save_video_media(array $element, FormStateInterface $form_state) {
-  $parents = $form_state->getTriggeringElement()['#array_parents'];
-  $button_key = array_pop($parents);
+  \Drupal::service('mrc_media.field_save')->saveVideo($element, $form_state);
+}
 
-  if ($button_key == 'remove_button' || $form_state::hasAnyErrors()) {
-    return;
-  }
-
-  if ($uri = $form_state->getValue($element['#parents'])) {
-    $uri = reset($uri);
-
-    $media_bundle = 'video';
-
-    // Grab video info through the service.
-    /** @var \Drupal\mrc_media\MediaInfo $video_data */
-    $video_data = \Drupal::service('mrc_media.media_info');
-
-    // Check if video is already in media browser
-    $video_data_uri = $video_data->videoExists($uri);
-
-    // If the video doesn't already exist in the media browser, create it.
-    if (empty($video_data_uri)) {
-      // Load the media type entity to get the source field.
-      $entity_type_manager = \Drupal::entityTypeManager();
-      $media_type = $entity_type_manager->getStorage('media_type')
-        ->load($media_bundle);
-      $source_field = $media_type->getSource()
-        ->getConfiguration()['source_field'];
-
-      $media_data = [
-        'bundle' => $media_type->id(),
-        $source_field => $uri,
-        'uid' => \Drupal::currentUser()->id(),
-        'status' => TRUE,
-        'type' => $media_type->getSource()->getPluginId(),
-      ];
-
-      if ($title = $form_state->getValue(['title', 0, 'value'])) {
-        $media_data['name'] = $title;
-      }
-
-      // Create the new media entity.
-      $media_entity = $entity_type_manager->getStorage('media')
-        ->create($media_data);
-
-      $media_entity->save();
-
-      // TODO: use services to grab target id, then use entity_usage services.
-      // $video_data_entity_id = $video_data->getVideoTargetId($uri);
-      //$add_usage = \Drupal::service('entity_usage.usage');
-      //$add_usage->add(
-      //  $t_id,
-      //  $t_type,
-      //  $re_id,
-      //  $re_type,
-      //  $method = 'entity_reference',
-      //  $count = 1
-      //);
-
-    }
-  }
+/**
+ * Create a new media entity when a file_managed file is uploaded.
+ *
+ * @param array $element
+ *   Managed file form element.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Submitted form state.
+ */
+function mrc_media_save_file_managed_media(array $element, FormStateInterface $form_state) {
+  \Drupal::service('mrc_media.field_save')->saveFile($element, $form_state);
 }
