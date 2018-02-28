@@ -36,7 +36,7 @@ function math_research_center_preprocess(&$variables, $hook) {
 /**
  * Implements hook_preprocess_paragraph
  */
-function math_research_center_preprocess_paragraph(&$variables){
+function math_research_center_preprocess_paragraph(&$variables) {
   $variables['#attached']['library'][] = 'math_research_center/paragraph.' . $variables['paragraph']->bundle();
 }
 
@@ -97,4 +97,12 @@ function math_research_center_preprocess_field(&$variables) {
 
   }
 
+}
+
+/**
+ * Implements hook_preprocess_search_result().
+ */
+function math_research_center_preprocess_search_result(&$variables) {
+  // Hide user and date/time info.
+  unset($variables['info']);
 }
