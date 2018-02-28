@@ -19,6 +19,11 @@
 @import
   '../utilities/mixins/mixins';
 
+// Accessibility helpers
+*:focus {
+  @include accessible-focus;
+}
+
 // Inputs
 @import
   'inputs';
