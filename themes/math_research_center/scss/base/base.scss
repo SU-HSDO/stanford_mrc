@@ -20,7 +20,8 @@
   '../utilities/mixins/mixins';
 
 // Accessibility helpers
-*:focus {
+*:focus,
+a:focus {
   @include accessible-focus;
 }
 
