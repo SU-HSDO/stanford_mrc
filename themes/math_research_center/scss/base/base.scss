@@ -19,19 +19,16 @@
 @import
   '../utilities/mixins/mixins';
 
-// Inputs
-@import
-  'inputs';
+// Footer
+#footer {
+  background: $color-cloud;
 
-// Images
-img {
-  max-width: 100%;
-  height: auto;
+  @include padding(1em null);
 }
 
-// Typography
-.decanter-font-lead {
-  font-weight: 400;
+// Grid
+.decanter-grid [class*="decanter-width-"] {
+  margin-bottom: 2em;
 }
 
 // Header
@@ -47,28 +44,21 @@ img {
   }
 }
 
-// Footer
-#footer {
-  background: $color-cloud;
-
-  @include padding(2em null null null);
-
-  h2 {
-    font-size: $h3-font-size;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  #block-givingbutton p,
-  .decanter-button,
-  a.decanter-button {
-    @include margin(0 null null);
-  }
+// Images
+img {
+  max-width: 100%;
+  height: auto;
 }
 
-// Grid
-.decanter-grid [class*="decanter-width-"] {
-  margin-bottom: 2em;
+// Inputs
+@import
+  'inputs';
+
+// Search
+@import
+  'search';
+
+// Typography
+.decanter-font-lead {
+  font-weight: 400;
 }

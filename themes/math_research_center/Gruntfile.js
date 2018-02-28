@@ -115,10 +115,10 @@ module.exports = function(grunt) {
           'css/node/stanford_visitor.css':  'scss/node/stanford_visitor.scss',
 
           // PARAGRAPH
-          'css/paragraph/mrc_slideshow.css':   'scss/paragraph/mrc_slideshow.scss',
+          'css/paragraph/mrc_slideshow.css':  'scss/paragraph/mrc_slideshow.scss',
 
           // MOLECULES
-          'css/molecules/hover-menu.css':  'scss/molecules/hover-menu.scss',
+          'css/molecules/hover-menu.css': 'scss/molecules/hover-menu.scss',
 
           // PATTERNS
           'patterns/atoms/date-stacked/css/date-stacked.css':                       'patterns/atoms/date-stacked/scss/date-stacked.scss',
