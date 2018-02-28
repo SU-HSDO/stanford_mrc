@@ -487,7 +487,8 @@ display:
           type: media_image_formatter
           settings:
             view_mode: default
-            image_style: news_250
+            image_style: news_thumbnail
+            link: 0
           group_column: target_id
           group_columns: {  }
           group_rows: true
