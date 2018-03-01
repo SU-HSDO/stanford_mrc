@@ -3,7 +3,7 @@ type: theme
 base theme: stanford_basic
 description: 'Math Research Center theme.'
 package: MRC
-version: VERSION
+version: 8.0.6
 core: 8.x
 libraries:
   - math_research_center/fontawesome
