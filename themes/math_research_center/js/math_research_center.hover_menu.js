@@ -2,7 +2,7 @@
   'use strict';
   Drupal.behaviors.mrcHoverMenu = {
     attach: function (context, settings) {
-      $('ul.decanter-nav-primary').menu();
+      $('#header ul.decanter-nav-primary').menu();
     }
   };
 })(jQuery, Drupal);
