@@ -30,7 +30,7 @@ class MediaFieldSave {
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
    * @param \Drupal\Core\Session\AccountProxyInterface $account_proxy
    */
-  protected function __construct(EntityTypeManagerInterface $entity_manager, AccountProxyInterface $account_proxy) {
+  public function __construct(EntityTypeManagerInterface $entity_manager, AccountProxyInterface $account_proxy) {
     $this->entityTypeManager = $entity_manager;
     $this->accountProxy = $account_proxy;
   }
