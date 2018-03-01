@@ -1,5 +1,14 @@
 Stanford MRC
 
+Version 8.0.6                                                         2018-02-28
+--------------------------------------------------------------------------------
+- Media fields instead of image/video fields
+- use those media fields on views
+- Image styles everywhere
+- field permissions
+- different media browsers
+- Media UX improvements
+
 Version 8.0.3                                                         2018-01-17
 --------------------------------------------------------------------------------
 - Saml configured
