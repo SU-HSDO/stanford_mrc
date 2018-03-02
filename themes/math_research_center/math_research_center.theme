@@ -8,6 +8,34 @@
 use Drupal\ui_patterns\UiPatterns;
 
 /**
+ * Implements hook_preprocess_block().
+ */
+function math_research_center_preprocess_block(&$variables) {
+  if ($variables['elements']['#base_plugin_id'] == 'menu_block') {
+    // Get the current active trail.
+    /** @var \Drupal\Core\Menu\MenuActiveTrail $active_trail */
+    $active_trail = \Drupal::service('menu.active_trail');
+    $trail = $active_trail->getActiveTrailIds($variables['elements']['#derivative_plugin_id']);
+    $trail = array_filter($trail);
+
+    if (empty($trail)) {
+      return;
+    }
+
+    // The last item of the trail is the root menu item.
+    $root = end($trail);
+
+    /** @var \Drupal\Core\Menu\MenuLinkManager $menu_link_manager */
+    $menu_link_manager = \Drupal::service('plugin.manager.menu.link');
+    // Create the link to put as the label
+    if ($root_link = $menu_link_manager->createInstance($root)) {
+      $link = \Drupal\Core\Link::fromTextAndUrl($variables['configuration']['label'], $root_link->getUrlObject());
+      $variables['configuration']['label'] = $link->toRenderable();
+    }
+  }
+}
+
+/**
  * Implements hook_theme_suggestions_alter().
  */
 function math_research_center_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
