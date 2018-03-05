@@ -9,7 +9,9 @@ use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 use Drupal\mrc_helper\Element\DynamicEntityAutocomplete;
 
 /**
- * Plugin implementation of the 'link' widget.
+ * Overrides the default core link widget.
+ *
+ * Remove when https://www.drupal.org/project/drupal/issues/2423093 is resolved.
  *
  * @FieldWidget(
  *   id = "link_default",

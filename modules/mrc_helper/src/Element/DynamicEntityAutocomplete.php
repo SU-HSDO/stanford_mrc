@@ -15,7 +15,8 @@ use Drupal\Core\Site\Settings;
  * Provides a "dynamic" entity autocomplete form element.
  *
  * This form element allows you to create an entity autocomplete that works
- * with multiple types of entities.
+ * with multiple types of entities. This wont be needed when
+ * https://www.drupal.org/project/drupal/issues/2423093 is resolved.
  *
  * @see \Drupal\Core\Entity\Element\EntityAutocomplete
  *

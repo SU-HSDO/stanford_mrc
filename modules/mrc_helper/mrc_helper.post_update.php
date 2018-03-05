@@ -32,6 +32,7 @@ function mrc_helper_post_update_8_0_6() {
  * Change menu links to entity reference links.
  */
 function mrc_helper_post_update_8_0_7() {
+  \Drupal::service('module_installer')->install(['taxonomy_menu_ui']);
   $database = \Drupal::database();
   $links = $database->select('menu_link_content_data', 'm')
     ->fields('m', ['id', 'link__uri'])
