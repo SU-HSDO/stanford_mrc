@@ -15,14 +15,104 @@
 .js .decanter-main-menu--hover-reveal {
   &.menu--main {
     box-shadow: none;
+    float: right;
+
+    a:hover,
+    a.is-active,
+    .menu-item--active-trail a,
+    a.ui-state-active {
+      border-bottom: solid 3px $color-black;
+    }
   }
 
   .decanter-nav-primary {
     border: none;
 
-    > li > a .ui-menu-icon {
-      -webkit-transform: rotate(90deg);
-      transform: rotate(90deg);
+    &.ui-menu {
+      &.ui-widget-content {
+        background: none;
+
+        &.ui-widget {
+          border: none;
+        }
+
+        .ui-icon {
+          background-image: none;
+        }
+
+        .ui-widget {
+          background: $color-black;
+
+          @include padding(1em);
+        }
+      }
+
+      .ui-menu-item-wrapper {
+        @include margin(0 1.5em 0 0);
+        @include padding(3px 0 30px);
+      }
+    }
+
+    a,
+    .menu-item a {
+      border-bottom: solid 3px $color-cloud;
+    }
+
+    > li > a {
+      font-weight: $font-normal;
+
+      @media (min-width: 951px) {
+        font-size: $base-font-size;
+      }
+
+      & .ui-menu-icon {
+        right: -18px;
+        top: -23px;
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
+    }
+
+    .ui-state-active,
+    .ui-widget-content .ui-state-active,
+    .ui-widget-header .ui-state-active,
+    a.ui-button:active,
+    .ui-button:active,
+    .ui-button.ui-state-active:hover {
+      background-color: transparent;
+      border: none;
+      color: $color-black;
+    }
+
+    .decanter-nav-submenu {
+      .menu-item a {
+        border-bottom: none;
+        color: $color-white;
+
+        @include margin(0 0 10px 0);
+        @include padding(0);
+
+        &:hover {
+          background-color: transparent;
+          border: none;
+          color: $color-cloud;
+          text-decoration: underline;
+        }
+
+        &.is-active {
+          color: $color-cloud;
+        }
+      }
+
+      .ui-state-active,
+      .ui-widget-content .ui-state-active
+      a.ui-button:active,
+      .ui-button:active,
+      .ui-button.ui-state-active:hover {
+        background-color: transparent;
+        color: $color-cloud;
+        text-decoration: underline;
+      }
     }
   }
 
