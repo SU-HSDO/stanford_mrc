@@ -24,6 +24,7 @@ dependencies:
     - ds
     - link
     - mrc_date
+    - mrc_ds_blocks
     - mrc_media
     - telephone
     - text
@@ -61,6 +62,27 @@ third_party_settings:
         - field_s_event_contact_phone
       embed_video:
         - field_mrc_video
+      sidebar:
+        - 'block_content:c16a5bb2-404e-482e-af1c-6edb4162f963'
+        - 'menu_block:main'
+  mrc_ds_blocks:
+    'menu_block:main':
+      config:
+        provider: menu_block
+        admin_label: ''
+        label: 'Main navigation'
+        label_display: visible
+        level: '1'
+        depth: '0'
+        expand: 1
+        parent: 'main:'
+        label_type: root
+        follow: 1
+        follow_parent: '0'
+        suggestion: main
+      parent_name: ''
+      weight: 20
+      region: sidebar
 _core:
   default_config_hash: '--Z_oePhErkaBTiWo881iUr_LbanS3gn3S1XXxQDkW0'
 id: node.stanford_event.default
