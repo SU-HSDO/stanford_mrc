@@ -383,4 +383,9 @@ function stanford_mrc_post_update_8_0_7() {
   $config->set('allow_override', 0);
   $config->set('redirect_code', '301');
   $config->save();
+
+  $config = $config_factory->getEditable('rabbit_hole.behavior_settings.default_bundle');
+  $config->set('allow_override', 0);
+  $config->set('redirect_code', '301');
+  $config->save();
 }
