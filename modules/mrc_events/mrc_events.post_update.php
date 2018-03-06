@@ -46,3 +46,14 @@ function mrc_events_post_update_8_0_6() {
   $config_update = \Drupal::service('config_update.config_update');
   $config_update->import('image_style', 'event_350');
 }
+
+/**
+ * Revert the events display.
+ */
+function mrc_events_post_update_8_0_7() {
+  \Drupal::service('module_installer')->install(['menu_position']);
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('entity_view_display', 'node.stanford_event.default');
+  $config_update->import('menu_position_rule', 'events');
+}
