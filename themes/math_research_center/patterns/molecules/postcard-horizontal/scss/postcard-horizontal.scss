@@ -18,6 +18,7 @@
   '../utilities/mixins/mixins';
 
 .mrc-postcard--horizontal {
+  @include margin(null null 2em);
   @include mrc-card-container;
 
   .mrc-postcard__img {
