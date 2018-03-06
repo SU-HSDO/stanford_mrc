@@ -5,9 +5,8 @@ dependencies:
     - menu_ui
 third_party_settings:
   menu_ui:
-    available_menus:
-      - main
-    parent: 'main:'
+    available_menus: {  }
+    parent: ''
 _core:
   default_config_hash: tArwO0Xe_vzbE5DCpSk2baFo2ogkkUkrPCgfeiAQcDo
 name: Event
