@@ -56,7 +56,7 @@ a:focus {
 #header {
   background: $color-cloud;
 
-  @include padding(1em null);
+  @include padding(1em null null);
 
   .block--lockup__site-name-and-slogan a {
     color: $color-black;
