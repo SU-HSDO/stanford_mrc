@@ -51,9 +51,12 @@ function mrc_events_post_update_8_0_6() {
  * Revert the events display.
  */
 function mrc_events_post_update_8_0_7() {
-  \Drupal::service('module_installer')->install(['menu_position']);
+  \Drupal::service('module_installer')->install(['menu_position', 'eck']);
   /** @var \Drupal\config_update\ConfigReverter $config_update */
   $config_update = \Drupal::service('config_update.config_update');
   $config_update->revert('entity_view_display', 'node.stanford_event.default');
   $config_update->import('menu_position_rule', 'events');
+
+  $config_update->import('eck_entity_type', 'event_collections');
+  $config_update->import('eck_entity_bundle', 'event_collections.speaker');
 }

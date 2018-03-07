@@ -11,7 +11,7 @@ label: 'Events importer'
 source:
   plugin: url
   data_fetcher_plugin: file
-  urls: 'http://events.stanford.edu/xml/drupal/v2.php?organization=631'
+  urls: 'http://events.stanford.edu/xml/drupal/v2.php?organization=19'
   data_parser_plugin: simple_xml
   item_selector: /EventList/Event
   fields:
@@ -79,6 +79,10 @@ source:
       name: event_status
       label: "Event Status"
       selector: eventStatus
+    -
+      name: speaker
+      label: "Speaker"
+      selector: People/person
 
   ids:
     guid:
@@ -162,6 +166,9 @@ process:
       plugin: migration_lookup
       migration: events_image_importer
       source: guid
+    -
+      plugin: default_value
+      default_value: null
   field_s_event_status:
     -
       source: event_status
@@ -170,6 +177,17 @@ process:
       bundle_key: vid
       bundle: event_status
       value_key: name
+    -
+      plugin: default_value
+      default_value: null
+  field_s_event_speaker:
+    -
+      source: speaker
+      plugin: entity_generate
+      entity_type: event_collections
+      bundle_key: type
+      bundle: speaker
+      value_key: title
     -
       plugin: default_value
       default_value: null
