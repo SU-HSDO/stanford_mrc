@@ -34,26 +34,6 @@ li {
   }
 }
 
-/** NAVIGATION **/
-
-/******** SUBNAVIGATION ********/
-.decanter-width-one-fourth .menu--main a,
-.decanter-width-one-fourth .menu--main .menu-item a {
-  font-weight: 600;
-  padding: 0 0 10px 10px;
-  border-bottom: none;
-  border-left: 2px solid #fff;
-
-}
-
-.decanter-width-one-fourth .menu--main a:hover,
-.decanter-width-one-fourth .menu--main a.is-active,
-.decanter-width-one-fourth .menu--main .menu-item--active-trail a {
-  border-bottom: none;
-  color: #333;
-  border-left: 2px solid #333;
-}
-
 /** SLIDESHOW **/
 @media (min-width: 767px) {
   .slick--optionset--mrc-slideshow .slick-content {
