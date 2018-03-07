@@ -135,6 +135,8 @@
 // it does not appear in the Header region.
 .js .decanter-width-one-fourth {
   .decanter-main-menu--hover-reveal.menu--main {
+    float: none;
+
     h2#menu-blockmain-menu {
       @include margin(0 null null);
 
@@ -159,6 +161,14 @@
 
       &.is-active {
         border-left: 2px solid $color-black;
+      }
+    }
+
+    ul {
+      @include margin(null null 0);
+
+      li {
+        display: block;
       }
     }
 
@@ -194,10 +204,6 @@
       font-weight: $font-normal;
 
       @include padding(null null null 20px);
-    }
-
-    ul {
-      @include margin(null null 0);
     }
   }
 }
