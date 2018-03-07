@@ -84,5 +84,25 @@ li {
 /******** POSTCARD ********/
 
 .mrc-date-stacked {
-  margin-bottom: .4em ;
+  margin-bottom: .4em;
+}
+
+@media(min-width: 481px) {
+  #block-math-research-center-mainnavigation {
+    button {
+      display: none;
+    }
+  }
+}
+
+@media(max-width: 481px) {
+  #block-math-research-center-mainnavigation {
+    > ul {
+      display: none;
+    }
+  }
+}
+
+.ui-widget .fa {
+  font: normal normal normal 14px/1 FontAwesome;
 }
