@@ -183,7 +183,7 @@ process:
   field_s_event_speaker:
     -
       source: speaker
-      plugin: entity_generate
+      plugin: entity_generate_no_lookup
       entity_type: event_collections
       bundle_key: type
       bundle: speaker
