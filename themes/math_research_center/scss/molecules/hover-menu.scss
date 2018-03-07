@@ -12,6 +12,7 @@
 @import
   '../utilities/mixins/mixins';
 
+// Main menu in header region
 .js .decanter-main-menu--hover-reveal {
   &.menu--main {
     box-shadow: none;
@@ -129,7 +130,79 @@
   }
 }
 
-// Styles for no javascript
+// Subnavigation - no JavaScript
+// No JavaScript is applied to the menu when
+// it does not appear in the Header region.
+.js .decanter-width-one-fourth {
+  .decanter-main-menu--hover-reveal.menu--main {
+    h2#menu-blockmain-menu {
+      @include margin(0 null null);
+
+      a {
+        color: $color-black;
+        font-size: $h2-font-size;
+        font-weight: $font-bold;
+      }
+    }
+
+    a {
+      font-weight: $font-bold;
+      text-decoration: none;
+
+      @include padding(0 0 5px 10px);
+
+      &:hover,
+      &.is-active,
+      &.ui-state-active {
+        border-bottom: none;
+      }
+
+      &.is-active {
+        border-left: 2px solid $color-black;
+      }
+    }
+
+    .menu-item--active-trail {
+      a {
+        border-bottom: none;
+        color: $color-bright-red;
+
+        &:hover {
+          color: $color-black;
+        }
+
+        &.is-active {
+          color: $color-black;
+          font-weight: $font-bold;
+        }
+      }
+
+      &.menu-item--expanded > a {
+        border-left: 2px solid $color-black;
+        color: #2e2d29;
+        font-weight: $font-bold;
+      }
+
+      ul.menu .menu-item a.is-active {
+        border-left: none;
+        color: $color-black;
+        font-weight: $font-bold;
+      }
+    }
+
+    ul.menu ul.menu .menu-item a {
+      font-weight: $font-normal;
+
+      @include padding(null null null 20px);
+    }
+
+    ul {
+      @include margin(null null 0);
+    }
+  }
+}
+
+// Styles for no JavaScript
 .no-js .decanter-main-menu--hover-reveal {
   ul li {
     display: inline-block;
