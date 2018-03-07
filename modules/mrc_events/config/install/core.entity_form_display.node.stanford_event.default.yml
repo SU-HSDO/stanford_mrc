@@ -17,6 +17,7 @@ dependencies:
     - field.field.node.stanford_event.field_s_event_link
     - field.field.node.stanford_event.field_s_event_location
     - field.field.node.stanford_event.field_s_event_map_link
+    - field.field.node.stanford_event.field_s_event_speaker
     - field.field.node.stanford_event.field_s_event_sponsor
     - field.field.node.stanford_event.field_s_event_status
     - field.field.node.stanford_event.field_s_event_type
@@ -24,8 +25,10 @@ dependencies:
   module:
     - datetime_range
     - entity_browser
+    - entity_browser_entity_form
     - field_group
-    - link
+    - inline_entity_form
+    - mrc_helper
     - path
     - telephone
     - text
@@ -51,6 +54,7 @@ third_party_settings:
         - body
         - field_mrc_image
         - field_s_event_link
+        - field_s_event_speaker
         - field_s_event_featured
         - field_s_event_type
         - field_mrc_event_series
@@ -121,7 +125,7 @@ content:
     third_party_settings: {  }
   field_mrc_event_series:
     type: options_select
-    weight: 24
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -139,6 +143,7 @@ content:
       field_widget_display_settings:
         view_mode: thumbnail
       field_widget_edit: true
+      field_widget_replace: false
   field_mrc_video:
     type: entity_browser_entity_reference
     weight: 24
@@ -152,6 +157,7 @@ content:
       field_widget_edit: false
       open: true
       field_widget_display_settings: {  }
+      field_widget_replace: false
   field_s_event_admission:
     weight: 13
     settings:
@@ -203,7 +209,7 @@ content:
     type: daterange_datelist
     region: content
   field_s_event_featured:
-    weight: 22
+    weight: 23
     settings:
       display_label: true
     third_party_settings: {  }
@@ -233,6 +239,21 @@ content:
     third_party_settings: {  }
     type: link_default
     region: content
+  field_s_event_speaker:
+    type: inline_entity_form_complex
+    weight: 22
+    region: content
+    settings:
+      form_mode: default
+      override_labels: true
+      label_singular: Speaker
+      label_plural: Speakers
+      allow_new: true
+      match_operator: CONTAINS
+      allow_existing: false
+    third_party_settings:
+      entity_browser_entity_form:
+        entity_browser_id: _none
   field_s_event_sponsor:
     weight: 10
     settings:
@@ -242,7 +263,7 @@ content:
     type: string_textarea
     region: content
   field_s_event_type:
-    weight: 23
+    weight: 24
     settings: {  }
     third_party_settings: {  }
     type: options_select
