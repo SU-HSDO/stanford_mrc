@@ -20,7 +20,20 @@ function mrc_events_importer_post_update_8_0_4() {
   $config_entity->save();
 }
 
+/**
+ * Release 8.0.6 Changes
+ */
 function mrc_events_importer_post_update_8_0_6() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('migration', 'events_image_importer');
+  $config_update->revert('migration', 'events_importer');
+}
+
+/**
+ * Release 8.0.7 Changes
+ */
+function mrc_events_importer_post_update_8_0_7(){
   /** @var \Drupal\config_update\ConfigReverter $config_update */
   $config_update = \Drupal::service('config_update.config_update');
   $config_update->revert('migration', 'events_image_importer');
