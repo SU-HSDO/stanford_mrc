@@ -16,7 +16,11 @@
 .js .decanter-main-menu--hover-reveal {
   &.menu--main {
     box-shadow: none;
-    float: right;
+
+    @include media($medium-screen) {
+      float: right;
+    }
+
 
     a:hover,
     a.is-active,
@@ -31,7 +35,12 @@
 
     &.ui-menu {
       &.ui-widget-content {
-        background: none;
+        background: $color-black;
+
+        @include media($medium-screen) {
+          background: none;
+        }
+
 
         &.ui-widget {
           border: none;
@@ -56,7 +65,11 @@
 
     a,
     .menu-item a {
-      border-bottom: solid 3px $color-cloud;
+      border-bottom: none;
+
+      @include media($medium-screen) {
+        border-bottom: solid 3px $color-cloud;
+      }
     }
 
     > li > a {
@@ -82,7 +95,11 @@
     .ui-button.ui-state-active:hover {
       background-color: transparent;
       border: none;
-      color: $color-black;
+      color: $color-cloud;
+
+      @include media($medium-screen) {
+        color: $color-black;
+      }
     }
 
     .decanter-nav-submenu {
@@ -90,8 +107,13 @@
         border-bottom: none;
         color: $color-white;
 
-        @include margin(0 0 10px 0);
+        @include margin(0 1.5em 10px 0);
         @include padding(0);
+
+        @include media($medium-screen) {
+          @include margin(0 0 10px 0);
+        }
+
 
         &:hover {
           background-color: transparent;
@@ -127,6 +149,66 @@
       left: 100%;
       top: 0;
     }
+  }
+}
+
+// Mobile styles for the main menu in header
+// region
+.decanter-main-menu--hover-reveal {
+  .ui-widget .fa {
+    font: normal normal normal 14px/1 FontAwesome;
+  }
+
+  button {
+    width: auto;
+  }
+
+  > ul {
+    display: none;
+
+    &.expanded {
+      display: block;
+
+      li a {
+        color: $color-white;
+      }
+
+      ul button {
+        color: $color-white;
+
+        @include margin(null null null 1.5em);
+      }
+    }
+  }
+
+  &.menu--main li {
+    display: block;
+
+    @include padding(0.2em null null 0.75em);
+  }
+
+  @include media($medium-screen) {
+    button {
+      display: none;
+    }
+
+    > ul {
+      display: block;
+    }
+
+    &.menu--main li {
+      display: inline-block;
+
+      @include padding(0.2em null null 0);
+    }
+  }
+}
+
+.decanter-nav-primary > li > a:hover {
+  color: $color-cloud;
+
+  @include media($medium-screen) {
+    color: $color-black;
   }
 }
 
