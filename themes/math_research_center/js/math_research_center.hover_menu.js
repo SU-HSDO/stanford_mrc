@@ -5,10 +5,10 @@
       $('#header ul.decanter-nav-primary').menu();
 
       $('#header button.fa-bars').click(function () {
-        $(this).siblings('ul').slideToggle('slow');
+        $(this).siblings('ul').toggleClass('expanded');
       });
       $('#header button.fa-plus').click(function () {
-        $(this).siblings('ul').slideToggle('slow');
+        $(this).siblings('ul').toggleClass('expanded');
         $(this).toggleClass('fa-plus').toggleClass('fa-minus');
       })
     }
