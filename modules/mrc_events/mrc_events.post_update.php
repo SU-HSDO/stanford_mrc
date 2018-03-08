@@ -98,4 +98,5 @@ function mrc_events_post_update_8_0_7() {
   $config_update->revert('field_storage_config', 'node.field_s_event_speaker');
   $config_update->revert('field_config', 'node.stanford_event.field_s_event_speaker');
   $config_update->revert('entity_form_display', 'node.stanford_event.default');
+  $config_update->revert('entity_view_display', 'node.stanford_event.default');
 }
