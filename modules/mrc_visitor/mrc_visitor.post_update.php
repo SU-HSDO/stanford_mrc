@@ -39,7 +39,7 @@ function mrc_visitor_post_update_8_0_4() {
   }
 }
 
-function mrc_visitor_post_update_8_0_7() {
+function mrc_visitor_post_update_8_0_7_alpha1() {
   $entity_type_manager = \Drupal::entityTypeManager();
   $file = drupal_get_path('module', 'mrc_visitor') . '/img/visitor-profile.png';
   $file = file_save_data(file_get_contents($file), 'public://visitor-profile.png');

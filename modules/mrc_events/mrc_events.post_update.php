@@ -84,7 +84,7 @@ function mrc_events_post_update_8_0_6() {
 /**
  * Revert the events display.
  */
-function mrc_events_post_update_8_0_7() {
+function mrc_events_post_update_8_0_7_alpha1() {
   \Drupal::service('module_installer')->install(['menu_position', 'eck']);
   /** @var \Drupal\config_update\ConfigReverter $config_update */
   $config_update = \Drupal::service('config_update.config_update');

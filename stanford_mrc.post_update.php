@@ -375,9 +375,9 @@ function _stanford_mrc_post_update_find_media_video($url) {
 }
 
 /**
- * Release 8.0.7 Changes.
+ * Release 8.0.7-alpha1 Changes.
  */
-function stanford_mrc_post_update_8_0_7() {
+function stanford_mrc_post_update_8_0_7_alpha1() {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('rabbit_hole.behavior_settings.default');
   $config->set('allow_override', 0);

@@ -31,9 +31,9 @@ function mrc_events_importer_post_update_8_0_6() {
 }
 
 /**
- * Release 8.0.7 Changes
+ * Release 8.0.7-alpha1 Changes
  */
-function mrc_events_importer_post_update_8_0_7(){
+function mrc_events_importer_post_update_8_0_7_alpha1(){
   /** @var \Drupal\config_update\ConfigReverter $config_update */
   $config_update = \Drupal::service('config_update.config_update');
   $config_update->revert('migration', 'events_image_importer');
