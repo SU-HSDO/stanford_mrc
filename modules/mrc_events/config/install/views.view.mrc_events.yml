@@ -2373,11 +2373,11 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: daterange_custom
+          type: datetimerange_custom
           settings:
             timezone_override: ''
             date_format: j
-            separator: '-'
+            display: start_date
           group_column: value
           group_columns: {  }
           group_rows: true
