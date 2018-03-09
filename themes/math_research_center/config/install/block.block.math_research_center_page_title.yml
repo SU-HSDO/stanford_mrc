@@ -1,12 +1,18 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - block_class
+    - system
   theme:
     - math_research_center
+third_party_settings:
+  block_class:
+    classes: ''
 id: math_research_center_page_title
 theme: math_research_center
 region: content
-weight: -75
+weight: -6
 provider: null
 plugin: page_title_block
 settings:
@@ -14,4 +20,9 @@ settings:
   label: 'Page title'
   provider: core
   label_display: '0'
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: "/node/*\r\n/taxonomy/*"
+    negate: true
+    context_mapping: {  }

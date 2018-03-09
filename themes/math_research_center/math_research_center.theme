@@ -6,6 +6,7 @@
  */
 
 use Drupal\ui_patterns\UiPatterns;
+use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_preprocess_block().
@@ -56,7 +57,7 @@ function math_research_center_preprocess_page(&$variables) {
   if (isset($variables['node'])) {
     $variables['#attached']['library'][] = 'math_research_center/node.' . $variables['node']->bundle();
   }
-  if($variables['is_front']){
+  if ($variables['is_front']) {
     $variables['#attached']['library'][] = 'math_research_center/front';
   }
 }
@@ -114,6 +115,16 @@ function math_research_center_preprocess_pattern(&$variables, $hook) {
           unset($variables[$field]);
         }
       }
+
+      if (!isset($variables['attributes']['id'])) {
+        $variables['attributes']['id'] = Html::getUniqueId($hook);
+      }
+
+      if(!isset($variables['attributes']['class'])){
+        $variables['attributes']['class'] = [];
+      }
+      $variables['attributes']['class'][] = 'ui-pattern';
+      $variables['attributes']['class'][] = Html::cleanCssIdentifier($hook);
 
       // We got the pattern we want, so we can exit.
       return;

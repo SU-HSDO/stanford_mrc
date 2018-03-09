@@ -4,6 +4,14 @@ node_news:
   label: "Node: News"
   description: "News node layout"
   fields:
+    page_title:
+      label: "Page Title"
+      preview: "Page Title"
+      type: text
+    sidebar:
+      label: "Sidebar"
+      preview: "Some content goes here"
+      type: text
     date:
       label: "Date"
       preview: "Month, Day, Year"

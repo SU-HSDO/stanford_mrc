@@ -16,10 +16,40 @@ dependencies:
     - datetime
     - ds
     - link
+    - mrc_ds_blocks
     - mrc_media
     - text
     - user
 third_party_settings:
+  mrc_ds_blocks:
+    'menu_block:main':
+      config:
+        provider: menu_block
+        admin_label: ''
+        label: 'Main navigation'
+        label_display: visible
+        level: '1'
+        depth: '0'
+        expand: 1
+        parent: 'main:'
+        label_type: root
+        follow: 1
+        follow_parent: '0'
+        suggestion: main
+      parent_name: ''
+      weight: 1
+      region: sidebar
+    local_tasks_block:
+      config:
+        provider: core
+        admin_label: ''
+        label: Tabs
+        label_display: 0
+        primary: 1
+        secondary: 1
+      parent_name: ''
+      weight: 20
+      region: page_title
   ds:
     layout:
       id: pattern_node_news
@@ -30,6 +60,11 @@ third_party_settings:
         pattern:
           field_templates: only_content
     regions:
+      page_title:
+        - node_title
+        - local_tasks_block
+      sidebar:
+        - 'menu_block:main'
       date:
         - field_s_news_date
       link:
@@ -40,6 +75,16 @@ third_party_settings:
         - body
       author:
         - field_s_news_byline
+    fields:
+      node_title:
+        plugin_id: node_title
+        weight: 0
+        label: hidden
+        formatter: default
+        settings:
+          wrapper: h1
+          class: page-title
+          link: false
 _core:
   default_config_hash: tHz7HH0TLEM8PMHeA5HIwZZUcXxOJq2d4Ro2Fbo3WZY
 id: node.stanford_news_item.default
@@ -50,22 +95,22 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 3
+    weight: 5
     settings: {  }
     third_party_settings: {  }
     region: content
   field_mrc_image:
     type: media_image_formatter
-    weight: 2
+    weight: 4
     region: image
     label: hidden
     third_party_settings: {  }
     settings:
       view_mode: full
-      image_style: hero_banner
-      link: false
+      image_style: slideshow
+      link: 0
   field_s_news_byline:
-    weight: 4
+    weight: 6
     label: hidden
     settings:
       link_to_entity: false
@@ -73,7 +118,7 @@ content:
     type: string
     region: author
   field_s_news_date:
-    weight: 0
+    weight: 2
     label: hidden
     settings:
       timezone_override: ''
@@ -83,7 +128,7 @@ content:
     region: date
   field_s_news_link:
     type: link
-    weight: 1
+    weight: 3
     region: link
     label: hidden
     settings:
