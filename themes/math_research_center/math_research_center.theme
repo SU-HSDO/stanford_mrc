@@ -43,6 +43,9 @@ function math_research_center_preprocess_block(&$variables) {
  * Implements hook_theme_suggestions_alter().
  */
 function math_research_center_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
+  if ($hook == 'block' && $variables['elements']['#base_plugin_id'] == 'menu_block') {
+    $suggestions[] = 'block__menu_block';
+  }
   if ($hook == 'menu' && isset($variables['menu_block_configuration'])) {
     $suggestions[] = 'menu__menu_block';
     $suggestions[] = 'menu__menu_block__' . $variables['menu_name'];
