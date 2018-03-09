@@ -56,6 +56,9 @@ function math_research_center_preprocess_page(&$variables) {
   if (isset($variables['node'])) {
     $variables['#attached']['library'][] = 'math_research_center/node.' . $variables['node']->bundle();
   }
+  if($variables['is_front']){
+    $variables['#attached']['library'][] = 'math_research_center/front';
+  }
 }
 
 /**

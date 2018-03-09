@@ -110,6 +110,7 @@ module.exports = function(grunt) {
           // BASE
           'css/base/base.css':  'scss/base/base.scss',
           'css/ckeditor.css':   'scss/ckeditor.scss',
+          'css/base/front.css':   'scss/base/front.scss',
 
           // NODE
           'css/node/stanford_visitor.css':  'scss/node/stanford_visitor.scss',

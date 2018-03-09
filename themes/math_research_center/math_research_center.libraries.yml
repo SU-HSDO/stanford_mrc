@@ -111,6 +111,12 @@ base:
     - core/normalize
     - core/jquery
 
+front:
+  version: VERSION
+  css:
+    base:
+      css/base/front.css: {}
+
 hover_menu:
   version: VERSION
   css:
