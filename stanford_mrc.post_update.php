@@ -399,4 +399,7 @@ function stanford_mrc_post_update_8_0_7() {
   $config_update->revert('node_type', 'stanford_event');
   $config_update->revert('node_type', 'stanford_person');
   $config_update->revert('node_type', 'stanford_visitor');
+
+  $config_update->revert('view', 'mrc_news');
+  $config_update->revert('view', 'mrc_events');
 }
