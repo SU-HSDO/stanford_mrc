@@ -1,3 +1,4 @@
+uuid: 3b7e33d3-c67c-481d-aa62-6454cab65c09
 langcode: en
 status: true
 dependencies:
@@ -80,6 +81,17 @@ third_party_settings:
       parent_name: ''
       weight: 0
       region: sidebar
+    local_tasks_block:
+      config:
+        provider: core
+        admin_label: ''
+        label: Tabs
+        label_display: 0
+        primary: 1
+        secondary: 1
+      parent_name: ''
+      weight: 20
+      region: page_title
   ds:
     layout:
       id: pattern_terms_event_series
@@ -92,8 +104,10 @@ third_party_settings:
     regions:
       sidebar:
         - 'menu_block:main'
-      top:
+      page_title:
         - taxonomy_term_title
+        - local_tasks_block
+      top:
         - field_mrc_event_series_name
         - field_mrc_image
         - description

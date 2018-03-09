@@ -124,7 +124,7 @@ module.exports = function(grunt) {
           // PATTERNS
           'patterns/atoms/date-stacked/css/date-stacked.css':                       'patterns/atoms/date-stacked/scss/date-stacked.scss',
           'patterns/molecules/event-card/css/event-card.css':                       'patterns/molecules/event-card/scss/event-card.scss',
-          'patterns/molecules/event-date-stacked/css/event-date-stacked.scss.css':  'patterns/molecules/event-date-stacked/scss/event-date-stacked.scss',
+          'patterns/molecules/event-date-stacked/css/event-date-stacked.css':  'patterns/molecules/event-date-stacked/scss/event-date-stacked.scss',
           'patterns/molecules/event-past/css/event-past.css':                       'patterns/molecules/event-past/scss/event-past.scss',
           'patterns/molecules/featured-event-card/css/featured-event-card.css':     'patterns/molecules/featured-event-card/scss/featured-event-card.scss',
           'patterns/molecules/news-card/css/news-card.css':                         'patterns/molecules/news-card/scss/news-card.scss',

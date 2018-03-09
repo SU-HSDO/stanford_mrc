@@ -1,3 +1,4 @@
+uuid: 9f1c1abf-e53a-440c-8fcf-5fffed244d36
 langcode: en
 status: true
 dependencies:
@@ -30,10 +31,22 @@ third_party_settings:
       parent_name: ''
       weight: 1
       region: sidebar
+    local_tasks_block:
+      config:
+        provider: core
+        admin_label: ''
+        label: Tabs
+        label_display: 0
+        primary: 1
+        secondary: 1
+      parent_name: ''
+      weight: 20
+      region: page_title
   ds:
     regions:
       page_title:
         - node_title
+        - local_tasks_block
       sidebar:
         - 'menu_block:main'
         - field_s_mrc_page_sidebar_block

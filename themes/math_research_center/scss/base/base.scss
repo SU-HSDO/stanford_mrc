@@ -25,6 +25,10 @@ a:focus {
   @include accessible-focus;
 }
 
+.ui-pattern {
+  @include margin(2rem null null);
+}
+
 // Footer
 #footer {
   background: $color-cloud;

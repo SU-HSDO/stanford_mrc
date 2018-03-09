@@ -1,3 +1,4 @@
+uuid: d7b3af80-4a19-470b-bbdf-d034c54c73ce
 langcode: en
 status: true
 dependencies:
@@ -17,11 +18,41 @@ dependencies:
   module:
     - ds
     - link
+    - mrc_ds_blocks
     - mrc_media
     - mrc_yearonly
     - text
     - user
 third_party_settings:
+  mrc_ds_blocks:
+    'menu_block:main':
+      config:
+        provider: menu_block
+        admin_label: ''
+        label: 'Main navigation'
+        label_display: visible
+        level: '1'
+        depth: '0'
+        expand: 1
+        parent: 'main:'
+        label_type: root
+        follow: 1
+        follow_parent: '0'
+        suggestion: main
+      parent_name: ''
+      weight: 1
+      region: sidebar
+    local_tasks_block:
+      config:
+        provider: core
+        admin_label: ''
+        label: Tabs
+        label_display: 0
+        primary: 1
+        secondary: 1
+      parent_name: ''
+      weight: 20
+      region: page_title
   ds:
     layout:
       id: pattern_node_simple
@@ -32,10 +63,14 @@ third_party_settings:
         pattern:
           field_templates: default
     regions:
+      page_title:
+        - node_title
+        - local_tasks_block
       image:
         - field_mrc_image
+      sidebar:
+        - 'menu_block:main'
       above_break:
-        - node_title
         - field_s_visitor_position_title
         - field_s_visitor_curr_inst
         - field_s_visitor_year_visited
@@ -47,7 +82,7 @@ third_party_settings:
     fields:
       node_title:
         plugin_id: node_title
-        weight: 1
+        weight: 0
         label: hidden
         formatter: default
         settings:
@@ -70,7 +105,7 @@ content:
     third_party_settings: {  }
   field_mrc_image:
     type: media_image_formatter
-    weight: 0
+    weight: 1
     region: image
     label: hidden
     third_party_settings: {  }

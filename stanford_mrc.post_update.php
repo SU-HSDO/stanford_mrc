@@ -404,5 +404,8 @@ function stanford_mrc_post_update_8_0_7() {
   $config_update->revert('view', 'mrc_events');
   $config_update->revert('entity_view_display', 'node.stanford_event.default');
   $config_update->revert('entity_view_display', 'node.stanford_basic_page.default');
+  $config_update->revert('entity_view_display', 'node.stanford_news_item.default');
+  $config_update->revert('entity_view_display', 'node.stanford_visitor.default');
   $config_update->revert('entity_view_display', 'taxonomy_term.mrc_event_series.default');
+
 }
