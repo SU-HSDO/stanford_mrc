@@ -2,7 +2,7 @@ name: MRC Helper
 description: A helper module for MRC specific functionality.
 core: 8.x
 type: module
-version: 8.0.7-alpha1
+version: 8.x
 package: Stanford MRC
 dependencies:
   - menu_block
