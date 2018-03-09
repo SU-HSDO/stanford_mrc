@@ -8,6 +8,7 @@ dependencies:
   module:
     - entity_usage
     - media
+    - ui_patterns_views
     - user
     - video_embed_field
 id: mrc_videos
@@ -74,7 +75,26 @@ display:
       style:
         type: default
       row:
-        type: fields
+        type: ui_patterns
+        options:
+          default_field_elements: 0
+          inline:
+            name: 0
+            field_media_video_embed_field: 0
+          separator: ''
+          hide_empty: 0
+          pattern: video_list
+          pattern_mapping:
+            'views_row:name':
+              destination: title
+              weight: 0
+              plugin: views_row
+              source: name
+            'views_row:field_media_video_embed_field':
+              destination: video
+              weight: 1
+              plugin: views_row
+              source: field_media_video_embed_field
       fields:
         name:
           id: name
