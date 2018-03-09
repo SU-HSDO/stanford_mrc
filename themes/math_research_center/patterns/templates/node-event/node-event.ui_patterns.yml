@@ -4,6 +4,10 @@ node_event:
   label: "Node: Event"
   description: "Event node layout"
   fields:
+    page_title:
+      label: "Page Title"
+      preview: "Page Title"
+      type: text
     sidebar:
       label: "Sidebar"
       preview: "Some content goes here"

@@ -1,3 +1,4 @@
+uuid: e52064be-68b2-4c44-95e1-7e101c891d97
 langcode: en
 status: true
 dependencies:
@@ -41,6 +42,10 @@ third_party_settings:
         pattern:
           field_templates: only_content
     regions:
+      page_title:
+        - node_title
+      sidebar:
+        - 'menu_block:main'
       image:
         - field_mrc_image
       location:
@@ -63,8 +68,16 @@ third_party_settings:
         - field_s_event_contact_phone
       embed_video:
         - field_mrc_video
-      sidebar:
-        - 'menu_block:main'
+    fields:
+      node_title:
+        plugin_id: node_title
+        weight: 0
+        label: hidden
+        formatter: default
+        settings:
+          wrapper: h1
+          class: page-title
+          link: false
   mrc_ds_blocks:
     'menu_block:main':
       config:
@@ -81,7 +94,7 @@ third_party_settings:
         follow_parent: '0'
         suggestion: main
       parent_name: ''
-      weight: 20
+      weight: 1
       region: sidebar
 _core:
   default_config_hash: '--Z_oePhErkaBTiWo881iUr_LbanS3gn3S1XXxQDkW0'
@@ -92,14 +105,14 @@ mode: default
 content:
   body:
     type: text_default
-    weight: 6
+    weight: 8
     region: description
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_mrc_image:
     type: media_image_formatter
-    weight: 0
+    weight: 2
     region: image
     label: hidden
     third_party_settings: {  }
@@ -109,7 +122,7 @@ content:
       link: false
   field_mrc_video:
     type: entity_reference_entity_view
-    weight: 10
+    weight: 12
     region: embed_video
     label: hidden
     third_party_settings: {  }
@@ -117,21 +130,21 @@ content:
       view_mode: full
       link: false
   field_s_event_admission:
-    weight: 5
+    weight: 7
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: admission
   field_s_event_contact_email:
-    weight: 8
+    weight: 10
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: email
   field_s_event_contact_phone:
-    weight: 9
+    weight: 11
     label: hidden
     settings:
       title: ''
@@ -139,7 +152,7 @@ content:
     type: telephone_link
     region: phone
   field_s_event_date:
-    weight: 2
+    weight: 4
     label: hidden
     settings:
       timezone_override: ''
@@ -150,7 +163,7 @@ content:
     region: date
   field_s_event_link:
     type: link
-    weight: 3
+    weight: 5
     region: event_link
     label: above
     settings:
@@ -161,14 +174,14 @@ content:
       url_plain: false
     third_party_settings: {  }
   field_s_event_location:
-    weight: 1
+    weight: 3
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: location
   field_s_event_map_link:
-    weight: 4
+    weight: 6
     label: hidden
     settings:
       trim_length: 80
@@ -180,7 +193,7 @@ content:
     type: link
     region: map
   field_s_event_sponsor:
-    weight: 7
+    weight: 9
     label: hidden
     settings: {  }
     third_party_settings: {  }
