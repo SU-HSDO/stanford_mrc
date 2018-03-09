@@ -128,7 +128,7 @@ display:
         path:
           id: path
           table: node
-          field: path
+          field: view_node
           relationship: none
           group_type: group
           admin_label: ''
@@ -175,7 +175,8 @@ display:
           hide_alter_empty: true
           absolute: false
           entity_type: node
-          plugin_id: node_path
+          plugin_id: entity_link
+          output_url_as_text: true
         title:
           id: title
           table: node_field_data
@@ -676,7 +677,7 @@ display:
         path:
           id: path
           table: node
-          field: path
+          field: view_node
           relationship: none
           group_type: group
           admin_label: ''
@@ -723,7 +724,8 @@ display:
           hide_alter_empty: true
           absolute: false
           entity_type: node
-          plugin_id: node_path
+          plugin_id: entity_link
+          output_url_as_text: true
         title:
           id: title
           table: node_field_data
@@ -1135,6 +1137,7 @@ display:
               anonymous: '0'
               administrator: '0'
               site_owner: '0'
+            placeholder: ''
           is_grouped: false
           group_info:
             label: ''
@@ -1292,7 +1295,7 @@ display:
         path:
           id: path
           table: node
-          field: path
+          field: view_node
           relationship: none
           group_type: group
           admin_label: ''
@@ -1339,7 +1342,8 @@ display:
           hide_alter_empty: true
           absolute: false
           entity_type: node
-          plugin_id: node_path
+          plugin_id: entity_link
+          output_url_as_text: true
         title:
           id: title
           table: node_field_data
@@ -1664,11 +1668,11 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-      use_more: false
-      use_more_always: false
-      use_more_text: 'See all news'
+      use_more: true
+      use_more_always: true
+      use_more_text: 'See all recent news'
       link_display: custom_url
-      link_url: 'news?series={{ raw_arguments.field_mrc_event_series_target_id }}'
+      link_url: /news
     cache_metadata:
       max-age: -1
       contexts:

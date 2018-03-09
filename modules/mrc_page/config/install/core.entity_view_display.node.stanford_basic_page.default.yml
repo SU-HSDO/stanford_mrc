@@ -28,10 +28,12 @@ third_party_settings:
         follow_parent: '0'
         suggestion: main
       parent_name: ''
-      weight: 0
+      weight: 1
       region: sidebar
   ds:
     regions:
+      page_title:
+        - node_title
       sidebar:
         - 'menu_block:main'
         - field_s_mrc_page_sidebar_block
@@ -45,6 +47,16 @@ third_party_settings:
       settings:
         pattern:
           field_templates: default
+    fields:
+      node_title:
+        plugin_id: node_title
+        weight: 0
+        label: hidden
+        formatter: default
+        settings:
+          wrapper: h1
+          class: page-title
+          link: false
 _core:
   default_config_hash: eCJfWs1L2OJlePnDzTtAIAuf7b9QberTFVdcVaNRMIQ
 id: node.stanford_basic_page.default
@@ -53,7 +65,7 @@ bundle: stanford_basic_page
 mode: default
 content:
   field_s_mrc_page_bricks:
-    weight: 2
+    weight: 3
     label: hidden
     settings:
       view_mode: default
@@ -62,7 +74,7 @@ content:
     type: bricks_nested
     region: content
   field_s_mrc_page_sidebar_block:
-    weight: 1
+    weight: 2
     label: hidden
     settings: {  }
     third_party_settings: {  }
