@@ -6,6 +6,8 @@
 
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\menu_position\Entity\MenuPositionRule;
+use Drupal\eck\Entity\EckEntityType;
 
 /**
  * @param string $entity_type
@@ -89,10 +91,17 @@ function mrc_events_post_update_8_0_7_alpha1() {
   /** @var \Drupal\config_update\ConfigReverter $config_update */
   $config_update = \Drupal::service('config_update.config_update');
   $config_update->revert('node_type', 'stanford_event');
-  $config_update->import('menu_position_rule', 'events');
 
-  $config_update->import('eck_entity_type', 'event_collections');
-  $config_update->import('event_collections_type', 'speaker');
+  if (!MenuPositionRule::load('events')) {
+    $config_update->import('menu_position_rule', 'events');
+  }
+  $config_update->revert('menu_position_rule', 'events');
+
+  if (!EckEntityType::load('event_collections')) {
+    $config_update->import('eck_entity_type', 'event_collections');
+    $config_update->import('event_collections_type', 'speaker');
+  }
+
 
   mrc_events_create_field('node', 'stanford_event', 'field_s_event_speaker', 'bricks', 'Speaker');
   $config_update->revert('field_storage_config', 'node.field_s_event_speaker');

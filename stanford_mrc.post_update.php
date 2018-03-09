@@ -389,3 +389,14 @@ function stanford_mrc_post_update_8_0_7_alpha1() {
   $config->set('redirect_code', '301');
   $config->save();
 }
+
+/**
+ * Release 8.0.7 Changes.
+ */
+function stanford_mrc_post_update_8_0_7() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('node_type', 'stanford_event');
+  $config_update->revert('node_type', 'stanford_person');
+  $config_update->revert('node_type', 'stanford_visitor');
+}
