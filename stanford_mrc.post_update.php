@@ -3,6 +3,7 @@
 use Drupal\field\Entity\FieldConfig;
 use Drupal\user\Entity\Role;
 use Drupal\file\Entity\File;
+use Drupal\block\Entity\Block;
 
 /**
  * Release 8.0.4 changes.
@@ -408,4 +409,6 @@ function stanford_mrc_post_update_8_0_7() {
   $config_update->revert('entity_view_display', 'node.stanford_visitor.default');
   $config_update->revert('entity_view_display', 'taxonomy_term.mrc_event_series.default');
 
+  $config_update->revert('block', 'math_research_center_local_tasks');
+  $config_update->revert('block', 'math_research_center_page_title');
 }
