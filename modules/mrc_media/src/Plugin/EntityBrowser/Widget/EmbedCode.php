@@ -2,7 +2,15 @@
 
 namespace Drupal\mrc_media\Plugin\EntityBrowser\Widget;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\entity_browser\WidgetValidationManager;
+use Drupal\mrc_media\BundleSuggestion;
+use Drupal\video_embed_field\Annotation\VideoEmbedProvider;
+use Drupal\video_embed_field\ProviderManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * An Entity Browser widget for creating media entities from embed codes.
@@ -14,6 +22,36 @@ use Drupal\Core\Form\FormStateInterface;
  * )
  */
 class EmbedCode extends MediaBrowserBase {
+
+  /**
+   * @var \Drupal\video_embed_field\ProviderManager
+   */
+  protected $videoProvider;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('event_dispatcher'),
+      $container->get('entity_type.manager'),
+      $container->get('plugin.manager.entity_browser.widget_validation'),
+      $container->get('mrc_media.bundle_suggestion'),
+      $container->get('current_user'),
+      $container->get('video_embed_field.provider_manager')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, BundleSuggestion $bundles, AccountProxyInterface $current_user, ProviderManager $video_provider) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $event_dispatcher, $entity_type_manager, $validation_manager, $bundles, $current_user);
+    $this->videoProvider = $video_provider;
+  }
 
   /**
    * {@inheritdoc}
@@ -47,10 +85,16 @@ class EmbedCode extends MediaBrowserBase {
    */
   public function getForm(array &$original_form, FormStateInterface $form_state, array $additional_widget_parameters) {
     $form = parent::getForm($original_form, $form_state, $additional_widget_parameters);
-
+    $providers = $this->videoProvider->getProvidersOptionList();
+    /** @var \Drupal\Core\StringTranslation\TranslatableMarkup $provider */
+    foreach ($providers as &$provider) {
+      $provider = $provider->render();
+    }
+    $providers = implode(', ', $providers);
     $form['input'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Video Url'),
+      '#description' => $this->t('Enter the url of the video. This will display as an embedded video on the page. Compatible providers are: %providers', ['%providers' => $providers]),
       '#required' => TRUE,
       '#placeholder' => $this->t('Enter a URL...'),
     ];
