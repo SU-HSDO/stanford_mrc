@@ -20,8 +20,10 @@ function mrc_media_preprocess_dropzonejs(&$variables) {
   // Adds additional things to the template for the dropzone js widget.
   $variables['allowed_files'] = str_replace(' ', ', ', $variables['element']['#extensions']);
   $url = Url::fromRoute('mrc_media.bulk_upload');
-  $link = Link::fromTextAndUrl('click here', $url)->toString();
-  $variables['help_text'] = t('To bulk upload to the media library %link', ['%link' => $link]);
+  $link = Link::fromTextAndUrl('click here', $url)->toRenderable();
+  $link['#attributes']['target'] = '_blank';
+
+  $variables['help_text'] = t('To bulk upload to the media library %link', ['%link' => render($link)]);
 }
 
 /**
