@@ -134,25 +134,11 @@ module.exports = function(grunt) {
           'patterns/molecules/video-list/css/video-list.css':                       'patterns/molecules/video-list/scss/video-list.scss',
           'patterns/molecules/visitors-grid/css/visitors-grid.css':                 'patterns/molecules/visitors-grid/scss/visitors-grid.scss',
           'patterns/molecules/visitors-list/css/visitors-list.css':                 'patterns/molecules/visitors-list/scss/visitors-list.scss',
+          'patterns/templates/node-basic/css/node-basic.css':                       'patterns/templates/node-basic/scss/node-basic.scss',
           'patterns/templates/node-event/css/node-event.css':                       'patterns/templates/node-event/scss/node-event.scss',
           'patterns/templates/node-news/css/node-news.css':                         'patterns/templates/node-news/scss/node-news.scss',
           'patterns/templates/node-simple/css/node-simple.css':                     'patterns/templates/node-simple/scss/node-simple.scss',
           'patterns/templates/terms-event-series/css/terms-event-series.css':       'patterns/templates/terms-event-series/scss/terms-event-series.scss',
-
-          // EXAMPLES
-          'examples/atoms/date-stacked/css/date-stacked.css':                   'examples/atoms/date-stacked/scss/date-stacked.scss',
-          'examples/molecules/event-card/css/event-card.css':                   'examples/molecules/event-card/scss/event-card.scss',
-          'examples/molecules/event-date-stacked/css/event-date-stacked.css':   'examples/molecules/event-date-stacked/scss/event-date-stacked.scss',
-          'examples/molecules/event-past/css/event-past.css':                   'examples/molecules/event-past/scss/event-past.scss',
-          'examples/molecules/featured-event-card/css/featured-event-card.css': 'examples/molecules/featured-event-card/scss/featured-event-card.scss',
-          'examples/molecules/news-card/css/news-card.css':                     'examples/molecules/news-card/scss/news-card.scss',
-          'examples/molecules/news-recent/css/news-recent.css':                 'examples/molecules/news-recent/scss/news-recent.scss',
-          'examples/molecules/postcard/css/postcard.css':                       'examples/molecules/postcard/scss/postcard.scss',
-          'examples/molecules/postcard-horizontal/css/postcard-horizontal.css': 'examples/molecules/postcard-horizontal/scss/postcard-horizontal.scss',
-          'examples/molecules/visitors-grid/css/visitors-grid.css':             'examples/molecules/visitors-grid/scss/visitors-grid.scss',
-          'examples/molecules/visitors-list/css/visitors-list.css':             'examples/molecules/visitors-list/scss/visitors-list.scss',
-          'examples/templates/event/css/event.css':                             'examples/templates/event/scss/event.scss',
-          'examples/templates/news/css/news.css':                               'examples/templates/news/scss/news.scss'
         }
       }
     },
