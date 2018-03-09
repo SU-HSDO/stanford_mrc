@@ -8,6 +8,8 @@
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\menu_block\Plugin\Block\MenuBlock;
+use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_ENTITY_TYPE_view_alter().
@@ -22,7 +24,7 @@ function mrc_helper_taxonomy_term_view_alter(array &$build, EntityInterface $ent
 /**
  * Implements hook_block_view_alter().
  */
-function mrc_helper_block_view_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+function mrc_helper_block_view_alter(array &$build, BlockPluginInterface $block) {
   if ($block instanceof MenuBlock) {
     /** @var \Drupal\Core\Menu\MenuLinkTree $menu_tree */
     $menu_tree = \Drupal::service('menu.link_tree');
@@ -33,5 +35,23 @@ function mrc_helper_block_view_alter(array &$build, \Drupal\Core\Block\BlockPlug
     if (empty(array_filter($parameters->activeTrail))) {
       $build = [];
     }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function mrc_helper_form_system_site_information_settings_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['site_information']['site_slogan']['#title'] = t('Stanford Affiliation');
+  $form['site_information']['site_slogan']['#description'] = t('Stanford University school or administrative unit your site is most associated with.');
+  $admin_roles = \Drupal::entityTypeManager()
+    ->getStorage('user_role')
+    ->getQuery()
+    ->condition('is_admin', TRUE)
+    ->execute();
+  $user_roles = \Drupal::currentUser()->getRoles();
+
+  if (empty(array_intersect($user_roles, $admin_roles))) {
+    $form['site_information']['site_slogan']['#attributes']['disabled'] = 'disabled';
   }
 }

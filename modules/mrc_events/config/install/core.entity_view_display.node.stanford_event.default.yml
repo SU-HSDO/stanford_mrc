@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.stanford_event.field_s_event_link
     - field.field.node.stanford_event.field_s_event_location
     - field.field.node.stanford_event.field_s_event_map_link
+    - field.field.node.stanford_event.field_s_event_speaker
     - field.field.node.stanford_event.field_s_event_sponsor
     - field.field.node.stanford_event.field_s_event_status
     - field.field.node.stanford_event.field_s_event_type
@@ -63,7 +64,6 @@ third_party_settings:
       embed_video:
         - field_mrc_video
       sidebar:
-        - 'block_content:c16a5bb2-404e-482e-af1c-6edb4162f963'
         - 'menu_block:main'
   mrc_ds_blocks:
     'menu_block:main':
@@ -191,6 +191,7 @@ hidden:
   field_s_event_audience: true
   field_s_event_category: true
   field_s_event_featured: true
+  field_s_event_speaker: true
   field_s_event_status: true
   field_s_event_type: true
   links: true
