@@ -39,9 +39,11 @@ a:focus {
     @include margin(6rem null null);
   }
 
+
   @include media($large-screen) {
     @include margin(10rem null null);
   }
+
 
   h2 {
     font-size: $h3-font-size;
@@ -74,6 +76,40 @@ a:focus {
     display: inherit;
     text-decoration: none;
   }
+
+  .decanter-grid {
+    display: flex;
+
+    @include media($medium-screen) {
+      display: block;
+    }
+
+    #block-math-research-center-branding {
+      order: 2;
+      text-align: center;
+      @include media($medium-screen) {
+        text-align: left;
+      }
+    }
+
+    #block-searchform {
+      order: 3;
+
+      @include margin(null null null 1rem);
+      @include media($medium-screen) {
+        @include margin(null null null 0);
+      }
+    }
+
+    #block-math-research-center-mainnavigation {
+      order: 1;
+
+      @include margin(null 1rem null null);
+      @include media($medium-screen) {
+        @include margin(null 0 null null);
+      }
+    }
+  }
 }
 
 // Images
@@ -84,11 +120,12 @@ img {
 
 // Inputs
 
-@import "inputs";
+@import
+  'inputs';
 
-// Search]
-
-@import "search";
+// Search
+@import
+  'search';
 
 // Typography
 .decanter-font-lead {

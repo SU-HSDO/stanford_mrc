@@ -71,9 +71,11 @@
       &:focus {
         background: url("../../img/search.svg") no-repeat 160px center;
         background-size: 45px 45px;
+        cursor: text;
+        position: absolute;
+        right: 0;
         -webkit-transition: width 0.6s, border-radius 0.6s, background 0.6s;
         transition: width 0.6s, border-radius 0.6s, background 0.6s;
-        cursor: text;
         width: 145px;
 
         @include padding(null 50px null 15px);

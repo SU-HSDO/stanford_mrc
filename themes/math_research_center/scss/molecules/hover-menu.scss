@@ -140,7 +140,7 @@
   }
 
   ul ul {
-    display:none;
+    display: none;
 
     li {
       position: relative;
@@ -170,6 +170,12 @@
 
     &.expanded {
       display: block;
+      position: absolute;
+
+      @include media($medium-screen) {
+        position: static;
+      }
+
 
       li a {
         color: $color-white;
