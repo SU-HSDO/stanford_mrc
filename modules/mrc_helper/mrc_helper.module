@@ -58,10 +58,10 @@ function mrc_helper_form_system_site_information_settings_alter(&$form, FormStat
 }
 
 /**
- * Implements hook_field_widget_form_alter().
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
  */
-function mrc_helper_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
-  if ($context['widget']->getPluginId() == 'block_field_default' && !empty($element['plugin_id']['#options']['Views'])) {
+function mrc_helper_field_widget_block_field_default_form_alter(&$element, FormStateInterface $form_state, $context) {
+  if (!empty($element['plugin_id']['#options']['Views'])) {
     foreach ($element['plugin_id']['#options']['Views'] as $key => $label) {
       if (strpos($key, 'views_exposed_filter_block') !== FALSE) {
         $element['plugin_id']['#options']['Exposed Form (Views)'][$key] = _mrc_helper_get_block_label($key) ?: $label;
@@ -95,7 +95,7 @@ function _mrc_helper_get_block_label($key) {
   if ($view = View::load($view_id)) {
     $label = $view->label();
     $display = $view->getDisplay($display_id);
-    $static[$key] = $label . ': ' . $display['display_title'] . t(' - Filters');
+    $static[$key] = $label . ': ' . $display['display_title'];
   }
 
   return $static[$key];
