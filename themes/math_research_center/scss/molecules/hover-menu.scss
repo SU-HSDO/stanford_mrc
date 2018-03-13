@@ -3,14 +3,10 @@
 ///
 /// HOVER MAIN MENU COMPONENT
 ///
-
 // Decanter
-@import
-  'decanter-no-markup';
-
+@import 'decanter-no-markup';
 // Stanford Math Research Center
-@import
-  '../utilities/mixins/mixins';
+@import '../utilities/mixins/mixins';
 
 // Main menu in header region
 .js .decanter-main-menu--hover-reveal {
@@ -20,7 +16,6 @@
     @include media($medium-screen) {
       float: right;
     }
-
 
     a:hover,
     a.is-active,
@@ -40,7 +35,6 @@
         @include media($medium-screen) {
           background: none;
         }
-
 
         &.ui-widget {
           border: none;
@@ -114,7 +108,6 @@
           @include margin(0 0 10px 0);
         }
 
-
         &:hover {
           background-color: transparent;
           border: none;
@@ -140,7 +133,7 @@
   }
 
   ul ul {
-    display:none;
+    display: none;
 
     li {
       position: relative;
@@ -218,8 +211,12 @@
 // No JavaScript is applied to the menu when
 // it does not appear in the Header region.
 .js .main-container {
-  .decanter-main-menu--hover-reveal.menu--main {
+  .menu--main {
     float: none;
+
+    @include media(max-width $medium-screen) {
+      display: none;
+    }
 
     h2#menu-blockmain-menu {
       @include margin(0 null null);
