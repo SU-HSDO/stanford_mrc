@@ -72,6 +72,17 @@ function math_research_center_preprocess_patterns_overview_page(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_item_list__search_results().
+ */
+function math_research_center_preprocess_item_list__search_results(&$variables) {
+  // Set the start of the ol numbers.
+  if ($page = (int) \Drupal::requestStack()
+    ->getCurrentRequest()->query->get('page')) {
+    $variables['attributes']['start'] = $page * 10 + 1;
+  }
+}
+
+/**
  * Implements hook_preprocess().
  */
 function math_research_center_preprocess(&$variables, $hook) {

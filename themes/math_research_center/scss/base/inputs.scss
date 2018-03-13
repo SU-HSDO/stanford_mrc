@@ -30,7 +30,7 @@ select {
   @include margin(0.2em 0);
   @include padding($input-padding-vertical 0.7em);
 
-  &:focus {
+  .user-is-tabbing &:focus {
     box-shadow: $focus-shadow;
   }
 }
@@ -113,7 +113,7 @@ fieldset {
   box-shadow: 0 0 0 2px $color-white, 0 0 0 4px $color-bright-red;
 }
 
-[type=radio]:focus + label::before {
+.user-is-tabbing [type=radio]:focus + label::before {
   box-shadow: 0 0 0 2px $color-white, 0 0 0 4px $color-bright-red, 0 0 3px 4px $color-black, 0 0 7px 4px $color-black;
 }
 
@@ -126,7 +126,7 @@ fieldset {
   background-size: 10px;
 }
 
-[type=checkbox]:focus + label::before {
+.user-is-tabbing [type=checkbox]:focus + label::before {
   box-shadow: 0 0 0 1px $color-white, 0 0 0 3px $color-bright-red;
 }
 

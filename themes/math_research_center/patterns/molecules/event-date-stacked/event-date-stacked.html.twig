@@ -16,6 +16,14 @@
         <h2 class="mrc-event-date-stacked__title">{{ title }}</h2>
       {% endif %}
 
+      {% if speaker %}
+        <div class="mrc-event-date-stacked__speaker">{{ speaker }}</div>
+      {% endif %}
+
+      {% if program %}
+        <div class="mrc-event-date-stacked__program">{{ program }}</div>
+      {% endif %}
+
       <div class="mrc-event-date-stacked__time-location">
         {% if time %}
           <div class="mrc-event-date-stacked__time">{{ time }}</div>
@@ -29,10 +37,6 @@
           <div class="mrc-event-date-stacked__location">{{ location }}</div>
         {% endif %}
       </div>
-
-      {% if program %}
-        <div class="mrc-event-date-stacked__program">{{ program }}</div>
-      {% endif %}
     </div>
   </div>
 </div>

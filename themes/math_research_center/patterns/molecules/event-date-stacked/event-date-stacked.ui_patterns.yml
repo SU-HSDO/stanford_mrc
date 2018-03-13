@@ -25,6 +25,10 @@ event_date_stacked:
       label: "Program"
       preview: "Poincare"
       teyp: text
+    speaker:
+      label: "Speaker"
+      preview: "Elon Musk"
+      type: text
   libraries:
     - event_date_stacked:
         css:

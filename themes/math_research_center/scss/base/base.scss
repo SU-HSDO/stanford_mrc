@@ -21,8 +21,8 @@
   '../molecules/pager';
 
 // Accessibility helpers
-*:focus,
-a:focus {
+.user-is-tabbing *:focus,
+.user-is-tabbing a:focus {
   @include accessible-focus;
 }
 

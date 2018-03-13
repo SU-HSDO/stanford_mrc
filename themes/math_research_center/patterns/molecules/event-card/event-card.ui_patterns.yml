@@ -28,6 +28,10 @@ event_card:
       label: "Program"
       preview: "Poincare"
       type: text
+    speaker:
+      label: "Speaker"
+      preview: "Elon Musk"
+      type: text
 
   libraries:
     - event_card:

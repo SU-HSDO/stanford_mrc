@@ -31,6 +31,11 @@ featured_event_card:
       label: "Location"
       preview: "12:35 PM"
       type: text
+    speaker:
+      label: "Speaker"
+      preview: "Elon Musk"
+      type: text
+
   libraries:
     - featured_event_card:
         css:

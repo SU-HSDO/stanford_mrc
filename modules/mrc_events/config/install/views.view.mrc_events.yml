@@ -7,10 +7,12 @@ dependencies:
     - field.storage.node.field_mrc_image
     - field.storage.node.field_s_event_date
     - field.storage.node.field_s_event_location
+    - field.storage.node.field_s_event_speaker
     - node.type.stanford_event
     - taxonomy.vocabulary.event_type
     - taxonomy.vocabulary.mrc_event_series
   module:
+    - bricks
     - datetime
     - datetime_range
     - mrc_date
@@ -95,38 +97,44 @@ display:
             field_s_event_location: 0
             field_mrc_image: 0
             field_mrc_event_series: 0
+            field_s_event_speaker: 0
           separator: ''
           hide_empty: 1
           pattern: event_card
           pattern_mapping:
+            'views_row:field_s_event_speaker':
+              destination: speaker
+              weight: 0
+              plugin: views_row
+              source: field_s_event_speaker
             'views_row:title':
               destination: title
-              weight: 0
+              weight: 1
               plugin: views_row
               source: title
             'views_row:field_mrc_event_series':
               destination: program
-              weight: 1
+              weight: 2
               plugin: views_row
               source: field_mrc_event_series
             'views_row:field_mrc_image':
               destination: image
-              weight: 2
+              weight: 3
               plugin: views_row
               source: field_mrc_image
             'views_row:field_s_event_date':
               destination: date
-              weight: 3
+              weight: 4
               plugin: views_row
               source: field_s_event_date
             'views_row:field_s_event_date_1':
               destination: time
-              weight: 4
+              weight: 5
               plugin: views_row
               source: field_s_event_date_1
             'views_row:field_s_event_location':
               destination: location
-              weight: 5
+              weight: 6
               plugin: views_row
               source: field_s_event_location
       fields:
@@ -497,6 +505,69 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_s_event_speaker:
+          id: field_s_event_speaker
+          table: node__field_s_event_speaker
+          field: field_s_event_speaker
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: bricks_nested
+          settings:
+            view_mode: default
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       filters:
         status:
           value: '1'
@@ -596,6 +667,7 @@ display:
         - 'config:field.storage.node.field_mrc_image'
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
+        - 'config:field.storage.node.field_s_event_speaker'
   block_1:
     display_plugin: block
     id: block_1
@@ -796,38 +868,44 @@ display:
             field_s_event_date_1: 0
             field_s_event_location: 0
             field_mrc_event_series: 0
+            field_s_event_speaker: 0
           separator: ''
           hide_empty: 1
           pattern: event_date_stacked
           pattern_mapping:
+            'views_row:field_s_event_speaker':
+              destination: speaker
+              weight: 0
+              plugin: views_row
+              source: field_s_event_speaker
             'views_row:title':
               destination: title
-              weight: 0
+              weight: 1
               plugin: views_row
               source: title
             'views_row:field_mrc_event_series':
               destination: program
-              weight: 1
+              weight: 2
               plugin: views_row
               source: field_mrc_event_series
             'views_row:field_s_event_date':
               destination: month
-              weight: 2
+              weight: 3
               plugin: views_row
               source: field_s_event_date
             'views_row:field_s_event_date_2':
               destination: day
-              weight: 3
+              weight: 4
               plugin: views_row
               source: field_s_event_date_2
             'views_row:field_s_event_date_1':
               destination: time
-              weight: 4
+              weight: 5
               plugin: views_row
               source: field_s_event_date_1
             'views_row:field_s_event_location':
               destination: location
-              weight: 5
+              weight: 6
               plugin: views_row
               source: field_s_event_location
       fields:
@@ -1198,6 +1276,69 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_s_event_speaker:
+          id: field_s_event_speaker
+          table: node__field_s_event_speaker
+          field: field_s_event_speaker
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: bricks_nested
+          settings:
+            view_mode: default
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       pager:
         type: full
         options:
@@ -1255,6 +1396,7 @@ display:
         - 'config:field.storage.node.field_mrc_event_series'
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
+        - 'config:field.storage.node.field_s_event_speaker'
   event_series_past_events:
     display_plugin: block
     id: event_series_past_events
@@ -1342,6 +1484,7 @@ display:
         link_display: false
         link_url: false
         relationships: false
+        sorts: false
       filter_groups:
         operator: AND
         groups:
@@ -1407,6 +1550,7 @@ display:
             field_s_event_date_2: 0
             field_s_event_date_1: 0
             field_s_event_location: 0
+            field_s_event_speaker: 0
           separator: ''
           hide_empty: 1
           pattern: event_date_stacked
@@ -1416,24 +1560,29 @@ display:
               weight: 0
               plugin: views_row
               source: title
+            'views_row:field_s_event_speaker':
+              destination: speaker
+              weight: 1
+              plugin: views_row
+              source: field_s_event_speaker
             'views_row:field_s_event_date':
               destination: month
-              weight: 1
+              weight: 2
               plugin: views_row
               source: field_s_event_date
             'views_row:field_s_event_date_2':
               destination: day
-              weight: 2
+              weight: 3
               plugin: views_row
               source: field_s_event_date_2
             'views_row:field_s_event_date_1':
               destination: time
-              weight: 3
+              weight: 4
               plugin: views_row
               source: field_s_event_date_1
             'views_row:field_s_event_location':
               destination: location
-              weight: 4
+              weight: 5
               plugin: views_row
               source: field_s_event_location
       fields:
@@ -1741,6 +1890,69 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_s_event_speaker:
+          id: field_s_event_speaker
+          table: node__field_s_event_speaker
+          field: field_s_event_speaker
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: bricks_nested
+          settings:
+            view_mode: default
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       pager:
         type: some
         options:
@@ -1765,6 +1977,21 @@ display:
             - mrc_event_series
           entity_type: node
           plugin_id: node_term_data
+      sorts:
+        field_s_event_date_value:
+          id: field_s_event_date_value
+          table: node__field_s_event_date
+          field: field_s_event_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          granularity: second
+          plugin_id: datetime
+          entity_type: node
     cache_metadata:
       max-age: -1
       contexts:
@@ -1776,6 +2003,7 @@ display:
       tags:
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
+        - 'config:field.storage.node.field_s_event_speaker'
   event_series_upcoming_events:
     display_plugin: block
     id: event_series_upcoming_events
@@ -1928,6 +2156,7 @@ display:
             field_s_event_date_2: 0
             field_s_event_date_1: 0
             field_s_event_location: 0
+            field_s_event_speaker: 0
           separator: ''
           hide_empty: 1
           pattern: event_date_stacked
@@ -1937,24 +2166,29 @@ display:
               weight: 0
               plugin: views_row
               source: title
+            'views_row:field_s_event_speaker':
+              destination: speaker
+              weight: 1
+              plugin: views_row
+              source: field_s_event_speaker
             'views_row:field_s_event_date':
               destination: month
-              weight: 1
+              weight: 2
               plugin: views_row
               source: field_s_event_date
             'views_row:field_s_event_date_2':
               destination: day
-              weight: 2
+              weight: 3
               plugin: views_row
               source: field_s_event_date_2
             'views_row:field_s_event_date_1':
               destination: time
-              weight: 3
+              weight: 4
               plugin: views_row
               source: field_s_event_date_1
             'views_row:field_s_event_location':
               destination: location
-              weight: 4
+              weight: 5
               plugin: views_row
               source: field_s_event_location
       fields:
@@ -2262,6 +2496,69 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_s_event_speaker:
+          id: field_s_event_speaker
+          table: node__field_s_event_speaker
+          field: field_s_event_speaker
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: bricks_nested
+          settings:
+            view_mode: default
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       pager:
         type: some
         options:
@@ -2297,6 +2594,7 @@ display:
       tags:
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
+        - 'config:field.storage.node.field_s_event_speaker'
   featured_event:
     display_plugin: block
     id: featured_event
@@ -2326,38 +2624,44 @@ display:
             field_s_event_location: 0
             field_mrc_image: 0
             body: 0
+            field_s_event_speaker: 0
           separator: ''
           hide_empty: 1
           pattern: featured_event_card
           pattern_mapping:
+            'views_row:field_s_event_speaker':
+              destination: speaker
+              weight: 0
+              plugin: views_row
+              source: field_s_event_speaker
             'views_row:title':
               destination: title
-              weight: 0
+              weight: 1
               plugin: views_row
               source: title
             'views_row:body':
               destination: description
-              weight: 1
+              weight: 2
               plugin: views_row
               source: body
             'views_row:field_mrc_image':
               destination: image
-              weight: 2
+              weight: 3
               plugin: views_row
               source: field_mrc_image
             'views_row:field_s_event_date':
               destination: month
-              weight: 3
+              weight: 4
               plugin: views_row
               source: field_s_event_date
             'views_row:field_s_event_date_1':
               destination: day
-              weight: 4
+              weight: 5
               plugin: views_row
               source: field_s_event_date_1
             'views_row:field_s_event_location':
               destination: location
-              weight: 5
+              weight: 6
               plugin: views_row
               source: field_s_event_location
       fields:
@@ -2727,6 +3031,69 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_s_event_speaker:
+          id: field_s_event_speaker
+          table: node__field_s_event_speaker
+          field: field_s_event_speaker
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: bricks_nested
+          settings:
+            view_mode: default
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       pager:
         type: some
         options:
@@ -2848,6 +3215,7 @@ display:
         - 'config:field.storage.node.field_mrc_image'
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
+        - 'config:field.storage.node.field_s_event_speaker'
   short_upcoming:
     display_plugin: block
     id: short_upcoming
@@ -2953,6 +3321,7 @@ display:
             field_s_event_date_2: 0
             field_s_event_date_1: 0
             field_s_event_location: 0
+            field_s_event_speaker: 0
           separator: ''
           hide_empty: 1
           pattern: event_date_stacked
@@ -2962,24 +3331,29 @@ display:
               weight: 0
               plugin: views_row
               source: title
+            'views_row:field_s_event_speaker':
+              destination: speaker
+              weight: 1
+              plugin: views_row
+              source: field_s_event_speaker
             'views_row:field_s_event_date':
               destination: month
-              weight: 1
+              weight: 2
               plugin: views_row
               source: field_s_event_date
             'views_row:field_s_event_date_2':
               destination: day
-              weight: 2
+              weight: 3
               plugin: views_row
               source: field_s_event_date_2
             'views_row:field_s_event_date_1':
               destination: time
-              weight: 3
+              weight: 4
               plugin: views_row
               source: field_s_event_date_1
             'views_row:field_s_event_location':
               destination: location
-              weight: 4
+              weight: 5
               plugin: views_row
               source: field_s_event_location
       fields:
@@ -3287,6 +3661,69 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_s_event_speaker:
+          id: field_s_event_speaker
+          table: node__field_s_event_speaker
+          field: field_s_event_speaker
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: bricks_nested
+          settings:
+            view_mode: default
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       pager:
         type: some
         options:
@@ -3308,6 +3745,7 @@ display:
       tags:
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
+        - 'config:field.storage.node.field_s_event_speaker'
   upcoming_list:
     display_plugin: block
     id: upcoming_list
@@ -3537,3 +3975,4 @@ display:
         - 'config:field.storage.node.field_mrc_image'
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
+        - 'config:field.storage.node.field_s_event_speaker'
