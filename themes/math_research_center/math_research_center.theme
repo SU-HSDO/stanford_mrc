@@ -165,6 +165,10 @@ function math_research_center_preprocess_field(&$variables) {
       }
       break;
 
+    case 'field_s_news_byline':
+      $variables['label'] = t('Story by');
+      break;
+
   }
 
 }

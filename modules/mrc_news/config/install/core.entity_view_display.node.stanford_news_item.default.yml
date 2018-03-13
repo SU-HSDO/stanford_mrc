@@ -37,7 +37,7 @@ third_party_settings:
         follow_parent: '0'
         suggestion: main
       parent_name: ''
-      weight: 1
+      weight: 2
       region: sidebar
     local_tasks_block:
       config:
@@ -48,32 +48,30 @@ third_party_settings:
         primary: 1
         secondary: 1
       parent_name: ''
-      weight: 20
+      weight: 1
       region: page_title
   ds:
     layout:
-      id: pattern_node_news
+      id: pattern_node_simple
       library: null
       disable_css: false
       entity_classes: all_classes
       settings:
         pattern:
-          field_templates: only_content
+          field_templates: default
     regions:
       page_title:
         - node_title
         - local_tasks_block
       sidebar:
         - 'menu_block:main'
-      date:
-        - field_s_news_date
-      link:
-        - field_s_news_link
       image:
         - field_mrc_image
-      content:
+      above_break:
+        - field_s_news_date
+        - field_s_news_link
+      below_break:
         - body
-      author:
         - field_s_news_byline
     fields:
       node_title:
@@ -95,41 +93,41 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 5
+    weight: 6
     settings: {  }
     third_party_settings: {  }
-    region: content
+    region: below_break
   field_mrc_image:
     type: media_image_formatter
-    weight: 4
+    weight: 3
     region: image
     label: hidden
     third_party_settings: {  }
     settings:
       view_mode: full
-      image_style: slideshow
+      image_style: large
       link: 0
   field_s_news_byline:
-    weight: 6
-    label: hidden
+    weight: 7
+    label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-    region: author
+    region: below_break
   field_s_news_date:
-    weight: 2
+    weight: 4
     label: hidden
     settings:
       timezone_override: ''
       format_type: standard_date
     third_party_settings: {  }
     type: datetime_default
-    region: date
+    region: above_break
   field_s_news_link:
     type: link
-    weight: 3
-    region: link
+    weight: 5
+    region: above_break
     label: hidden
     settings:
       trim_length: 80
