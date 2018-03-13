@@ -1,5 +1,21 @@
 Stanford MRC
 
+Version 8.0.7-alpha1                                                  2018-03-08
+--------------------------------------------------------------------------------
+- Added menu position rules on events
+- Added taxonomoy menu ui to link to taxonomy terms on link fields
+- Menu style fixes and mobile menu styling
+- Events speaker field with importer
+
+Version 8.0.6                                                         2018-02-28
+--------------------------------------------------------------------------------
+- Media fields instead of image/video fields
+- use those media fields on views
+- Image styles everywhere
+- field permissions
+- different media browsers
+- Media UX improvements
+
 Version 8.0.3                                                         2018-01-17
 --------------------------------------------------------------------------------
 - Saml configured

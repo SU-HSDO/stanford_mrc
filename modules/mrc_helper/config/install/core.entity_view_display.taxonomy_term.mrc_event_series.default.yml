@@ -2,12 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.mrc_event_series.field_mrc_event_series_image
     - field.field.taxonomy_term.mrc_event_series.field_mrc_event_series_name
+    - field.field.taxonomy_term.mrc_event_series.field_mrc_image
     - taxonomy.vocabulary.mrc_event_series
   module:
     - ds
-    - image
     - mrc_ds_blocks
     - text
 third_party_settings:
@@ -23,7 +22,7 @@ third_party_settings:
         views_label_checkbox: 0
         views_label: ''
       parent_name: ''
-      weight: 5
+      weight: 6
       region: bottom_left
     'views_block:mrc_events-event_series_upcoming_events':
       config:
@@ -36,7 +35,7 @@ third_party_settings:
         views_label_checkbox: 0
         views_label: ''
       parent_name: ''
-      weight: 4
+      weight: 5
       region: bottom_left
     'views_block:mrc_news-event_series_related_news':
       config:
@@ -49,7 +48,7 @@ third_party_settings:
         views_label_checkbox: 0
         views_label: ''
       parent_name: ''
-      weight: 6
+      weight: 7
       region: bottom_right
     'views_block:mrc_visitor-event_series_visitors':
       config:
@@ -62,7 +61,7 @@ third_party_settings:
         views_label_checkbox: 0
         views_label: ''
       parent_name: ''
-      weight: 7
+      weight: 8
       region: footer
     'menu_block:main':
       config:
@@ -81,6 +80,17 @@ third_party_settings:
       parent_name: ''
       weight: 0
       region: sidebar
+    local_tasks_block:
+      config:
+        provider: core
+        admin_label: ''
+        label: Tabs
+        label_display: 0
+        primary: 1
+        secondary: 1
+      parent_name: ''
+      weight: 20
+      region: page_title
   ds:
     layout:
       id: pattern_terms_event_series
@@ -93,9 +103,12 @@ third_party_settings:
     regions:
       sidebar:
         - 'menu_block:main'
+      page_title:
+        - taxonomy_term_title
+        - local_tasks_block
       top:
         - field_mrc_event_series_name
-        - field_mrc_event_series_image
+        - field_mrc_image
         - description
       bottom_left:
         - 'views_block:mrc_events-event_series_upcoming_events'
@@ -104,6 +117,16 @@ third_party_settings:
         - 'views_block:mrc_news-event_series_related_news'
       footer:
         - 'views_block:mrc_visitor-event_series_visitors'
+    fields:
+      taxonomy_term_title:
+        plugin_id: taxonomy_term_title
+        weight: 1
+        label: hidden
+        formatter: default
+        settings:
+          wrapper: h1
+          class: page-title
+          link: false
 id: taxonomy_term.mrc_event_series.default
 targetEntityType: taxonomy_term
 bundle: mrc_event_series
@@ -112,25 +135,25 @@ content:
   description:
     label: hidden
     type: text_default
-    weight: 3
+    weight: 4
     region: top
     settings: {  }
     third_party_settings: {  }
-  field_mrc_event_series_image:
-    weight: 2
-    label: hidden
-    settings:
-      image_style: ''
-      image_link: ''
-    third_party_settings: {  }
-    type: image
-    region: top
   field_mrc_event_series_name:
-    weight: 1
+    weight: 2
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: top
+  field_mrc_image:
+    type: entity_reference_entity_view
+    weight: 3
+    region: top
+    label: hidden
+    third_party_settings: {  }
+    settings:
+      view_mode: full
+      link: false
 hidden: {  }

@@ -31,6 +31,10 @@
 
     @include padding(35px);
 
+    @media (min-wdith: 767px) {
+      @include padding(35px 70px);
+    }
+
     .mrc-slide.field-mrc-slide-title {
       font-size: $h2-font-size;
       font-weight: $font-bold;

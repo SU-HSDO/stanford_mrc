@@ -103,10 +103,19 @@ base:
   css:
     base:
       css/base/base.css: {}
+  js:
+    js/math_research_center.js: {}
   dependencies:
     - classy/base
     - core/modernizr
     - core/normalize
+    - core/jquery
+
+front:
+  version: VERSION
+  css:
+    base:
+      css/base/front.css: {}
 
 hover_menu:
   version: VERSION

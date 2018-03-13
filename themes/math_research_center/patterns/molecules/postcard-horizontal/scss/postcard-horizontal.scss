@@ -18,13 +18,16 @@
   '../utilities/mixins/mixins';
 
 .mrc-postcard--horizontal {
+  @include margin(null null 2em);
   @include mrc-card-container;
 
   .mrc-postcard__img {
     @include margin(null 0 null null);
     @include media($medium-screen) {
       float: left;
-      margin-right: 30px;
+      max-width: 50%;
+
+      @include margin(null 30px null null);
     }
 
     img {

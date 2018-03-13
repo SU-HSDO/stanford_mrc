@@ -16,6 +16,10 @@ source:
   item_selector: /EventList/Event
   fields:
     -
+      name: title
+      label: 'Event Title'
+      selector: title
+    -
       name: guid
       label: GUID
       selector: guid
@@ -34,7 +38,7 @@ process:
   name: title
   status: constants/status
   bundle: constants/type
-  uri:
+  field_media_image/target_id:
     -
       plugin: skip_on_empty
       method: row
@@ -45,6 +49,12 @@ process:
         - image
         - constants/destination_dir
       rename: true
+    -
+      plugin: entity_generate
+      value_key: uri
+      entity_type: file
+      default_values:
+        status: 1
 destination:
-  plugin: 'entity:file'
+  plugin: 'entity:media'
 migration_dependencies: {}

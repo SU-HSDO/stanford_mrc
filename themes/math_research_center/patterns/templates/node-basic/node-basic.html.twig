@@ -3,19 +3,14 @@
 <div{{ attributes }}>
 
   {% if sidebar %}
-
-    <div class="decanter-width-one-fourth">
+    <div class="basic-node__sidebar decanter-width-one-fourth">
       {{ sidebar }}
     </div>
-
-    <div class="decanter-width-three-fourths">
-      {{ content }}
-    </div>
-
-  {% else %}
-
-    {{ content }}
-
   {% endif %}
+
+  <div class="basic-node__main {% if sidebar %} decanter-width-three-fourths{% endif %}">
+    {{ page_title }}
+    {{ content }}
+  </div>
 
 </div>

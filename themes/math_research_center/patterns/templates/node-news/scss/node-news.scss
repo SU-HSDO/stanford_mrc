@@ -3,14 +3,10 @@
 ///
 /// NEWS NODE STYLES
 ///
-
 // Decanter
-@import
-  'decanter-no-markup';
-
+@import 'decanter-no-markup';
 // Stanford Math Research Center
-@import
-'../utilities/mixins/mixins';
+@import '../utilities/mixins/mixins';
 
 .mrc-news__date-source {
   display: flex;
@@ -45,4 +41,8 @@
   > div {
     display: inline-block;
   }
+}
+
+h1.page-title {
+  margin-top: 0;
 }

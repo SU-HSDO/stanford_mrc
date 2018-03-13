@@ -3,11 +3,14 @@
 <div{{ attributes }}>
 
   {% if sidebar %}
-  <div class="decanter-width-one-fourth">
-    {{ sidebar }}
-  </div>
-  <div class="decanter-width-three-fourths">
-    {% endif %}
+    <div class="terms-event-series__sidebar decanter-width-one-fourth">
+      {{ sidebar }}
+    </div>
+  {% endif %}
+
+  <div class="terms-event-series__main{% if sidebar %} decanter-width-three-fourths{% endif %}">
+
+    {{ page_title }}
 
     {% if top %}
       <div class="terms-event-series--top">
@@ -39,9 +42,6 @@
       </div>
     {% endif %}
 
-
-    {% if sidebar %}
   </div>
-  {% endif %}
 
 </div>

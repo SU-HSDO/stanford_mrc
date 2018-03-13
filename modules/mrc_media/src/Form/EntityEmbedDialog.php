@@ -368,6 +368,8 @@ class EntityEmbedDialog implements ContainerInjectionInterface {
     }
 
     if (!empty($render['#display_settings']['image_style'])) {
+      $render[$source_field]['#formatter'] = 'image';
+      $render[$source_field][0]['#theme'] = 'image_formatter';;
       $render[$source_field][0]['#image_style'] = $render['#display_settings']['image_style'];
     }
     else {

@@ -29,4 +29,9 @@
 
     @include margin(1em null null);
   }
+
+  h1.page-title {
+    margin-top: 0;
+  }
 }
+

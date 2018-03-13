@@ -9,6 +9,8 @@
  * Revert the media browsers.
  */
 function mrc_media_post_update_8_0_6() {
+  \Drupal::service('module_installer')->install(['focal_point']);
+
   $configs = [
     'entity_browser.browser.media_browser',
     'views.view.media_entity_browser',
@@ -34,7 +36,6 @@ function mrc_media_post_update_8_0_6() {
   $config->set('settings.file_extensions', 'txt rtf doc docx ppt pptx xls xlsx pdf');
   $config->save();
 
-  \Drupal::service('module_installer')->install(['focal_point']);
   $settings = [
     'preview:image_style' => 'medium',
     'offsets' => '50,50',

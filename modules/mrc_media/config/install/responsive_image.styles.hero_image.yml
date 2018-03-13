@@ -17,28 +17,13 @@ image_style_mappings:
     image_mapping_type: image_style
     image_mapping: responsive_large
   -
-    breakpoint_id: stanford_basic.lg
-    multiplier: 2x
-    image_mapping_type: image_style
-    image_mapping: responsive_large
-  -
     breakpoint_id: stanford_basic.md
     multiplier: 1x
     image_mapping_type: image_style
     image_mapping: responsive_medium
   -
-    breakpoint_id: stanford_basic.md
-    multiplier: 2x
-    image_mapping_type: image_style
-    image_mapping: responsive_medium
-  -
     breakpoint_id: stanford_basic.xs
     multiplier: 1x
-    image_mapping_type: image_style
-    image_mapping: responsive_small
-  -
-    breakpoint_id: stanford_basic.xs
-    multiplier: 2x
     image_mapping_type: image_style
     image_mapping: responsive_small
 breakpoint_group: stanford_basic

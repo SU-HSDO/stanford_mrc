@@ -1,11 +1,8 @@
 @charset "UTF-8";
 
 ///
-/// BASE STYLES
+/// INPUTS STYLES
 ///
-
-// For overriding or making additions to the
-// stanford_basic theme and/or Decanter.
 
 // Decanter
 @import
@@ -29,9 +26,9 @@ select {
   display: block;
   font-size: $base-font-size;
   line-height: $input-line-height;
-  margin: 0.2em 0;
   outline: none;
-  padding: $input-padding-vertical 0.7em;
+  @include margin(0.2em 0);
+  @include padding($input-padding-vertical 0.7em);
 
   &:focus {
     box-shadow: $focus-shadow;
@@ -40,6 +37,7 @@ select {
 
 label {
   display: block;
+  @include margin(1rem null);
 }
 
 select {
@@ -68,9 +66,9 @@ fieldset {
   .lt-ie9 & {
     border: 0;
     float: left;
-    margin: 0.4em 0.4em 0 0;
     position: static;
     width: auto;
+    @include margin(0.4em 0.4em 0 0);
   }
 }
 
@@ -88,9 +86,9 @@ fieldset {
   content: '\a0';
   display: inline-block;
   line-height: 1rem;
-  margin-right: 0.6em;
   text-indent: 0.15em;
   vertical-align: middle;
+  @include margin(null 0.6em null null);
 }
 
 [type=checkbox] + label::before {

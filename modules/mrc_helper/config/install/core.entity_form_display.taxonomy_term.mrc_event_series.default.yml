@@ -2,12 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.mrc_event_series.field_mrc_event_series_image
+    - entity_browser.browser.image_browser
     - field.field.taxonomy_term.mrc_event_series.field_mrc_event_series_name
-    - image.style.thumbnail
+    - field.field.taxonomy_term.mrc_event_series.field_mrc_image
     - taxonomy.vocabulary.mrc_event_series
   module:
-    - image
+    - entity_browser
+    - path
     - text
 id: taxonomy_term.mrc_event_series.default
 targetEntityType: taxonomy_term
@@ -22,14 +23,6 @@ content:
       placeholder: ''
       rows: 5
     third_party_settings: {  }
-  field_mrc_event_series_image:
-    weight: 2
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
-    type: image_image
-    region: content
   field_mrc_event_series_name:
     weight: 0
     settings:
@@ -38,6 +31,21 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_mrc_image:
+    type: entity_browser_entity_reference
+    weight: 2
+    region: content
+    third_party_settings: {  }
+    settings:
+      entity_browser: image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      open: false
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: thumbnail
+      field_widget_edit: true
+      field_widget_replace: false
   name:
     type: string_textfield
     weight: 1
@@ -46,5 +54,11 @@ content:
       size: 60
       placeholder: Shortname
     third_party_settings: {  }
+  path:
+    type: path
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
-  path: true
+  field_mrc_event_series_image: true
