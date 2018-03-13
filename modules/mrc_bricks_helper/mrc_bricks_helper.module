@@ -8,20 +8,35 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\bricks_inline\Plugin\Field\FieldWidget\BricksTreeInlineWidget;
+//testing line below
+use Drupal\Component\Utility\NestedArray;
 
 /**
  * Implements hook_field_widget_form_alter().
  */
 function mrc_bricks_helper_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
   if ($context['widget'] instanceof BricksTreeInlineWidget) {
+
     $view_mode_display = \Drupal::entityTypeManager()
       ->getStorage('entity_view_display');
 
+
     foreach (Element::children($element['entities']) as $delta) {
+
       $child = &$element['entities'][$delta];
+
+      $eif_id = $element['#ief_id'];
+
+      // TODO: MRCD8-204 - trying to open brick programmatically.
+      $storage = $form_state->getStorage();
+      $storage['inline_entity_form'][$eif_id]['entities'][$delta]['form'] = 'edit';
+      $form_state->setStorage($storage);
+
+
 
       // If the entity doesn't have the view display, remove it as an option.
       foreach (array_keys($child['options']['view_mode']['#options']) as $view_mode_id) {
+
         $view_id = $child['#entity']->getEntityTypeId() . '.' . $child['#entity']->bundle() . '.' . $view_mode_id;
 
         if (empty($view_mode_display->load($view_id))) {
@@ -48,6 +63,7 @@ function mrc_bricks_helper_field_widget_form_alter(&$element, FormStateInterface
  */
 function mrc_bricks_helper_preprocess_inline_entity_form_entity_table(&$variables) {
   $element = $variables['form'];
+  //kint($element);
 
   if (isset($element['#widget']) && $element['#widget'] == 'bricks_tree_inline') {
     // For now disable the nesting ability.
@@ -70,4 +86,43 @@ function mrc_bricks_helper_preprocess_inline_entity_form_entity_table(&$variable
       }
     }
   }
+}
+
+/**
+ * Perform alterations before an entity form is included in the IEF widget.
+ *
+ * @param $entity_form
+ *   Nested array of form elements that comprise the entity form.
+ * @param $form_state
+ *   The form state of the parent form.
+ */
+function mrc_bricks_helper_inline_entity_form_entity_form_alter(&$entity_form, &$form_state) {
+  //This gets fired when you edit the brick, not in the node edit form.
+  //dpm('firing');
+  //kint($entity_form);
+  //kint($form_state);
+  //dpm($storage['inline_entity_form'][$eif_id]['entities'][$delta]['form']);
+  //$storage = $form_state->getStorage();
+  //$storage['inline_entity_form'][$eif_id]['entities'][$delta]['form'] = 'edit';
+}
+
+/**
+ * Perform alterations before the reference form is included in the IEF widget.
+ *
+ * The reference form is used to add existing entities through an autocomplete
+ * field
+ *
+ * @param $reference_form
+ *   Nested array of form elements that comprise the reference form.
+ * @param $form_state
+ *   The form state of the parent form.
+ */
+function mrc_bricks_helper_inline_entity_form_reference_form_alter(&$reference_form, &$form_state) {
+  //$reference_form['entity_id']['#description'] = t('New autocomplete description');
+  //dpm('firing');
+  //kint($reference_form);
+  //kint($form_state);
+  //dpm($storage['inline_entity_form'][$eif_id]['entities'][$delta]['form']);
+  //$storage = $form_state->getStorage();
+  //$storage['inline_entity_form'][$eif_id]['entities'][$delta]['form'] = 'edit';
 }
