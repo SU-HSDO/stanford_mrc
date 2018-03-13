@@ -4,18 +4,27 @@ event_date_stacked:
     month:
       label: "Month"
       preview: "Jan"
+      teyp: text
     day:
       label: "Day"
       preview: "23"
+      teyp: integer
     title:
       label: "Title"
       preview: "<a href=\"#\">Event Title</a>"
+      teyp: text
     time:
       label: "Time"
       preview: "4:30 PM"
+      teyp: text
     location:
       label: "Location"
       preview: "Bldg. 380-380W"
+      teyp: text
+    program:
+      label: "Program"
+      preview: "Poincare"
+      teyp: text
   libraries:
     - event_date_stacked:
         css:

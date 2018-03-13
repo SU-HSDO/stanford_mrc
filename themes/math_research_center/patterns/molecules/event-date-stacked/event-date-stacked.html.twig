@@ -1,4 +1,3 @@
-
 {% set attributes = attributes.addClass('mrc-event-date-stacked-card') %}
 
 <div{{ attributes }}>
@@ -12,9 +11,11 @@
       {% endif %}
     </div>
     <div class="mrc-event-date-stacked__content">
+
       {% if title %}
         <h2 class="mrc-event-date-stacked__title">{{ title }}</h2>
       {% endif %}
+
       <div class="mrc-event-date-stacked__time-location">
         {% if time %}
           <div class="mrc-event-date-stacked__time">{{ time }}</div>
@@ -28,6 +29,10 @@
           <div class="mrc-event-date-stacked__location">{{ location }}</div>
         {% endif %}
       </div>
+
+      {% if program %}
+        <div class="mrc-event-date-stacked__program">{{ program }}</div>
+      {% endif %}
     </div>
   </div>
 </div>

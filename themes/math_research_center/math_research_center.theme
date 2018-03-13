@@ -111,7 +111,7 @@ function math_research_center_preprocess_pattern(&$variables, $hook) {
       // Cleanup any fields in the pattern that have no text. This happens
       // mostly in views.
       foreach (array_keys($pattern_definition->getFields()) as $field) {
-        if (empty($variables[$field]) || empty(render($variables[$field]))) {
+        if (empty($variables[$field]) || empty(trim(preg_replace('/<!--(.*)-->/Uis', '', render($variables[$field]))))) {
           unset($variables[$field]);
         }
       }
@@ -120,7 +120,7 @@ function math_research_center_preprocess_pattern(&$variables, $hook) {
         $variables['attributes']['id'] = Html::getUniqueId($hook);
       }
 
-      if(!isset($variables['attributes']['class'])){
+      if (!isset($variables['attributes']['class'])) {
         $variables['attributes']['class'] = [];
       }
       $variables['attributes']['class'][] = 'ui-pattern';

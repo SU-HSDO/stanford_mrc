@@ -2,6 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.body
+    - field.storage.node.field_mrc_event_series
     - field.storage.node.field_mrc_image
     - field.storage.node.field_s_event_date
     - field.storage.node.field_s_event_location
@@ -15,6 +17,7 @@ dependencies:
     - mrc_media
     - node
     - taxonomy
+    - text
     - ui_patterns_views
     - user
     - views_taxonomy_term_name_depth
@@ -91,6 +94,7 @@ display:
             field_s_event_date_1: 0
             field_s_event_location: 0
             field_mrc_image: 0
+            field_mrc_event_series: 0
           separator: ''
           hide_empty: 1
           pattern: event_card
@@ -100,24 +104,29 @@ display:
               weight: 0
               plugin: views_row
               source: title
+            'views_row:field_mrc_event_series':
+              destination: program
+              weight: 1
+              plugin: views_row
+              source: field_mrc_event_series
             'views_row:field_mrc_image':
               destination: image
-              weight: 1
+              weight: 2
               plugin: views_row
               source: field_mrc_image
             'views_row:field_s_event_date':
               destination: date
-              weight: 2
+              weight: 3
               plugin: views_row
               source: field_s_event_date
             'views_row:field_s_event_date_1':
               destination: time
-              weight: 3
+              weight: 4
               plugin: views_row
               source: field_s_event_date_1
             'views_row:field_s_event_location':
               destination: location
-              weight: 4
+              weight: 5
               plugin: views_row
               source: field_s_event_location
       fields:
@@ -425,6 +434,69 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_mrc_event_series:
+          id: field_mrc_event_series
+          table: node__field_mrc_event_series
+          field: field_mrc_event_series
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       filters:
         status:
           value: '1'
@@ -520,6 +592,7 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_mrc_event_series'
         - 'config:field.storage.node.field_mrc_image'
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
@@ -722,6 +795,7 @@ display:
             field_s_event_date_2: 0
             field_s_event_date_1: 0
             field_s_event_location: 0
+            field_mrc_event_series: 0
           separator: ''
           hide_empty: 1
           pattern: event_date_stacked
@@ -731,24 +805,29 @@ display:
               weight: 0
               plugin: views_row
               source: title
+            'views_row:field_mrc_event_series':
+              destination: program
+              weight: 1
+              plugin: views_row
+              source: field_mrc_event_series
             'views_row:field_s_event_date':
               destination: month
-              weight: 1
+              weight: 2
               plugin: views_row
               source: field_s_event_date
             'views_row:field_s_event_date_2':
               destination: day
-              weight: 2
+              weight: 3
               plugin: views_row
               source: field_s_event_date_2
             'views_row:field_s_event_date_1':
               destination: time
-              weight: 3
+              weight: 4
               plugin: views_row
               source: field_s_event_date_1
             'views_row:field_s_event_location':
               destination: location
-              weight: 4
+              weight: 5
               plugin: views_row
               source: field_s_event_location
       fields:
@@ -1056,6 +1135,69 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        field_mrc_event_series:
+          id: field_mrc_event_series
+          table: node__field_mrc_event_series
+          field: field_mrc_event_series
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       pager:
         type: full
         options:
@@ -1110,6 +1252,7 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_mrc_event_series'
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
   event_series_past_events:
@@ -2182,6 +2325,7 @@ display:
             field_s_event_date_1: 0
             field_s_event_location: 0
             field_mrc_image: 0
+            body: 0
           separator: ''
           hide_empty: 1
           pattern: featured_event_card
@@ -2191,24 +2335,29 @@ display:
               weight: 0
               plugin: views_row
               source: title
+            'views_row:body':
+              destination: description
+              weight: 1
+              plugin: views_row
+              source: body
             'views_row:field_mrc_image':
               destination: image
-              weight: 1
+              weight: 2
               plugin: views_row
               source: field_mrc_image
             'views_row:field_s_event_date':
               destination: month
-              weight: 2
+              weight: 3
               plugin: views_row
               source: field_s_event_date
             'views_row:field_s_event_date_1':
               destination: day
-              weight: 3
+              weight: 4
               plugin: views_row
               source: field_s_event_date_1
             'views_row:field_s_event_location':
               destination: location
-              weight: 4
+              weight: 5
               plugin: views_row
               source: field_s_event_location
       fields:
@@ -2516,6 +2665,68 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        body:
+          id: body
+          table: node__body
+          field: body
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 200
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: true
+            trim: true
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: text_default
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
       pager:
         type: some
         options:
@@ -2633,6 +2844,7 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.body'
         - 'config:field.storage.node.field_mrc_image'
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
@@ -3321,6 +3533,7 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_mrc_event_series'
         - 'config:field.storage.node.field_mrc_image'
         - 'config:field.storage.node.field_s_event_date'
         - 'config:field.storage.node.field_s_event_location'
