@@ -4,21 +4,34 @@ event_card:
   fields:
     title:
       label: "Title"
-      preview: "<a href=\"#\">Card Title</a>"
+      preview: "<h2><a href=\"#\">Card Title</a></h2>"
+      type: text
     image:
       label: "Image"
       preview:
         theme: image
         uri: "http://via.placeholder.com/200x200"
+      type: image
     date:
       label: "Date"
       preview: "Week Day, Month, Day, Year"
+      type: text
     time:
       label: "Time"
       preview: "Start Time - End Time"
+      type: text
     location:
       label: "Location"
       preview: "Location Information"
+      type: text
+    program:
+      label: "Program"
+      preview: "Poincare"
+      type: text
+    speaker:
+      label: "Speaker"
+      preview: "Elon Musk"
+      type: text
 
   libraries:
     - event_card:

@@ -415,5 +415,7 @@ function stanford_mrc_post_update_8_0_7() {
   $config_update->revert('block', 'math_research_center_local_tasks');
   $config_update->revert('block', 'math_research_center_page_title');
 
+  $config_update->revert('field_storage_config', 'node.field_mrc_event_series');
+
   SearchPage::load('user_search')->disable()->save();
 }

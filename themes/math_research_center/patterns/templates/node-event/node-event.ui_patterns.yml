@@ -58,6 +58,10 @@ node_event:
       label: "Embed Video"
       preview: "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/_Nq4Z5i7lcs\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"></iframe>"
       type: text
+    speaker:
+      label: "Speaker"
+      preview: "Stanford Speaker"
+      type: text
   libraries:
     - node_event:
         css:

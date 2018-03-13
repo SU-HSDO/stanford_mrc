@@ -107,6 +107,8 @@ base:
     js/math_research_center.js: {}
   dependencies:
     - classy/base
+    - classy/messages
+    - classy/progress
     - core/modernizr
     - core/normalize
     - core/jquery

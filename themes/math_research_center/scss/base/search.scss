@@ -62,13 +62,13 @@
 
       @include padding(null 35px null null);
 
-      &:hover,
-      &:focus {
+      .user-is-tabbing &:hover,
+      .user-is-tabbing &:focus {
         box-shadow: 0 0 0 2px $color-bright-red;
         border: none;
       }
 
-      &:focus {
+      .user-is-tabbing &:focus {
         background: url("../../img/search.svg") no-repeat 160px center;
         background-size: 45px 45px;
         -webkit-transition: width 0.6s, border-radius 0.6s, background 0.6s;

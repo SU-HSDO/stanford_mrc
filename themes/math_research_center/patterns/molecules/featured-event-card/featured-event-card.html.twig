@@ -23,6 +23,12 @@
     {% if title %}
       <h2 class="mrc-featured-event-card__title">{{ title }}</h2>
     {% endif %}
+
+
+    {% if speaker %}
+      <div class="mrc-featured-event-card__speaker">{{ speaker }}</div>
+    {% endif %}
+
     {% if description %}
       <div class="mrc-featured-event-card__teaser">{{ description }}</div>
     {% endif %}
