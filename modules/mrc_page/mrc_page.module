@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * mrc_page.module
+ */
+
+use Drupal\paragraphs\Entity\Paragraph;
+
+function mrc_page_preprocess_field(&$variables) {
+  if ($variables['element']['#field_name'] == 'field_s_mrc_page_bricks' && $variables['element']['#view_mode'] == 'search_result') {
+    foreach ($variables['items'] as &$brick_item) {
+      foreach ($brick_item['content'] as $delta => $brick) {
+        /** @var Paragraph $paragraph */
+        $paragraph = $brick['#paragraph'];
+        if ($paragraph->bundle() == 'mrc_view') {
+          unset($brick_item['content'][$delta]);
+        }
+      }
+    }
+  }
+}
