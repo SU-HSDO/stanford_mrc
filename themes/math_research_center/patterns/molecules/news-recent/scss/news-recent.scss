@@ -3,17 +3,12 @@
 ///
 /// RECENT NEWS COMPONENT
 ///
-
 // Decanter
-@import
-  'decanter-no-markup';
-
+@import 'decanter-no-markup';
 // Stanford Math Research Center
-@import
-  '../utilities/mixins/mixins';
+@import '../utilities/mixins/mixins';
 
 .mrc-news-recent-card {
-  display: table-cell;
 
   @include mrc-card-container;
 
@@ -40,5 +35,9 @@
   .mrc-news-recent__date-source {
     display: flex;
     flex-wrap: wrap;
+  }
+
+  h2 {
+    font-size: $lead-font-size;
   }
 }

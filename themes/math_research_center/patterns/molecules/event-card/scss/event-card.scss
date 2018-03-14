@@ -19,6 +19,7 @@
 
   .mrc-event-card__img {
     @include margin(null 0 null null);
+    flex-shrink: 0;
 
     img {
       width: 100%;

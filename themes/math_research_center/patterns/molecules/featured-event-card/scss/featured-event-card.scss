@@ -21,6 +21,7 @@
 
   .mrc-featured-event-card__img {
     margin-right: 0;
+    flex-shrink: 0;
 
     img {
       width: 100%;
@@ -36,6 +37,7 @@
   }
 
   .mrc-featured-event-card__content {
+
     .mrc-featured-event-card__date {
       @include mrc-date-stacked;
     }

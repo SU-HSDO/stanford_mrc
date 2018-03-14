@@ -3,14 +3,10 @@
 ///
 /// NEWS CARD COMPONENT
 ///
-
 // Decanter
-@import
-  'decanter-no-markup';
-
+@import 'decanter-no-markup';
 // Stanford Math Research Center
-@import
-  '../utilities/mixins/mixins';
+@import '../utilities/mixins/mixins';
 
 .mrc-news-card {
   @include margin(null null 2em);
@@ -19,6 +15,7 @@
 
   .mrc-news-card__img {
     @include margin(null 0 null null);
+    flex-shrink: 0;
 
     img {
       width: 100%;
