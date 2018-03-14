@@ -56,3 +56,15 @@ function mrc_media_post_update_8_0_6() {
   $config->set('content.field_media_image.type', 'responsive_image');
   $config->save(TRUE);
 }
+
+/**
+ * Removed old actions that dont work anymore.
+ */
+function mrc_media_post_update_8_0_7(){
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('system.action.media_delete_actions');
+  $config->delete();
+
+  $config = $config_factory->getEditable('system.action.media_delete_action');
+  $config->delete();
+}
