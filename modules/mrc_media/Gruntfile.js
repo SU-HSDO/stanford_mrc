@@ -80,6 +80,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           // Compiled styles.
+          'css/mrc_media.admin.css':              'scss/mrc_media.admin.scss',
           'css/mrc_media.multi_step.css':         'scss/mrc_media.multi_step.scss',
           'css/mrc_media.dropzonejs.css':         'scss/mrc_media.dropzonejs.scss',
           'css/mrc_media.embed.css':              'scss/mrc_media.embed.scss',
