@@ -9,200 +9,208 @@
 @import '../utilities/mixins/mixins';
 
 // Main menu in header region
-.js .decanter-main-menu--hover-reveal {
-  &.menu--main {
-    box-shadow: none;
-
-    @include media($medium-screen) {
-      float: right;
-      height: 40px;
-    }
-
-    a:hover,
-    a.is-active,
-    .menu-item--active-trail a,
-    a.ui-state-active {
-      border-bottom: solid 3px $color-black;
-    }
-  }
-
-  .decanter-nav-primary {
-    border: none;
-
-    &.ui-menu {
-      &.ui-widget-content {
-        background: $color-black;
-
-        @include media($medium-screen) {
-          background: none;
-        }
-
-        &.ui-widget {
-          border: none;
-        }
-
-        .ui-icon {
-          background-image: none;
-        }
-
-        .ui-widget {
-          background: $color-black;
-
-          @include padding(1em);
-        }
-      }
-
-      .ui-menu-item-wrapper {
-        @include margin(0 1.5em 0 0);
-        @include padding(3px 0 0);
-      }
-    }
-
-    > li > a {
-      font-weight: $font-normal;
-
-      @media (min-width: 951px) {
-        font-size: $base-font-size;
-      }
-
-      & .ui-menu-icon {
-        right: -18px;
-        top: -23px;
-        -webkit-transform: rotate(90deg);
-        transform: rotate(90deg);
-      }
-    }
-
-    .ui-state-active,
-    .ui-widget-content .ui-state-active,
-    .ui-widget-header .ui-state-active,
-    a.ui-button:active,
-    .ui-button:active,
-    .ui-button.ui-state-active:hover {
-      background-color: transparent;
-      border: none;
-      color: $color-cloud;
-
-      @include media($medium-screen) {
-        color: $color-black;
-      }
-    }
-
-    .decanter-nav-submenu {
-      .menu-item a {
-        border-bottom: none;
-        color: $color-white;
-
-        @include margin(0 1.5em 10px 0);
-        @include padding(0);
-
-        @include media($medium-screen) {
-          @include margin(0 0 10px 0);
-        }
-
-        &:hover {
-          background-color: transparent;
-          border: none;
-          color: $color-cloud;
-          text-decoration: underline;
-        }
-
-        &.is-active {
-          color: $color-cloud;
-        }
-      }
-
-      .ui-state-active,
-      .ui-widget-content .ui-state-active
-      a.ui-button:active,
-      .ui-button:active,
-      .ui-button.ui-state-active:hover {
-        background-color: transparent;
-        color: $color-cloud;
-        text-decoration: underline;
-      }
-    }
-  }
-
-  ul ul {
-    display: none;
-
-    li {
-      position: relative;
-      display: block;
-    }
-
-    ul {
-      left: 100%;
-      top: 0;
-    }
-  }
-}
-
-// Mobile styles for the main menu in header
-// region
-.decanter-main-menu--hover-reveal {
-  .ui-widget .fa {
+#header {
+  .fa {
     font: normal normal normal 14px/1 FontAwesome;
   }
 
-  button {
-    width: auto;
-  }
+  .js & {
+    .decanter-main-menu--hover-reveal {
 
-  > ul {
-    display: none;
+      @include media($medium-screen) {
+        .fa {
+          display: none;
+        }
 
-    &.expanded {
-      display: block;
+        &.menu--main {
+          box-shadow: none;
+          float: right;
+          height: 40px;
 
-      li a {
-        color: $color-white;
+          a:hover,
+          a.is-active,
+          .menu-item--active-trail a,
+          a.ui-state-active {
+            border-bottom: solid 3px $color-black;
+          }
+        }
+
+        .ui-menu.decanter-nav-primary {
+          border: none;
+
+          &.ui-menu {
+            &.ui-widget-content {
+              background: $color-black;
+
+              @include media($medium-screen) {
+                background: none;
+              }
+
+              &.ui-widget {
+                border: none;
+              }
+
+              .ui-icon {
+                background-image: none;
+              }
+
+              .ui-widget {
+                background: $color-black;
+
+                @include padding(1em);
+              }
+            }
+
+            .ui-menu-item-wrapper {
+              @include margin(0 1.5em 0 0);
+              @include padding(3px 0 0);
+            }
+          }
+
+          > li > a {
+            font-weight: $font-normal;
+
+            @media (min-width: 951px) {
+              font-size: $base-font-size;
+            }
+
+            & .ui-menu-icon {
+              right: -18px;
+              top: -23px;
+              -webkit-transform: rotate(90deg);
+              transform: rotate(90deg);
+            }
+          }
+
+          .ui-state-active,
+          .ui-widget-content .ui-state-active,
+          .ui-widget-header .ui-state-active,
+          a.ui-button:active,
+          .ui-button:active,
+          .ui-button.ui-state-active:hover {
+            background-color: transparent;
+            border: none;
+            color: $color-cloud;
+
+            @include media($medium-screen) {
+              color: $color-black;
+            }
+          }
+
+          .decanter-nav-submenu {
+            .menu-item a {
+              border-bottom: none;
+              color: $color-white;
+
+              @include margin(0 1.5em 10px 0);
+              @include padding(0);
+
+              @include media($medium-screen) {
+                @include margin(0 0 10px 0);
+              }
+
+              &:hover {
+                background-color: transparent;
+                border: none;
+                color: $color-cloud;
+                text-decoration: underline;
+              }
+
+              &.is-active {
+                color: $color-cloud;
+              }
+            }
+
+            .ui-state-active,
+            .ui-widget-content .ui-state-active
+            a.ui-button:active,
+            .ui-button:active,
+            .ui-button.ui-state-active:hover {
+              background-color: transparent;
+              color: $color-cloud;
+              text-decoration: underline;
+            }
+          }
+        }
+
+        ul ul {
+          display: none;
+
+          li {
+            position: relative;
+            display: block;
+          }
+
+          ul {
+            left: 100%;
+            top: 0;
+          }
+        }
       }
 
-      ul button {
-        color: $color-white;
+      // Mobile styles for the main menu in header region.
+      @include media(max-width $medium-screen - 1) {
+        position: relative;
 
-        @include margin(null null null 1.5em);
+        ul {
+          display: none;
+          background: $color-black;
+          position: absolute;
+          z-index: 1;
+          width: calc(100% - 10px);
+
+          &.expanded {
+            display: block;
+          }
+
+          ul {
+            border: 1px solid $color-white;
+            z-index: 2;
+
+            ul {
+              z-index: 3;
+
+              ul {
+                z-index: 4;
+              }
+            }
+          }
+
+          button {
+            @include padding(4px);
+            @include margin(null null null 1.5em);
+          }
+        }
+
+        li {
+          display: block;
+          position: relative;
+          @include padding(0.2em null null 0.75em);
+        }
+
+        a {
+          color: $color-white;
+          border: 0;
+          @include padding(0);
+
+          &:hover, &:focus {
+            text-decoration: none;
+          }
+        }
+
+        button {
+          color: $color-white;
+          width: auto;
+        }
       }
     }
-  }
-
-  &.menu--main li {
-    display: block;
-
-    @include padding(0.2em null null 0.75em);
-  }
-
-  @include media($medium-screen) {
-    button {
-      display: none;
-    }
-
-    > ul {
-      display: block;
-    }
-
-    &.menu--main li {
-      display: inline-block;
-
-      @include padding(0.2em null null 0);
-    }
-  }
-}
-
-.decanter-nav-primary > li > a:hover {
-  color: $color-cloud;
-
-  @include media($medium-screen) {
-    color: $color-black;
   }
 }
 
 // Subnavigation - no JavaScript
 // No JavaScript is applied to the menu when
 // it does not appear in the Header region.
-.js .main-container {
+.main-container {
   .menu--main {
     float: none;
 
@@ -282,7 +290,7 @@
 
 // Styles for no JavaScript
 .no-js .decanter-main-menu--hover-reveal {
-  float:right;
+  float: right;
   height: 50px;
 
   ul li {
