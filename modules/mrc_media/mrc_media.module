@@ -7,7 +7,6 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\editor\Entity\Editor;
-use Drupal\mrc_media\Form\EntityEmbedDialog;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\entity_browser\EntityBrowserFormInterface;
 use Drupal\Core\Link;
@@ -55,11 +54,19 @@ function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $fo
   if (isset($form['attributes']['data-entity-embed-display-settings'])) {
 
     $editor = $form_state->getBuildInfo()['args'][0];
+
     // Alter the media embed dialog form.
     if ($editor instanceof Editor) {
-      \Drupal::classResolver()
-        ->getInstanceFromDefinition(EntityEmbedDialog::class)
-        ->alterForm($form, $form_state);
+      $entity = $form_state->get('entity');
+
+      /** @var \Drupal\mrc_media\MediaEmbedDialogManager $dialog_manager */
+      $dialog_manager = \Drupal::service('plugin.manager.media_embed_dialog_manager');
+      foreach ($dialog_manager->getDefinitions() as $plugin_id => $configuration) {
+        if ($configuration['media_type'] == $entity->bundle()) {
+          $dialog_manager->createInstance($plugin_id)
+            ->alterDialogForm($form, $form_state);
+        }
+      }
     }
   }
 }
@@ -108,8 +115,14 @@ function mrc_media_theme_registry_alter(&$theme_registry) {
  * Implements hook_entity_embed_alter().
  */
 function mrc_media_entity_embed_alter(array &$build, EntityInterface $entity, array &$context) {
-  $build['entity']['#display_settings'] = $context['data-entity-embed-display-settings'];
-  $build['entity']['#pre_render'][] = [EntityEmbedDialog::class, 'preRender'];
+  /** @var \Drupal\mrc_media\MediaEmbedDialogManager $dialog_manager */
+  $dialog_manager = \Drupal::service('plugin.manager.media_embed_dialog_manager');
+  foreach ($dialog_manager->getDefinitions() as $plugin_id => $configuration) {
+    if ($configuration['media_type'] == $entity->bundle()) {
+      $dialog_manager->createInstance($plugin_id)
+        ->embedAlter($build, $entity, $context);
+    }
+  }
 }
 
 /**
