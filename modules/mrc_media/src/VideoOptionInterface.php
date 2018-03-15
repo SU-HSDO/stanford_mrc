@@ -12,6 +12,6 @@ namespace Drupal\mrc_media;
  * - Displaying the entity browser in an iframe.
  * - Displaying the entity browser in a modal dialog box.
  */
-interface MediaEmbedDialogInterface {
+interface VideoOptionInterface {
 
 }
