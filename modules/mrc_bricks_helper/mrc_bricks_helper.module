@@ -9,11 +9,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\bricks_inline\Plugin\Field\FieldWidget\BricksTreeInlineWidget;
 
-function my_test_process($element) {
-  $element['actions']['ief_edit_save']['#value'] = t('My Test here');
-  return $element;
-}
-
 /**
  * Implements hook_field_widget_form_alter().
  */
@@ -23,9 +18,10 @@ function mrc_bricks_helper_field_widget_form_alter(&$element, FormStateInterface
     $view_mode_display = \Drupal::entityTypeManager()
       ->getStorage('entity_view_display');
 
-
     foreach (Element::children($element['entities']) as $delta) {
-      $element['entities'][$delta]['form']['inline_entity_form']['#process'][] = 'my_test_process';
+
+      //Adding custom preproces function for modifying ief buttons.
+      $element['entities'][$delta]['form']['inline_entity_form']['#process'][] = 'mrc_bricks_helper_process';
 
       $child = &$element['entities'][$delta];
 
@@ -55,6 +51,14 @@ function mrc_bricks_helper_field_widget_form_alter(&$element, FormStateInterface
       }
     }
   }
+}
+
+/**
+ * Custom Process callback to override InlineEntityFormComplex.
+ */
+function mrc_bricks_helper_process($element) {
+  $element['actions']['ief_edit_save']['#value'] = t('Collapse');
+  return $element;
 }
 
 /**
@@ -90,49 +94,4 @@ function mrc_bricks_helper_preprocess_inline_entity_form_entity_table(&$variable
       }
     }
   }
-}
-
-/**
- * Perform alterations before an entity form is included in the IEF widget.
- *
- * @param $entity_form
- *   Nested array of form elements that comprise the entity form.
- * @param $form_state
- *   The form state of the parent form.
- */
-function mrc_bricks_helper_inline_entity_form_entity_form_alter(&$entity_form, &$form_state) {
-  //This gets fired when you edit the brick, not in the node edit form.
-  //ddl($entity_form);
-  //ddl($form_state);
-  $buttons = $form_state->getButtons();
-  foreach ($buttons as &$button) {
-    if ($button['#value'] = 'Update @type_singular') {
-      $button['#value'] = 'Collapse';
-    }
-  }
-  //dpm($entity_form);
-  //ddl($buttons);
-  $form_state->setButtons($buttons);
-}
-
-/**
- * Perform alterations before the reference form is included in the IEF widget.
- *
- * The reference form is used to add existing entities through an autocomplete
- * field
- *
- * @param $reference_form
- *   Nested array of form elements that comprise the reference form.
- * @param $form_state
- *   The form state of the parent form.
- */
-function mrc_bricks_helper_inline_entity_form_reference_form_alter(&$reference_form, &$form_state) {
-  //$reference_form['entity_id']['#description'] = t('New autocomplete description');
-  //dpm('firing');
-  //kint($reference_form);
-  //kint($form_state);
-  //ddl($form_state);
-  //dpm($storage['inline_entity_form'][$eif_id]['entities'][$delta]['form']);
-  //$storage = $form_state->getStorage();
-  //$storage['inline_entity_form'][$eif_id]['entities'][$delta]['form'] = 'edit';
 }
