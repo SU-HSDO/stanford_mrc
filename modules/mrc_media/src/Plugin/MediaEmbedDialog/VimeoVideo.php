@@ -85,6 +85,7 @@ class VimeoVideo extends MediaEmbedDialogBase {
   public function alterDialogForm(array &$form, FormStateInterface $form_state) {
     parent::alterDialogForm($form, $form_state);
     $input = $this->getUserInput($form_state);
+    unset($form['attributes']['data-align']);
 
     $form['attributes'][$this->settingsKey]['intro'] = [
       '#markup' => $this->t('Some videos do not support all options below.'),

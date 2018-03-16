@@ -85,6 +85,15 @@ abstract class MediaEmbedDialogBase extends PluginBase implements MediaEmbedDial
     return $entity->getSource()->getConfiguration()['source_field'];
   }
 
+  /**
+   * Get the user's configured settings combined with the default settings.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state that contains the display settings.
+   *
+   * @return array|mixed
+   *   Input settings with defaults added.
+   */
   protected function getUserInput(FormStateInterface $form_state) {
     $input = [];
     if (isset($form_state->getUserInput()['editor_object'])) {

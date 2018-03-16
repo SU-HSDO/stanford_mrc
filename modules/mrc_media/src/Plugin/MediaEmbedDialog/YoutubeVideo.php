@@ -4,6 +4,7 @@ namespace Drupal\mrc_media\Plugin\MediaEmbedDialog;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\media\MediaInterface;
 use Drupal\mrc_media\MediaEmbedDialogBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\video_embed_field\ProviderManager;
@@ -84,6 +85,7 @@ class YoutubeVideo extends MediaEmbedDialogBase {
   public function alterDialogForm(array &$form, FormStateInterface $form_state) {
     parent::alterDialogForm($form, $form_state);
     $input = $this->getUserInput($form_state);
+    unset($form['attributes']['data-align']);
 
     $form['attributes'][$this->settingsKey]['start'] = [
       '#type' => 'textfield',

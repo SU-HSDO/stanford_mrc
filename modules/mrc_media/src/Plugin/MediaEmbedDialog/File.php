@@ -2,8 +2,8 @@
 
 namespace Drupal\mrc_media\Plugin\MediaEmbedDialog;
 
-use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\media\MediaInterface;
 use Drupal\mrc_media\MediaEmbedDialogBase;
 
 /**
