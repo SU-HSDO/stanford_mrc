@@ -9,7 +9,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\bricks_inline\Plugin\Field\FieldWidget\BricksTreeInlineWidget;
 
-
+function my_test_process($element) {
+  $element['actions']['ief_edit_save']['#value'] = t('My Test here');
+  return $element;
+}
 
 /**
  * Implements hook_field_widget_form_alter().
@@ -22,6 +25,7 @@ function mrc_bricks_helper_field_widget_form_alter(&$element, FormStateInterface
 
 
     foreach (Element::children($element['entities']) as $delta) {
+      $element['entities'][$delta]['form']['inline_entity_form']['#process'][] = 'my_test_process';
 
       $child = &$element['entities'][$delta];
 
@@ -101,11 +105,12 @@ function mrc_bricks_helper_inline_entity_form_entity_form_alter(&$entity_form, &
   //ddl($entity_form);
   //ddl($form_state);
   $buttons = $form_state->getButtons();
-  foreach ($buttons as $button) {
+  foreach ($buttons as &$button) {
     if ($button['#value'] = 'Update @type_singular') {
       $button['#value'] = 'Collapse';
     }
   }
+  //dpm($entity_form);
   //ddl($buttons);
   $form_state->setButtons($buttons);
 }
