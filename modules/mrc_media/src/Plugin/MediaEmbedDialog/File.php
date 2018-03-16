@@ -20,11 +20,10 @@ class File extends MediaEmbedDialogBase {
    * {@inheritdoc}
    */
   public function isApplicable() {
-    if (empty($this->configuration['entity']) || !$this->configuration['entity'] instanceof MediaInterface) {
-      return FALSE;
+    if ($this->entity instanceof MediaInterface) {
+      return $this->entity->bundle() == 'file';
     }
-
-    return $this->configuration['entity']->bundle() == 'file';
+    return FALSE;
   }
 
   /**
@@ -43,14 +42,11 @@ class File extends MediaEmbedDialogBase {
     parent::alterDialogForm($form, $form_state);
     $input = $this->getUserInput($form_state);
 
-    /** @var \Drupal\media\Entity\Media $entity */
-    $entity = $form_state->getStorage()['entity'];
-
     $form['attributes'][$this->settingsKey]['description'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Description'),
       '#description' => $this->t('Optionally enter text to use as the link text.'),
-      '#default_value' => $input['description'] ?: $entity->label(),
+      '#default_value' => $input['description'] ?: $this->entity->label(),
       '#required' => TRUE,
     ];
   }

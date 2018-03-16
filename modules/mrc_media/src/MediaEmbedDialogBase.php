@@ -25,6 +25,13 @@ abstract class MediaEmbedDialogBase extends PluginBase implements MediaEmbedDial
   protected $settingsKey = 'data-entity-embed-display-settings';
 
   /**
+   * Media entity being embeded.
+   *
+   * @var MediaInterface
+   */
+  protected $entity;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -42,6 +49,7 @@ abstract class MediaEmbedDialogBase extends PluginBase implements MediaEmbedDial
   public function __construct($configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_manager;
+    $this->entity = $configuration['entity'];
   }
 
   /**

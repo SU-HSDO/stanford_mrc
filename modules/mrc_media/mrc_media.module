@@ -56,20 +56,24 @@ function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $fo
     $editor = $form_state->getBuildInfo()['args'][0];
 
     // Alter the media embed dialog form.
-    if ($editor instanceof Editor) {
-      $entity = $form_state->get('entity');
+    if (!($editor instanceof Editor)) {
+      return;
+    }
 
-      /** @var \Drupal\mrc_media\MediaEmbedDialogManager $dialog_manager */
-      $dialog_manager = \Drupal::service('plugin.manager.media_embed_dialog_manager');
-      foreach ($dialog_manager->getDefinitions() as $plugin_id => $configuration) {
-        $plugin = $dialog_manager->createInstance($plugin_id, ['entity' => $entity]);
+    $entity = $form_state->get('entity');
 
-        if ($plugin->isApplicable()) {
-          $plugin->alterDialogForm($form, $form_state);
-        }
+    /** @var \Drupal\mrc_media\MediaEmbedDialogManager $dialog_manager */
+    $dialog_manager = \Drupal::service('plugin.manager.media_embed_dialog_manager');
+
+    foreach ($dialog_manager->getDefinitions() as $plugin_id => $configuration) {
+      $plugin = $dialog_manager->createInstance($plugin_id, ['entity' => $entity]);
+
+      if ($plugin->isApplicable()) {
+        $plugin->alterDialogForm($form, $form_state);
       }
     }
   }
+
 }
 
 /**

@@ -63,15 +63,11 @@ class YoutubeVideo extends MediaEmbedDialogBase {
    * {@inheritdoc}
    */
   public function isApplicable() {
-    if (empty($this->configuration['entity']) || !$this->configuration['entity'] instanceof MediaInterface) {
-      return FALSE;
-    }
-
-    $entity = $this->configuration['entity'];
-    if ($entity->bundle() == 'video') {
-      $url = $entity->get(static::getMediaSourceField($entity))
-        ->getValue()[0]['value'];
+    if (!$this->entity instanceof MediaInterface && $this->entity->bundle() == 'video') {
+      $source_field = static::getMediaSourceField($this->entity);
+      $url = $this->entity->get($source_field)->getValue()[0]['value'];
       $provider = $this->videoManager->loadProviderFromInput($url);
+
       if ($provider->getPluginId() == 'youtube') {
         return TRUE;
       }
@@ -120,6 +116,15 @@ class YoutubeVideo extends MediaEmbedDialogBase {
     ];
   }
 
+  /**
+   * Convert seconds into minutes:seconds.
+   *
+   * @param int $seconds
+   *   Number of seconds to convert into readable time.
+   *
+   * @return string
+   *   Formatted time.
+   */
   protected function getReadableTime($seconds) {
     $mins = floor($seconds / 60 % 60);
     $secs = floor($seconds % 60);

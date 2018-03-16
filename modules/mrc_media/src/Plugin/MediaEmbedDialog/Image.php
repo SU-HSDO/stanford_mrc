@@ -22,11 +22,10 @@ class Image extends MediaEmbedDialogBase {
    * {@inheritdoc}
    */
   public function isApplicable() {
-    if (empty($this->configuration['entity']) || !$this->configuration['entity'] instanceof MediaInterface) {
-      return FALSE;
+    if ($this->entity instanceof MediaInterface) {
+      return $this->entity->bundle() == 'image';
     }
-
-    return $this->configuration['entity']->bundle() == 'image';
+    return FALSE;
   }
 
   /**
@@ -61,11 +60,9 @@ class Image extends MediaEmbedDialogBase {
     parent::alterDialogForm($form, $form_state);
     $input = $this->getUserInput($form_state);
 
-    /** @var \Drupal\media\Entity\Media $entity */
-    $entity = $form_state->getStorage()['entity'];
-    $source_field = static::getMediaSourceField($entity);
+    $source_field = static::getMediaSourceField($this->entity);
     /** @var \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $image_field */
-    $image_field = $entity->get($source_field);
+    $image_field = $this->entity->get($source_field);
     $default_alt = $image_field->getValue()[0]['alt'];
 
     $form['attributes'][$this->settingsKey]['image_style'] = [
