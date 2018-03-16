@@ -17,6 +17,10 @@ use Drupal\mrc_media\MediaEmbedDialogBase;
  */
 class Image extends MediaEmbedDialogBase {
 
+  public function isApplicable() {
+    return $this->configuration['entity']->bundle() == 'image';
+  }
+
   /**
    * Use Linkit functions but replace the autocomplete library with our own.
    *
@@ -172,6 +176,7 @@ class Image extends MediaEmbedDialogBase {
       ];
     }
   }
+
   /**
    * {@inheritdoc}
    */

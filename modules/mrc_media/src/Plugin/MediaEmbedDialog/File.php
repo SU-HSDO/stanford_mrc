@@ -16,6 +16,10 @@ use Drupal\mrc_media\MediaEmbedDialogBase;
  */
 class File extends MediaEmbedDialogBase {
 
+  public function isApplicable() {
+    return $this->configuration['entity']->bundle() == 'file';
+  }
+
   /**
    * {@inheritdoc}
    */

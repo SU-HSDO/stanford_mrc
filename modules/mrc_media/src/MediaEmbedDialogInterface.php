@@ -14,4 +14,6 @@ namespace Drupal\mrc_media;
  */
 interface MediaEmbedDialogInterface {
 
+  function isApplicable();
+
 }

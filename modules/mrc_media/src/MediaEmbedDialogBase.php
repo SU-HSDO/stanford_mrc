@@ -62,4 +62,10 @@ abstract class MediaEmbedDialogBase extends PluginBase implements MediaEmbedDial
     return $element;
   }
 
+  public static function getMediaSourceField($entity){
+    return $entity->getSource()->getConfiguration()['source_field'];
+  }
+
+  abstract public function isApplicable();
+
 }

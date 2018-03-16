@@ -16,7 +16,3 @@ services:
   plugin.manager.media_embed_dialog_manager:
     class: Drupal\mrc_media\MediaEmbedDialogManager
     parent: default_plugin_manager
-  plugin.manager.video_option_manager:
-      class: Drupal\mrc_media\VideoOptionManager
-      parent: default_plugin_manager
-

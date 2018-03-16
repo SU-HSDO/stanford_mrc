@@ -62,9 +62,10 @@ function mrc_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $fo
       /** @var \Drupal\mrc_media\MediaEmbedDialogManager $dialog_manager */
       $dialog_manager = \Drupal::service('plugin.manager.media_embed_dialog_manager');
       foreach ($dialog_manager->getDefinitions() as $plugin_id => $configuration) {
-        if ($configuration['media_type'] == $entity->bundle()) {
-          $dialog_manager->createInstance($plugin_id)
-            ->alterDialogForm($form, $form_state);
+        $plugin = $dialog_manager->createInstance($plugin_id, ['entity' => $entity]);
+
+        if ($plugin->isApplicable()) {
+          $plugin->alterDialogForm($form, $form_state);
         }
       }
     }
@@ -118,9 +119,9 @@ function mrc_media_entity_embed_alter(array &$build, EntityInterface $entity, ar
   /** @var \Drupal\mrc_media\MediaEmbedDialogManager $dialog_manager */
   $dialog_manager = \Drupal::service('plugin.manager.media_embed_dialog_manager');
   foreach ($dialog_manager->getDefinitions() as $plugin_id => $configuration) {
-    if ($configuration['media_type'] == $entity->bundle()) {
-      $dialog_manager->createInstance($plugin_id)
-        ->embedAlter($build, $entity, $context);
+    $plugin = $dialog_manager->createInstance($plugin_id, ['entity' => $entity]);
+    if ($plugin->isApplicable()) {
+      $plugin->embedAlter($build, $entity, $context);
     }
   }
 }
