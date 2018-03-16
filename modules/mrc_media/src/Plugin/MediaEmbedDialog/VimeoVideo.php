@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\video_embed_field\ProviderManager;
 
 /**
- * Changes embedded video media items.
+ * Changes embedded video media items with vimeo provider.
  *
  * @MediaEmbedDialog(
  *   id = "vimeo_video",
@@ -48,6 +48,16 @@ class VimeoVideo extends MediaEmbedDialogBase {
   /**
    * {@inheritdoc}
    */
+  public function getDefaultInput() {
+    return [
+
+    ];
+  }
+
+
+  /**
+   * {@inheritdoc}
+   */
   public function isApplicable() {
     $entity = $this->configuration['entity'];
     if ($entity->bundle() == 'video') {
@@ -72,6 +82,10 @@ class VimeoVideo extends MediaEmbedDialogBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Autoplay'),
     ];
+  }
+
+  public static function preRender(array $element) {
+    return $element;
   }
 
 }

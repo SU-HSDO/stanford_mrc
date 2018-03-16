@@ -2,6 +2,7 @@
 
 namespace Drupal\mrc_media;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
@@ -11,6 +12,9 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 abstract class MediaEmbedDialogBase extends PluginBase implements MediaEmbedDialogInterface, ContainerFactoryPluginInterface {
 
+  /**
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
   protected $entityTypeManager;
 
   /**
@@ -40,32 +44,58 @@ abstract class MediaEmbedDialogBase extends PluginBase implements MediaEmbedDial
     $this->entityTypeManager = $entity_manager;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function alterDialogForm(array &$form, FormStateInterface $form_state) {
-    array_unshift($form['#validate'], [self::class, 'validateDialogForm']);
-    array_unshift($form['#submit'], [self::class, 'submitDialogForm']);
+    array_unshift($form['#validate'], [get_class($this), 'validateDialogForm']);
+    array_unshift($form['#submit'], [get_class($this), 'submitDialogForm']);
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public static function validateDialogForm(array &$form, FormStateInterface $form_state) {
-
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public static function submitDialogForm(array &$form, FormStateInterface $form_state) {
-
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function embedAlter(array &$build, MediaInterface $entity, array &$context) {
     $build['entity']['#display_settings'] = $context['data-entity-embed-display-settings'];
-    $build['entity']['#pre_render'][] = [static::class, 'preRender'];
+    $build['entity']['#pre_render'][] = [get_class($this), 'preRender'];
   }
 
-  public static function preRender(array $element) {
-    return $element;
-  }
-
-  public static function getMediaSourceField($entity){
+  /**
+   * Get the field configured for the source data of the media entity.
+   *
+   * @param \Drupal\media\MediaInterface $entity
+   *   Media entity.
+   *
+   * @return string
+   *   The configured field name.
+   */
+  public static function getMediaSourceField(MediaInterface $entity) {
     return $entity->getSource()->getConfiguration()['source_field'];
   }
 
-  abstract public function isApplicable();
+  protected function getUserInput(FormStateInterface $form_state) {
+    $input = [];
+    if (isset($form_state->getUserInput()['editor_object'])) {
+      $editor_object = $form_state->getUserInput()['editor_object'];
+      if (isset($editor_object[$this->settingsKey])) {
+        $display_settings = Json::decode($editor_object[$this->settingsKey]);
+        $input = $display_settings ?: [];
+      }
+    }
+
+    return $input + $this->getDefaultInput();
+  }
 
 }

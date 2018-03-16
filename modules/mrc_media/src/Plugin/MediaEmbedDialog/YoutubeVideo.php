@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\video_embed_field\ProviderManager;
 
 /**
- * Changes embedded video media items.
+ * Changes embedded video media items with youtube provider.
  *
  * @MediaEmbedDialog(
  *   id = "youtube_video",
@@ -47,6 +47,20 @@ class YoutubeVideo extends MediaEmbedDialogBase {
   /**
    * {@inheritdoc}
    */
+  public function getDefaultInput() {
+    return [
+      'start' => 0,
+      'autoplay' => 0,
+      'rel' => 0,
+      'showinfo' => 1,
+      'loop' => 1,
+    ];
+  }
+
+
+  /**
+   * {@inheritdoc}
+   */
   public function isApplicable() {
     $entity = $this->configuration['entity'];
     if ($entity->bundle() == 'video') {
@@ -65,36 +79,89 @@ class YoutubeVideo extends MediaEmbedDialogBase {
    */
   public function alterDialogForm(array &$form, FormStateInterface $form_state) {
     parent::alterDialogForm($form, $form_state);
-    $form['attributes'][$this->settingsKey]['display_options'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Display Options'),
-      '#multiple' => TRUE,
-      '#options' => [
-        'autoplay' => $this->t('Autoplay'),
-        'cc_load_policy' => $this->t('Load Captions'),
-        'controls' => $this->t('Hide Controls'),
-        'fs' => $this->t('Disable Full Screen'),
-        'loop' => $this->t('Loop Video'),
-        'modestbranding' => $this->t('Small Logo'),
-        'rel' => $this->t('Show related videos at the end'),
-        'showinfo' => $this->t('Hide video title'),
-      ],
+    $input = $this->getUserInput($form_state);
+
+    $form['attributes'][$this->settingsKey]['start'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Start at'),
+      '#description' => $this->t('Enter a time in the format mm:ss'),
+      '#size' => 5,
+      '#default_value' => $this->getReadableTime($input['start']),
     ];
+
+    $form['attributes'][$this->settingsKey]['autoplay'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Autoplay'),
+      '#default_value' => $input['autoplay'],
+    ];
+
+    $form['attributes'][$this->settingsKey]['rel'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show suggested videos when the video finishes'),
+      '#default_value' => $input['rel'],
+    ];
+
+    $form['attributes'][$this->settingsKey]['showinfo'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show video title and player actions'),
+      '#default_value' => $input['showinfo'],
+    ];
+
+    $form['attributes'][$this->settingsKey]['loop'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Loop video when the video ends'),
+      '#default_value' => $input['loop'],
+    ];
+  }
+
+  protected function getReadableTime($seconds) {
+    $mins = floor($seconds / 60 % 60);
+    $secs = floor($seconds % 60);
+    return sprintf('%02d:%02d', $mins, $secs);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function validateDialogForm(array &$form, FormStateInterface $form_state) {
+    parent::validateDialogForm($form, $form_state);
+    $start = $form_state->getValue([
+      'attributes',
+      'data-entity-embed-display-settings',
+      'start',
+    ]);
+
+    if (is_numeric($start)) {
+      return;
+    }
+
+    // Check if start at is in the correct time format
+    if (!(preg_match('/^\d{1}:\d{2}$/', $start) || preg_match('/^\d{2}:\d{2}$/', $start))) {
+      $form_state->setError($form['attributes']['data-entity-embed-display-settings']['start'], t('Invalid Time Entry'));
+      return;
+    }
+
+    $seconds = 0;
+    sscanf($start, "%d:%d", $minutes, $seconds);
+    $start = $minutes * 60 + $seconds;
+
+    $form_state->setValue([
+      'attributes',
+      'data-entity-embed-display-settings',
+      'start',
+    ], $start);
+
   }
 
   /**
    * {@inheritdoc}
    */
   public static function preRender(array $element) {
-    $opposite_value = ['controls', 'fs', 'rel', 'controls'];
-    if (!empty($element['#display_settings']['display_options'])) {
-      foreach ($element['#display_settings']['display_options'] as $option) {
-        $field = static::getMediaSourceField($element['#media']);
-        $element[$field][0]['children']['#query'][$option] = 1;
 
-        if (in_array($option, $opposite_value)) {
-          $element[$field][0]['children']['#query'][$option] = 0;
-        }
+    if (!empty($element['#display_settings'])) {
+      $field = static::getMediaSourceField($element['#media']);
+      foreach ($element['#display_settings'] as $key => $value) {
+        $element[$field][0]['children']['#query'][$key] = $value;
       }
     }
     return $element;

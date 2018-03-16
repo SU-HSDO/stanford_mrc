@@ -17,8 +17,22 @@ use Drupal\mrc_media\MediaEmbedDialogBase;
  */
 class Image extends MediaEmbedDialogBase {
 
+  /**
+   * {@inheritdoc}
+   */
   public function isApplicable() {
     return $this->configuration['entity']->bundle() == 'image';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDefaultInput() {
+    return [
+      'image_style' => NULL,
+      'alt_text' => NULL,
+      'title_text' => '',
+    ];
   }
 
   /**
@@ -40,18 +54,11 @@ class Image extends MediaEmbedDialogBase {
    */
   public function alterDialogForm(array &$form, FormStateInterface $form_state) {
     parent::alterDialogForm($form, $form_state);
-
-    $input = [];
-    if (isset($form_state->getUserInput()['editor_object'])) {
-      $editor_object = $form_state->getUserInput()['editor_object'];
-      $display_settings = Json::decode($editor_object[$this->settingsKey]);
-      $input = $display_settings ?: [];
-    }
+    $input = $this->getUserInput($form_state);
 
     /** @var \Drupal\media\Entity\Media $entity */
     $entity = $form_state->getStorage()['entity'];
-    $source_field = $entity->getSource()
-      ->getConfiguration()['source_field'];
+    $source_field = static::getMediaSourceField($entity);
     /** @var \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $image_field */
     $image_field = $entity->get($source_field);
     $default_alt = $image_field->getValue()[0]['alt'];
@@ -60,21 +67,21 @@ class Image extends MediaEmbedDialogBase {
       '#type' => 'select',
       '#title' => $this->t('Image Style'),
       '#options' => $this->getImageStyles(),
-      '#default_value' => isset($input['image_style']) ? $input['image_style'] : '',
+      '#default_value' => $input['image_style'],
       '#empty_option' => $this->t('None (original image)'),
     ];
     $form['attributes'][$this->settingsKey]['alt_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Alternative text'),
       '#description' => $this->t('This text will be used by screen readers, search engines, or when the image cannot be loaded.'),
-      '#default_value' => isset($input['alt_text']) ? $input['alt_text'] : $default_alt,
+      '#default_value' => $input['alt_text'] ?: $default_alt,
     ];
     $this->buildLinkitField($form, $form_state);
     $form['attributes'][$this->settingsKey]['title_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Link Title Text'),
       '#description' => $this->t('Please describe wht the link above leads to. (ie. Stanford University Home Page'),
-      '#default_value' => isset($input['title_text']) ? $input['title_text'] : '',
+      '#default_value' => $input['title_text'],
       '#weight' => 199,
       '#states' => [
         'visible' => [
@@ -86,7 +93,10 @@ class Image extends MediaEmbedDialogBase {
   }
 
   /**
+   * Get all available image styles.
+   *
    * @return array
+   *   Keyed array of image styles and their labels.
    */
   protected function getImageStyles() {
     $styles = $this->entityTypeManager->getStorage('image_style')
@@ -229,10 +239,7 @@ class Image extends MediaEmbedDialogBase {
    * {@inheritdoc}
    */
   public static function preRender(array $element) {
-    $element = parent::preRender($element);
-
-    $source_field = $element['#media']->getSource()
-      ->getConfiguration()['source_field'];
+    $source_field = static::getMediaSourceField($element['#media']);
 
     if (!empty($element['#display_settings']['alt_text'])) {
       $element[$source_field][0]['#item_attributes']['alt'] = $element['#display_settings']['alt_text'];
