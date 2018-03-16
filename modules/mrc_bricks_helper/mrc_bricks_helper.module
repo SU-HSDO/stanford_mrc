@@ -8,8 +8,8 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\bricks_inline\Plugin\Field\FieldWidget\BricksTreeInlineWidget;
-//testing line below
-use Drupal\Component\Utility\NestedArray;
+
+
 
 /**
  * Implements hook_field_widget_form_alter().
@@ -25,13 +25,13 @@ function mrc_bricks_helper_field_widget_form_alter(&$element, FormStateInterface
 
       $child = &$element['entities'][$delta];
 
-      $eif_id = $element['#ief_id'];
-
       // TODO: MRCD8-204 - trying to open brick programmatically.
-      $storage = $form_state->getStorage();
-      $storage['inline_entity_form'][$eif_id]['entities'][$delta]['form'] = 'edit';
-      $form_state->setStorage($storage);
-
+      //$eif_id = $element['#ief_id'];
+      //$storage = $form_state->getStorage();
+      //$storage['inline_entity_form'][$eif_id]['entities'][$delta]['form'] = 'edit';
+      //$form_state->setStorage($storage);
+      // Using js for now since above not working.
+      $element['#attached']['library'][] = 'mrc_bricks_helper/basicpage';
 
 
       // If the entity doesn't have the view display, remove it as an option.
@@ -98,12 +98,16 @@ function mrc_bricks_helper_preprocess_inline_entity_form_entity_table(&$variable
  */
 function mrc_bricks_helper_inline_entity_form_entity_form_alter(&$entity_form, &$form_state) {
   //This gets fired when you edit the brick, not in the node edit form.
-  //dpm('firing');
-  //kint($entity_form);
-  //kint($form_state);
-  //dpm($storage['inline_entity_form'][$eif_id]['entities'][$delta]['form']);
-  //$storage = $form_state->getStorage();
-  //$storage['inline_entity_form'][$eif_id]['entities'][$delta]['form'] = 'edit';
+  //ddl($entity_form);
+  //ddl($form_state);
+  $buttons = $form_state->getButtons();
+  foreach ($buttons as $button) {
+    if ($button['#value'] = 'Update @type_singular') {
+      $button['#value'] = 'Collapse';
+    }
+  }
+  //ddl($buttons);
+  $form_state->setButtons($buttons);
 }
 
 /**
@@ -122,6 +126,7 @@ function mrc_bricks_helper_inline_entity_form_reference_form_alter(&$reference_f
   //dpm('firing');
   //kint($reference_form);
   //kint($form_state);
+  //ddl($form_state);
   //dpm($storage['inline_entity_form'][$eif_id]['entities'][$delta]['form']);
   //$storage = $form_state->getStorage();
   //$storage['inline_entity_form'][$eif_id]['entities'][$delta]['form'] = 'edit';
