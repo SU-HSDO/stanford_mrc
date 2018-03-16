@@ -20,6 +20,10 @@ class File extends MediaEmbedDialogBase {
    * {@inheritdoc}
    */
   public function isApplicable() {
+    if (empty($this->configuration['entity']) || !$this->configuration['entity'] instanceof MediaInterface) {
+      return FALSE;
+    }
+
     return $this->configuration['entity']->bundle() == 'file';
   }
 

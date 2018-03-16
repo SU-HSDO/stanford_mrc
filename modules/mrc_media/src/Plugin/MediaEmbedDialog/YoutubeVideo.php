@@ -62,6 +62,10 @@ class YoutubeVideo extends MediaEmbedDialogBase {
    * {@inheritdoc}
    */
   public function isApplicable() {
+    if (empty($this->configuration['entity']) || !$this->configuration['entity'] instanceof MediaInterface) {
+      return FALSE;
+    }
+
     $entity = $this->configuration['entity'];
     if ($entity->bundle() == 'video') {
       $url = $entity->get(static::getMediaSourceField($entity))
@@ -157,7 +161,6 @@ class YoutubeVideo extends MediaEmbedDialogBase {
    * {@inheritdoc}
    */
   public static function preRender(array $element) {
-
     if (!empty($element['#display_settings'])) {
       $field = static::getMediaSourceField($element['#media']);
       foreach ($element['#display_settings'] as $key => $value) {

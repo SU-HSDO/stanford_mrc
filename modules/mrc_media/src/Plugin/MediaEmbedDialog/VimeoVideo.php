@@ -50,15 +50,22 @@ class VimeoVideo extends MediaEmbedDialogBase {
    */
   public function getDefaultInput() {
     return [
-
+      'autoplay' => 0,
+      'loop' => 0,
+      'title' => 1,
+      'byline' => 1,
+      'color' => '',
     ];
   }
-
 
   /**
    * {@inheritdoc}
    */
   public function isApplicable() {
+    if (empty($this->configuration['entity']) || !$this->configuration['entity'] instanceof MediaInterface) {
+      return FALSE;
+    }
+
     $entity = $this->configuration['entity'];
     if ($entity->bundle() == 'video') {
       $source_field = $entity->getSource()
@@ -77,14 +84,71 @@ class VimeoVideo extends MediaEmbedDialogBase {
    */
   public function alterDialogForm(array &$form, FormStateInterface $form_state) {
     parent::alterDialogForm($form, $form_state);
+    $input = $this->getUserInput($form_state);
 
-    $form['autoplay'] = [
+    $form['attributes'][$this->settingsKey]['intro'] = [
+      '#markup' => $this->t('Some videos do not support all options below.'),
+    ];
+    $form['attributes'][$this->settingsKey]['autoplay'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Autoplay'),
+      '#default_value' => $input['autoplay'],
+    ];
+    $form['attributes'][$this->settingsKey]['loop'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Loop video when the video ends'),
+      '#default_value' => $input['loop'],
+    ];
+    $form['attributes'][$this->settingsKey]['title'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show Title'),
+      '#default_value' => $input['title'],
+    ];
+    $form['attributes'][$this->settingsKey]['byline'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show Byline'),
+      '#default_value' => $input['byline'],
+    ];
+    $form['attributes'][$this->settingsKey]['color'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Control Color'),
+      '#default_value' => $input['color'],
+      '#size' => 6,
+      '#max_length' => 6,
     ];
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function validateDialogForm(array &$form, FormStateInterface $form_state) {
+    parent::validateDialogForm($form, $form_state);
+
+    $color = $form_state->getValue([
+      'attributes',
+      'data-entity-embed-display-settings',
+      'color',
+    ]);
+
+    if ($color && !ctype_xdigit($color)) {
+      $form_state->setError($form['attributes']['data-entity-embed-display-settings']['color'], t('Invalid Color String'));
+      return;
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function preRender(array $element) {
+    if (!empty($element['#display_settings'])) {
+      $field = static::getMediaSourceField($element['#media']);
+      foreach ($element['#display_settings'] as $key => $value) {
+        if ($key == 'color' && empty($value)) {
+          continue;
+        }
+        $element[$field][0]['children']['#query'][$key] = $value;
+      }
+    }
     return $element;
   }
 
