@@ -60,6 +60,7 @@ function mrc_page_form_node_stanford_basic_page_edit_form_alter(&$form, FormStat
     '#type' => 'submit',
     '#value' => t('Cancel'),
     '#submit' => array('mrc_page_cancel'),
+    '#limit_validation_errors' => [],
   );
 }
 
