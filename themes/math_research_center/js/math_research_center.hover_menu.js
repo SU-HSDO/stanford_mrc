@@ -2,25 +2,49 @@
   'use strict';
   Drupal.behaviors.mrcHoverMenu = {
     attach: function (context, settings) {
-      $('#header ul.decanter-nav-primary').menu();
+      var $header = $('#header');
 
-      $('#header button.fa-bars').click(function () {
-        $(this).siblings('ul').toggleClass('expanded');
-      });
-      $('#header button.fa-plus').click(function () {
-        $(this).siblings('ul').toggleClass('expanded');
-        $(this).toggleClass('fa-plus').toggleClass('fa-minus');
-      });
+      function setMenu() {
+        var $menu = $header.find('ul.decanter-nav-primary');
 
-      $(window).resize(function () {
-        if ($(window).width() > 600) {
-          $('#header ul').each(function () {
-            $(this).removeClass('expanded')
-          });
-          $('#header button.fa-minus').each(function () {
-            $(this).toggleClass('fa-plus').toggleClass('fa-minus');
-          })
+        // Desktop, apply the jquery ui menu and change any mobile classes.
+        if ($(window).width() >= 600) {
+          $menu.menu();
+          $menu.removeClass('expanded');
+          $menu.find('.fa-minus').addClass('fa-plus').removeClass('fa-minus');
+          $menu.find('.expanded').removeClass('expanded');
         }
+        else {
+          // Check if jquery ui has been applied yet.
+          if ($menu.hasClass('ui-menu')) {
+            $menu.menu('destroy');
+
+            // Removes any `display:block;` inline styles.
+            $menu.parent().find('ul').attr('style', function (i, style) {
+              return style && style.replace(/display[^;]+;?/g, '');
+            });
+          }
+        }
+      }
+
+      setMenu();
+      $(window).resize(setMenu);
+
+      // Open/close the menu from hamburger button.
+      $header.find('button.fa-bars').once().click(function () {
+        $(this).siblings('ul').toggleClass('expanded').find('.fa-minus').each(function () {
+          $(this).toggleClass('fa-plus').toggleClass('fa-minus');
+          $(this).siblings('ul').toggleClass('expanded');
+        });
+      });
+
+      // Open/close submenus from the plus button.
+      $header.find('button.fa-plus').once().click(function () {
+        $(this).siblings('ul').toggleClass('expanded').find('.fa-minus').each(function () {
+          $(this).toggleClass('fa-plus').toggleClass('fa-minus');
+          $(this).siblings('ul').toggleClass('expanded');
+        });
+        $(this).toggleClass('fa-plus').toggleClass('fa-minus');
       });
     }
   };

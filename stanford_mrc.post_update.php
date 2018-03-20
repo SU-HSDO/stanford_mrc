@@ -403,6 +403,8 @@ function stanford_mrc_post_update_8_0_7() {
 
   $config_update->revert('view', 'mrc_news');
   $config_update->revert('view', 'mrc_events');
+  $config_update->revert('view', 'mrc_videos');
+  $config_update->revert('view', 'media_entity_browser');
   $config_update->revert('entity_view_display', 'node.stanford_event.default');
   $config_update->revert('entity_view_display', 'node.stanford_basic_page.default');
   $config_update->revert('entity_view_display', 'node.stanford_news_item.default');
@@ -418,4 +420,33 @@ function stanford_mrc_post_update_8_0_7() {
   $config_update->revert('field_storage_config', 'node.field_mrc_event_series');
 
   SearchPage::load('user_search')->disable()->save();
+}
+
+/**
+ * Release 8.0.8 Changes.
+ */
+function stanford_mrc_post_update_8_0_8() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+//  $config_update->revert('node_type', 'stanford_event');
+//  $config_update->revert('node_type', 'stanford_person');
+//  $config_update->revert('node_type', 'stanford_visitor');
+//
+//  $config_update->revert('view', 'mrc_news');
+  $config_update->revert('view', 'mrc_events');
+//  $config_update->revert('view', 'mrc_videos');
+  $config_update->revert('view', 'media_entity_browser');
+//  $config_update->revert('entity_view_display', 'node.stanford_event.default');
+//  $config_update->revert('entity_view_display', 'node.stanford_basic_page.default');
+//  $config_update->revert('entity_view_display', 'node.stanford_news_item.default');
+//  $config_update->revert('entity_view_display', 'node.stanford_visitor.default');
+//  $config_update->revert('entity_view_display', 'taxonomy_term.mrc_event_series.default');
+//
+//  $config_update->import('entity_view_display', 'node.stanford_basic_page.search_result');
+//  $config_update->import('entity_view_display', 'node.stanford_basic_page.search_index');
+//
+//  $config_update->revert('block', 'math_research_center_local_tasks');
+//  $config_update->revert('block', 'math_research_center_page_title');
+//
+//  $config_update->revert('field_storage_config', 'node.field_mrc_event_series');
 }

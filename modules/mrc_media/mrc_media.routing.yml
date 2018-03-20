@@ -7,10 +7,3 @@ mrc_media.bulk_upload:
     _permission: 'administer media'
   options:
     _admin_route: TRUE
-
-media.multiple_delete_confirm:
-  path: '/admin/content/media/bulk-delete'
-  defaults:
-    _form: '\Drupal\mrc_media\Form\DeleteMultiple'
-  requirements:
-    _permission: 'administer nodes'

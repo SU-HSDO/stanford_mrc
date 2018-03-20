@@ -13,6 +13,33 @@
 @import 'decanter-no-markup',
 'elements/index';
 
+.hide-logged-in:hover {
+  outline: 1px dashed pink;
+
+  &:before {
+    content: 'Visible to logged out users';
+    font-size: 10px;
+    position: absolute;
+    z-index: 99;
+    background: white;
+    border: 1px solid;
+  }
+}
+
+.hide-logged-out:hover {
+  outline: 1px dashed pink;
+
+  &:before {
+    content: 'Hidden to logged out users';
+    font-size: 10px;
+    position: absolute;
+    z-index: 99;
+    background: white;
+    border: 1px solid;
+  }
+}
+
+
 // Need to override ckeditor styles but use similar styles as decanter.
 
 .cke_editable.cke_show_borders table.cke_show_border {

@@ -16,13 +16,6 @@ function mrc_media_views_data_alter(array &$data) {
       'id' => 'entity_usage_link',
     ],
   ];
-  $data['media']['media_bulk_form'] = [
-    'title' => t('Media operations bulk form'),
-    'help' => t('Add a form element that lets you run operations on multiple medias.'),
-    'field' => [
-      'id' => 'media_bulk_form',
-    ],
-  ];
 
   return $data;
 }

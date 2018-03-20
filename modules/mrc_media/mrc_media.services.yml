@@ -13,3 +13,6 @@ services:
     arguments:
       - '@entity_type.manager'
       - '@current_user'
+  plugin.manager.media_embed_dialog_manager:
+    class: Drupal\mrc_media\MediaEmbedDialogManager
+    parent: default_plugin_manager

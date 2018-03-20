@@ -1,5 +1,11 @@
 Stanford MRC
 
+Version 8.0.7                                                         2018-03-14
+--------------------------------------------------------------------------------
+- Several style changes
+- Removed media bulk delete action
+- Updated several views to show/replace some fields
+
 Version 8.0.7-alpha1                                                  2018-03-08
 --------------------------------------------------------------------------------
 - Added menu position rules on events

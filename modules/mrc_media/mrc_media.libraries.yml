@@ -11,6 +11,12 @@ mrc_media.autocomplete:
     - core/jquery.ui.autocomplete
     - core/underscore
 
+mrc_media.admin:
+  version: VERSION
+  css:
+    component:
+      css/mrc_media.admin.css: {}
+
 mrc_media.multi_step:
   version: VERSION
   css:
