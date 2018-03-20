@@ -63,6 +63,7 @@ function mrc_page_form_node_stanford_basic_page_edit_form_alter(&$form, FormStat
     '#limit_validation_errors' => [],
   );
 
+  //Adding js to prompt for cancel confirmation.
   $form['#attached']['library'][] = 'mrc_page/admin';
 }
 

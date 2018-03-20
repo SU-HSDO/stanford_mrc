@@ -25,12 +25,7 @@ function mrc_bricks_helper_field_widget_form_alter(&$element, FormStateInterface
 
       $child = &$element['entities'][$delta];
 
-      // TODO: MRCD8-204 - trying to open brick programmatically.
-      //$eif_id = $element['#ief_id'];
-      //$storage = $form_state->getStorage();
-      //$storage['inline_entity_form'][$eif_id]['entities'][$delta]['form'] = 'edit';
-      //$form_state->setStorage($storage);
-      // Using js for now since above not working.
+      // Using js to open single brick.
       $element['#attached']['library'][] = 'mrc_bricks_helper/basicpage';
 
 
@@ -81,7 +76,6 @@ function mrc_bricks_helper_process($element) {
  */
 function mrc_bricks_helper_preprocess_inline_entity_form_entity_table(&$variables) {
   $element = $variables['form'];
-  //kint($element);
 
   if (isset($element['#widget']) && $element['#widget'] == 'bricks_tree_inline') {
     // For now disable the nesting ability.
