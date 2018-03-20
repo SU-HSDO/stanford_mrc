@@ -449,4 +449,5 @@ function stanford_mrc_post_update_8_0_8() {
 //  $config_update->revert('block', 'math_research_center_page_title');
 //
 //  $config_update->revert('field_storage_config', 'node.field_mrc_event_series');
+  $config_update->revert('node_type', 'stanford_basic_page');
 }

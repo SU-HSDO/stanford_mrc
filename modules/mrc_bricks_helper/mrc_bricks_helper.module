@@ -14,14 +14,24 @@ use Drupal\bricks_inline\Plugin\Field\FieldWidget\BricksTreeInlineWidget;
  */
 function mrc_bricks_helper_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
   if ($context['widget'] instanceof BricksTreeInlineWidget) {
+
     $view_mode_display = \Drupal::entityTypeManager()
       ->getStorage('entity_view_display');
 
     foreach (Element::children($element['entities']) as $delta) {
+
+      //Adding custom preproces function for modifying ief buttons.
+      $element['entities'][$delta]['form']['inline_entity_form']['#process'][] = 'mrc_bricks_helper_process';
+
       $child = &$element['entities'][$delta];
+
+      // Using js to open single brick.
+      $element['#attached']['library'][] = 'mrc_bricks_helper/basicpage';
+
 
       // If the entity doesn't have the view display, remove it as an option.
       foreach (array_keys($child['options']['view_mode']['#options']) as $view_mode_id) {
+
         $view_id = $child['#entity']->getEntityTypeId() . '.' . $child['#entity']->bundle() . '.' . $view_mode_id;
 
         if (empty($view_mode_display->load($view_id))) {
@@ -34,8 +44,26 @@ function mrc_bricks_helper_field_widget_form_alter(&$element, FormStateInterface
         $child['options']['view_mode']['#type'] = 'hidden';
         $child['options']['view_mode']['#value'] = key($child['options']['view_mode']['#options']);
       }
+
+      //Disabled input for CSS class(-es) on bricks for Site Owners
+      $current_user = \Drupal::currentUser();
+      $roles = $current_user->getRoles();
+      if (in_array('site_owner', $roles)) {
+        if (isset($child['options']['css_class'])) {
+          //unset($child['options']['css_class']);
+          $child['options']['css_class']['#type'] = 'hidden';
+        }
+      }
     }
   }
+}
+
+/**
+ * Custom Process callback to override InlineEntityFormComplex.
+ */
+function mrc_bricks_helper_process($element) {
+  $element['actions']['ief_edit_save']['#value'] = t('Collapse');
+  return $element;
 }
 
 /**
