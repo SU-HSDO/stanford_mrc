@@ -426,6 +426,13 @@ function stanford_mrc_post_update_8_0_7() {
  * Release 8.0.8 Changes.
  */
 function stanford_mrc_post_update_8_0_8() {
+  \Drupal::service('module_installer')->install(['porterstemmer']);
+  // Mark site for re-indexing.
+  $search_page_repository = \Drupal::service('search.search_page_repository');
+  foreach ($search_page_repository->getIndexableSearchPages() as $entity) {
+    $entity->getPlugin()->markForReindex();
+  }
+
   /** @var \Drupal\config_update\ConfigReverter $config_update */
   $config_update = \Drupal::service('config_update.config_update');
 //  $config_update->revert('node_type', 'stanford_event');
