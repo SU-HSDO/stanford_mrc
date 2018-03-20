@@ -62,7 +62,7 @@ class VimeoVideo extends MediaEmbedDialogBase {
    * {@inheritdoc}
    */
   public function isApplicable() {
-    if (!$this->entity instanceof MediaInterface && $this->entity->bundle() == 'video') {
+    if ($this->entity instanceof MediaInterface && $this->entity->bundle() == 'video') {
       $source_field = static::getMediaSourceField($this->entity);
       $url = $this->entity->get($source_field)->getValue()[0]['value'];
       $provider = $this->videoManager->loadProviderFromInput($url);
