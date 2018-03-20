@@ -1,12 +1,11 @@
 <?php
 
-use \Drupal\Core\Form\FormStateInterface;
-
 /**
  * @file
  * mrc_page.module
  */
 
+use \Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 
 function mrc_page_preprocess_field(&$variables) {
@@ -23,57 +22,30 @@ function mrc_page_preprocess_field(&$variables) {
   }
 }
 
-
 /**
- * Provide a form-specific alteration instead of the global hook_form_alter().
- *
- * Implementations are responsible for adding cache contexts/tags/max-age as
- * needed. See https://www.drupal.org/developing/api/8/cache.
- *
- * Modules can implement hook_form_FORM_ID_alter() to modify a specific form,
- * rather than implementing hook_form_alter() and checking the form ID, or
- * using long switch statements to alter multiple forms.
- *
- * Form alter hooks are called in the following order: hook_form_alter(),
- * hook_form_BASE_FORM_ID_alter(), hook_form_FORM_ID_alter(). See
- * hook_form_alter() for more details.
- *
- * @param $form
- *   Nested array of form elements that comprise the form.
- * @param $form_state
- *   The current state of the form. The arguments that
- *   \Drupal::formBuilder()->getForm() was originally called with are available
- *   in the array $form_state->getBuildInfo()['args'].
- * @param $form_id
- *   String representing the name of the form itself. Typically this is the
- *   name of the function that generated the form.
- *
- * @see hook_form_alter()
- * @see hook_form_BASE_FORM_ID_alter()
- * @see \Drupal\Core\Form\FormBuilderInterface::prepareForm()
- *
- * @ingroup form_api
+ * Implements hook_form_FORM_ID_alter().
  */
 function mrc_page_form_node_stanford_basic_page_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Add a custom submit handler to save the array of types back to the config file.
-  $form['actions']['cancel'] = array(
+  $form['actions']['cancel'] = [
     '#type' => 'submit',
     '#value' => t('Cancel'),
-    '#submit' => array('mrc_page_cancel'),
+    '#submit' => ['mrc_page_cancel'],
     '#limit_validation_errors' => [],
-  );
+  ];
 
   //Adding js to prompt for cancel confirmation.
   $form['#attached']['library'][] = 'mrc_page/admin';
 }
 
-
 /**
  * Custom Callback for cancel button.
+ *
  * @param $form
  * @param \Drupal\Core\Form\FormStateInterface $form_state
  */
 function mrc_page_cancel(&$form, FormStateInterface $form_state) {
-  $route_name = 'user.page';
-  $form_state->setRedirect($route_name);
+  /** @var \Drupal\node\Entity\Node $node */
+  $node = $form_state->getFormObject()->getEntity();
+  $form_state->setRedirectUrl($node->toUrl());
 }
