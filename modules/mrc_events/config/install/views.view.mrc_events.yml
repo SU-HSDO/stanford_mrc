@@ -653,7 +653,7 @@ display:
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
-      use_ajax: true
+      use_ajax: false
     cache_metadata:
       max-age: -1
       contexts:
@@ -753,14 +753,14 @@ display:
           exposed: true
           expose:
             operator_id: field_s_event_type_target_id_op
-            label: 'Event Type'
+            label: 'Filter by Event Type'
             description: ''
             use_operator: false
             operator: field_s_event_type_target_id_op
             identifier: type
             required: false
             remember: false
-            multiple: false
+            multiple: true
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
@@ -799,14 +799,14 @@ display:
           exposed: true
           expose:
             operator_id: field_mrc_event_series_target_id_op
-            label: 'Event Series'
+            label: 'Filter by Event Series'
             description: ''
             use_operator: false
             operator: field_mrc_event_series_target_id_op
             identifier: series
             required: false
             remember: false
-            multiple: false
+            multiple: true
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
@@ -846,7 +846,7 @@ display:
         use_more_text: false
         link_display: false
         link_url: false
-        use_ajax: true
+        use_ajax: false
         sorts: false
       filter_groups:
         operator: AND
@@ -1364,7 +1364,7 @@ display:
       use_more_always: false
       use_more_text: 'See all past events'
       link_display: '0'
-      link_url: 'events/past-events?series={{ raw_arguments.field_mrc_event_series_target_id }}'
+      link_url: 'events/past-events?series[]={{ raw_arguments.tid }}'
       block_hide_empty: true
       exposed_block: true
       sorts:
@@ -1962,7 +1962,7 @@ display:
       use_more_always: false
       use_more_text: 'See all past events'
       link_display: custom_url
-      link_url: 'events/past-events?series={{ raw_arguments.tid }}'
+      link_url: 'events/past-events?series[]={{ raw_arguments.tid }}'
       block_hide_empty: true
       relationships:
         term_node_tid:
@@ -2568,7 +2568,7 @@ display:
       use_more_always: false
       use_more_text: 'View all upcoming events'
       link_display: '0'
-      link_url: 'events?series={{ raw_arguments.tid }}'
+      link_url: 'events?series[]={{ raw_arguments.tid }}'
       block_hide_empty: true
       relationships:
         term_node_tid:
@@ -4475,7 +4475,7 @@ display:
           exposed: true
           expose:
             operator_id: field_s_event_type_target_id_op
-            label: 'Event Type'
+            label: 'Filter by Event Type'
             description: ''
             use_operator: false
             operator: field_s_event_type_target_id_op
@@ -4521,7 +4521,7 @@ display:
           exposed: true
           expose:
             operator_id: field_mrc_event_series_target_id_op
-            label: 'Event Series'
+            label: 'Filter by Event Series'
             description: ''
             use_operator: false
             operator: field_mrc_event_series_target_id_op
