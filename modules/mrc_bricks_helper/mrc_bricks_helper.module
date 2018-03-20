@@ -49,6 +49,16 @@ function mrc_bricks_helper_field_widget_form_alter(&$element, FormStateInterface
         $child['options']['view_mode']['#type'] = 'hidden';
         $child['options']['view_mode']['#value'] = key($child['options']['view_mode']['#options']);
       }
+
+      //Disabled input for CSS class(-es) on bricks for Site Owners
+      $current_user = \Drupal::currentUser();
+      $roles = $current_user->getRoles();
+      if (in_array('site_owner', $roles)) {
+        if (isset($child['options']['css_class'])) {
+          //unset($child['options']['css_class']);
+          $child['options']['css_class']['#type'] = 'hidden';
+        }
+      }
     }
   }
 }
