@@ -63,7 +63,6 @@ class YoutubeVideo extends MediaEmbedDialogBase {
    * {@inheritdoc}
    */
   public function isApplicable() {
-    dpm($this);
     if ($this->entity instanceof MediaInterface && $this->entity->bundle() == 'video') {
 
       $source_field = static::getMediaSourceField($this->entity);
