@@ -430,6 +430,7 @@ function stanford_mrc_post_update_8_0_8() {
   $config_update = \Drupal::service('config_update.config_update');
   $config_update->revert('view', 'mrc_events');
   $config_update->revert('view', 'media_entity_browser');
+  $config_update->revert('node_type', 'stanford_basic_page');
 
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('metatag.metatag_defaults.global');
