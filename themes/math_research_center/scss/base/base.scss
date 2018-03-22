@@ -9,10 +9,14 @@
 // If overrides exceed resonable number of lines
 // in code, create a partial in the base folder
 // and import the file here.
+
 // Decanter
-@import 'decanter-no-markup';
+@import
+  'decanter-no-markup';
+
 // Stanford Math Research Center
-@import '../utilities/mixins/mixins',
+@import
+'../utilities/mixins/mixins',
 '../molecules/pager';
 
 // Accessibility helpers
@@ -87,7 +91,7 @@
 #header {
   background: $color-cloud;
 
-  @include padding(1em null null);
+  @include padding(1em null);
 
   .block--lockup__site-name-and-slogan a {
     color: $color-black;
@@ -103,12 +107,12 @@ img {
 }
 
 // Inputs
+@import
+  'inputs';
 
-@import "inputs";
-
-// Search]
-
-@import "search";
+// Search
+@import
+  'search';
 
 // Typography
 .decanter-font-lead {
