@@ -67,11 +67,7 @@
 
             .ui-menu-item-wrapper {
               @include margin(0 1.5em 0 0);
-              @include padding(3px 0 0);
-
-              &.ui-state-active {
-                @include padding(null null 6px null);
-              }
+              @include padding(6px 0 6px 0);
             }
           }
 
