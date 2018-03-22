@@ -3,10 +3,14 @@
 ///
 /// HOVER MAIN MENU COMPONENT
 ///
+
 // Decanter
-@import 'decanter-no-markup';
+@import
+  'decanter-no-markup';
+
 // Stanford Math Research Center
-@import '../utilities/mixins/mixins';
+@import
+  '../utilities/mixins/mixins';
 
 // Main menu in header region
 #header {
@@ -16,7 +20,6 @@
 
   .js & {
     .decanter-main-menu--hover-reveal {
-
       @include media($medium-screen) {
         .fa {
           display: none;
@@ -46,6 +49,7 @@
                 background: none;
               }
 
+
               &.ui-widget {
                 border: none;
               }
@@ -64,6 +68,10 @@
             .ui-menu-item-wrapper {
               @include margin(0 1.5em 0 0);
               @include padding(3px 0 0);
+
+              &.ui-state-active {
+                @include padding(null null 6px null);
+              }
             }
           }
 
@@ -90,6 +98,7 @@
           .ui-button.ui-state-active:hover {
             background-color: transparent;
             border: none;
+            border-bottom: 3px solid $color-black;
             color: $color-cloud;
 
             @include media($medium-screen) {
@@ -108,6 +117,7 @@
               @include media($medium-screen) {
                 @include margin(0 0 10px 0);
               }
+
 
               &:hover {
                 background-color: transparent;
@@ -149,7 +159,7 @@
       }
 
       // Mobile styles for the main menu in header region.
-      @include media(max-width $medium-screen - 1) {
+      @include media(max-width ($medium-screen - 1)) {
         position: relative;
 
         ul {
@@ -185,12 +195,14 @@
         li {
           display: block;
           position: relative;
+
           @include padding(0.2em null null 0.75em);
         }
 
         a {
           color: $color-white;
           border: 0;
+
           @include padding(0);
 
           &:hover, &:focus {
@@ -217,6 +229,7 @@
     @include media(max-width $medium-screen) {
       display: none;
     }
+
 
     h2#menu-blockmain-menu {
       @include margin(0 null null);
