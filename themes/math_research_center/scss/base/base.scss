@@ -63,6 +63,30 @@
   margin-bottom: 2em;
 }
 
+@include media($medium-screen) {
+  [class*="__sidebar"].decanter-width-one-fourth {
+    width: 23.2317609825%;
+
+    @include margin(null 2.3576520234% null null);
+  }
+
+  [class*="__main"].decanter-width-three-fourths {
+    width: 74.4105869942%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 900px) {
+  [class*="__sidebar"].decanter-width-one-fourth {
+    width: 47.5854205965%;
+
+    @include margin(null 4.8291588071% null null);
+  }
+
+  [class*="__main"].decanter-width-three-fourths {
+    width: 100%;
+  }
+}
+
 // Header
 #header {
   background: $color-cloud;
