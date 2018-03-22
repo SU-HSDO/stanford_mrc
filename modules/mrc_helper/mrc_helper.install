@@ -17,7 +17,7 @@ use Drupal\views\Entity\View;
  * @param string $label
  * @param int $cardinality
  */
-function mrc_helper_create_field($entity_type, $bundle, $field_name, $type, $label, $cardinality = -1) {
+function mrc_helper_create_field($entity_type, $bundle = NULL, $field_name, $type, $label, $cardinality = -1) {
   $field_storage_config = FieldStorageConfig::loadByName($entity_type, $field_name);
   if (empty($field_storage_config)) {
     FieldStorageConfig::create([
@@ -27,15 +27,16 @@ function mrc_helper_create_field($entity_type, $bundle, $field_name, $type, $lab
       'cardinality' => $cardinality,
     ])->save();
   }
-
-  $field_instance = FieldConfig::loadByName($entity_type, $bundle, $field_name);
-  if (empty($field_instance)) {
-    FieldConfig::create([
-      'field_name' => $field_name,
-      'entity_type' => $entity_type,
-      'bundle' => $bundle,
-      'label' => $label,
-    ])->save();
+  if ($bundle) {
+    $field_instance = FieldConfig::loadByName($entity_type, $bundle, $field_name);
+    if (empty($field_instance)) {
+      FieldConfig::create([
+        'field_name' => $field_name,
+        'entity_type' => $entity_type,
+        'bundle' => $bundle,
+        'label' => $label,
+      ])->save();
+    }
   }
 }
 

@@ -49,7 +49,7 @@ third_party_settings:
         views_label: ''
       parent_name: ''
       weight: 7
-      region: bottom_right
+      region: footer
     'views_block:mrc_visitor-event_series_visitors':
       config:
         provider: views
@@ -62,7 +62,7 @@ third_party_settings:
         views_label: ''
       parent_name: ''
       weight: 8
-      region: footer
+      region: bottom_right
     'menu_block:main':
       config:
         provider: menu_block
@@ -113,9 +113,9 @@ third_party_settings:
       bottom_left:
         - 'views_block:mrc_events-event_series_upcoming_events'
         - 'views_block:mrc_events-event_series_past_events'
-      bottom_right:
-        - 'views_block:mrc_news-event_series_related_news'
       footer:
+        - 'views_block:mrc_news-event_series_related_news'
+      bottom_right:
         - 'views_block:mrc_visitor-event_series_visitors'
     fields:
       taxonomy_term_title:

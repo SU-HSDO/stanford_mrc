@@ -17,8 +17,8 @@ dependencies:
     - datetime
     - entity_browser
     - field_group
-    - link
     - metatag
+    - mrc_helper
     - path
     - text
 third_party_settings:
@@ -76,6 +76,7 @@ content:
       selection_mode: selection_append
       field_widget_display_settings:
         view_mode: thumbnail
+      field_widget_replace: false
       open: false
   field_s_news_byline:
     type: string_textfield
