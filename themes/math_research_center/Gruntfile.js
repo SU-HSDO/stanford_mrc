@@ -94,7 +94,7 @@ module.exports = function(grunt) {
           "node_modules/bourbon-neat/app/assets/stylesheets",
           "node_modules/font-awesome/scss",
           "node_modules/neat-omega/core",
-          "../../../../themes/custom/stanford_basic/libraries/decanter/scss",
+          "../../../../../themes/stanford/stanford_basic/libraries/decanter/scss",
           "node_modules",
         ],
         sourceMap: true,
