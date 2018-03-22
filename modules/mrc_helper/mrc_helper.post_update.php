@@ -63,3 +63,12 @@ function mrc_helper_post_update_8_0_7_alpha1() {
   $config_update = \Drupal::service('config_update.config_update');
   $config_update->revert('entity_form_display', 'taxonomy_term.mrc_event_series.default');
 }
+
+/**
+ * Update term display.
+ */
+function mrc_helper_post_update_8_0_8() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('entity_view_display','taxonomy_term.mrc_event_series.default');
+}
