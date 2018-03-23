@@ -13,31 +13,14 @@
   '../utilities/mixins/mixins';
 
 .mrc-visitors-grid-card {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-
-  @include media($medium-screen) {
-    grid-gap: 1rem;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-
-  @include media($large-screen) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-
   @include mrc-card-container;
 
   .mrc-visitors-grid__item {
     @include margin(null null 1em);
 
     .mrc-visitors-grid__img img {
-      width: 100%;
-
-      @include media($medium-screen) {
-        width: auto;
-      }
+      @include margin(0 auto);
+      display:block;
     }
 
     .mrc-visitors-grid__name {

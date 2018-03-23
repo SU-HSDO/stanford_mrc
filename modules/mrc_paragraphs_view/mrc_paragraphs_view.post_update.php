@@ -19,3 +19,12 @@ function mrc_paragraphs_view_post_update_8_0_7() {
   $config_update->revert('entity_form_display', 'paragraph.mrc_view.default');
   $config_update->revert('entity_view_display', 'paragraph.mrc_view.default');
 }
+
+/**
+ * Release 8.0.7 changes
+ */
+function mrc_paragraphs_view_post_update_8_0_8() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('entity_view_display', 'paragraph.mrc_view.default');
+}

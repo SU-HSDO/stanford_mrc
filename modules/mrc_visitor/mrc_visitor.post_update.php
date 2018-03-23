@@ -39,6 +39,9 @@ function mrc_visitor_post_update_8_0_4() {
   }
 }
 
+/**
+ * Release 8.0.7-alpha1 changes.
+ */
 function mrc_visitor_post_update_8_0_7_alpha1() {
   $entity_type_manager = \Drupal::entityTypeManager();
   $file = drupal_get_path('module', 'mrc_visitor') . '/img/visitor-profile.png';
@@ -76,4 +79,14 @@ function mrc_visitor_post_update_8_0_7_alpha1() {
       $visitor->save();
     }
   }
+}
+
+/**
+ * Release 8.0.8 changes.
+ */
+function mrc_visitor_post_update_8_0_8() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('view', 'mrc_visitor');
+  $config_update->revert('entity_view_display', 'node.stanford_visitor.default');
 }

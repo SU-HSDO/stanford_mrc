@@ -3,14 +3,10 @@
 ///
 /// INPUTS STYLES
 ///
-
 // Decanter
-@import
-  'decanter-no-markup';
-
+@import 'decanter-no-markup';
 // Stanford Math Research Center
-@import
-  '../utilities/mixins/mixins';
+@import '../utilities/mixins/mixins';
 
 // Block form elements.
 input,
@@ -143,6 +139,24 @@ fieldset {
 .form-checkboxes .form-item,
 .form-radios .form-item {
   @include margin(null null 0.8em);
+}
+
+.chosen-container {
+  .search-field:after {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f078";
+    position: absolute;
+    right: 5px;
+    top: calc(50% - 7px);
+  }
+
+  &.chosen-with-drop .search-field:after {
+    content: '';
+  }
+
+  .search-choice {
+    width: 90%;
+  }
 }
 
 div.chosen-container {

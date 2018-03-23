@@ -25,3 +25,13 @@ function mrc_news_post_update_8_0_6(){
   $config_update = \Drupal::service('config_update.config_update');
   $config_update->import('image_style', 'news_thumbnail');
 }
+
+/**
+ * Release 8.0.8 changes.
+ */
+function mrc_news_post_update_8_0_8() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('view', 'mrc_news');
+  $config_update->revert('entity_form_display', 'node.stanford_news_item.default');
+}
