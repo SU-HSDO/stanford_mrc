@@ -158,3 +158,9 @@ fieldset {
     width: 90%;
   }
 }
+
+div.chosen-container {
+  @include media($small-screen) {
+    width: 100% !important;
+  }
+}

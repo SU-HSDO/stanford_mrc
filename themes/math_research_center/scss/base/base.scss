@@ -9,10 +9,14 @@
 // If overrides exceed resonable number of lines
 // in code, create a partial in the base folder
 // and import the file here.
+
 // Decanter
-@import 'decanter-no-markup';
+@import
+  'decanter-no-markup';
+
 // Stanford Math Research Center
-@import '../utilities/mixins/mixins',
+@import
+'../utilities/mixins/mixins',
 '../molecules/pager';
 
 // Accessibility helpers
@@ -59,11 +63,35 @@
   margin-bottom: 2em;
 }
 
+@include media($medium-screen) {
+  [class*="__sidebar"].decanter-width-one-fourth {
+    width: 23.2317609825%;
+
+    @include margin(null 2.3576520234% null null);
+  }
+
+  [class*="__main"].decanter-width-three-fourths {
+    width: 74.4105869942%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 900px) {
+  [class*="__sidebar"].decanter-width-one-fourth {
+    width: 47.5854205965%;
+
+    @include margin(null 4.8291588071% null null);
+  }
+
+  [class*="__main"].decanter-width-three-fourths {
+    width: 100%;
+  }
+}
+
 // Header
 #header {
   background: $color-cloud;
 
-  @include padding(1em null null);
+  @include padding(1em null);
 
   .block--lockup__site-name-and-slogan a {
     color: $color-black;
@@ -79,12 +107,12 @@ img {
 }
 
 // Inputs
+@import
+  'inputs';
 
-@import "inputs";
-
-// Search]
-
-@import "search";
+// Search
+@import
+  'search';
 
 // Typography
 .decanter-font-lead {
