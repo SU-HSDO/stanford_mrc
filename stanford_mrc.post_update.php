@@ -451,3 +451,43 @@ function stanford_mrc_post_update_8_0_8() {
   $config->set('logo.path', 'themes/stanford/stanford_basic/assets/svg/su_logo.svg');
   $config->save();
 }
+
+/**
+ * Switch from mrc_media to stanford_media.
+ */
+function stanford_mrc_post_update_8_0_8__1() {
+  $configs = [
+    'core.entity_view_display.node.stanford_event.default',
+    'core.entity_view_display.node.stanford_news_item.default',
+    'core.entity_view_display.node.stanford_visitor.default',
+    'core.entity_view_display.paragraph.mrc_postcard.default',
+    'core.entity_view_display.paragraph.mrc_postcard.mrc_postcard_vertical',
+    'core.entity_view_display.paragraph.mrc_slide.default',
+    'views.view.media_entity_browser',
+    'views.view.mrc_events',
+    'views.view.mrc_event_series',
+    'views.view.mrc_news',
+    'views.view.mrc_visitor',
+    'entity_browser.browser.media_browser',
+    'entity_browser.browser.file_browser',
+    'entity_browser.browser.image_browser',
+    'entity_browser.browser.video_browser',
+  ];
+  $config_factory = \Drupal::configFactory();
+  foreach ($configs as $config) {
+    $config = $config_factory->getEditable($config);
+    $pos = array_search('mrc_media', $config->get('dependencies.module'));
+    if ($pos !== FALSE) {
+      $config->set("dependencies.module.$pos", 'stanford_media');
+      $config->save();
+    }
+  }
+
+  $config = $config_factory->getEditable('core.extension');
+  $config->set('module.stanford_media', 0);
+  $config->save();
+
+  /** @var \Drupal\Core\Extension\ModuleInstaller $installer */
+  $installer = \Drupal::service('module_installer');
+  $installer->uninstall(['mrc_media']);
+}

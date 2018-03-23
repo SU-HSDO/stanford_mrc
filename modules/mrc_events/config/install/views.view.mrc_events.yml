@@ -16,7 +16,7 @@ dependencies:
     - datetime
     - datetime_range
     - mrc_date
-    - mrc_media
+    - stanford_media
     - node
     - taxonomy
     - text

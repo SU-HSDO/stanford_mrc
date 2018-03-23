@@ -10,7 +10,7 @@ dependencies:
   module:
     - field_group
     - link
-    - mrc_media
+    - stanford_media
     - text
 third_party_settings:
   field_group:

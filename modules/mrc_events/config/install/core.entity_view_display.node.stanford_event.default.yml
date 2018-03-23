@@ -27,7 +27,7 @@ dependencies:
     - link
     - mrc_date
     - mrc_ds_blocks
-    - mrc_media
+    - stanford_media
     - telephone
     - text
     - user
