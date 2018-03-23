@@ -5,7 +5,7 @@ dependencies:
     - field.storage.taxonomy_term.field_mrc_image
     - taxonomy.vocabulary.mrc_event_series
   module:
-    - mrc_media
+    - stanford_media
     - taxonomy
     - text
     - ui_patterns_views

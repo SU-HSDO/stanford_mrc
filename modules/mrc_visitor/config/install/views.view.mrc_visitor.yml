@@ -11,7 +11,7 @@ dependencies:
     - taxonomy.vocabulary.mrc_event_series
     - taxonomy.vocabulary.stanford_mrc_research_area
   module:
-    - mrc_media
+    - stanford_media
     - mrc_yearonly
     - node
     - taxonomy

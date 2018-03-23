@@ -17,7 +17,7 @@ dependencies:
     - ds
     - link
     - mrc_ds_blocks
-    - mrc_media
+    - stanford_media
     - text
     - user
 third_party_settings:

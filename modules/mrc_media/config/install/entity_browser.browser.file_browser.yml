@@ -4,7 +4,7 @@ dependencies:
   config:
     - views.view.media_entity_browser
   module:
-    - mrc_media
+    - stanford_media
     - views
 name: file_browser
 label: 'File Browser'

@@ -12,7 +12,7 @@ dependencies:
   module:
     - datetime
     - link
-    - mrc_media
+    - stanford_media
     - node
     - taxonomy
     - ui_patterns_views
