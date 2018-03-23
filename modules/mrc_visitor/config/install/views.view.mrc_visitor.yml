@@ -891,7 +891,7 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: 'Filter by Visitor''s Name'
+            label: 'Search by Visitor''s Name'
             description: ''
             use_operator: false
             operator: title_op
