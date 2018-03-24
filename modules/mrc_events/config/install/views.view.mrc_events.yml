@@ -16,8 +16,8 @@ dependencies:
     - datetime
     - datetime_range
     - mrc_date
-    - stanford_media
     - node
+    - stanford_media
     - taxonomy
     - text
     - ui_patterns_views
@@ -57,7 +57,7 @@ display:
         type: basic
         options:
           submit_button: Apply
-          reset_button: false
+          reset_button: true
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
