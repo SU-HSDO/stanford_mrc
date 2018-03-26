@@ -12,6 +12,7 @@
     {% if month and day %}
       {{ pattern('date_stacked', {'month': month, 'day': day}) }}
     {% endif %}
+
     <div class=mrc-featured-event-card__subcontent>
       {% if time %}
         <div class="mrc-featured-event-card__time">{{ time }}</div>
@@ -20,13 +21,13 @@
         <div class="mrc-featured-event-card__location">{{ location }}</div>
       {% endif %}
     </div>
-    {% if title %}
-      <h2 class="mrc-featured-event-card__title">{{ title }}</h2>
-    {% endif %}
-
 
     {% if speaker %}
       <div class="mrc-featured-event-card__speaker">{{ speaker }}</div>
+    {% endif %}
+
+    {% if title %}
+      <h2 class="mrc-featured-event-card__title">{{ title }}</h2>
     {% endif %}
 
     {% if description %}

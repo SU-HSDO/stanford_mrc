@@ -110,6 +110,15 @@ img {
 @import
   'inputs';
 
+// Roles
+body.role--authenticated .hide-logged-in {
+  display: none;
+}
+
+body.role--anonymous .hide-logged-out {
+  display: none;
+}
+
 // Search
 @import
   'search';
@@ -132,10 +141,7 @@ img {
   margin: 0 auto;
 }
 
-body.role--authenticated .hide-logged-in {
-  display: none;
-}
-
-body.role--anonymous .hide-logged-out {
-  display: none;
+// Views
+.view .more-link {
+  text-align: center;
 }

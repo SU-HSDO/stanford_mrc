@@ -14,7 +14,6 @@
   'patterns/atoms/date-stacked/scss/date-stacked';
 
 .mrc-event-date-stacked-card {
-
   @include mrc-card-container;
 
   h2 {
@@ -28,6 +27,22 @@
 
     .mrc-event-date-stacked__content {
       display: table-cell;
+
+      .mrc-event-date-stacked__program {
+        font-size: $small-font-size;
+
+        @include margin(0 0 0.25em 0);
+      }
+
+      .mrc-event-date-stacked__time-location {
+        @include margin(0 0 0.25em 0);
+      }
+
+      .mrc-event-date-stacked__speaker {
+        font-size: $small-font-size;
+
+        @include margin(0 0 0.25em 0);
+      }
 
       .mrc-event-date-stacked__title {
         @include margin(0 null 0.25em);
