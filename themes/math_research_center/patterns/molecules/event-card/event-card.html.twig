@@ -9,9 +9,14 @@
   {% endif %}
 
   <div class="mrc-event-card__content">
+    {% if program %}
+      <div class="mrc-event-card__program">{{ program }}</div>
+    {% endif %}
+
     {% if date %}
       <div class="mrc-event-card__date">{{ date }}</div>
     {% endif %}
+
     <div class=mrc-event-card__subcontent>
       {% if time %}
         <div class="mrc-event-card__time">{{ time }}</div>
@@ -25,10 +30,6 @@
         <div class="mrc-event-card__location">{{ location }}</div>
       {% endif %}
     </div>
-
-    {% if program %}
-      <div class="mrc-event-card__program">{{ program }}</div>
-    {% endif %}
 
     {% if speaker %}
       <div class="mrc-event-card__speaker">{{ speaker }}</div>
