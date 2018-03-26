@@ -116,5 +116,5 @@ function mrc_events_post_update_8_0_7_alpha1() {
 function mrc_events_post_update_8_0_8() {
   /** @var \Drupal\config_update\ConfigReverter $config_update */
   $config_update = \Drupal::service('config_update.config_update');
-  $config_update->import('view', 'mrc_events');
+  $config_update->revert('view', 'mrc_events');
 }
