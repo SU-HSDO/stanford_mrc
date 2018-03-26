@@ -9,6 +9,21 @@ use Drupal\ui_patterns\UiPatterns;
 use Drupal\Component\Utility\Html;
 
 /**
+ * Implements hook_preprocess_pattern_view_field().
+ */
+function math_research_center_preprocess_pattern_view_field(&$variables) {
+  /** @var \Drupal\views\ViewExecutable $view */
+  $view = $variables['view'];
+  if ($view->id() == 'mrc_events') {
+    /** @var \Drupal\views\Plugin\views\field\EntityField $field */
+    $field = $variables['field'];
+    if ($field->label() == 'Speaker') {
+      $field->label = 'Speakers';
+    }
+  }
+}
+
+/**
  * Implements hook_preprocess_block().
  */
 function math_research_center_preprocess_block(&$variables) {
