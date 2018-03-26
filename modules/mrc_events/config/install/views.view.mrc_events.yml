@@ -860,7 +860,7 @@ display:
       row:
         type: ui_patterns
         options:
-          default_field_elements: 0
+          default_field_elements: 1
           inline:
             title: 0
             field_s_event_date: 0
