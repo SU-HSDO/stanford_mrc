@@ -16,12 +16,12 @@ function math_research_center_preprocess_pattern_view_field(&$variables) {
   $view = $variables['view'];
   $field = $variables['field'];
 
-  if ($view->id() == 'mrc_events' && strpos($field->label, 'Speaker') !== FALSE) {
+  if ($view->id() == 'mrc_events' && strpos($field->label, 'Speaker:') !== FALSE) {
     // Set singular label.
-    $field->label = t('Speaker');
+    $field->label = t('Speaker:');
     // Plural label.
     if (count($field->handler->getItems($variables['row'])) > 1) {
-      $field->label = t('Speakers');
+      $field->label = t('Speakers:');
     }
   }
 }

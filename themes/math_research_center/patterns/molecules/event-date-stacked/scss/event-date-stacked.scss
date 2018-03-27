@@ -42,6 +42,10 @@
         font-size: $small-font-size;
 
         @include margin(0 0 0.25em 0);
+
+        .field-content {
+          display: inline-block;
+        }
       }
 
       .mrc-event-date-stacked__title {

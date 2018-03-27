@@ -70,6 +70,12 @@
       }
     }
 
+    .mrc-featured-event-card__speaker {
+      .field-content {
+        display: inline-block;
+      }
+    }
+
     .mrc-featured-event-card__title {
       @include margin(0.75em null null);
     }
