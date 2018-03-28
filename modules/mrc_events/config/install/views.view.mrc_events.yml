@@ -183,7 +183,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
         field_s_event_date:
           id: field_s_event_date
@@ -247,7 +247,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_1:
@@ -312,7 +312,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_location:
@@ -374,7 +374,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_mrc_image:
@@ -439,7 +439,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_mrc_event_series:
@@ -502,7 +502,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_speaker:
@@ -512,7 +512,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Speaker:
+          label: Speaker
           exclude: false
           alter:
             alter_text: false
@@ -545,7 +545,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -565,7 +565,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ''
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
       filters:
@@ -954,7 +954,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
         field_s_event_date:
           id: field_s_event_date
@@ -1018,7 +1018,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_2:
@@ -1083,7 +1083,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_1:
@@ -1148,7 +1148,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_location:
@@ -1210,7 +1210,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_mrc_event_series:
@@ -1273,7 +1273,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_speaker:
@@ -1283,7 +1283,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Speaker:
+          label: Speaker
           exclude: false
           alter:
             alter_text: false
@@ -1316,7 +1316,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -1336,7 +1336,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ' '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
       pager:
@@ -1631,7 +1631,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
         field_s_event_date:
           id: field_s_event_date
@@ -1695,7 +1695,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_2:
@@ -1760,7 +1760,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_1:
@@ -1825,7 +1825,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_location:
@@ -1887,7 +1887,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_speaker:
@@ -1897,7 +1897,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Speaker:
+          label: Speaker
           exclude: false
           alter:
             alter_text: false
@@ -1930,7 +1930,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -1950,7 +1950,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ' '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
       pager:
@@ -2237,7 +2237,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
         field_s_event_date:
           id: field_s_event_date
@@ -2301,7 +2301,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_2:
@@ -2366,7 +2366,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_1:
@@ -2431,7 +2431,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_location:
@@ -2493,7 +2493,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_speaker:
@@ -2503,7 +2503,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Speaker:
+          label: Speaker
           exclude: false
           alter:
             alter_text: false
@@ -2536,7 +2536,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -2556,7 +2556,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ' '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
       pager:
@@ -2711,7 +2711,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
         field_s_event_date:
           id: field_s_event_date
@@ -2775,7 +2775,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_1:
@@ -2840,7 +2840,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_location:
@@ -2902,7 +2902,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_mrc_image:
@@ -2967,7 +2967,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         body:
@@ -3029,7 +3029,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_speaker:
@@ -3039,7 +3039,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Speaker:
+          label: Speaker
           exclude: false
           alter:
             alter_text: false
@@ -3072,7 +3072,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -3092,7 +3092,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ' '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
       pager:
@@ -3344,7 +3344,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
         field_s_event_date:
           id: field_s_event_date
@@ -3408,7 +3408,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_1:
@@ -3473,7 +3473,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_location:
@@ -3535,7 +3535,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_mrc_image:
@@ -3600,7 +3600,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         body:
@@ -3662,7 +3662,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_speaker:
@@ -3672,7 +3672,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Speaker:
+          label: Speaker
           exclude: false
           alter:
             alter_text: false
@@ -3705,7 +3705,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -3725,7 +3725,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ' '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
       pager:
@@ -4000,7 +4000,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
         field_s_event_date:
           id: field_s_event_date
@@ -4064,7 +4064,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_2:
@@ -4129,7 +4129,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_date_1:
@@ -4194,7 +4194,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_location:
@@ -4256,7 +4256,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ', '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
         field_s_event_speaker:
@@ -4266,7 +4266,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Speaker:
+          label: Speaker
           exclude: false
           alter:
             alter_text: false
@@ -4299,7 +4299,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -4319,7 +4319,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: ' '
+          separator: '<span class="separator">,</span>'
           field_api_classes: false
           plugin_id: field
       pager:
