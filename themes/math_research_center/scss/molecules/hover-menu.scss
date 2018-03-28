@@ -156,7 +156,6 @@
 
       // Mobile styles for the main menu in header region.
       @include media(max-width ($medium-screen - 1)) {
-        position: relative;
 
         ul {
           display: none;
@@ -167,6 +166,7 @@
 
           &.expanded {
             display: block;
+            width: 95%;
           }
 
           ul {
