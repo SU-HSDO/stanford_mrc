@@ -1,9 +1,0 @@
-mrc_media.bulk_upload:
-  path: '/admin/content/media/add/bulk'
-  defaults:
-    _form: '\Drupal\mrc_media\Form\BulkUpload'
-    _title: 'Upload Files(s)'
-  requirements:
-    _permission: 'administer media'
-  options:
-    _admin_route: TRUE
