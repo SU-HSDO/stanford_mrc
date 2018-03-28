@@ -49,14 +49,13 @@
     }
 
     .mrc-event-card__subcontent {
-      display: flex;
-      flex-wrap: wrap;
       font-size: $small-font-size;
 
       @include margin(0 0 0.25em 0);
 
+      .mrc-event-card__time,
       .mrc-event-card__location {
-        @include margin(0 null null);
+        display: inline;
       }
     }
 
