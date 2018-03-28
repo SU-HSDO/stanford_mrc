@@ -16,21 +16,24 @@
   @include mrc-card-container;
 
   .mrc-visitors-grid__item {
-    @include margin(null null 1em);
+    display: flex;
 
     .mrc-visitors-grid__img img {
-      @include margin(0 auto);
-      display:block;
+      @include margin(null 1em null null);
     }
 
-    .mrc-visitors-grid__name {
-      @include margin(0.25em null);
-    }
+    .mrc-visitors-grid__content {
+      flex: 1 4 auto;
 
-    .mrc-visitors-grid__title {
-      font-weight: 700;
+      .mrc-visitors-grid__name {
+        @include margin(0 null);
+      }
 
-      @include margin(null null 0.25em);
+      .mrc-visitors-grid__title {
+        font-weight: 700;
+
+        @include margin(null null 0.25em);
+      }
     }
   }
 }
