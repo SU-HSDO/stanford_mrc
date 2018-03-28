@@ -53,9 +53,13 @@
 
       @include margin(0 0 0.25em 0);
 
-      .mrc-event-card__time,
-      .mrc-event-card__location {
-        display: inline;
+      .mrc-event-card__time {
+        float: left;
+      }
+
+      .pipe {
+        float: left;
+        padding: 0 3px;
       }
     }
 
