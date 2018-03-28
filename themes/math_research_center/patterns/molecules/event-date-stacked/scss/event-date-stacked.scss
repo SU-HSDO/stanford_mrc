@@ -63,8 +63,15 @@
   }
 
   .mrc-event-date-stacked__time-location {
-    display: flex;
-    flex-wrap: wrap;
     font-size: $small-font-size;
+
+    .mrc-event-date-stacked__time{
+      float:left;
+    }
+
+    .pipe {
+      float: left;
+      margin: 0 3px;
+    }
   }
 }

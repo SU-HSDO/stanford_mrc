@@ -491,3 +491,16 @@ function stanford_mrc_post_update_8_0_8__1() {
   $installer = \Drupal::service('module_installer');
   $installer->uninstall(['mrc_media']);
 }
+
+/**
+ * Release 8.0.8 Production changes.
+ */
+function stanford_mrc_post_update_8_0_8_prod() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('view', 'mrc_events');
+  $config_update->revert('view', 'mrc_videos');
+  $config_update->revert('view', 'mrc_event_series');
+  $config_update->revert('view', 'mrc_news');
+  $config_update->revert('view', 'mrc_visitor');
+}

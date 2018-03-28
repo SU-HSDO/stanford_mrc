@@ -111,7 +111,7 @@ function mrc_events_post_update_8_0_7_alpha1() {
 }
 
 /**
- * Create new image style.
+ * Release 8.0.8 changes.
  */
 function mrc_events_post_update_8_0_8() {
   /** @var \Drupal\config_update\ConfigReverter $config_update */
