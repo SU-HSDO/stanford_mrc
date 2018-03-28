@@ -156,7 +156,6 @@
 
       // Mobile styles for the main menu in header region.
       @include media(max-width ($medium-screen - 1)) {
-
         ul {
           display: none;
           background: $color-black;
@@ -201,8 +200,14 @@
 
           @include padding(0);
 
-          &:hover, &:focus {
+          &:hover,
+          &:focus {
             text-decoration: none;
+          }
+
+          &.is-active {
+            border-bottom: 2px solid $color-white;
+            font-weight: $font-bold;
           }
         }
 
