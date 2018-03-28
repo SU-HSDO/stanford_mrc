@@ -62,6 +62,11 @@
 
     .mrc-event-card__speaker {
       font-size: $small-font-size;
+
+      .views-label {
+        display: block;
+        float: left;
+      }
     }
 
     .mrc-event-card__title {
