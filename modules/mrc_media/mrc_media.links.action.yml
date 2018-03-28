@@ -1,5 +1,0 @@
-mrc_media.bulk_upload:
-  route_name: entity.media.add_page
-  title: 'Add media'
-  appears_on:
-    - view.media_entity_browser.use_list
