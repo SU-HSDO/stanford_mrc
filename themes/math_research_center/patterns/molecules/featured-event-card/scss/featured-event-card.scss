@@ -73,6 +73,13 @@
       }
     }
 
+    .mrc-featured-event-card__speaker {
+      .views-label {
+        display: block;
+        float: left;
+      }
+    }
+
     .mrc-featured-event-card__title {
       @include margin(0.75em null null);
     }
