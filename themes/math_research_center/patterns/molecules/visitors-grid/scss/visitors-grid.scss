@@ -16,16 +16,14 @@
   @include mrc-card-container;
 
   .mrc-visitors-grid__item {
-    @include margin(null null 1em);
+    display: flex;
 
     .mrc-visitors-grid__img img {
-      float: left;
-
-      @include margin(null 1em 0.5em null);
+      @include margin(null 1em null null);
     }
 
     .mrc-visitors-grid__content {
-      display: table-cell;
+      flex: 1 4 auto;
 
       .mrc-visitors-grid__name {
         @include margin(0 null);
