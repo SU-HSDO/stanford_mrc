@@ -71,8 +71,9 @@
     }
 
     .mrc-featured-event-card__speaker {
-      .field-content {
-        display: inline-block;
+      .views-label {
+        display: block;
+        float: left;
       }
     }
 

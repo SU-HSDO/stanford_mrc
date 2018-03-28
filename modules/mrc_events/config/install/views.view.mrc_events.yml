@@ -523,7 +523,7 @@ display:
             external: false
             replace_spaces: false
             path_case: none
-            trim_whitespace: false
+            trim_whitespace: true
             alt: ''
             rel: ''
             link_class: ''
@@ -537,9 +537,9 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
-            preserve_tags: ''
+            preserve_tags: '<a>'
             html: false
           element_type: ''
           element_class: ''
@@ -565,7 +565,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: '<span class="separator">,</span>'
+          separator: ', '
           field_api_classes: false
           plugin_id: field
       filters:
@@ -1294,7 +1294,7 @@ display:
             external: false
             replace_spaces: false
             path_case: none
-            trim_whitespace: false
+            trim_whitespace: true
             alt: ''
             rel: ''
             link_class: ''
@@ -1308,9 +1308,9 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
-            preserve_tags: ''
+            preserve_tags: '<a>'
             html: false
           element_type: ''
           element_class: ''
@@ -1336,7 +1336,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: '<span class="separator">,</span>'
+          separator: ', '
           field_api_classes: false
           plugin_id: field
       pager:
@@ -1908,7 +1908,7 @@ display:
             external: false
             replace_spaces: false
             path_case: none
-            trim_whitespace: false
+            trim_whitespace: true
             alt: ''
             rel: ''
             link_class: ''
@@ -1922,9 +1922,9 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
-            preserve_tags: ''
+            preserve_tags: '<a>'
             html: false
           element_type: ''
           element_class: ''
@@ -1950,7 +1950,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: '<span class="separator">,</span>'
+          separator: ', '
           field_api_classes: false
           plugin_id: field
       pager:
@@ -2514,7 +2514,7 @@ display:
             external: false
             replace_spaces: false
             path_case: none
-            trim_whitespace: false
+            trim_whitespace: true
             alt: ''
             rel: ''
             link_class: ''
@@ -2528,9 +2528,9 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
-            preserve_tags: ''
+            preserve_tags: '<a>'
             html: false
           element_type: ''
           element_class: ''
@@ -2556,7 +2556,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: '<span class="separator">,</span>'
+          separator: ', '
           field_api_classes: false
           plugin_id: field
       pager:
@@ -3050,7 +3050,7 @@ display:
             external: false
             replace_spaces: false
             path_case: none
-            trim_whitespace: false
+            trim_whitespace: true
             alt: ''
             rel: ''
             link_class: ''
@@ -3064,9 +3064,9 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
-            preserve_tags: ''
+            preserve_tags: '<a>'
             html: false
           element_type: ''
           element_class: ''
@@ -3092,7 +3092,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: '<span class="separator">,</span>'
+          separator: ', '
           field_api_classes: false
           plugin_id: field
       pager:
@@ -3683,7 +3683,7 @@ display:
             external: false
             replace_spaces: false
             path_case: none
-            trim_whitespace: false
+            trim_whitespace: true
             alt: ''
             rel: ''
             link_class: ''
@@ -3697,9 +3697,9 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
-            preserve_tags: ''
+            preserve_tags: '<a>'
             html: false
           element_type: ''
           element_class: ''
@@ -3725,7 +3725,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: '<span class="separator">,</span>'
+          separator: ', '
           field_api_classes: false
           plugin_id: field
       pager:
@@ -4277,7 +4277,7 @@ display:
             external: false
             replace_spaces: false
             path_case: none
-            trim_whitespace: false
+            trim_whitespace: true
             alt: ''
             rel: ''
             link_class: ''
@@ -4291,9 +4291,9 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
-            preserve_tags: ''
+            preserve_tags: '<a>'
             html: false
           element_type: ''
           element_class: ''
@@ -4319,7 +4319,7 @@ display:
           delta_reversed: false
           delta_first_last: false
           multi_type: separator
-          separator: '<span class="separator">,</span>'
+          separator: ', '
           field_api_classes: false
           plugin_id: field
       pager:
