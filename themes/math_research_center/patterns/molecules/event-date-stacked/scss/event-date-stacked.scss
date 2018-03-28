@@ -27,6 +27,7 @@
 
     .mrc-event-date-stacked__content {
       display: table-cell;
+      width: 90%;
 
       .mrc-event-date-stacked__program {
         font-size: $small-font-size;
@@ -43,8 +44,13 @@
 
         @include margin(0 0 0.25em 0);
 
-        .field-content {
-          display: inline-block;
+        .views-label {
+          display: block;
+          float: left;
+        }
+
+        .separator {
+          margin-right: 5px;
         }
       }
 

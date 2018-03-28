@@ -63,8 +63,13 @@
     .mrc-event-card__speaker {
       font-size: $small-font-size;
 
-      .field-content {
-        display: inline-block;
+      .views-label {
+        display: block;
+        float: left;
+      }
+
+      .separator {
+        margin-right: 5px;
       }
     }
 
