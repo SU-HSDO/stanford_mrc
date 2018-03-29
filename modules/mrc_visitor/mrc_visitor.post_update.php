@@ -90,3 +90,12 @@ function mrc_visitor_post_update_8_0_8() {
   $config_update->revert('view', 'mrc_visitor');
   $config_update->revert('entity_view_display', 'node.stanford_visitor.default');
 }
+
+/**
+ * Release 8.0.8 changes.
+ */
+function mrc_visitor_post_update_8_0_0() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('view', 'mrc_visitor');
+}
