@@ -15,14 +15,14 @@ function math_research_center_preprocess_html(&$variables) {
   $xuacompatible = [
     '#tag' => 'meta',
     '#attributes' => [
-      'http-equiv' => 'x-ua-compatible',
-      'content' => 'ie=edge',
+      'http-equiv' => 'X-UA-Compatible',
+      'content' => 'IE=edge',
     ],
   ];
 
   $variables['page']['#attached']['html_head'][] = [
     $xuacompatible,
-    'x-ua-compatible',
+    'X-UA-Compatible',
   ];
 }
 
