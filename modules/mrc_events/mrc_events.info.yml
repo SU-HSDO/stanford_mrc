@@ -2,7 +2,7 @@ name: MRC Events
 description: Events content type and importer
 core: 8.x
 type: module
-version: 8.x
+version: 8.x-0.9
 package: Stanford MRC
 dependencies:
   - telephone

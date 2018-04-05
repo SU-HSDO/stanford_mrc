@@ -2,7 +2,7 @@ name: MRC Bricks Helper
 description: Adds helper functionality to bricks module.
 core: 8.x
 type: module
-version: 8.x
+version: 8.x-0.9
 package: Stanford MRC
 dependencies:
   - bricks

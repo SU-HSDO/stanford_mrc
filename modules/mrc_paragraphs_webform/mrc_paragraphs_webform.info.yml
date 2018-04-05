@@ -2,7 +2,7 @@ name: MRC Paragraph Webform
 description: A paragraph type with a webform reference.
 core: 8.x
 type: module
-version: 8.x
+version: 8.x-0.9
 package: Stanford MRC
 dependencies:
   - paragraphs

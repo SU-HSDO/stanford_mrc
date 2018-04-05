@@ -2,7 +2,7 @@ name: 'MRC Basic Page'
 type: module
 description: 'MRC Basic Page.'
 core: 8.x
-version: 8.x
+version: 8.x-0.9
 package: Stanford MRC
 dependencies:
   - telephone

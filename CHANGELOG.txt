@@ -1,5 +1,11 @@
 Stanford MRC
 
+Version 8.0.9                                                         2018-04-05
+--------------------------------------------------------------------------------
+- Minor field name changes
+- Added metatag for IE edge mode
+- Main menu style tweaks.
+
 Version 8.0.8                                                         2018-03-28
 --------------------------------------------------------------------------------
 - Several style changes

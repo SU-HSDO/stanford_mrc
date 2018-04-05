@@ -2,7 +2,7 @@ name: MRC Paragraph View
 description: A paragraph type to embed views.
 core: 8.x
 type: module
-version: 8.x
+version: 8.x-0.9
 package: Stanford MRC
 dependencies:
   - viewfield
