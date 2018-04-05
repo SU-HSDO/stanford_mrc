@@ -12,6 +12,50 @@
 @import
   '../utilities/mixins/mixins';
 
+// Styles for no JavaScript
+// Fallback styles, which are also applied to the page when
+// loading and in-between navigation page refreshes
+#header {
+.decanter-main-menu--hover-reveal {
+  .no-js & {
+    .fa {
+      display: none;
+    }
+  }
+
+  @include media($medium-screen) {
+    ul ul {
+      display: none;
+    }
+
+    &.menu--main {
+      box-shadow: none;
+      float: right;
+      height: 40px;
+
+      a:hover,
+      a.is-active,
+      .menu-item--active-trail a {
+        border-bottom: solid 3px $color-black;
+      }
+
+      li {
+        @include margin(null 0 null null);
+
+        &.menu-item > a {
+          font-size: $base-font-size;
+          font-weight: $font-normal;
+          text-decoration: none;
+
+          @include margin(0 1.5em 0 0);
+          @include padding(6px 0);
+        }
+      }
+    }
+  }
+}
+}
+
 // Main menu in header region
 #header {
   .fa {
@@ -62,6 +106,10 @@
                 background: $color-black;
 
                 @include padding(1em);
+
+                &.decanter-nav-submenu li a {
+                  font-size: 1.8rem;
+                }
               }
             }
 
@@ -153,6 +201,7 @@
           }
         }
       }
+
 
       // Mobile styles for the main menu in header region.
       @include media(max-width ($medium-screen - 1)) {
@@ -298,87 +347,6 @@
       font-weight: $font-normal;
 
       @include padding(null null null 20px);
-    }
-  }
-}
-
-// Styles for no JavaScript
-.no-js .decanter-main-menu--hover-reveal {
-  float: right;
-  height: 50px;
-
-  ul li {
-    display: inline-block;
-
-    &:first-child {
-      @include padding(null null null 0);
-    }
-
-    &:last-child {
-      @include padding(null 0 null null);
-    }
-
-    ul {
-      visibility: hidden;
-      opacity: 0;
-      transition: visibility 0s, opacity 0.2s linear;
-      position: absolute;
-      background: $color-white;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
-      border-radius: 0.25em;
-      z-index: 99;
-
-      @include margin(0);
-      @include padding(0.5em);
-
-      li {
-        position: relative;
-        display: block;
-
-        @include margin(0);
-        @include padding(0);
-      }
-
-      a {
-        font-weight: normal;
-        color: $color-bright-red;
-        display: block;
-        border-radius: 0.25em;
-
-        @include padding(0.5em);
-
-        &:hover {
-          border-bottom: none;
-          color: $color-black;
-          background: $color-cool-grey;
-
-          @include padding(null null 0.5em);
-        }
-      }
-
-      ul {
-        left: calc(100% - 10px);
-
-        @include margin((-45px) null null);
-      }
-    }
-
-    &:hover > ul, ul.focused {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
-
-  a {
-    color: $color-bright-red;
-    font-weight: $font-bold;
-    text-decoration: none;
-
-    @include padding(1em 3px 0);
-
-    &:hover {
-      border-bottom: 2px solid $color-black;
-      color: $color-black;
     }
   }
 }

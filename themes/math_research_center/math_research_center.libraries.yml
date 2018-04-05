@@ -129,6 +129,7 @@ hover_menu:
   dependencies:
     - core/drupal
     - core/jquery.ui.menu
+    - core/jquery.once
 
 # NODES
 node.stanford_visitor:
