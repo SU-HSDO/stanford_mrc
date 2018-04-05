@@ -30,17 +30,13 @@ function math_research_center_preprocess_html(&$variables) {
  * Implements hook_preprocess_pattern_view_field().
  */
 function math_research_center_preprocess_pattern_view_field(&$variables) {
-  /** @var \Drupal\views\ViewExecutable $view */
-  $view = $variables['view'];
   $field = $variables['field'];
+  $items = $field->handler->getItems($variables['row']);
 
-  if ($view->id() == 'mrc_events' && strpos($field->label, 'Speaker') !== FALSE) {
-    // Set singular label.
-    $field->label = t('Speaker');
-    // Plural label.
-    if (count($field->handler->getItems($variables['row'])) > 1) {
-      $field->label = t('Speakers');
-    }
+  // Make labels plural if they are generic.
+  if ($field->label) {
+    $replacement = count($items) > 1 ? 's' : '';
+    $field->label = str_replace('(s)', $replacement, $field->label);
   }
 }
 
@@ -183,6 +179,12 @@ function math_research_center_preprocess_pattern(&$variables, $hook) {
  * Implements hook_preprocess_field().
  */
 function math_research_center_preprocess_field(&$variables) {
+  // Make labels plural if they are generic.
+  if ($variables['label']) {
+    $replacement = count($variables['items']) > 1 ? 's' : '';
+    $variables['label'] = str_replace('(s)', $replacement, $variables['label']);
+  }
+
   // Change some field settings like the labels.
   switch ($variables['field_name']) {
     case 'field_s_visitor_donor':
@@ -192,13 +194,6 @@ function math_research_center_preprocess_field(&$variables) {
     case 'field_s_visitor_external_link':
       $node_title = $variables['element']['#object']->label();
       $variables['label'] = t('You can learn more about @title at', ['@title' => $node_title]);
-      break;
-
-    case 'field_s_visitor_research_area':
-
-      if (count($variables['items']) > 1) {
-        $variables['label'] .= 's';
-      }
       break;
 
     case 'field_s_news_byline':

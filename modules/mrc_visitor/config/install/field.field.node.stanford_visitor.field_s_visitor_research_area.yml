@@ -9,7 +9,7 @@ id: node.stanford_visitor.field_s_visitor_research_area
 field_name: field_s_visitor_research_area
 entity_type: node
 bundle: stanford_visitor
-label: 'Research Area'
+label: 'Research Area(s)'
 description: ''
 required: false
 translatable: false

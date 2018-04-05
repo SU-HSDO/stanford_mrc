@@ -512,7 +512,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Speaker
+          label: Speaker(s)
           exclude: false
           alter:
             alter_text: false
@@ -1283,7 +1283,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Speaker
+          label: Speaker(s)
           exclude: false
           alter:
             alter_text: false

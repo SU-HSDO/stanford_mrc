@@ -504,3 +504,16 @@ function stanford_mrc_post_update_8_0_8_prod() {
   $config_update->revert('view', 'mrc_news');
   $config_update->revert('view', 'mrc_visitor');
 }
+
+/**
+ * Release 8.0.9 changes.
+ */
+function stanford_mrc_post_update_8_0_9() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('field_config', 'node.stanford_visitor.field_s_visitor_year_visited');
+  $config_update->revert('field_config', 'node.stanford_visitor.field_s_visitor_research_area');
+  $config_update->revert('view', 'mrc_news');
+  $config_update->revert('view', 'mrc_visitor');
+  $config_update->revert('view', 'mrc_events');
+}

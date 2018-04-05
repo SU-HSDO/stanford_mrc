@@ -772,7 +772,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Academic Year'
+          label: 'Academic Year(s) of Visit'
           exclude: false
           alter:
             alter_text: false

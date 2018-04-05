@@ -1126,7 +1126,7 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: 'Search by Title'
+            label: 'Search by Keyword'
             description: ''
             use_operator: false
             operator: title_op

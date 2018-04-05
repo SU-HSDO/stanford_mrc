@@ -12,7 +12,7 @@ id: node.stanford_visitor.field_s_visitor_year_visited
 field_name: field_s_visitor_year_visited
 entity_type: node
 bundle: stanford_visitor
-label: 'Academic year'
+label: 'Academic Year(s) of Visit'
 description: ''
 required: true
 translatable: false
