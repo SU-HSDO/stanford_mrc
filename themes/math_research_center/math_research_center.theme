@@ -7,6 +7,7 @@
 
 use Drupal\ui_patterns\UiPatterns;
 use Drupal\Component\Utility\Html;
+use Drupal\views\Plugin\views\field\EntityField;
 
 /**
  * Implements hook_preprocess_html().
@@ -31,13 +32,16 @@ function math_research_center_preprocess_html(&$variables) {
  */
 function math_research_center_preprocess_pattern_view_field(&$variables) {
   $field = $variables['field'];
-  $items = $field->handler->getItems($variables['row']);
+  if ($field->handler instanceof EntityField) {
+    $items = $field->handler->getItems($variables['row']);
 
-  // Make labels plural if they are generic.
-  if ($field->label) {
-    $replacement = count($items) > 1 ? 's' : '';
-    $field->label = str_replace('(s)', $replacement, $field->label);
+    // Make labels plural if they are generic.
+    if ($field->label) {
+      $replacement = count($items) > 1 ? 's' : '';
+      $field->label = str_replace('(s)', $replacement, $field->label);
+    }
   }
+
 }
 
 /**
