@@ -108,8 +108,9 @@ class LinkFieldWidget extends LinkWidget {
         $displayable_string = DynamicEntityAutocomplete::getEntityLabels([$entity]);
       }
     }
-
-    return $displayable_string;
+    // Trim quotes since commas break this.
+    // @see \Drupal\Core\Entity\EntityAutocompleteMatcher::getMatches()
+    return trim($displayable_string, '"');
   }
 
 }

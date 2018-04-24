@@ -70,7 +70,9 @@ class DynamicEntityAutocompleteController extends ControllerBase {
     foreach ($selection_settings as $entity_type_id => $settings) {
       $matches = $this->matcher->getMatches($entity_type_id, $settings['selection_handler'], $settings['selection_settings'], $typed_string);
       foreach ($matches as $match) {
-        preg_match('/(?<entity_id>\d+)\)$/', $match['value'], $matches);
+        // Trim quotes since commas break this.
+        // @see \Drupal\Core\Entity\EntityAutocompleteMatcher::getMatches()
+        preg_match('/(?<entity_id>\d+)\)$/', trim($match['value'], '"'), $matches);
         $combined_matches[] = [
           'label' => $match['label'],
           'value' => sprintf('%s (%s:%s)', $match['label'], $entity_type_id, $matches['entity_id']),
