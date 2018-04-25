@@ -4,6 +4,6 @@ dependencies: {  }
 machine: 2_staging
 description: null
 name: Staging
-url: 'https://hs-mrc-stage.stanford.edu'
+url: 'https://mrc-stage.stanford.edu'
 fg_color: '#fff'
 bg_color: '#4127C2'

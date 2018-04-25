@@ -517,3 +517,14 @@ function stanford_mrc_post_update_8_0_9() {
   $config_update->revert('view', 'mrc_visitor');
   $config_update->revert('view', 'mrc_events');
 }
+
+/**
+ * Release 8.0.9 changes.
+ */
+function stanford_mrc_post_update_8_0_10_alpha1() {
+  /** @var \Drupal\config_update\ConfigReverter $config_update */
+  $config_update = \Drupal::service('config_update.config_update');
+  $config_update->revert('environment_indicator', '1_development');
+  $config_update->revert('environment_indicator', '2_staging');
+  $config_update->revert('environment_indicator', '3_production');
+}

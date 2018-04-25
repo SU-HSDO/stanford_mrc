@@ -4,6 +4,6 @@ dependencies: {  }
 machine: 3_production
 description: null
 name: Production
-url: 'https://hs-mrc-prod.stanford.edu'
+url: 'https://mrc.stanford.edu'
 fg_color: '#fff'
 bg_color: '#000'
