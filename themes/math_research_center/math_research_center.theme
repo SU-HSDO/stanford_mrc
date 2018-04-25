@@ -8,6 +8,8 @@
 use Drupal\ui_patterns\UiPatterns;
 use Drupal\Component\Utility\Html;
 use Drupal\views\Plugin\views\field\EntityField;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\Entity\Node;
 
 /**
  * Implements hook_preprocess_html().
@@ -89,9 +91,19 @@ function math_research_center_theme_suggestions_alter(array &$suggestions, array
   }
 }
 
+/**
+ * Implements hook_preprocess_page().
+ */
 function math_research_center_preprocess_page(&$variables) {
   if (isset($variables['node'])) {
-    $variables['#attached']['library'][] = 'math_research_center/node.' . $variables['node']->bundle();
+    $node = $variables['node'];
+    if (!$variables['node'] instanceof EntityInterface) {
+      $node = Node::load((is_int($node) || is_string($node)) ? $node : 0);
+    }
+
+    if ($node) {
+      $variables['#attached']['library'][] = 'math_research_center/node.' . $node->bundle();
+    }
   }
   if ($variables['is_front']) {
     $variables['#attached']['library'][] = 'math_research_center/front';
