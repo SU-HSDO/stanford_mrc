@@ -2,7 +2,7 @@ name: MRC Events Importer
 description: Migrate importer for stanford events.
 core: 8.x
 type: module
-version: 8.x-0.10
+version: 8.x
 package: Stanford MRC
 dependencies:
   - mrc_events
