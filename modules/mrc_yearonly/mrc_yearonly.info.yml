@@ -2,7 +2,7 @@ name: MRC Year Only
 description: Helper module for contrib Year Only module
 core: 8.x
 type: module
-version: 8.x
+version: 8.x-0.10
 package: Stanford MRC
 dependencies:
   - yearonly
